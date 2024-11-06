@@ -1,7 +1,7 @@
 # Hello World
 Welcome to my not-so-one-of-a-kind-but-awesome-in-my-opinion roadmap:
 - [x] Open-Source Personal Brand ([Inspiration](https://github.com/0atman/noboilerplate))
-- [ ] Publish Visual Studio Code Theme ([Inspiration](https://resend.com/nextjs))
+- [x] [Publish Visual Studio Code Theme](https://marketplace.visualstudio.com/items?itemName=Polymath.polymath) ([Inspiration](https://resend.com/nextjs))
 - [ ] Open-Source Entire VSC-Setup ([Tutorial](https://bobbyhadz.com/blog/vscode-export-settings-and-extensions))
 - [ ] #1 Open-Source (Non-Fiction) Book Quotes API
 - [ ] Publish YouTube Videos *Again* ([Channel](https://youtube.com/@fabianfrankwerner))
