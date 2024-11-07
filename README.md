@@ -3,9 +3,9 @@ Welcome to my not-so-one-of-a-kind-but-awesome-in-my-opinion roadmap:
 - [x] [Open-Source Personal Brand](https://github.com/fabianfrankwerner/fabianfrankwerner) ([Inspiration](https://github.com/0atman/noboilerplate))
 - [x] [Publish Visual Studio Code Theme](https://marketplace.visualstudio.com/items?itemName=Polymath.polymath) ([Inspiration](https://resend.com/nextjs))
 - [x] [Open-Source Entire VSC-Setup](https://github.com/fabianfrankwerner/visual-studio-code-settings) ([Tutorial](https://bobbyhadz.com/blog/vscode-export-settings-and-extensions))
-- [ ] #1 Open-Source (Non-Fiction) Book Quotes API
-- [ ] Publish YouTube Videos *Again* ([Channel](https://youtube.com/@fabianfrankwerner))
 - [ ] Giphy Clone for Viral Short-Form Hooks
+- [ ] Publish YouTube Videos *Again* ([Channel](https://youtube.com/@fabianfrankwerner))
+- [ ] #1 Open-Source (Non-Fiction) Book Quotes API
 - [ ] 3D-Portfolio Website ([Inspiration](https://skelly-stickers.vercel.app))
 - [ ] Code Animation Tool *(Visual Studio Code Theme)* ([Inspiration](https://www.animate-code.com/))
 - [ ] Pixel-Perfect [Geist Design System](https://vercel.com/geist) Clone
