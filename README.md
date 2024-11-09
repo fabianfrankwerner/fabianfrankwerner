@@ -12,7 +12,7 @@ Welcome to my not-so-one-of-a-kind-but-awesome-in-my-opinion roadmap:
 - [ ] Polymath Component Library - Tailwind CSS Based ([Inspiration](https://ui.shadcn.com/))
 - [ ] Component → SVG → Mockup ([Inspiration](https://www.canva.com/create/mockup-generator/) & [Database](https://jeremymura.notion.site/e20452febb3647849d5c21c48cb3ed8f?v=27e66eda58924d1d8fc2e1dd1b42b460))
 - [ ] Reader (RSS, Newsletter, Articles)
-- [ ] Minimal Writer
+- [ ] Writer ([This](https://lex.page/) + [This](https://ia.net/writer)
 ## Startup Potential
 - [ ] Website Templates
 - [ ] Reactive Teleprompter 
