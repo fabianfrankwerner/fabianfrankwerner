@@ -20,4 +20,4 @@ Welcome to my not-so-one-of-a-kind-but-awesome-in-my-opinion roadmap:
 ## Startup Potential
 - [ ] Website Templates
 - [ ] Reactive Teleprompter 
-- [ ] StudioBinder for YouTube
+- [ ] StudioBinder for YouTube (Spotter Studio + Studio Forge)
