@@ -19,5 +19,6 @@ Welcome to my not-so-one-of-a-kind-but-awesome-in-my-opinion roadmap:
 - [ ] Presenter ([This](https://github.com/MSzturc/obsidian-advanced-slides) + [This](https://ia.net/presenter))
 ## Startup Potential
 - [ ] Website Templates
+- [ ] Rotten Tomatoes for Books
 - [ ] Reactive Teleprompter 
 - [ ] StudioBinder for YouTube (Spotter Studio + Studio Forge)
