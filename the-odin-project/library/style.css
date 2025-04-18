@@ -1,0 +1,67 @@
+body {
+  background-color: black;
+  color: white;
+  font-family: sans-serif;
+  margin: 0;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 25px;
+  padding-right: 25px;
+  background-color: white;
+  color: black;
+  position: relative;
+}
+
+nav > button {
+  background-color: white;
+  color: black;
+  border-radius: 25px;
+  padding: 12.5px;
+  font-weight: bold;
+  border: black 2.5px dashed;
+}
+
+nav > button:hover {
+  background-color: black;
+  color: white;
+  border: black solid 2.5px;
+}
+
+.book-card {
+  border: white 2.5px dashed;
+  color: white;
+  padding: 25px;
+  background-color: black;
+  border-radius: 25px;
+}
+
+#library-display {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 25px;
+  margin: 25px;
+}
+
+.book-card > button {
+  background-color: black;
+  color: white;
+  border-radius: 25px;
+  padding: 12.5px;
+  font-weight: bold;
+  border: white 2.5px dashed;
+  /*margin-right: 25px;*/
+  /*margin-bottom: 25px;*/
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 12.5px;
+}
+
+.book-card > button:hover {
+  background-color: white;
+  color: black;
+  border: white solid 2.5px;
+}

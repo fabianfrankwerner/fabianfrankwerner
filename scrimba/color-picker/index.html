@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Color-Picker</title>
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body>
+    <nav>
+      <form action="">
+        <input type="color" name="color-seed" id="color-seed" />
+        <select name="color-mode" id="color-mode">
+          <option value="monochrome">Monochrome</option>
+          <option value="monochrome-dark">Monochrome-dark</option>
+          <option value="monochrome-light">Monochrome-light</option>
+          <option value="analogic">Analogic</option>
+          <option value="complement">Complement</option>
+          <option value="analogic-complement">Analogic-complement</option>
+          <option value="triad">Triad</option>
+        </select>
+        <button id="get-color-scheme">Get color scheme</button>
+      </form>
+    </nav>
+
+    <main>
+      <div class="colors">
+        <div id="one" class="color"></div>
+        <div id="two" class="color"></div>
+        <div id="three" class="color"></div>
+        <div id="four" class="color"></div>
+        <div id="five" class="color"></div>
+      </div>
+    </main>
+
+    <footer>
+      <div class="colors">
+        <p id="p-one">#F55A5A</p>
+        <p id="p-two">#2B283A</p>
+        <p id="p-three">#FBF3AB</p>
+        <p id="p-four">#AAD1B6</p>
+        <p id="p-five">#A626D3</p>
+      </div>
+    </footer>
+
+    <script src="index.js"></script>
+  </body>
+</html>

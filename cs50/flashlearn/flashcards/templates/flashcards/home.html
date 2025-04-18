@@ -1,0 +1,25 @@
+{% extends "flashcards/base.html" %}
+{% block content %}
+<h2>Your Decks</h2>
+<p class="mb-4"><strong>🔥 Streak:</strong> {{ streak }} day{{ streak|pluralize }}</p>
+
+{% for stat in deck_stats %}
+<div class="card mb-3 p-3">
+    <h4>
+        <a href="{% url 'study' stat.deck.id %}">{{ stat.deck.title }}</a>
+        <a href="{% url 'delete_deck' stat.deck.id %}" class="btn btn-sm btn-outline-danger float-end">Delete</a>
+    </h4>
+    <p>
+        🗓 Due Today: {{ stat.due_today }} |
+        ⏳ Due Soon: {{ stat.due_soon }} |
+        ✅ Mastered: {{ stat.mastered }}
+    </p>
+    <div class="progress">
+        <div class="progress-bar bg-success" role="progressbar" style="width: {{ stat.progress }}%;" aria-valuenow="{{ stat.progress }}" aria-valuemin="0" aria-valuemax="100">{{ stat.progress }}%</div>
+    </div>
+</div>
+{% endfor %}
+
+<a class="btn btn-success mt-3" href="{% url 'create_deck' %}">+ New Deck</a>
+<a class="btn btn-primary mt-3" href="{% url 'create_flashcard' %}">+ New Card</a>
+{% endblock %}

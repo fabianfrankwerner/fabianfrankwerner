@@ -1,0 +1,402 @@
+:root {
+  --color-dark: #0f0f0f;
+  --color-secondary-dark: #aaaaaa;
+  --background-dark: #0f0f0f;
+  --color-light: #f1f1f1;
+  --background-light: #ffffff;
+  --color-secondary-light: #606060;
+  --border-radius: 25px;
+}
+
+body,
+html {
+  font-family: "Roboto", sans-serif;
+  transition: background-color 0.5s, color 0.5s;
+  margin: 0px;
+  min-height: 100vh;
+
+  display: grid;
+  place-items: center;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+figure,
+blockquote,
+dl,
+dd {
+  margin: 0;
+}
+
+ul[role="list"],
+ol[role="list"] {
+  list-style: none;
+}
+
+html:focus-within {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  text-rendering: optimizeSpeed;
+  line-height: 1.5;
+}
+
+a:not([class]) {
+  text-decoration-skip-ink: auto;
+}
+
+img,
+picture {
+  max-width: 100%;
+  display: block;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+body.light-mode {
+  background-color: var(--background-light);
+  color: var(--color-dark);
+}
+
+p.light-mode {
+  color: var(--color-secondary-light);
+}
+
+.title-preview-home.light-mode {
+  color: var(--color-dark);
+}
+
+.title-preview-home.dark-mode {
+  color: var(--color-light);
+}
+
+body.dark-mode {
+  background-color: var(--background-dark);
+  color: var(--color-light);
+}
+
+p.dark-mode {
+  color: var(--color-secondary-dark);
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--color-secondary-dark);
+  transition: 0.5s;
+  border-radius: var(--border-radius);
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: var(--color-light);
+  transition: 0.5s;
+  border-radius: var(--border-radius);
+}
+
+input:checked + .slider {
+  background-color: var(--color-secondary-light);
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+.navbar.dark-mode {
+  display: flex;
+  align-items: center;
+  padding: 25px;
+  color: var(--color-light);
+  background-color: var(--background-dark);
+}
+
+.navbar.dark-mode {
+  display: flex;
+  align-items: center;
+  padding: 25px;
+  color: var(--color-dark);
+  background-color: var(--background-light);
+}
+
+.custom-file-upload {
+  padding: 10px 20px;
+  cursor: pointer;
+  border: 2.5px solid var(--color-secondary-dark);
+  color: var(--color-light);
+  border-radius: var(--border-radius);
+  transition: background-color 0.5s, border-color 0.5s, color 0.5s;
+}
+
+.custom-file-upload:hover {
+  background-color: var(--background-light);
+  color: var(--color-dark);
+  border-color: var(--background-light);
+}
+
+.custom-file-upload input[type="file"] {
+  display: none;
+}
+
+.custom-text-input {
+  padding: 10px 20px;
+  border: 2.5px solid var(--color-secondary-dark);
+  background-color: transparent;
+  color: var(--color-light);
+  border-radius: var(--border-radius);
+  margin: 0 25px;
+  flex-grow: 1;
+  flex-shrink: 1;
+  min-width: 100px;
+  transition: background-color 0.5s, border-color 0.5s, color 0.5s;
+  outline: none;
+}
+
+.custom-text-input::placeholder {
+  color: var(--color-light);
+}
+
+.custom-text-input:hover::placeholder {
+  color: var(--color-dark);
+}
+
+.custom-text-input:focus::placeholder {
+  color: var(--color-dark);
+}
+
+.custom-text-input:hover {
+  background-color: var(--background-light);
+  color: var(--color-dark);
+  border-color: var(--background-light);
+}
+
+.custom-text-input:focus {
+  background-color: var(--background-light);
+  color: var(--color-dark);
+  border-color: var(--background-light);
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+  min-width: 60px;
+  min-height: 34px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--color-secondary-dark);
+  transition: 0.5s;
+  border-radius: var(--border-radius);
+  width: 100%;
+  height: 100%;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: var(--color-light);
+  transition: 0.5s;
+  border-radius: var(--border-radius);
+}
+
+input:checked + .slider {
+  background-color: var(--color-secondary-light);
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+.content {
+  padding: 25px;
+}
+
+.hidden {
+  display: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit; /* Optional: Inherit the color from the parent element */
+}
+
+a:hover,
+a:focus,
+a:active {
+  text-decoration: none; /* Ensure no underline on hover, focus, or active states */
+}
+
+.profile-picture-preview-home {
+  width: 36px;
+  height: 36px;
+}
+
+.preview-home {
+  display: flex;
+}
+
+.preview-home-right {
+  margin-left: 12px;
+}
+
+.title-preview-home {
+  font-size: 1.25rem;
+  font-weight: 500;
+  margin-bottom: 2.5px;
+}
+
+.channel-preview-home,
+.data-preview-home {
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.data-preview-home {
+  margin-top: 1.25px;
+}
+
+.thumbnail-preview-home {
+  border-radius: var(--border-radius);
+  width: 435px;
+  height: auto;
+  aspect-ratio: 16 / 9;
+}
+
+.preview-home {
+  margin-top: 10px;
+}
+
+/* Add channel name hover */
+
+.content {
+  margin-top: -200px;
+}
+
+/* Light mode styles for custom-text-input */
+.light-mode .custom-text-input {
+  color: var(--color-dark);
+  border-color: var(--color-secondary-light);
+}
+
+.light-mode .custom-text-input::placeholder {
+  color: var(--color-dark);
+}
+
+.light-mode .custom-text-input:hover,
+.light-mode .custom-text-input:focus {
+  background-color: var(--background-dark);
+  color: var(--color-light);
+  border-color: var(--background-dark);
+}
+
+.light-mode .custom-text-input:hover::placeholder,
+.light-mode .custom-text-input:focus::placeholder {
+  color: var(--color-light);
+}
+
+/* Light mode styles for custom-file-upload */
+.light-mode .custom-file-upload {
+  color: var(--color-dark);
+  border-color: var(--color-secondary-light);
+}
+
+.light-mode .custom-file-upload:hover {
+  background-color: var(--background-dark);
+  color: var(--color-light);
+  border-color: var(--background-dark);
+}
+
+/* Ensure dark mode styles override light mode when necessary */
+.dark-mode .custom-text-input,
+.dark-mode .custom-file-upload {
+  color: var(--color-light);
+  border-color: var(--color-secondary-dark);
+}
+
+.dark-mode .custom-text-input::placeholder {
+  color: var(--color-light);
+}
+
+.dark-mode .custom-text-input:hover,
+.dark-mode .custom-text-input:focus,
+.dark-mode .custom-file-upload:hover {
+  background-color: var(--background-light);
+  color: var(--color-dark);
+  border-color: var(--background-light);
+}
+
+.dark-mode .custom-text-input:hover::placeholder,
+.dark-mode .custom-text-input:focus::placeholder {
+  color: var(--color-dark);
+}

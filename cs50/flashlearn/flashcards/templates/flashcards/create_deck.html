@@ -1,0 +1,10 @@
+{% extends "flashcards/base.html" %}
+{% load widget_tweaks %}
+{% block content %}
+<h2>Create Deck</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn btn-primary mt-2">Create</button>
+</form>
+{% endblock %}

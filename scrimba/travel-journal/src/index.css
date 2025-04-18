@@ -1,0 +1,147 @@
+:root {
+  --white: #ffffff;
+  --gray: #918e9b;
+  --red: #f55a5a;
+  --blue: #2b283a;
+  --border-radius: 5px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+img,
+body {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+}
+
+body {
+  min-height: 100vh;
+  font-family: Inter, sans-serif;
+  background-color: #e5e5e5;
+  color: var(--blue);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#root {
+  width: 550px;
+  background-color: var(--white);
+  border-radius: var(--border-radius);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Header */
+
+header {
+  background-color: var(--red);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  height: 55px;
+  border-radius: var(--border-radius) var(--border-radius) 0 0;
+}
+
+.header--img {
+  height: 24px;
+  width: 24px;
+}
+
+.header--h1 {
+  color: var(--white);
+  font-weight: 500;
+  font-size: 0.90375rem;
+  letter-spacing: -0.075rem;
+}
+
+/* Card */
+
+.card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.card--left-img {
+  border-radius: var(--border-radius);
+  width: 125px;
+  height: 168px;
+  object-fit: cover;
+  display: block;
+}
+
+.card--right--top-img {
+  width: 7px;
+  height: 9.55px;
+}
+
+.card--right--top-h3 {
+  font-weight: 400;
+  font-size: 0.64rem;
+  letter-spacing: 0.17rem;
+  text-transform: uppercase;
+}
+
+.card--right--top {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 10px;
+}
+
+.card--right--top-p {
+  font-weight: 400;
+  font-size: 0.64rem;
+  color: var(--gray);
+}
+
+.card--right-h2 {
+  font-weight: 700;
+  font-size: 1.5625rem;
+}
+
+.card--right-h4 {
+  font-weight: 700;
+  font-size: 0.64rem;
+}
+
+.card--right-p {
+  font-size: 0.64rem;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.card--right {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+  gap: 10px;
+}
+
+hr {
+  width: 100%;
+  margin-top: 18px;
+  margin-bottom: 18px;
+  border: #f5f5f5 1px solid;
+}
+
+/* Main */
+
+main {
+  padding: 40px;
+}

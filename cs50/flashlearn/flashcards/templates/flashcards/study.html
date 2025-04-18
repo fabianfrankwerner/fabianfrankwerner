@@ -1,0 +1,52 @@
+{% extends 'flashcards/base.html' %}
+{% block content %}
+<h2><a href="{% url 'home' %}" class="text-decoration-none">{{ deck.title }}</a></h2>
+<div id="card-box" class="card p-4 mt-3">
+    <h3 id="card-front">{{ flashcards.0.front }}</h3>
+    <p id="card-back" class="d-none">{{ flashcards.0.back }}</p>
+</div>
+
+<div class="btn-group mt-3">
+    <button class="btn btn-secondary" id="btn-show" onclick="showAnswer()">Show Answer</button>
+    <button class="btn btn-success d-none" id="btn-correct" onclick="markCorrect()">Correct</button>
+    <button class="btn btn-danger d-none" id="btn-incorrect" onclick="markIncorrect()">Incorrect</button>
+</div>
+
+<script>
+    let index = 0;
+    let cards = {{ flashcards|safe }};
+
+    function showAnswer() {
+        document.getElementById("card-back").classList.remove("d-none");
+
+        document.getElementById("btn-correct").classList.remove("d-none");
+        document.getElementById("btn-incorrect").classList.remove("d-none");
+        document.getElementById("btn-show").classList.add("d-none"); // Hide the "Show Answer" button
+    }
+
+    function markCorrect() {
+        fetch(`/review/${cards[index].id}/correct/`).then(() => nextCard());
+    }
+
+    function markIncorrect() {
+        fetch(`/review/${cards[index].id}/incorrect/`).then(() => nextCard());
+    }
+
+    function nextCard() {
+        index++;
+        if (index >= cards.length) {
+            document.getElementById("card-box").innerHTML = "<h3>All done!</h3>";
+            document.querySelector('.btn-group').innerHTML = '';
+            return;
+        }
+
+        document.getElementById("card-front").innerText = cards[index].front;
+        document.getElementById("card-back").innerText = cards[index].back;
+        document.getElementById("card-back").classList.add("d-none");
+
+        document.getElementById("btn-correct").classList.add("d-none");
+        document.getElementById("btn-incorrect").classList.add("d-none");
+        document.getElementById("btn-show").classList.remove("d-none"); // Reset show button
+    }
+</script>
+{% endblock %}

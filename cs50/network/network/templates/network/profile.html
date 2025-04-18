@@ -1,0 +1,248 @@
+{% extends "network/layout.html" %}
+
+{% block body %}
+    <div class="profile-header mb-4">
+        <h2>{{ profile_user.username }}</h2>
+        <div class="profile-stats">
+            <p><strong>Followers:</strong> <span id="followers-count">{{ followers_count }}</span></p>
+            <p><strong>Following:</strong> <span id="following-count">{{ following_count }}</span></p>
+        </div>
+
+        {% if user.is_authenticated and user != profile_user %}
+            <button id="follow-button" class="btn {% if is_following %}btn-secondary{% else %}btn-primary{% endif %}">
+                {% if is_following %}Unfollow{% else %}Follow{% endif %}
+            </button>
+        {% endif %}
+    </div>
+
+    <h3>Posts</h3>
+    <div id="posts-view"></div>
+    <div id="pagination-controls" class="pagination-controls">
+        <button id="prev-page" class="btn btn-outline-primary">Previous</button>
+        <span id="page-number" class="mx-3">Page 1</span>
+        <button id="next-page" class="btn btn-outline-primary">Next</button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load profile posts when the page loads
+            loadProfilePosts(1);
+
+            // Follow/Unfollow button
+            const followButton = document.querySelector('#follow-button');
+            if (followButton) {
+                followButton.onclick = toggleFollow;
+            }
+
+            // Pagination controls
+            document.querySelector("#next-page").addEventListener("click", () => {
+                const currentPage = parseInt(document.querySelector("#page-number").innerText.split(' ')[1]);
+                loadProfilePosts(currentPage + 1);
+            });
+
+            document.querySelector("#prev-page").addEventListener("click", () => {
+                const currentPage = parseInt(document.querySelector("#page-number").innerText.split(' ')[1]);
+                if (currentPage > 1) {
+                    loadProfilePosts(currentPage - 1);
+                }
+            });
+        });
+
+        function toggleFollow() {
+            const username = '{{ profile_user.username }}';
+
+            fetch(`/follow/${username}`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': getCookie('csrftoken'),
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({})
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Update the follow button text and style
+                const followButton = document.querySelector('#follow-button');
+                if (data.is_following) {
+                    followButton.innerText = 'Unfollow';
+                    followButton.classList.remove('btn-primary');
+                    followButton.classList.add('btn-secondary');
+                } else {
+                    followButton.innerText = 'Follow';
+                    followButton.classList.remove('btn-secondary');
+                    followButton.classList.add('btn-primary');
+                }
+
+                // Update the followers count
+                document.querySelector('#followers-count').innerText = data.followers_count;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        // Function to load profile posts
+        function loadProfilePosts(page) {
+            const username = '{{ profile_user.username }}';
+            fetch(`/profile_posts/${username}?page=${page}`)
+            .then(response => response.json())
+            .then(data => {
+                displayPosts(data);
+                updatePagination(data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        // Function to display posts (same as in index.html)
+        function displayPosts(data) {
+            const postsView = document.querySelector('#posts-view');
+            postsView.innerHTML = "";
+
+            data.posts.forEach(post => {
+                const postDiv = document.createElement('div');
+                postDiv.className = 'post card mb-3';
+                postDiv.dataset.postId = post.id;
+
+                let postContent = `
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <a href="/profile/${post.user}" class="username-link">${post.user}</a>
+                        </h5>
+                        <div class="post-content">${post.content}</div>
+                        <div class="post-actions mt-3">
+                            <small class="text-muted">${post.timestamp}</small>
+                            <button class="btn btn-sm ${post.liked_by_user ? 'btn-danger' : 'btn-outline-danger'} like-button" data-post-id="${post.id}">
+                                ❤ <span class="like-count">${post.likes}</span>
+                            </button>
+                `;
+
+                // Add edit button if it's the user's post
+                if (post.is_users_post) {
+                    postContent += `
+                            <button class="btn btn-sm btn-outline-secondary edit-button ms-2" data-post-id="${post.id}">Edit</button>
+                    `;
+                }
+
+                postContent += `
+                        </div>
+                    </div>
+                `;
+
+                postDiv.innerHTML = postContent;
+                postsView.appendChild(postDiv);
+            });
+
+            // Add event listeners for like buttons
+            document.querySelectorAll('.like-button').forEach(button => {
+                button.addEventListener('click', function() {
+                    likePost(this.dataset.postId);
+                });
+            });
+
+            // Add event listeners for edit buttons
+            document.querySelectorAll('.edit-button').forEach(button => {
+                button.addEventListener('click', function() {
+                    editPost(this.dataset.postId);
+                });
+            });
+        }
+
+        // Function to update pagination controls
+        function updatePagination(data) {
+            document.querySelector("#page-number").innerText = `Page ${data.current_page}`;
+            document.querySelector("#prev-page").disabled = !data.has_previous;
+            document.querySelector("#next-page").disabled = !data.has_next;
+        }
+
+        // Function to like/unlike a post
+        function likePost(postId) {
+            fetch(`/like_post/${postId}`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': getCookie('csrftoken')
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                const likeButton = document.querySelector(`.like-button[data-post-id="${postId}"]`);
+                const likeCount = likeButton.querySelector('.like-count');
+
+                likeCount.innerText = data.count;
+                if (data.liked) {
+                    likeButton.classList.remove('btn-outline-danger');
+                    likeButton.classList.add('btn-danger');
+                } else {
+                    likeButton.classList.remove('btn-danger');
+                    likeButton.classList.add('btn-outline-danger');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        // Function to edit a post
+        function editPost(postId) {
+            const postDiv = document.querySelector(`.post[data-post-id="${postId}"]`);
+            const contentDiv = postDiv.querySelector('.post-content');
+            const currentContent = contentDiv.innerText;
+
+            // Replace content with textarea
+            contentDiv.innerHTML = `
+                <textarea class="form-control edit-textarea">${currentContent}</textarea>
+                <div class="mt-2">
+                    <button class="btn btn-sm btn-primary save-edit-button">Save</button>
+                    <button class="btn btn-sm btn-outline-secondary cancel-edit-button">Cancel</button>
+                </div>
+            `;
+
+            // Add event listeners for save and cancel buttons
+            contentDiv.querySelector('.save-edit-button').addEventListener('click', function() {
+                saveEditedPost(postId, contentDiv.querySelector('.edit-textarea').value);
+            });
+
+            contentDiv.querySelector('.cancel-edit-button').addEventListener('click', function() {
+                contentDiv.innerHTML = currentContent;
+            });
+        }
+
+        // Function to save an edited post
+        function saveEditedPost(postId, newContent) {
+            fetch(`/edit_post/${postId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken')
+                },
+                body: JSON.stringify({ content: newContent })
+            })
+            .then(response => response.json())
+            .then(data => {
+                const postDiv = document.querySelector(`.post[data-post-id="${postId}"]`);
+                const contentDiv = postDiv.querySelector('.post-content');
+                contentDiv.innerHTML = data.content;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        // Function to get CSRF token from cookies
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+</script>
+{% endblock %}

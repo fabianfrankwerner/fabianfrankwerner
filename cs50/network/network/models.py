@@ -1,0 +1,30 @@
+from django.contrib.auth.models import AbstractUser
+from django.db import models
+
+
+class User(AbstractUser):
+    pass
+
+
+class Post(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="posts")
+    content = models.TextField(max_length=280)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    likes = models.ManyToManyField(User, related_name="liked_posts", blank=True)
+
+    def __str__(self):
+        return f"{self.user.username} at {self.timestamp}: {self.content[:30]}..."
+
+    def like_count(self):
+        return self.likes.count()
+
+
+class Follow(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="following")  # who is doing the following
+    following = models.ForeignKey(User, on_delete=models.CASCADE, related_name="followers")  # who is being followed
+
+    class Meta:
+        unique_together = ('user', 'following')
+
+    def __str__(self):
+        return f"{self.user} follows {self.following}"

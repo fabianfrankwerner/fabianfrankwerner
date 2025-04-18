@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="index.css" />
+    <title>Order</title>
+  </head>
+  <body>
+    <header>
+      <div class="header">
+        <h1>Jimmy’s Diner</h1>
+        <p>The best burgers and pizzas in town.</p>
+      </div>
+    </header>
+    <main>
+      <div class="items" id="items"></div>
+    </main>
+    <section class="checkout" id="checkout"></section>
+    <div id="payment-modal" class="payment-modal">
+      <h2 class="payment-modal-title">Enter card details</h2>
+      <form class="payment-modal-form">
+        <input id="name" type="text" placeholder="Enter your name" required />
+        <input
+          id="ccn"
+          type="tel"
+          placeholder="Enter card number"
+          inputmode="numeric"
+          maxlength="18"
+          required
+        />
+        <input
+          id="cvv"
+          type="tel"
+          placeholder="Enter CVV"
+          inputmode="numeric"
+          maxlength="3"
+          required
+        />
+        <button id="payment-modal-button" class="payment-modal-button">
+          Pay
+        </button>
+      </form>
+    </div>
+
+    <section id="checkout-complete-state" class="checkout-complete-state">
+      <div class="checkout-complete">
+        <p class="checkout-complete-text"></p>
+      </div>
+    </section>
+    <script src="index.js" type="module"></script>
+  </body>
+</html>

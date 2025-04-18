@@ -1,0 +1,326 @@
+/*
+ 1. Use a more-intuitive box-sizing model.
+*/
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/*
+   2. Remove default margin
+ */
+* {
+  margin: 0;
+}
+
+/*
+   3-4. Line height, text rendering
+ */
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/*
+   5. Improve media defaults
+ */
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+/*
+   6. Remove built-in form typography styles
+ */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/*
+   7. Avoid text overflows
+ */
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+/*
+   8. Create a root stacking context
+ */
+#root,
+#__next {
+  isolation: isolate;
+}
+
+/* Basic link styles */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:hover {
+  cursor: pointer;
+  color: inherit;
+  text-decoration: none;
+}
+
+:root {
+  /* Colors */
+  --white: #ffffff;
+  --light-gray: #e5e7eb;
+  --blue-gray: #9ca3af;
+  --silver: #a5a5a5;
+  --cool-gray: #787878;
+  --amber: #fec654;
+  --steel: #4b4b4b;
+  --slate: #2e2e2f;
+  --cement: #2c2c2c;
+  --carbon: #1c1c1c;
+  --dark: #121212;
+  --charcoal: #0e0e0e;
+  /* Styles */
+  --border-radius: 5px;
+}
+
+body {
+  min-width: 550px;
+  margin: 0 auto;
+  color: var(--white);
+  background-color: var(--carbon);
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+}
+
+header {
+  height: 208px;
+  background-image: url("./assets/images/hero.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: -20px;
+}
+
+.header-h1 {
+  font-weight: 800;
+  font-size: 2.625rem;
+  margin-left: 44px;
+}
+
+.poster-wrapper {
+  width: 150px;
+  height: 225px; /* 3:2 aspect ratio for movie posters */
+  overflow: hidden;
+  border-radius: var(--border-radius);
+  background-color: var(--slate);
+}
+
+.header-p {
+  font-weight: 700;
+  font-size: 0.875rem;
+  margin-right: 44px;
+}
+
+.search {
+  position: relative;
+  top: 42px;
+  margin: 0 44px 42px;
+  display: flex;
+  padding: 2px;
+  border: 1px solid var(--slate);
+  border-radius: var(--border-radius);
+  background-color: var(--slate);
+  z-index: 1;
+}
+
+.search-bar {
+  border: none;
+  background: transparent;
+  margin: 0;
+  padding: 7px 8px;
+  font-size: 14px;
+  color: var(--silver);
+  border: 1px solid transparent;
+  border-radius: inherit;
+  width: 100%;
+}
+
+.search-bar::placeholder {
+  color: var(--silver);
+}
+
+.search-button {
+  text-indent: -999px;
+  overflow: hidden;
+  width: 40px;
+  padding: 0;
+  margin: 0;
+  border: 1px solid transparent;
+  border-radius: inherit;
+  background: transparent
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' class='bi bi-search' viewBox='0 0 16 16'%3E%3Cpath fill='%239CA3AF' d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z'%3E%3C/path%3E%3C/svg%3E")
+    no-repeat center;
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+.search-button:hover {
+  opacity: 1;
+}
+
+.search-bar:focus,
+.search-button:focus {
+  box-shadow: 0 0 3px 0 var(--amber);
+  border-color: var(--amber);
+  outline: none;
+}
+
+main {
+  background-color: var(--dark);
+  padding: 0 0 2rem 0;
+  margin-top: -42px;
+  min-height: 571px;
+}
+
+.main-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  min-height: 450px;
+  padding-top: 42px;
+}
+
+.main-img {
+  height: 61.25px;
+  width: 70px;
+}
+
+.main-h2 {
+  color: var(--slate);
+  font-weight: 700;
+  font-size: 1.125rem;
+}
+
+.movies {
+  display: none;
+  padding: 0 44px;
+}
+
+.movies-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  max-width: 462px;
+  margin: 0 auto;
+}
+
+.left {
+  flex-shrink: 0;
+}
+
+.movie {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 21px;
+  padding: 1.5rem 0;
+}
+
+.right {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 10px;
+  flex-grow: 1;
+}
+
+.movie-poster {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.divider {
+  border: none;
+  border-bottom: solid 1.5px var(--cement);
+  margin: 0;
+  width: 100%;
+}
+
+.movie-title {
+  font-weight: 500;
+  font-size: 1.125rem;
+}
+
+.movie-star,
+.movie-plus,
+.movie-minus {
+  width: 15px;
+  height: 15px;
+}
+
+.movie-rating,
+.movie-runtime,
+.movie-genre,
+.movie-watchlist,
+.movie-description {
+  font-weight: 400;
+  font-size: 0.75rem;
+}
+
+.movie-watchlist {
+  border: none;
+  color: inherit;
+  padding: 0;
+  background-color: var(--dark);
+}
+
+.movie-description {
+  color: var(--silver);
+}
+
+.one {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 5px;
+}
+
+.two {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 20px;
+}
+
+.movie-watchlist-wrapper {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 2.5px;
+}
+
+.three {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
