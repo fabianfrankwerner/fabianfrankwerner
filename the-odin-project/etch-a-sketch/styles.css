@@ -1,0 +1,25 @@
+body {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.height {
+  display: flex;
+}
+
+.grid {
+  display: flex;
+  flex-direction: column;
+}
+
+.square {
+  border: solid 1px black;
+  width: 25px;
+  height: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 900;
+}
