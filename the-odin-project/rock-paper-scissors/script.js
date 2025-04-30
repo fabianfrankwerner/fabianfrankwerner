@@ -1,24 +1,28 @@
-/*
+const rock = document.querySelector("#rock");
+const paper = document.querySelector("#paper");
+const scissors = document.querySelector("#scissors");
 
-TODO (Rock beats scissors, scissors beat paper, and paper beats rock.)
+const game = document.querySelector("#game");
+const elements = game.querySelectorAll(
+  "input, button, select, textarea, fieldset"
+);
 
-[x] getComputerChoice
-[x] getHumanChoice
-[x] playRound
-[x] playGame
+const score = document.querySelector("#score");
+const result = document.querySelector("#result");
+const results = document.querySelector("#results");
 
-*/
+rock.addEventListener("click", () => playRound("rock"));
+paper.addEventListener("click", () => playRound("paper"));
+scissors.addEventListener("click", () => playRound("scissors"));
 
 const hands = ["rock", "paper", "scissors"];
 
 let computerScore = 0;
 let humanScore = 0;
 
-function playRound() {
+function playRound(humanChoice) {
   let computerChoice = hands[Math.floor(Math.random() * 3)];
-  let humanChoice = prompt("Pick your hand.").toLowerCase();
-
-  console.log(`Computer: ${computerChoice} | Human: ${humanChoice}`);
+  results.textContent = `Computer: ${computerChoice} | Human: ${humanChoice}`;
 
   if (computerChoice === "rock" && humanChoice === "paper") {
     humanScore++;
@@ -33,25 +37,23 @@ function playRound() {
   } else if (computerChoice === "scissors" && humanChoice === "paper") {
     computerScore++;
   } else {
-    console.log("Draw");
+    results.textContent = "Draw";
   }
 
-  console.log(`Computer: ${computerScore} | Human: ${humanScore}`);
-}
+  score.textContent = `Computer: ${computerScore} | Human: ${humanScore}`;
 
-function playGame() {
-  while (computerScore !== 5 || humanScore !== 5) {
-    if (computerScore === 5 || humanScore === 5) {
-      if (computerScore === 5) {
-        console.log("Computer wins!");
-        break;
-      } else {
-        console.log("Human wins!");
-        break;
-      }
+  if (computerScore === 5 || humanScore === 5) {
+    if (computerScore === 5) {
+      result.textContent = "Computer wins!";
+    } else {
+      result.textContent = "Human wins!";
     }
-    playRound();
+    elements.forEach((element) => {
+      element.disabled = true;
+    });
+    computerScore = 0;
+    humanScore = 0;
+    score.textContent = "";
+    results.textContent = "";
   }
 }
-
-playGame();
