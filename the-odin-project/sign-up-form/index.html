@@ -6,5 +6,109 @@
     <title>Sign-Up Form</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
-  <body></body>
+  <body>
+    <div class="container">
+      <div class="left">
+        <div class="left-logo">
+          <img class="logo-image" src="./assets/logo.png" alt="The Odin Project" />
+          <p class="logo-text">ODIN</p>
+        </div>
+        <p class="p-left">
+          Photo by
+          <a href="https://unsplash.com/@haliewestphoto">Halie West</a> on
+          <a
+            href="https://unsplash.com/photos/green-leaf-plant-in-close-up-photography-25xggax4bSA"
+            >Unsplash</a
+          >.
+        </p>
+      </div>
+      <div class="right">
+        <h1>
+          This is not a real online service! You know you need something like
+          this in your life to help you realize your deepest dreams. Sign up
+          <em>now</em> to get started.
+        </h1>
+        <h2>You <em>know</em> you want to.</h2>
+        <div class="form">
+          <form action="#" method="post">
+            <h3>Let's do this!</h3>
+            <div class="row">
+              <div class="input">
+                <label for="first_name">First Name *</label>
+                <input
+                  type="text"
+                  name="first_name"
+                  id="first_name"
+                  placeholder="Michael"
+                  minlength="1"
+                  maxlength="20"
+                  required
+                />
+              </div>
+              <div class="input">
+                <label for="last_name">Last Name *</label>
+                <input
+                  type="text"
+                  name="last_name"
+                  id="last_name"
+                  placeholder="Jackson"
+                  minlength="1"
+                  maxlength="20"
+                  required
+                />
+              </div>
+            </div>
+            <div class="row">
+              <div class="input">
+                <label for="email_address">Email Address *</label>
+                <input
+                  type="email"
+                  name="email_address"
+                  id="email_address"
+                  placeholder="michael@jackson.com"
+                  required
+                />
+              </div>
+              <div class="input">
+                <label for="phone_number">Phone Number *</label>
+                <input
+                  type="number"
+                  name="phone_number"
+                  id="phone_number"
+                  placeholder="49 174 534 3485"
+                  minlength="15"
+                  maxlength="15"
+                  required
+                />
+              </div>
+            </div>
+            <div class="row">
+              <div class="input">
+                <label for="password_enter">Password *</label>
+                <input
+                  type="password"
+                  name="password_enter"
+                  id="password_enter"
+                  minlength="8"
+                  required
+                />
+              </div>
+              <div class="input">
+                <label for="password_confirm">Confirm Password *</label>
+                <input
+                  type="password"
+                  name="password_confirm"
+                  id="password_confirm"
+                  minlength="8"
+                  required
+                />
+              </div>
+            </div>
+            <button type="submit">Create Account</button>
+          </form>
+        </div>
+        <p class="p-right">Already have an account? <span>Log in</span></p>
+      </div>
+    </div>
+  </body>
 </html>

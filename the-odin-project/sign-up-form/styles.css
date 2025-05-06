@@ -1,0 +1,172 @@
+/* The area behind the "ODIN" logo is a div that has a dark,
+   but semi-transparent background color. This enhances the
+   readability of the text against the busy background image. */
+
+@font-face {
+  font-family: "Norse-Bold";
+  src: url("./assets/norse-bold.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@import url("https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+:root {
+  --button-background-color: #596d48;
+  --input-border-color: #e5e7eb;
+  --input-border-color-invalid: #ff0000;
+  --input-border-color-focus: #0000ff;
+}
+
+.container {
+  display: flex;
+}
+
+.left {
+  background-image: url("./assets/plant.jpg");
+  height: 100vh;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: calc(100vw - 750px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.p-left {
+  align-self: center;
+  margin-bottom: 10px;
+}
+
+.right {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 50px;
+  gap: 25px;
+  background-color: var(--input-border-color);
+}
+
+h1,
+h2,
+h3 {
+  font-size: 20px;
+}
+
+button {
+  background-color: var(--button-background-color);
+  color: var(--input-border-color);
+  font-weight: 500;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 30px;
+}
+
+span {
+  color: var(--button-background-color);
+  font-weight: 700;
+}
+
+.left-logo {
+  display: flex;
+  background-color: rgba(0, 0, 0, 0.5);
+  align-items: center;
+  justify-content: center;
+  margin-top: 250px;
+  padding: 25px 0;
+}
+
+.logo-image {
+  height: 150px;
+}
+
+.logo-text {
+  font-family: "Norse-Bold", sans-serif;
+  color: var(--input-border-color);
+  font-size: 100px;
+}
+
+.p-left,
+a {
+  color: var(--input-border-color);
+}
+
+.form {
+  background-color: white;
+  width: 100%;
+  padding: 20px 50px;
+margin: 0 -50px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: start;
+}
+
+label {
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 2px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 50px;
+}
+
+.input {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+input {
+  border: 1px solid var(--input-border-color);
+  padding: 5px;
+  border-radius: 5px;
+}
+
+input:invalid {
+  border: solid 2px var(--input-border-color-invalid);
+}
+
+input:focus {
+  border: solid 2px var(--input-border-color-focus);
+}
