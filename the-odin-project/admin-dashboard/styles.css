@@ -230,3 +230,9 @@ body {
   flex-direction: column;
   gap: 5px;
 }
+
+.right-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
