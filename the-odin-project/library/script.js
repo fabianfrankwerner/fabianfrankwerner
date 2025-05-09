@@ -7,19 +7,18 @@ const confirmBtn = favDialog.querySelector("#confirmBtn");
 
 const myLibrary = [];
 
-function Book(id, title, pages, author, read) {
-  if (!new.target) {
-    throw Error("You must use the 'new' operator to call the constructor");
+class Book {
+  constructor(id, title, pages, author, read) {
+    this.id = id;
+    this.title = title;
+    this.pages = pages;
+    this.author = author;
+    this.read = read;
   }
 
-  this.id = id;
-  this.title = title;
-  this.pages = pages;
-  this.author = author;
-  this.read = read;
-  this.info = function () {
+  info() {
     return `${this.title} from ${this.author}`;
-  };
+  }
 }
 
 function addBookToLibrary(title, pages, author, read = false) {
