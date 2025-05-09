@@ -117,3 +117,47 @@ const GameController = (function () {
     resetGame,
   };
 })();
+
+const Display = (function () {
+  const one = document.querySelector(".one");
+  const two = document.querySelector(".two");
+  const three = document.querySelector(".three");
+  const four = document.querySelector(".four");
+  const five = document.querySelector(".five");
+  const six = document.querySelector(".six");
+  const seven = document.querySelector(".seven");
+  const eight = document.querySelector(".eight");
+  const nine = document.querySelector(".nine");
+
+  const cells = [one, two, three, four, five, six, seven, eight, nine];
+
+  function updateDisplay() {
+    const board = Gameboard.getBoard();
+    cells.forEach((cell, index) => {
+      cell.textContent = board[index] || "";
+    });
+  }
+
+  function handleCellClick(e) {
+    const index = cells.indexOf(e.target);
+    if (index !== -1) {
+      GameController.playTurn(index);
+      updateDisplay();
+    }
+  }
+
+  function initializeDisplay() {
+    cells.forEach((cell) => {
+      cell.addEventListener("click", handleCellClick);
+    });
+    updateDisplay();
+  }
+
+  return {
+    initializeDisplay,
+    updateDisplay,
+  };
+})();
+
+
+Display.initializeDisplay();
