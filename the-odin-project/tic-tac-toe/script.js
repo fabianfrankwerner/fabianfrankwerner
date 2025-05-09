@@ -32,9 +32,9 @@ function createPlayer(name, mark) {
 }
 
 const GameController = (function () {
-  const playerOne = createPlayer("Player One", "X");
-  const playerTwo = createPlayer("Player Two", "O");
-  let currentPlayer = playerOne;
+  let playerOne;
+  let playerTwo;
+  let currentPlayer;
   let gameOver = false;
 
   const winConditions = [
@@ -47,6 +47,14 @@ const GameController = (function () {
     [0, 4, 8], // diagonal top-left to bottom-right
     [2, 4, 6], // diagonal top-right to bottom-left
   ];
+
+  function initializePlayers(player1Name, player2Name) {
+    playerOne = createPlayer(player1Name || "Player One", "X");
+    playerTwo = createPlayer(player2Name || "Player Two", "O");
+    currentPlayer = playerOne;
+    gameOver = false;
+    Gameboard.resetBoard();
+  }
 
   function checkWin() {
     const board = Gameboard.getBoard();
@@ -69,35 +77,26 @@ const GameController = (function () {
 
   function playTurn(index) {
     if (gameOver) {
-      console.log("Game is over. Please start a new game.");
       return;
     }
 
     try {
       Gameboard.setMark(index, currentPlayer.mark);
-      console.log(
-        `${currentPlayer.name} placed ${currentPlayer.mark} at position ${index}`
-      );
-      console.log(Gameboard.getBoard());
-
       const winner = checkWin();
       if (winner) {
         gameOver = true;
-        console.log(`Game Over! ${currentPlayer.name} wins!`);
-        return;
+        return { type: "win", player: currentPlayer };
       }
 
       if (checkDraw()) {
         gameOver = true;
-        console.log("Game Over! It's a draw!");
-        return;
+        return { type: "draw" };
       }
 
       switchTurn();
+      return { type: "continue", player: currentPlayer };
     } catch (error) {
-      console.error(
-        `${currentPlayer.name} placed ${currentPlayer.mark} at position ${index}: ${error.message}`
-      );
+      return { type: "error", message: error.message };
     }
   }
 
@@ -105,16 +104,10 @@ const GameController = (function () {
     return currentPlayer;
   }
 
-  function resetGame() {
-    Gameboard.resetBoard();
-    currentPlayer = playerOne;
-    gameOver = false;
-  }
-
   return {
+    initializePlayers,
     playTurn,
     getCurrentPlayer,
-    resetGame,
   };
 })();
 
@@ -130,6 +123,11 @@ const Display = (function () {
   const nine = document.querySelector(".nine");
 
   const cells = [one, two, three, four, five, six, seven, eight, nine];
+  const player1Input = document.getElementById("player1");
+  const player2Input = document.getElementById("player2");
+  const startButton = document.getElementById("startGame");
+  const restartButton = document.getElementById("restartGame");
+  const statusMessage = document.getElementById("statusMessage");
 
   function updateDisplay() {
     const board = Gameboard.getBoard();
@@ -138,19 +136,65 @@ const Display = (function () {
     });
   }
 
+  function updateStatus(message) {
+    statusMessage.textContent = message;
+  }
+
   function handleCellClick(e) {
     const index = cells.indexOf(e.target);
     if (index !== -1) {
-      GameController.playTurn(index);
-      updateDisplay();
+      const result = GameController.playTurn(index);
+
+      switch (result.type) {
+        case "win":
+          updateDisplay();
+          updateStatus(`${result.player.name} wins!`);
+          restartButton.style.display = "block";
+          break;
+        case "draw":
+          updateDisplay();
+          updateStatus("It's a draw!");
+          restartButton.style.display = "block";
+          break;
+        case "continue":
+          updateDisplay();
+          updateStatus(`${result.player.name}'s turn`);
+          break;
+        case "error":
+          updateStatus(result.message);
+          break;
+      }
     }
   }
 
-  function initializeDisplay() {
+  function startNewGame() {
+    const player1Name = player1Input.value.trim();
+    const player2Name = player2Input.value.trim();
+
+    GameController.initializePlayers(player1Name, player2Name);
+    updateDisplay();
+    updateStatus(`${GameController.getCurrentPlayer().name}'s turn`);
+    restartButton.style.display = "none";
+
+    // Enable cell clicks
     cells.forEach((cell) => {
       cell.addEventListener("click", handleCellClick);
     });
+  }
+
+  function initializeDisplay() {
+    // Initial setup
     updateDisplay();
+    updateStatus("Enter player names and start the game!");
+
+    // Event listeners
+    startButton.addEventListener("click", startNewGame);
+    restartButton.addEventListener("click", startNewGame);
+
+    // Disable cell clicks until game starts
+    cells.forEach((cell) => {
+      cell.removeEventListener("click", handleCellClick);
+    });
   }
 
   return {
@@ -158,6 +202,5 @@ const Display = (function () {
     updateDisplay,
   };
 })();
-
 
 Display.initializeDisplay();

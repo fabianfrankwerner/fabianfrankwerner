@@ -7,22 +7,42 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <div class="grid">
-      <div class="row">
-        <div class="cell one">1</div>
-        <div class="cell two">2</div>
-        <div class="cell three">3</div>
+    <div class="game-container">
+      <div class="player-setup">
+        <div class="player-input">
+          <label for="player1">Player 1 (X):</label>
+          <input type="text" id="player1" placeholder="Enter name" />
+        </div>
+        <div class="player-input">
+          <label for="player2">Player 2 (O):</label>
+          <input type="text" id="player2" placeholder="Enter name" />
+        </div>
+        <button id="startGame">Start Game</button>
       </div>
-      <div class="row">
-        <div class="cell four">4</div>
-        <div class="cell five">5</div>
-        <div class="cell six">6</div>
+
+      <div class="game-status">
+        <h2 id="statusMessage">Enter player names and start the game!</h2>
       </div>
-      <div class="row">
-        <div class="cell seven">7</div>
-        <div class="cell eight">8</div>
-        <div class="cell nine">9</div>
+
+      <div class="grid">
+        <div class="row">
+          <div class="cell one"></div>
+          <div class="cell two"></div>
+          <div class="cell three"></div>
+        </div>
+        <div class="row">
+          <div class="cell four"></div>
+          <div class="cell five"></div>
+          <div class="cell six"></div>
+        </div>
+        <div class="row">
+          <div class="cell seven"></div>
+          <div class="cell eight"></div>
+          <div class="cell nine"></div>
+        </div>
       </div>
+
+      <button id="restartGame" style="display: none">Restart Game</button>
     </div>
     <script src="script.js"></script>
   </body>
