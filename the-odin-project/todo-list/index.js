@@ -51,10 +51,15 @@ function renderTasks() {
       <p><strong>Description:</strong> ${task.description}</p>
       <p><strong>Deadline:</strong> ${task.deadline}</p>
       <p><strong>Priority:</strong> ${task.priority}</p>
-      <button onclick="${() => task.toggleCompleted()}">${
-      task.toggleCompleted() ? "Done" : "To-Do"
-    }</button>
+      <button class="toggle-btn">${task.completed ? "Done" : "To-Do"}</button>
     `;
+
+    // Add click event listener to the button
+    const toggleBtn = taskDiv.querySelector(".toggle-btn");
+    toggleBtn.addEventListener("click", () => {
+      task.toggleCompleted();
+      toggleBtn.textContent = task.completed ? "Done" : "To-Do";
+    });
 
     // Append to the tasks container
     tasks.appendChild(taskDiv);
