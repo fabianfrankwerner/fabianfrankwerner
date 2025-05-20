@@ -7,5 +7,55 @@
     <link rel="stylesheet" href="index.css" />
     <script src="index.js" defer></script>
   </head>
-  <body></body>
+  <body>
+    <h1>Tasks</h1>
+
+    <!-- Add tasks -->
+    <form action="/" method="post">
+      <fieldset>
+        <legend>Add New Task</legend>
+
+        <div>
+          <label for="title">Title <span aria-hidden="true">*</span></label>
+          <input type="text" name="title" id="title" required />
+        </div>
+
+        <div>
+          <label for="description"
+            >Description <span aria-hidden="true">*</span></label
+          >
+          <textarea
+            name="description"
+            id="description"
+            required
+            rows="3"
+          ></textarea>
+        </div>
+
+        <div>
+          <label for="deadline"
+            >Deadline <span aria-hidden="true">*</span></label
+          >
+          <input type="datetime-local" name="deadline" id="deadline" required />
+        </div>
+
+        <div>
+          <label for="priority"
+            >Priority <span aria-hidden="true">*</span></label
+          >
+          <select name="priority" id="priority" required>
+            <option value="" disabled selected>Select a priority</option>
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+          </select>
+        </div>
+
+        <button type="submit">Add Task</button>
+      </fieldset>
+    </form>
+
+    <!-- Display tasks -->
+    <div id="tasks"></div>
+  </body>
 </html>

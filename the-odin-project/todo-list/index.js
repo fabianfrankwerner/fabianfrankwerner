@@ -34,3 +34,42 @@ class List {
     return this.tasks;
   }
 }
+
+const meal = new List("meal");
+
+const breakfast = new Task(
+  "Eat",
+  "Something fresh and healthy.",
+  "2025-05-21",
+  "Medium"
+);
+
+meal.addTask(breakfast);
+
+const dinner = new Task(
+  "Feast",
+  "Something cozy and warm.",
+  "2025-07-13",
+  "High"
+);
+
+meal.addTask(dinner);
+
+const tasks = document.querySelector("#tasks");
+
+meal.getTasks().forEach((task) => {
+  // Create a task container
+  const taskDiv = document.createElement("div");
+  taskDiv.classList.add("task");
+
+  // Add task details
+  taskDiv.innerHTML = `
+    <h3>${task.title}</h3>
+    <p><strong>Description:</strong> ${task.description}</p>
+    <p><strong>Deadline:</strong> ${task.deadline}</p>
+    <p><strong>Priority:</strong> ${task.priority}</p>
+  `;
+
+  // Append to the tasks container
+  tasks.appendChild(taskDiv);
+});
