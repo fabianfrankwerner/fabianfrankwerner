@@ -1,18 +1,9 @@
-class Todo {
-  constructor(
-    title,
-    description,
-    dueDate,
-    priority,
-    notes = "",
-    checklist = []
-  ) {
+class Task {
+  constructor(title, description, deadline, priority) {
     this.title = title;
     this.description = description;
-    this.dueDate = dueDate;
+    this.deadline = deadline;
     this.priority = priority;
-    this.notes = notes;
-    this.checklist = checklist;
     this.completed = false;
   }
 
@@ -20,83 +11,26 @@ class Todo {
     this.completed = !this.completed;
   }
 
-  addChecklistItem(item) {
-    this.checklist.push({ item, done: false });
-  }
-
-  toggleChecklistItem(index) {
-    if (this.checklist[index]) {
-      this.checklist[index].done = !this.checklist[index].done;
-    }
+  updatePriority(priority) {
+    return (this.priority = priority);
   }
 }
 
-// Project class - for grouping todos
-class Project {
+class List {
   constructor(name) {
     this.name = name;
-    this.todos = [];
+    this.tasks = [];
   }
 
-  addTodo(todo) {
-    this.todos.push(todo);
+  addTask(task) {
+    this.tasks.push(task);
   }
 
-  removeTodo(index) {
-    this.todos.splice(index, 1);
+  deleteTask(index) {
+    this.tasks.splice(index, 1);
   }
 
-  getTodos() {
-    return this.todos;
-  }
-}
-
-// ProjectManager class - to manage multiple projects
-class ProjectManager {
-  constructor() {
-    this.projects = {};
-    this.defaultProject = new Project("Default");
-    this.projects["Default"] = this.defaultProject;
-    this.currentProject = this.defaultProject;
-  }
-
-  createProject(name) {
-    if (!this.projects[name]) {
-      const project = new Project(name);
-      this.projects[name] = project;
-    }
-  }
-
-  setCurrentProject(name) {
-    if (this.projects[name]) {
-      this.currentProject = this.projects[name];
-    }
-  }
-
-  addTodoToCurrentProject(todo) {
-    this.currentProject.addTodo(todo);
-  }
-
-  getCurrentTodos() {
-    return this.currentProject.getTodos();
-  }
-
-  getProjectNames() {
-    return Object.keys(this.projects);
+  getTasks() {
+    return this.tasks;
   }
 }
-
-// Example usage
-const manager = new ProjectManager();
-manager.createProject("Work");
-manager.setCurrentProject("Work");
-
-const todo1 = new Todo(
-  "Finish report",
-  "Complete the financial report",
-  "2025-05-20",
-  "High"
-);
-manager.addTodoToCurrentProject(todo1);
-
-console.log(manager.getCurrentTodos());
