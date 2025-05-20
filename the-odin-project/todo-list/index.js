@@ -37,39 +37,48 @@ class List {
 
 const meal = new List("meal");
 
-const breakfast = new Task(
-  "Eat",
-  "Something fresh and healthy.",
-  "2025-05-21",
-  "Medium"
-);
+function renderTasks() {
+  const tasks = document.querySelector("#tasks");
 
-meal.addTask(breakfast);
+  meal.getTasks().forEach((task) => {
+    // Create a task container
+    const taskDiv = document.createElement("div");
+    taskDiv.classList.add("task");
 
-const dinner = new Task(
-  "Feast",
-  "Something cozy and warm.",
-  "2025-07-13",
-  "High"
-);
+    // Add task details
+    taskDiv.innerHTML = `
+      <h3>${task.title}</h3>
+      <p><strong>Description:</strong> ${task.description}</p>
+      <p><strong>Deadline:</strong> ${task.deadline}</p>
+      <p><strong>Priority:</strong> ${task.priority}</p>
+      <button onclick="${() => task.toggleCompleted()}">${
+      task.toggleCompleted() ? "Done" : "To-Do"
+    }</button>
+    `;
 
-meal.addTask(dinner);
+    // Append to the tasks container
+    tasks.appendChild(taskDiv);
+  });
+}
 
-const tasks = document.querySelector("#tasks");
+document
+  .querySelector("#task-form")
+  .addEventListener("submit", function (event) {
+    event.preventDefault();
 
-meal.getTasks().forEach((task) => {
-  // Create a task container
-  const taskDiv = document.createElement("div");
-  taskDiv.classList.add("task");
+    const title = document.querySelector("#title").value;
+    const description = document.querySelector("#description").value;
+    const deadline = document.querySelector("#deadline").value;
+    const priority = document.querySelector("#priority").value;
 
-  // Add task details
-  taskDiv.innerHTML = `
-    <h3>${task.title}</h3>
-    <p><strong>Description:</strong> ${task.description}</p>
-    <p><strong>Deadline:</strong> ${task.deadline}</p>
-    <p><strong>Priority:</strong> ${task.priority}</p>
-  `;
+    const newTask = new Task(title, description, deadline, priority);
+    meal.addTask(newTask);
 
-  // Append to the tasks container
-  tasks.appendChild(taskDiv);
-});
+    // Optionally clear form
+    event.target.reset();
+
+    // Refresh task list in DOM
+    renderTasks();
+  });
+
+renderTasks();
