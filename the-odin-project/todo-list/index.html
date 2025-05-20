@@ -8,54 +8,89 @@
     <script src="index.js" defer></script>
   </head>
   <body>
-    <h1>Tasks</h1>
+    <div class="container">
+      <header>
+        <h1>Todo List</h1>
+      </header>
 
-    <!-- Add tasks -->
-    <form action="/" method="post" id="task-form">
-      <fieldset>
-        <legend>Add New Task</legend>
+      <main>
+        <section class="projects-section">
+          <h2>Projects</h2>
+          <form id="project-form">
+            <div class="form-group">
+              <input
+                type="text"
+                id="project-name"
+                placeholder="New project name"
+                required
+              />
+              <button type="submit">Add Project</button>
+            </div>
+          </form>
+          <div id="projects-list"></div>
+        </section>
 
-        <div>
-          <label for="title">Title <span aria-hidden="true">*</span></label>
-          <input type="text" name="title" id="title" required />
-        </div>
+        <section class="tasks-section">
+          <h2>Tasks</h2>
+          <form id="task-form">
+            <fieldset>
+              <legend>Add New Task</legend>
 
-        <div>
-          <label for="description"
-            >Description <span aria-hidden="true">*</span></label
-          >
-          <textarea
-            name="description"
-            id="description"
-            required
-            rows="3"
-          ></textarea>
-        </div>
+              <div class="form-group">
+                <label for="title"
+                  >Title <span aria-hidden="true">*</span></label
+                >
+                <input type="text" name="title" id="title" required />
+              </div>
 
-        <div>
-          <label for="deadline"
-            >Deadline <span aria-hidden="true">*</span></label
-          >
-          <input type="datetime-local" name="deadline" id="deadline" required />
-        </div>
+              <div class="form-group">
+                <label for="description"
+                  >Description <span aria-hidden="true">*</span></label
+                >
+                <textarea
+                  name="description"
+                  id="description"
+                  required
+                  rows="3"
+                ></textarea>
+              </div>
 
-        <div>
-          <label for="priority"
-            >Priority <span aria-hidden="true">*</span></label
-          >
-          <select name="priority" id="priority" required>
-            <option value="" disabled selected>Select a priority</option>
-            <option value="low">Low</option>
-            <option value="medium">Medium</option>
-            <option value="high">High</option>
-          </select>
-        </div>
+              <div class="form-group">
+                <label for="deadline"
+                  >Deadline <span aria-hidden="true">*</span></label
+                >
+                <input
+                  type="datetime-local"
+                  name="deadline"
+                  id="deadline"
+                  required
+                />
+              </div>
 
-        <button type="submit">Add Task</button>
-      </fieldset>
-    </form>
+              <div class="form-group">
+                <label for="priority"
+                  >Priority <span aria-hidden="true">*</span></label
+                >
+                <select name="priority" id="priority" required>
+                  <option value="" disabled selected>Select a priority</option>
+                  <option value="low">Low</option>
+                  <option value="medium">Medium</option>
+                  <option value="high">High</option>
+                </select>
+              </div>
 
-    <!-- Display tasks -->
-    <div id="tasks"></div>
+              <div class="form-group">
+                <label for="notes">Notes</label>
+                <textarea name="notes" id="notes" rows="3"></textarea>
+              </div>
+
+              <button type="submit">Add Task</button>
+            </fieldset>
+          </form>
+
+          <div id="tasks"></div>
+        </section>
+      </main>
+    </div>
   </body>
 </html>
