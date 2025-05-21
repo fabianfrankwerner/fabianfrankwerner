@@ -75,6 +75,10 @@ showButton.addEventListener("click", () => {
 confirmBtn.addEventListener("click", (event) => {
   event.preventDefault();
 
+  if (!validateForm()) {
+    return;
+  }
+
   const title = document.getElementById("title").value;
   const pages = document.getElementById("pages").value;
   const author = document.getElementById("author").value;
@@ -87,4 +91,54 @@ confirmBtn.addEventListener("click", (event) => {
   favDialog.close();
 
   document.querySelector("form").reset();
+  clearValidationMessages();
+});
+
+function validateForm() {
+  const title = document.getElementById("title");
+  const pages = document.getElementById("pages");
+  const author = document.getElementById("author");
+  const read = document.getElementById("read");
+  let isValid = true;
+
+  clearValidationMessages();
+
+  if (!title.checkValidity()) {
+    showValidationMessage(title.validationMessage);
+    isValid = false;
+  }
+
+  if (!pages.checkValidity()) {
+    showValidationMessage(pages.validationMessage);
+    isValid = false;
+  }
+
+  if (!author.checkValidity()) {
+    showValidationMessage(author.validationMessage);
+    isValid = false;
+  }
+
+  if (!read.checkValidity()) {
+    showValidationMessage(read.validationMessage);
+    isValid = false;
+  }
+
+  return isValid;
+}
+
+function showValidationMessage(message) {
+  const demo = document.getElementById("demo");
+  const messageElement = document.createElement("p");
+  messageElement.textContent = message;
+  messageElement.style.color = "red";
+  demo.appendChild(messageElement);
+}
+
+function clearValidationMessages() {
+  const demo = document.getElementById("demo");
+  demo.innerHTML = "";
+}
+
+favDialog.addEventListener("close", () => {
+  clearValidationMessages();
 });

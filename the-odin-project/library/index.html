@@ -11,28 +11,31 @@
       <form>
         <p>
           <label for="title"
-            >Title:
-            <input type="text" id="title" />
+            >*Title:
+            <input type="text" id="title" required />
           </label>
 
           <label for="pages"
-            >Pages:
-            <input type="number" id="pages" />
+            >*Pages:
+            <input type="number" id="pages" required />
           </label>
 
           <label for="author"
-            >Author:
-            <input type="text" id="author" />
+            >*Author:
+            <input type="text" id="author" required />
           </label>
 
           <label for="read"
-            >Read?
-            <input type="checkbox" id="read" />
+            >*Read?
+            <input type="checkbox" id="read" required />
           </label>
         </p>
+        <p id="demo"></p>
         <div>
           <button value="cancel" formmethod="dialog">Cancel</button>
-          <button id="confirmBtn" value="default">Confirm</button>
+          <button id="confirmBtn" onclick="validateForm()" value="default">
+            Confirm
+          </button>
         </div>
       </form>
     </dialog>
