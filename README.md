@@ -2,4 +2,4 @@
 
 I make [YouTube](https://youtube.com/@fabianfrankwerner) videos and write a [Newsletter](https://fabianfrankwerner.com/newsletter)!
 
-arrived well in Montafon
+its rather Rainy but the view is great!
