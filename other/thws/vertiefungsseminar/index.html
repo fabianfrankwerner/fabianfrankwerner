@@ -2,18 +2,69 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Redirecting...</title>
+    <title>Poll Closed - Redirecting...</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        padding: 50px;
+        background-color: #f0f0f0;
+      }
+      .container {
+        max-width: 600px;
+        margin: 0 auto;
+        background: white;
+        padding: 40px;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+      .countdown {
+        font-size: 48px;
+        font-weight: bold;
+        color: #e74c3c;
+        margin: 20px 0;
+      }
+      h1 {
+        color: #2c3e50;
+        margin-bottom: 20px;
+      }
+      p {
+        color: #34495e;
+        font-size: 18px;
+        line-height: 1.6;
+      }
+    </style>
     <script>
-      const formA = "https://forms.gle/2ASsWG13vHeTQ1PM6";
-      const formB = "https://forms.gle/VGsA53dcWzmVZriQ9";
+      let countdown = 5;
+      const redirectUrl = "https://www.youtube.com/watch?v=fC7oUOUEEi4";
 
-      const targetUrl = Math.random() < 0.5 ? formA : formB;
+      function updateCountdown() {
+        const countdownElement = document.getElementById("countdown");
+        if (countdownElement) {
+          countdownElement.textContent = countdown;
+        }
 
-      window.location.href = targetUrl;
+        if (countdown <= 0) {
+          window.location.href = redirectUrl;
+        } else {
+          countdown--;
+          setTimeout(updateCountdown, 1000);
+        }
+      }
+
+      window.onload = function () {
+        updateCountdown();
+      };
     </script>
   </head>
   <body>
-    <h1>Redirecting...</h1>
+    <div class="container">
+      <h1>Scientific Poll Closed</h1>
+      <p>Sorry! The scientific poll you were looking for has been closed.</p>
+      <p>Redirecting you to something else in:</p>
+      <div class="countdown" id="countdown">3</div>
+      <p><em>Get ready to be stick bugged...</em></p>
+    </div>
   </body>
 </html>
