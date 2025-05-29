@@ -2,4 +2,4 @@
 
 I make [YouTube](https://youtube.com/@fabianfrankwerner) videos and write a [Newsletter](https://fabianfrankwerner.com/newsletter)!
 
-coding on some uni projects right now
+its time to drive home again from this workation :)
