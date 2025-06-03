@@ -1,5 +1,3 @@
 # Hello, World!
 
 I make [YouTube](https://youtube.com/@fabianfrankwerner) videos and write a [Newsletter](https://fabianfrankwerner.com/newsletter)!
-
-coding a lil sum sum in ipynb rn, I'll upload the stuff here oce I'm done!
