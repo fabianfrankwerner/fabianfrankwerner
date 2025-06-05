@@ -1,4 +1,5 @@
-function sumRange(num) {
-  return num === 1 ? 1 : num + sumRange(num - 1);
+function power(base, exponent) {
+  if (exponent === 0) return 1;
+  return base * power(base, exponent - 1);
 }
-console.log(sumRange(3));
+console.log(power(2, 4));
