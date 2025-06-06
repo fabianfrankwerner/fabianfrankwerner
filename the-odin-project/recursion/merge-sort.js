@@ -30,7 +30,7 @@ function merge(left, right) {
 }
 
 // Example usage:
-const unsorted = [64, 34, 25, 12, 22, 11, 90];
+const unsorted = [64, 34, 25, 12, 22, 11];
 const sorted = mergeSort(unsorted);
 console.log("Original:", unsorted);
 console.log("Sorted:", sorted);
