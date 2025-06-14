@@ -2,4 +2,4 @@
 
 I make [YouTube](https://youtube.com/@fabianfrankwerner) videos and write a [Newsletter](https://fabianfrankwerner.com/newsletter)!
 
-maybe i'll do optimistic computer science videos next
+i should Code more
