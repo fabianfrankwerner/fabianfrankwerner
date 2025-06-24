@@ -13,3 +13,9 @@ class Ship {
     return this.length === this.hits ? (this.sunk = true) : (this.sunk = false);
   }
 }
+
+class Gameboard {
+  constructor(parameters) {}
+}
+
+(module.exports = Ship), Gameboard;
