@@ -2,4 +2,4 @@
 
 I make [YouTube](https://youtube.com/@fabianfrankwerner) videos and write a [Newsletter](https://fabianfrankwerner.com/newsletter)!
 
-grinding in unity right now
+it's crazy hot 🔥 outside damn
