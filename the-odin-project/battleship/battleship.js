@@ -80,6 +80,10 @@ class Gameboard {
       return "already attacked";
     }
   }
+
+  allShipsSunk() {
+    return this.ships.forEach((ship) => ship.isSunk()) ? true : false;
+  }
 }
 
 module.exports = Ship;
