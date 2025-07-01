@@ -82,7 +82,7 @@ class Gameboard {
   }
 
   allShipsSunk() {
-    return this.ships.forEach((ship) => ship.isSunk()) ? true : false;
+    return this.ships.length > 0 && this.ships.every((ship) => ship.isSunk());
   }
 }
 
@@ -96,6 +96,8 @@ class Player {
   }
 }
 
-module.exports = Ship;
-module.exports = Player;
-module.exports = Gameboard;
+module.exports = {
+  Ship,
+  Gameboard,
+  Player,
+};
