@@ -86,5 +86,16 @@ class Gameboard {
   }
 }
 
+class Player {
+  constructor(name = "Computer") {
+    this.name = name;
+  }
+
+  createGameboard() {
+    return new Gameboard();
+  }
+}
+
 module.exports = Ship;
+module.exports = Player;
 module.exports = Gameboard;
