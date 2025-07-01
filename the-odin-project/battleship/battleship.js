@@ -26,7 +26,7 @@ class Gameboard {
   placeShip(x, y, length, direction) {
     // Check if placement is valid
     if (!this.isValidPlacement(x, y, length, direction)) {
-      throw new Error("Invalid ship placement");
+      throw new Error("Invalid ship coordinates");
     }
 
     // Create the ship
@@ -54,6 +54,31 @@ class Gameboard {
       if (this.grid[yi][xi] !== null) return false;
     }
     return true;
+  }
+
+  receiveAttack(x, y) {
+    if (x < 0 || x >= this.size || y < 0 || y >= this.size) {
+      throw new Error("Invalid attack coordinates");
+    }
+
+    const cell = this.grid[y][x];
+
+    if (cell === null) {
+      // Mark as miss
+      this.grid[y][x] = "miss";
+      return "miss";
+    } else if (cell instanceof Ship) {
+      // Only allow hitting a ship once per cell
+      if (this.grid[y][x] === "hit") {
+        return "already hit";
+      }
+      cell.hit();
+      cell.isSunk();
+      this.grid[y][x] = "hit";
+      return "hit";
+    } else if (cell === "hit" || cell === "miss") {
+      return "already attacked";
+    }
   }
 }
 
