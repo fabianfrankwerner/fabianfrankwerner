@@ -1,4 +1,4 @@
-class Ship {
+export class Ship {
   constructor(length, hits, sunk) {
     this.length = length;
     this.hits = 0;
@@ -14,7 +14,7 @@ class Ship {
   }
 }
 
-class Gameboard {
+export class Gameboard {
   constructor(size = 10) {
     // 2D array for the board, initialized to null
     this.size = size;
@@ -86,7 +86,7 @@ class Gameboard {
   }
 }
 
-class Player {
+export class Player {
   constructor(name = "Computer") {
     this.name = name;
   }
@@ -95,9 +95,3 @@ class Player {
     return new Gameboard();
   }
 }
-
-module.exports = {
-  Ship,
-  Gameboard,
-  Player,
-};
