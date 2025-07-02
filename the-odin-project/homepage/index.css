@@ -82,6 +82,7 @@ h2,
 h3 {
   font-family: Playfair Display, serif;
   font-weight: 300;
+  color: white;
 }
 
 body {
@@ -127,6 +128,10 @@ main svg:hover {
 }
 
 /* MAIN */
+
+.header--h2 {
+  color: black;
+}
 
 /* Grid container for cards */
 .cards-container {
@@ -255,20 +260,22 @@ footer svg:hover {
 
 /* Responsive images */
 img,
-.footer--image {
+.footer--image,
+.header--left img {
   width: 100%;
   height: auto;
-  max-width: 400px;
-  border-radius: 8px;
+  max-width: none;
+  border-radius: 0;
   object-fit: cover;
-}
-
-.header--left img {
-  max-width: 350px;
+  display: block;
 }
 
 .footer--image {
-  max-width: 350px;
+  width: 100% !important;
+  height: auto;
+  max-width: none !important;
+  display: block;
+  object-fit: cover;
 }
 
 /* Responsive header/footer layout */
