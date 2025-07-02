@@ -232,3 +232,23 @@ footer svg:hover {
   cursor: pointer;
   fill: black;
 }
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 50px;
+    width: 100%;
+  }
+  
+  .card {
+    width: 100%;        /* Make cards responsive inside the grid */
+    min-width: 0;       /* Prevent overflow in grid */
+    /* Remove any fixed width if present */
+  }
+  
+  @media (max-width: 900px) {
+    .cards {
+      grid-template-columns: 1fr;
+      gap: 30px;
+    }
+  }
