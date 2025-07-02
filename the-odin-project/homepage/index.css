@@ -85,9 +85,9 @@ h3 {
 }
 
 body {
-    display: flex;
-    flex-direction: column;
-    gap: 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 100px;
 }
 
 /* HEADER */
@@ -96,14 +96,16 @@ header {
   display: flex;
 }
 
-header svg, main svg {
+header svg,
+main svg {
   height: 25px;
   width: 25px;
   fill: black;
   flex-shrink: 0;
 }
 
-header svg:hover, main svg:hover {
+header svg:hover,
+main svg:hover {
   cursor: pointer;
   fill: #0891b2;
 }
@@ -125,6 +127,77 @@ header svg:hover, main svg:hover {
 }
 
 /* MAIN */
+
+/* Grid container for cards */
+.cards-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+/* Card styles */
+.card {
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  background: white;
+  width: 320px;
+  min-height: 340px;
+  transition: transform 0.15s;
+}
+
+.card:hover {
+  transform: translateY(-1px) scale(1.01);
+  /* box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12); */
+}
+
+/* Top colored area */
+.card .card-image {
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 140px;
+  font-size: 2rem;
+  font-family: Playfair Display, serif;
+  text-align: center;
+}
+
+/* Bottom area */
+.card .card-content {
+  padding: 20px 16px 16px 16px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.card .card-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.card .card-title {
+  font-family: Playfair Display, serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #222;
+}
+
+.card .card-icons {
+  display: flex;
+  gap: 8px;
+}
+
+.card .card-description {
+  font-size: 0.95rem;
+  color: #444;
+  margin-top: 4px;
+}
 
 /* FOOTER */
 
