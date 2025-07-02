@@ -93,19 +93,17 @@ footer {
 .footer--email,
 .footer--socials {
   display: flex;
-align-items: center;
-gap: 10px;
+  align-items: center;
+  gap: 10px;
 }
 
 footer svg {
   height: 25px;
-  width: auto;
+  width: 25px;
+  fill: white;
+  flex-shrink: 0;
 }
 
 footer h2 {
   font-family: Playfair Display, serif;
-}
-
-footer svg {
-  fill: white;
 }
