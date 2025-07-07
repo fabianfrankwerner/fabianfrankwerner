@@ -67,7 +67,6 @@ export default function Occupation({ occupation, onUpdateOccupation }) {
           />
         </label>
       </div>
-      <hr />
     </>
   );
 }

@@ -57,7 +57,6 @@ export default function Education({ education, onUpdateEducation }) {
           />
         </label>
       </div>
-      <hr />
     </>
   );
 }

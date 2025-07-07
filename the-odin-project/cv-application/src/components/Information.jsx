@@ -47,7 +47,6 @@ export default function Information({ information, onUpdateInformation }) {
           />
         </label>
       </div>
-      <hr />
     </>
   );
 }
