@@ -19,6 +19,7 @@ export default function App() {
     },
   });
   const [isEditing, setIsEditing] = useState(true);
+  const [isDownloading, setIsDownloading] = useState(false);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -30,7 +31,10 @@ export default function App() {
   }
 
   function handleDownloadPDF() {
+    setIsDownloading(true);
     const cvElement = document.querySelector(".cv-preview");
+    const actionsElement = document.querySelector(".cv-actions");
+    if (actionsElement) actionsElement.style.display = "none";
     if (!cvElement) return;
     html2canvas(cvElement).then((canvas) => {
       const imgData = canvas.toDataURL("image/png");
@@ -40,12 +44,12 @@ export default function App() {
         format: "a4",
       });
       const pageWidth = pdf.internal.pageSize.getWidth();
-      const pageHeight = pdf.internal.pageSize.getHeight();
-      // Calculate image dimensions to fit A4
       const imgWidth = pageWidth - 40;
       const imgHeight = (canvas.height * imgWidth) / canvas.width;
       pdf.addImage(imgData, "PNG", 20, 20, imgWidth, imgHeight);
       pdf.save("cv.pdf");
+      if (actionsElement) actionsElement.style.display = "";
+      setIsDownloading(false);
     });
   }
 
@@ -114,12 +118,20 @@ export default function App() {
               <strong>End Date:</strong> {data.occupation.endDate}
             </p>
           </section>
-          <button type="button" className="cv-btn" onClick={handleEdit}>
-            Edit
-          </button>
-          <button type="button" className="cv-btn" onClick={handleDownloadPDF}>
-            Download PDF
-          </button>
+          {!isDownloading && (
+            <div className="cv-actions">
+              <button type="button" className="cv-btn" onClick={handleEdit}>
+                Edit
+              </button>
+              <button
+                type="button"
+                className="cv-btn"
+                onClick={handleDownloadPDF}
+              >
+                Download PDF
+              </button>
+            </div>
+          )}
         </div>
       )}
     </div>
