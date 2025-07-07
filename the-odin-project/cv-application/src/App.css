@@ -1,42 +1,60 @@
-/* #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+body {
+  background: #f4f6f8;
+  font-family: "Segoe UI", Arial, sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.app-container {
+  max-width: 900px;
+  margin: 40px auto;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+  padding: 32px 40px;
+  display: flex;
+  gap: 48px;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.form-section {
+  flex: 1;
+  min-width: 300px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.cv-preview {
+  flex: 1;
+  background: #f9fafb;
+  border-radius: 8px;
+  padding: 24px 32px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
-.card {
-  padding: 2em;
+.cv-preview h2 {
+  margin-top: 0;
+  color: #2d3748;
+  border-bottom: 2px solid #e2e8f0;
+  padding-bottom: 8px;
 }
 
-.read-the-docs {
-  color: #888;
-} */
+.cv-preview section {
+  margin-bottom: 24px;
+}
+
+.cv-preview h3 {
+  margin-bottom: 8px;
+  color: #4a5568;
+  font-size: 1.1em;
+  border-left: 4px solid #3182ce;
+  padding-left: 8px;
+}
+
+.cv-preview p {
+  margin: 4px 0 4px 0;
+  color: #2d3748;
+}
+
+hr {
+  margin: 32px 0;
+  border: none;
+  border-top: 1px solid #e2e8f0;
+}

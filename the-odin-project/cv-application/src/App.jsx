@@ -18,17 +18,16 @@ export default function App() {
   });
 
   return (
-    <>
-      <Information
-        information={data.information}
-        onUpdateInformation={setData}
-      />
-      <Education education={data.education} onUpdateEducation={setData} />
-      <Occupation occupation={data.occupation} onUpdateOccupation={setData} />
-
-      <hr />
-
-      <div>
+    <div className="app-container">
+      <div className="form-section">
+        <Information
+          information={data.information}
+          onUpdateInformation={setData}
+        />
+        <Education education={data.education} onUpdateEducation={setData} />
+        <Occupation occupation={data.occupation} onUpdateOccupation={setData} />
+      </div>
+      <div className="cv-preview">
         <h2>Curriculum Vitae</h2>
         <section>
           <h3>Personal Information</h3>
@@ -76,6 +75,6 @@ export default function App() {
           </p>
         </section>
       </div>
-    </>
+    </div>
   );
 }

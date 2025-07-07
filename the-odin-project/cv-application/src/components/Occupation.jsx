@@ -13,60 +13,58 @@ export default function Occupation({ occupation, onUpdateOccupation }) {
   }
 
   return (
-    <>
+    <div className="occupation-section">
       <h1>Occupation</h1>
-      <div>
-        <label htmlFor="company">
-          Company
-          <input
-            type="text"
-            name="company"
-            value={occupation.company}
-            onChange={handleChange}
-            placeholder="Company"
-          />
-        </label>
-        <label htmlFor="position">
-          Position
-          <input
-            type="text"
-            name="position"
-            value={occupation.position}
-            onChange={handleChange}
-            placeholder="Position"
-          />
-        </label>
-        <label htmlFor="responsibility">
-          Responsibility
-          <input
-            type="text"
-            name="responsibility"
-            value={occupation.responsibility}
-            onChange={handleChange}
-            placeholder="Responsibility"
-          />
-        </label>
-        <label htmlFor="startDate">
-          Start Date
-          <input
-            type="date"
-            name="startDate"
-            value={occupation.startDate}
-            onChange={handleChange}
-            placeholder="Start Date"
-          />
-        </label>
-        <label htmlFor="endDate">
-          End Date
-          <input
-            type="date"
-            name="endDate"
-            value={occupation.endDate}
-            onChange={handleChange}
-            placeholder="End Date"
-          />
-        </label>
-      </div>
-    </>
+      <label htmlFor="company">
+        Company
+        <input
+          type="text"
+          name="company"
+          value={occupation.company}
+          onChange={handleChange}
+          placeholder="Company"
+        />
+      </label>
+      <label htmlFor="position">
+        Position
+        <input
+          type="text"
+          name="position"
+          value={occupation.position}
+          onChange={handleChange}
+          placeholder="Position"
+        />
+      </label>
+      <label htmlFor="responsibility">
+        Responsibility
+        <input
+          type="text"
+          name="responsibility"
+          value={occupation.responsibility}
+          onChange={handleChange}
+          placeholder="Responsibility"
+        />
+      </label>
+      <label htmlFor="startDate">
+        Start Date
+        <input
+          type="text"
+          name="startDate"
+          value={occupation.startDate}
+          onChange={handleChange}
+          placeholder="Start Date"
+        />
+      </label>
+      <label htmlFor="endDate">
+        End Date
+        <input
+          type="text"
+          name="endDate"
+          value={occupation.endDate}
+          onChange={handleChange}
+          placeholder="End Date"
+        />
+      </label>
+    </div>
   );
 }
