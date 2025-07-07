@@ -3,6 +3,8 @@ import { useState } from "react";
 import Information from "./components/Information";
 import Education from "./components/Education";
 import Occupation from "./components/Occupation";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 
 export default function App() {
   const [data, setData] = useState({
@@ -27,6 +29,26 @@ export default function App() {
     setIsEditing(true);
   }
 
+  function handleDownloadPDF() {
+    const cvElement = document.querySelector(".cv-preview");
+    if (!cvElement) return;
+    html2canvas(cvElement).then((canvas) => {
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jsPDF({
+        orientation: "portrait",
+        unit: "pt",
+        format: "a4",
+      });
+      const pageWidth = pdf.internal.pageSize.getWidth();
+      const pageHeight = pdf.internal.pageSize.getHeight();
+      // Calculate image dimensions to fit A4
+      const imgWidth = pageWidth - 40;
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      pdf.addImage(imgData, "PNG", 20, 20, imgWidth, imgHeight);
+      pdf.save("cv.pdf");
+    });
+  }
+
   return (
     <div className="app-container">
       {isEditing ? (
@@ -40,7 +62,9 @@ export default function App() {
             occupation={data.occupation}
             onUpdateOccupation={setData}
           />
-          <button type="submit">Submit</button>
+          <button type="submit" className="cv-btn">
+            Submit
+          </button>
         </form>
       ) : (
         <div className="cv-preview">
@@ -90,8 +114,11 @@ export default function App() {
               <strong>End Date:</strong> {data.occupation.endDate}
             </p>
           </section>
-          <button type="button" onClick={handleEdit}>
+          <button type="button" className="cv-btn" onClick={handleEdit}>
             Edit
+          </button>
+          <button type="button" className="cv-btn" onClick={handleDownloadPDF}>
+            Download PDF
           </button>
         </div>
       )}

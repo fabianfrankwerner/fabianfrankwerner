@@ -58,3 +58,23 @@ hr {
   border: none;
   border-top: 1px solid #e2e8f0;
 }
+
+.cv-btn {
+  background: #3182ce;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 24px;
+  font-size: 1em;
+  font-weight: 500;
+  margin-top: 16px;
+  margin-right: 12px;
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px rgba(49, 130, 206, 0.08);
+}
+.cv-btn:hover,
+.cv-btn:focus {
+  background: #2563eb;
+  outline: none;
+}
