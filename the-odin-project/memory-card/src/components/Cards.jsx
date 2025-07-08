@@ -27,6 +27,7 @@ async function getRandomCharacters(count) {
 }
 
 export default function Cards({ gameScore, setGameScore }) {
+  const [gameReset, setGameReset] = useState(0);
   const [characters, setCharacters] = useState([]);
   const [selectedIds, setSelectedIds] = useState([]);
 
@@ -41,18 +42,18 @@ export default function Cards({ gameScore, setGameScore }) {
         setCharacters([data]);
       }
     });
-  }, []);
+    setSelectedIds([]);
+  }, [gameReset]);
 
   function handleCardClick(id) {
     if (selectedIds.includes(id)) {
       alert("Card already selected. Game over!");
       setGameScore(0);
-      setSelectedIds([]);
-      // recall use effect
+      setGameReset(gameReset + 1);
     } else {
       setSelectedIds([...selectedIds, id]);
       setGameScore(gameScore + 1);
-      // reorder cards randomly
+      // Optionally: reorder cards randomly here
     }
   }
 
