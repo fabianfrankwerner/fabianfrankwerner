@@ -1,9 +1,6 @@
-- [ ] Score & Best Score Counters /w useState
 - [ ] pull x random cards with titles from rm api (https://rickandmortyapi.com/)
 - [ ] onclick check if already in cards array
 - [ ] if no, up current score by one and
 - [x] if current score larger best score update best score
-- [ ] if yes reset array, set score to zero, rerender cards
+- [ ] if yes reset array, set score to zero
 - [ ] reorder cards randomly
-- [ ] 
-- [ ] 
