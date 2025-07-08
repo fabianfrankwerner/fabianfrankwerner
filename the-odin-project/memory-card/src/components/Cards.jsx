@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import "../styles/cards.css";
 
 function getRandomNumber() {
   return Math.floor(Math.random() * 826) + 1;
@@ -44,12 +45,11 @@ export default function Cards() {
   return (
     <div className="cards">
       {characters.map((character) => (
-        <div className="card">
+        <div className="card" key={character.id}>
           <img
-            key={character.id}
+            className="card--image"
             src={character.image}
             alt={character.name}
-            className="card--image"
           />
           <p className="card--text">{character.name}</p>
         </div>

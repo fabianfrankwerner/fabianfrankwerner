@@ -1,4 +1,4 @@
-// import "./App.css";
+import "./App.css";
 import { useState } from "react";
 import Cards from "./components/Cards";
 
@@ -14,14 +14,11 @@ export default function App() {
         once!
       </h2>
 
-      {/* Current Score */}
-      <h3>Score: {score}</h3>
-
-      {/* Best Score */}
       {score > bestScore && setBestScore(score)}
-      <h3>Best Score: {bestScore}</h3>
+      <h3>
+        Score: {score} | Best Score: {bestScore}
+      </h3>
 
-      {/* Cards */}
       <Cards />
     </>
   );
