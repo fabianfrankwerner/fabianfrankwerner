@@ -26,6 +26,16 @@ async function getRandomCharacters(count) {
   }
 }
 
+function shuffleArray(array) {
+  // Fisher-Yates shuffle
+  const arr = [...array];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
 export default function Cards({ gameScore, setGameScore }) {
   const [gameReset, setGameReset] = useState(false);
   const [characters, setCharacters] = useState([]);
@@ -54,7 +64,7 @@ export default function Cards({ gameScore, setGameScore }) {
     } else {
       setSelectedIds([...selectedIds, id]);
       setGameScore(gameScore + 1);
-      // Optionally: reorder cards randomly here
+      setCharacters(shuffleArray(characters));
     }
   }
 
