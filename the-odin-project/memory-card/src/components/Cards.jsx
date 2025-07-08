@@ -26,8 +26,9 @@ async function getRandomCharacters(count) {
   }
 }
 
-export default function Cards() {
+export default function Cards({ gameScore, setGameScore }) {
   const [characters, setCharacters] = useState([]);
+  const [selectedIds, setSelectedIds] = useState([]);
 
   useEffect(() => {
     getRandomCharacters(10).then((data) => {
@@ -42,10 +43,27 @@ export default function Cards() {
     });
   }, []);
 
+  function handleCardClick(id) {
+    if (selectedIds.includes(id)) {
+      alert("Card already selected. Game over!");
+      setGameScore(0);
+      setSelectedIds([]);
+      // recall use effect
+    } else {
+      setSelectedIds([...selectedIds, id]);
+      setGameScore(gameScore + 1);
+      // reorder cards randomly
+    }
+  }
+
   return (
     <div className="cards">
       {characters.map((character) => (
-        <div className="card" key={character.id}>
+        <div
+          className="card"
+          key={character.id}
+          onClick={() => handleCardClick(character.id)}
+        >
           <img
             className="card--image"
             src={character.image}

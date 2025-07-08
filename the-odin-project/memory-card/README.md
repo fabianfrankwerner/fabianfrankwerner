@@ -1,6 +1,6 @@
 - [x] pull x random cards with titles from rm api (https://rickandmortyapi.com/)
-- [ ] onclick check if already in cards array
-- [ ] if no, up current score by one and
+- [x] onclick check if already in cards array
+- [x] if no, up current score by one and
 - [x] if current score larger best score update best score
 - [ ] if yes reset array, set score to zero
-- [ ] reorder cards randomly
+- [ ] reorder already fetched cards randomly

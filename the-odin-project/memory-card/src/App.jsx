@@ -19,7 +19,7 @@ export default function App() {
         Score: {score} | Best Score: {bestScore}
       </h3>
 
-      <Cards />
+      <Cards gameScore={score} setGameScore={setScore} />
     </>
   );
 }
