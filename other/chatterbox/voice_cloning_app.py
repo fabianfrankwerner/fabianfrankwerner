@@ -161,7 +161,8 @@ def create_app():
             max-width: 1200px !important;
         }
         .voice-tips {
-            background: #f0f9ff;
+            background: #222831;
+            color: #f1f1f1;
             padding: 15px;
             border-radius: 8px;
             border-left: 4px solid #3b82f6;
