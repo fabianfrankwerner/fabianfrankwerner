@@ -184,7 +184,7 @@ def create_app():
                     sources=["upload", "microphone"],
                     type="filepath",
                     label="Upload Your Voice Sample",
-                    info="Upload M4A, WAV, or MP3 file (15-30 seconds recommended)"
+                    # info="Upload M4A, WAV, or MP3 file (15-30 seconds recommended)"
                 )
                 
                 # Audio analysis
