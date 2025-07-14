@@ -1,3 +1,10 @@
+# https://claude.ai/chat/156ded3b-42de-4de9-a7ad-53c8b99bcea4
+
+# cd chatterbox
+# source chatterbox_env/bin/activate
+# python voice_cloning_app.py
+# deactivate
+
 import os
 import random
 import numpy as np
