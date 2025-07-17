@@ -1,0 +1,4451 @@
+[
+  {
+    "id": 1,
+    "title": "5 life-changing Linux tips",
+    "duration_seconds": 46,
+    "tags": [
+      "webdev",
+      "app development",
+      "lesson",
+      "tutorial",
+      "linux",
+      "linux course",
+      "start using linux",
+      "switch to linux",
+      "linux distros",
+      "linux 101",
+      "essential linux commands",
+      "what is linux",
+      "linux file system",
+      "linux file permissions",
+      "linux sudo",
+      "linux text editors",
+      "linux process management",
+      "linux programming",
+      "linux coding",
+      "linux code",
+      "linux guide",
+      "linux explained",
+      "what can linux do",
+      "linux tips",
+      "linux history",
+      "history of linux",
+      "learn linux",
+      "linux skills",
+      "linux commands",
+      "linux setup",
+      "fireship"
+    ],
+    "transcript": [
+      {
+        "timestamp": "0:00",
+        "text": "this cooking trick recently changed my"
+      },
+      {
+        "timestamp": "0:01",
+        "text": "life if you just drop an egg to crack it"
+      },
+      {
+        "timestamp": "0:03",
+        "text": "instead of tapping it while holding it"
+      },
+      {
+        "timestamp": "0:05",
+        "text": "you'll never get shells in the result"
+      },
+      {
+        "timestamp": "0:06",
+        "text": "mind-blowing but now here are five Linux"
+      },
+      {
+        "timestamp": "0:08",
+        "text": "command tricks that will change your"
+      },
+      {
+        "timestamp": "0:09",
+        "text": "life if you're a programmer one use"
+      },
+      {
+        "timestamp": "0:11",
+        "text": "makeer to create multiple combinations"
+      },
+      {
+        "timestamp": "0:13",
+        "text": "of folders by surrounding the path with"
+      },
+      {
+        "timestamp": "0:15",
+        "text": "segments and braces two now CD into a"
+      },
+      {
+        "timestamp": "0:18",
+        "text": "deeply nested path and instead of using"
+      },
+      {
+        "timestamp": "0:19",
+        "text": "CD dot dot a bunch of times use CD Dash"
+      },
+      {
+        "timestamp": "0:22",
+        "text": "to go back where you started instead"
+      },
+      {
+        "timestamp": "0:24",
+        "text": "three now I want to create 100 files"
+      },
+      {
+        "timestamp": "0:26",
+        "text": "that could take all day unless you know"
+      },
+      {
+        "timestamp": "0:27",
+        "text": "how to run touch with a range of numbers"
+      },
+      {
+        "timestamp": "0:29",
+        "text": "and braces four one of these files is a"
+      },
+      {
+        "timestamp": "0:31",
+        "text": "log file that's constantly changing I"
+      },
+      {
+        "timestamp": "0:33",
+        "text": "can read the end of that file with tail"
+      },
+      {
+        "timestamp": "0:35",
+        "text": "but instead of constantly rerunning the"
+      },
+      {
+        "timestamp": "0:36",
+        "text": "command I can use f to follow changes"
+      },
+      {
+        "timestamp": "0:38",
+        "text": "and automatically get updates in real"
+      },
+      {
+        "timestamp": "0:40",
+        "text": "time pretty cool but if you already"
+      },
+      {
+        "timestamp": "0:41",
+        "text": "forgot all these tricks just run history"
+      },
+      {
+        "timestamp": "0:43",
+        "text": "5 to print out your last five commands"
+      }
+    ],
+    "views": 1361228,
+    "likes": 94587
+  },
+  {
+    "id": 2,
+    "title": "This rubber duck can debug your code",
+    "duration_seconds": 42,
+    "tags": [
+      "webdev",
+      "app development",
+      "lesson",
+      "tutorial",
+      "debug",
+      "debugging code",
+      "how to debug your code",
+      "coding",
+      "programming",
+      "technology",
+      "development",
+      "software development",
+      "devs",
+      "rubber duck debugging",
+      "debugging your code with a rubber duck",
+      "coding bugs",
+      "coding bug",
+      "bug in code",
+      "debugging",
+      "debuggers"
+    ],
+    "transcript": [
+      {
+        "timestamp": "0:00",
+        "text": "it's 3:00 a.m. your code is broken you"
+      },
+      {
+        "timestamp": "0:02",
+        "text": "have no idea where your kids are and"
+      },
+      {
+        "timestamp": "0:03",
+        "text": "you're starting to wonder if building"
+      },
+      {
+        "timestamp": "0:04",
+        "text": "your own operating system kernel from"
+      },
+      {
+        "timestamp": "0:06",
+        "text": "scratch was a bad idea when this happens"
+      },
+      {
+        "timestamp": "0:08",
+        "text": "it's time to whip out your rubber duck"
+      },
+      {
+        "timestamp": "0:10",
+        "text": "what you do is teach your imaginary"
+      },
+      {
+        "timestamp": "0:12",
+        "text": "friend how your code Works line by line"
+      },
+      {
+        "timestamp": "0:14",
+        "text": "the duck is a great listener who won't"
+      },
+      {
+        "timestamp": "0:16",
+        "text": "judge and criticize you normal people"
+      },
+      {
+        "timestamp": "0:17",
+        "text": "will think you're crazy which you are"
+      },
+      {
+        "timestamp": "0:19",
+        "text": "but verbalizing your thought process out"
+      },
+      {
+        "timestamp": "0:21",
+        "text": "loud is a weirdly effective way to"
+      },
+      {
+        "timestamp": "0:23",
+        "text": "trigger a higher level of cognitive"
+      },
+      {
+        "timestamp": "0:25",
+        "text": "functioning even senica knew this 2,000"
+      },
+      {
+        "timestamp": "0:26",
+        "text": "years ago who said while we teach we"
+      },
+      {
+        "timestamp": "0:28",
+        "text": "learn magically that missing semicolon"
+      },
+      {
+        "timestamp": "0:31",
+        "text": "on line"
+      },
+      {
+        "timestamp": "0:32",
+        "text": "6233 becomes glaringly obvious not only"
+      },
+      {
+        "timestamp": "0:35",
+        "text": "does rubber duck debugging make you more"
+      },
+      {
+        "timestamp": "0:36",
+        "text": "productive but it's also a great way to"
+      },
+      {
+        "timestamp": "0:38",
+        "text": "prepare for all your upcoming technical"
+      },
+      {
+        "timestamp": "0:40",
+        "text": "interview failures"
+      }
+    ],
+    "views": 402890,
+    "likes": 28491
+  },
+  {
+    "id": 3,
+    "title": "Big O explained with a deck of cards",
+    "duration_seconds": 59,
+    "tags": [
+      "big o",
+      "o(log n)",
+      "what is big o notation",
+      "coding",
+      "web development",
+      "software",
+      "programming",
+      "logarithmic function",
+      "big o notation",
+      "Landau's symbol",
+      "complexity theory",
+      "computer science",
+      "math",
+      "mathematics",
+      "math skills",
+      "computers",
+      "coding basics",
+      "computer science for beginners",
+      "big o notation explained",
+      "big o explained",
+      "o(log n) explained",
+      "o(log n) time complexity",
+      "time complexity",
+      "time complexity big o",
+      "time complexity big o notation",
+      "fireship",
+      "shorts",
+      "computer science concepts",
+      "maths",
+      "tech"
+    ],
+    "transcript": [
+      {
+        "timestamp": "0:00",
+        "text": "if you want to get a job as a programmer"
+      },
+      {
+        "timestamp": "0:01",
+        "text": "you need to know Big O imagine you have"
+      },
+      {
+        "timestamp": "0:03",
+        "text": "a shuffled deck of cards if you want to"
+      },
+      {
+        "timestamp": "0:05",
+        "text": "pop one card off the stack that's"
+      },
+      {
+        "timestamp": "0:07",
+        "text": "extremely fast or o of one constant time"
+      },
+      {
+        "timestamp": "0:10",
+        "text": "but if you then want to count the cards"
+      },
+      {
+        "timestamp": "0:11",
+        "text": "you'll need to Loop over the entire deck"
+      },
+      {
+        "timestamp": "0:13",
+        "text": "resulting in O of n or linear time but"
+      },
+      {
+        "timestamp": "0:16",
+        "text": "now let's imagine we need to sort the"
+      },
+      {
+        "timestamp": "0:18",
+        "text": "deck in perfect order that's going to"
+      },
+      {
+        "timestamp": "0:19",
+        "text": "require a strategy or algorithm like"
+      },
+      {
+        "timestamp": "0:21",
+        "text": "bubble sort where we Loop over the deck"
+      },
+      {
+        "timestamp": "0:23",
+        "text": "repeatedly and swap out adjacent cards"
+      },
+      {
+        "timestamp": "0:25",
+        "text": "until the entire thing is perfectly"
+      },
+      {
+        "timestamp": "0:27",
+        "text": "sorted worst case we Loop over it 52"
+      },
+      {
+        "timestamp": "0:29",
+        "text": "times giving us o of n^ s or quadratic"
+      },
+      {
+        "timestamp": "0:32",
+        "text": "time alternatively if you're stupid you"
+      },
+      {
+        "timestamp": "0:34",
+        "text": "could throw the cards up in the air and"
+      },
+      {
+        "timestamp": "0:35",
+        "text": "hope that they land perfectly sorted on"
+      },
+      {
+        "timestamp": "0:37",
+        "text": "the ground that's called BOGO sort and"
+      },
+      {
+        "timestamp": "0:39",
+        "text": "gives you o of n factorial the worst"
+      },
+      {
+        "timestamp": "0:41",
+        "text": "possible time complexity but now we want"
+      },
+      {
+        "timestamp": "0:43",
+        "text": "to find the eight of hearts in the"
+      },
+      {
+        "timestamp": "0:44",
+        "text": "sorted deck instead of looping through"
+      },
+      {
+        "timestamp": "0:46",
+        "text": "every card you could do a binary search"
+      },
+      {
+        "timestamp": "0:48",
+        "text": "by splitting the deck in the middle if"
+      },
+      {
+        "timestamp": "0:49",
+        "text": "the shown card is greater than nine go"
+      },
+      {
+        "timestamp": "0:51",
+        "text": "left otherwise go right continue that"
+      },
+      {
+        "timestamp": "0:53",
+        "text": "process to cut your work in half after"
+      },
+      {
+        "timestamp": "0:55",
+        "text": "every step thus giving you o of log n or"
+      },
+      {
+        "timestamp": "0:57",
+        "text": "logarithmic time"
+      }
+    ],
+    "views": 1404684,
+    "likes": 88233
+  },
+  {
+    "id": 4,
+    "title": "this is just sad...  CrowdStrike attacks a clown website",
+    "duration_seconds": 49,
+    "tags": ["webdev", "app development", "lesson", "tutorial"],
+    "transcript": [
+      {
+        "timestamp": "0:00",
+        "text": "you guys remember that time crowd strike"
+      },
+      {
+        "timestamp": "0:01",
+        "text": "pushed a prod on a Friday and then 8.5"
+      },
+      {
+        "timestamp": "0:04",
+        "text": "million Windows machines entered blue"
+      },
+      {
+        "timestamp": "0:05",
+        "text": "screen of death mode causing the world's"
+      },
+      {
+        "timestamp": "0:07",
+        "text": "biggest it outage ever and then the"
+      },
+      {
+        "timestamp": "0:09",
+        "text": "stock lost 45% of its value which"
+      },
+      {
+        "timestamp": "0:11",
+        "text": "prompted lawsuits from customers and"
+      },
+      {
+        "timestamp": "0:12",
+        "text": "shareholders and then they tried to"
+      },
+      {
+        "timestamp": "0:14",
+        "text": "apologize by offering $10 Uber Eats gift"
+      },
+      {
+        "timestamp": "0:16",
+        "text": "cards to everyone well that screw-up"
+      },
+      {
+        "timestamp": "0:18",
+        "text": "motivated some random web developer to"
+      },
+      {
+        "timestamp": "0:20",
+        "text": "create a mildly insulting parody website"
+      },
+      {
+        "timestamp": "0:22",
+        "text": "on the clown strike. LOL domain which"
+      },
+      {
+        "timestamp": "0:24",
+        "text": "featured the trademark crowd strike logo"
+      },
+      {
+        "timestamp": "0:26",
+        "text": "wearing a clown hat this egregious act"
+      },
+      {
+        "timestamp": "0:28",
+        "text": "motivated crowd strike brand damage"
+      },
+      {
+        "timestamp": "0:30",
+        "text": "control henchmen to issue a dmca"
+      },
+      {
+        "timestamp": "0:32",
+        "text": "takedown of the website in hopes that"
+      },
+      {
+        "timestamp": "0:34",
+        "text": "your eyeballs will never see these"
+      },
+      {
+        "timestamp": "0:36",
+        "text": "pixels unfortunately parody is protected"
+      },
+      {
+        "timestamp": "0:38",
+        "text": "under the fair use Doctrine and this"
+      },
+      {
+        "timestamp": "0:40",
+        "text": "abuse of dmca could open them up to even"
+      },
+      {
+        "timestamp": "0:42",
+        "text": "more lawsuits if you care about crowd"
+      },
+      {
+        "timestamp": "0:44",
+        "text": "strike's feelings please don't go to"
+      },
+      {
+        "timestamp": "0:45",
+        "text": "this website and further exacerbate The"
+      },
+      {
+        "timestamp": "0:47",
+        "text": "Strand effect"
+      }
+    ],
+    "views": 1279360,
+    "likes": 80516
+  },
+  {
+    "id": 5,
+    "title": "Let’s play… Does your code suck? JavaScript Variables Edition",
+    "duration_seconds": 38,
+    "tags": ["webdev", "app development", "lesson", "tutorial"],
+    "transcript": [
+      {
+        "timestamp": "0:00",
+        "text": "let's play does your code suck"
+      },
+      {
+        "timestamp": "0:01",
+        "text": "JavaScript variables Edition one of"
+      },
+      {
+        "timestamp": "0:03",
+        "text": "these code examples does something"
+      },
+      {
+        "timestamp": "0:05",
+        "text": "annoyingly weird can you tell which"
+      },
+      {
+        "timestamp": "0:08",
+        "text": "[Music]"
+      },
+      {
+        "timestamp": "0:10",
+        "text": "one nope you're wrong it's the bottom"
+      },
+      {
+        "timestamp": "0:13",
+        "text": "one the code with VAR doesn't throw an"
+      },
+      {
+        "timestamp": "0:14",
+        "text": "error but that's actually why it sucks"
+      },
+      {
+        "timestamp": "0:16",
+        "text": "variables with VAR get hoisted to the"
+      },
+      {
+        "timestamp": "0:18",
+        "text": "top of their scope by the JavaScript"
+      },
+      {
+        "timestamp": "0:20",
+        "text": "engine however only the Declaration is"
+      },
+      {
+        "timestamp": "0:22",
+        "text": "hoisted not the value assigned to it"
+      },
+      {
+        "timestamp": "0:24",
+        "text": "which means this confusingly logs out"
+      },
+      {
+        "timestamp": "0:25",
+        "text": "undefined in a large code base that can"
+      },
+      {
+        "timestamp": "0:27",
+        "text": "be a nightmare to debug let on the other"
+      },
+      {
+        "timestamp": "0:29",
+        "text": "hand can only be accessed after the"
+      },
+      {
+        "timestamp": "0:31",
+        "text": "Declaration everything above it is"
+      },
+      {
+        "timestamp": "0:33",
+        "text": "called the temporal dead zone so what we"
+      },
+      {
+        "timestamp": "0:34",
+        "text": "get is a nice clear error that can be"
+      },
+      {
+        "timestamp": "0:36",
+        "text": "easily debugged"
+      }
+    ],
+    "views": 1311592,
+    "likes": 66881
+  },
+  {
+    "id": 6,
+    "title": "how god programmed birds probably",
+    "duration_seconds": 40,
+    "tags": ["webdev", "app development", "lesson", "tutorial"],
+    "transcript": [
+      {
+        "timestamp": "0:00",
+        "text": "just look at this block of birds it's so"
+      },
+      {
+        "timestamp": "0:01",
+        "text": "Majestic but how do they all fly"
+      },
+      {
+        "timestamp": "0:03",
+        "text": "together in unison like that it's not"
+      },
+      {
+        "timestamp": "0:05",
+        "text": "magic it's an algorithm built into"
+      },
+      {
+        "timestamp": "0:07",
+        "text": "nature and we can easily reproduce it in"
+      },
+      {
+        "timestamp": "0:09",
+        "text": "computers by programming three Simple"
+      },
+      {
+        "timestamp": "0:10",
+        "text": "Rules imagine we work for the"
+      },
+      {
+        "timestamp": "0:12",
+        "text": "government's top secret bird program but"
+      },
+      {
+        "timestamp": "0:14",
+        "text": "currently the birds fly around randomly"
+      },
+      {
+        "timestamp": "0:16",
+        "text": "so our algorithm needs a rule for"
+      },
+      {
+        "timestamp": "0:17",
+        "text": "separation that tells the bird not to"
+      },
+      {
+        "timestamp": "0:19",
+        "text": "run into its loock mates still too"
+      },
+      {
+        "timestamp": "0:21",
+        "text": "random so now let's write a rule for"
+      },
+      {
+        "timestamp": "0:23",
+        "text": "alignment that tells each bird to steer"
+      },
+      {
+        "timestamp": "0:25",
+        "text": "towards the average heading of the flock"
+      },
+      {
+        "timestamp": "0:26",
+        "text": "now they move together in a straight"
+      },
+      {
+        "timestamp": "0:27",
+        "text": "line but if we add one more rule for"
+      },
+      {
+        "timestamp": "0:30",
+        "text": "cohesion that tells them to steer"
+      },
+      {
+        "timestamp": "0:31",
+        "text": "towards the average Center of mass we"
+      },
+      {
+        "timestamp": "0:33",
+        "text": "get these cool patterns that simulate"
+      },
+      {
+        "timestamp": "0:35",
+        "text": "flocking behavior in nature"
+      },
+      {
+        "timestamp": "0:36",
+        "text": "congratulations you just implemented"
+      },
+      {
+        "timestamp": "0:38",
+        "text": "void's algorithm"
+      }
+    ],
+    "views": 2272672,
+    "likes": 130951
+  },
+  {
+    "id": 7,
+    "title": "real HTML programmers debug in 3D",
+    "duration_seconds": 50,
+    "tags": ["webdev", "app development", "lesson", "tutorial"],
+    "transcript": [
+      {
+        "timestamp": "0:00",
+        "text": "if you're an HTML programmer you've"
+      },
+      {
+        "timestamp": "0:01",
+        "text": "likely Seen Crazy nested code like this"
+      },
+      {
+        "timestamp": "0:03",
+        "text": "ugly code is one thing but the real"
+      },
+      {
+        "timestamp": "0:05",
+        "text": "problem is that your UI disappeared"
+      },
+      {
+        "timestamp": "0:06",
+        "text": "because you've got a bunch of other junk"
+      },
+      {
+        "timestamp": "0:08",
+        "text": "stacked on top of it this might make you"
+      },
+      {
+        "timestamp": "0:09",
+        "text": "want to gouge your eyes out but luckily"
+      },
+      {
+        "timestamp": "0:11",
+        "text": "there's a better approach first find 3D"
+      },
+      {
+        "timestamp": "0:13",
+        "text": "view in your browser Dev tools you see"
+      },
+      {
+        "timestamp": "0:14",
+        "text": "the browser needs to go through multiple"
+      },
+      {
+        "timestamp": "0:16",
+        "text": "steps to turn your code into actual"
+      },
+      {
+        "timestamp": "0:17",
+        "text": "pixels on the screen composite view will"
+      },
+      {
+        "timestamp": "0:19",
+        "text": "visualize how these steps take place in"
+      },
+      {
+        "timestamp": "0:21",
+        "text": "3D which is super useful for debugging"
+      },
+      {
+        "timestamp": "0:23",
+        "text": "animations but when something doesn't"
+      },
+      {
+        "timestamp": "0:24",
+        "text": "show up in the Dom the typical solution"
+      },
+      {
+        "timestamp": "0:26",
+        "text": "is to increase the zindex until it shows"
+      },
+      {
+        "timestamp": "0:28",
+        "text": "up but don't do that blind because in 3D"
+      },
+      {
+        "timestamp": "0:30",
+        "text": "view we can visualize the zindex of"
+      },
+      {
+        "timestamp": "0:32",
+        "text": "every single element and finally Dom"
+      },
+      {
+        "timestamp": "0:34",
+        "text": "mode allows us to visualize HTML hell it"
+      },
+      {
+        "timestamp": "0:37",
+        "text": "creates a heat map that shows how all"
+      },
+      {
+        "timestamp": "0:38",
+        "text": "the elements are nested and you can even"
+      },
+      {
+        "timestamp": "0:40",
+        "text": "customize the colors the more complex"
+      },
+      {
+        "timestamp": "0:42",
+        "text": "the result the more it means your"
+      },
+      {
+        "timestamp": "0:43",
+        "text": "website sucks pretty awesome but to use"
+      },
+      {
+        "timestamp": "0:45",
+        "text": "3D view there's just one catch it's only"
+      },
+      {
+        "timestamp": "0:47",
+        "text": "available in Microsoft Edge"
+      }
+    ],
+    "views": 1231830,
+    "likes": 69936
+  },
+  {
+    "id": 8,
+    "title": "the untold history of web development",
+    "duration_seconds": 54,
+    "tags": ["webdev", "app development", "lesson", "tutorial"],
+    "transcript": [
+      {
+        "timestamp": "0:00",
+        "text": "1990 HTML is invented 94 CSS invented to"
+      },
+      {
+        "timestamp": "0:04",
+        "text": "fix HTML 95 JavaScript invented to fix"
+      },
+      {
+        "timestamp": "0:07",
+        "text": "HTML and CSS 06 jQuery invented to fix"
+      },
+      {
+        "timestamp": "0:10",
+        "text": "JavaScript 2010 angularjs invented to"
+      },
+      {
+        "timestamp": "0:13",
+        "text": "fix jQuery 2013 react invented to fix"
+      },
+      {
+        "timestamp": "0:16",
+        "text": "angularjs 2014 view invented to fix"
+      },
+      {
+        "timestamp": "0:19",
+        "text": "react and angular 2016 angular 2"
+      },
+      {
+        "timestamp": "0:21",
+        "text": "invented to fix angular 2017 web"
+      },
+      {
+        "timestamp": "0:23",
+        "text": "assembly invented to fix this madness"
+      },
+      {
+        "timestamp": "0:25",
+        "text": "2019 spelt invented to fix react angular"
+      },
+      {
+        "timestamp": "0:28",
+        "text": "and view react hooks invented to to fix"
+      },
+      {
+        "timestamp": "0:30",
+        "text": "react 2020 view composition invented to"
+      },
+      {
+        "timestamp": "0:32",
+        "text": "fix react hooks is solid invented to fix"
+      },
+      {
+        "timestamp": "0:35",
+        "text": "react angular spelt and view HTM X"
+      },
+      {
+        "timestamp": "0:37",
+        "text": "invented to fix react angular spelt View"
+      },
+      {
+        "timestamp": "0:39",
+        "text": "and solid 2021 react suspense invented"
+      },
+      {
+        "timestamp": "0:42",
+        "text": "to fix react again 2023 spelt runes"
+      },
+      {
+        "timestamp": "0:44",
+        "text": "invented to fix spelt 2024 jQuery is"
+      },
+      {
+        "timestamp": "0:47",
+        "text": "still used on 75% of websites 75% of"
+      },
+      {
+        "timestamp": "0:52",
+        "text": "websites"
+      }
+    ],
+    "views": 4916495,
+    "likes": 283932
+  },
+  {
+    "id": 9,
+    "title": "my browser, my paste",
+    "duration_seconds": 26,
+    "tags": ["webdev", "app development", "lesson", "tutorial"],
+    "transcript": [
+      {
+        "timestamp": "0:00",
+        "text": "one of the most annoying things in the"
+      },
+      {
+        "timestamp": "0:01",
+        "text": "world is when you go to a website and"
+      },
+      {
+        "timestamp": "0:03",
+        "text": "the developer has disabled Pace because"
+      },
+      {
+        "timestamp": "0:05",
+        "text": "they think you're too stupid to copy the"
+      },
+      {
+        "timestamp": "0:06",
+        "text": "right password or the right routing and"
+      },
+      {
+        "timestamp": "0:08",
+        "text": "account numbers from your bank you can"
+      },
+      {
+        "timestamp": "0:09",
+        "text": "stand up to this tyranny by writing a"
+      },
+      {
+        "timestamp": "0:11",
+        "text": "function that captures the paste event"
+      },
+      {
+        "timestamp": "0:13",
+        "text": "and stops immediate propagation this"
+      },
+      {
+        "timestamp": "0:15",
+        "text": "ensures that other event listeners like"
+      },
+      {
+        "timestamp": "0:16",
+        "text": "the one the developer road to prevent"
+      },
+      {
+        "timestamp": "0:18",
+        "text": "paste will not be called now take this"
+      },
+      {
+        "timestamp": "0:20",
+        "text": "untrusted code you just learned from"
+      },
+      {
+        "timestamp": "0:21",
+        "text": "some guy on the Internet run it in the"
+      },
+      {
+        "timestamp": "0:23",
+        "text": "browser console and take the power back"
+      }
+    ],
+    "views": 1507623,
+    "likes": 71883
+  },
+  {
+    "id": 10,
+    "title": "Yo mama so FAT32...",
+    "duration_seconds": 43,
+    "tags": ["webdev", "app development", "lesson", "tutorial"],
+    "transcript": [
+      {
+        "timestamp": "0:00",
+        "text": "yo yo mama so fat 32 she can't even"
+      },
+      {
+        "timestamp": "0:02",
+        "text": "store files over four gigabytes and"
+      },
+      {
+        "timestamp": "0:04",
+        "text": "she's so ugly she makes ssds turn floppy"
+      },
+      {
+        "timestamp": "0:06",
+        "text": "if you don't get that joke you best"
+      },
+      {
+        "timestamp": "0:08",
+        "text": "recognize that a file system is mostly"
+      },
+      {
+        "timestamp": "0:10",
+        "text": "just a lookup table that keeps track of"
+      },
+      {
+        "timestamp": "0:11",
+        "text": "where files are stored on a disk in the"
+      },
+      {
+        "timestamp": "0:13",
+        "text": "early days we had the file allocation"
+      },
+      {
+        "timestamp": "0:15",
+        "text": "table or fat but it was too small and"
+      },
+      {
+        "timestamp": "0:17",
+        "text": "didn't support permissions it was"
+      },
+      {
+        "timestamp": "0:18",
+        "text": "upgraded to FAT32 which is commonly used"
+      },
+      {
+        "timestamp": "0:20",
+        "text": "on USB flash drives today but now we"
+      },
+      {
+        "timestamp": "0:22",
+        "text": "also have xvat to support even larger"
+      },
+      {
+        "timestamp": "0:24",
+        "text": "drives Windows has its own file system"
+      },
+      {
+        "timestamp": "0:26",
+        "text": "called new technology file system while"
+      },
+      {
+        "timestamp": "0:28",
+        "text": "Mac OS has the Apple file system while"
+      },
+      {
+        "timestamp": "0:31",
+        "text": "Linux has the fourth extended file"
+      },
+      {
+        "timestamp": "0:33",
+        "text": "system or ext4 all of which support"
+      },
+      {
+        "timestamp": "0:35",
+        "text": "journaling encryption and other Advanced"
+      },
+      {
+        "timestamp": "0:37",
+        "text": "features and now you can file this"
+      },
+      {
+        "timestamp": "0:39",
+        "text": "useless information away in that file"
+      },
+      {
+        "timestamp": "0:41",
+        "text": "system you call your brain"
+      }
+    ],
+    "views": 1432470,
+    "likes": 85160
+  },
+  {
+    "id": 11,
+    "title": "A Day in the Life of a Proompt Engineer",
+    "duration_seconds": 56,
+    "tags": ["webdev", "app development", "lesson", "tutorial"],
+    "transcript": [
+      {
+        "timestamp": "0:00",
+        "text": "hey guys my name is Jeff and welcome to"
+      },
+      {
+        "timestamp": "0:01",
+        "text": "a day in the life of a 25-year-old pred"
+      },
+      {
+        "timestamp": "0:03",
+        "text": "engineer making 369k total comp here in"
+      },
+      {
+        "timestamp": "0:06",
+        "text": "beautiful San Francisco I do my daily"
+      },
+      {
+        "timestamp": "0:08",
+        "text": "standup and today is pretty chill I'll"
+      },
+      {
+        "timestamp": "0:10",
+        "text": "be building seven web apps three iOS"
+      },
+      {
+        "timestamp": "0:12",
+        "text": "apps 22 new JavaScript Frameworks a"
+      },
+      {
+        "timestamp": "0:14",
+        "text": "custom compiler and a new operating"
+      },
+      {
+        "timestamp": "0:16",
+        "text": "system Kel to build our first web app we"
+      },
+      {
+        "timestamp": "0:17",
+        "text": "prompt the image AI for some design"
+      },
+      {
+        "timestamp": "0:19",
+        "text": "files which look amazing I then pruned"
+      },
+      {
+        "timestamp": "0:21",
+        "text": "Captain formerly known as co-pilot to"
+      },
+      {
+        "timestamp": "0:23",
+        "text": "bang out all the code for it it also"
+      },
+      {
+        "timestamp": "0:24",
+        "text": "needs some content so we PR the chat AI"
+      },
+      {
+        "timestamp": "0:26",
+        "text": "to write some articles then for"
+      },
+      {
+        "timestamp": "0:28",
+        "text": "e-commerce we generate some realistic"
+      },
+      {
+        "timestamp": "0:29",
+        "text": "looking humans to model the product the"
+      },
+      {
+        "timestamp": "0:31",
+        "text": "whole process took about 4 minutes so"
+      },
+      {
+        "timestamp": "0:33",
+        "text": "now we can Pro the accounting AI to"
+      },
+      {
+        "timestamp": "0:34",
+        "text": "invoice the client for $770,000 next I"
+      },
+      {
+        "timestamp": "0:37",
+        "text": "go to lunch on the perch and have a"
+      },
+      {
+        "timestamp": "0:38",
+        "text": "pretentious salad which is so yummy when"
+      },
+      {
+        "timestamp": "0:40",
+        "text": "I look down at the city below I see a"
+      },
+      {
+        "timestamp": "0:42",
+        "text": "tent city filled with former software"
+      },
+      {
+        "timestamp": "0:44",
+        "text": "Engineers which is so sad so I prompt my"
+      },
+      {
+        "timestamp": "0:46",
+        "text": "AR glasses to remove them from the scene"
+      },
+      {
+        "timestamp": "0:48",
+        "text": "uh Hey guys quick update I just got laid"
+      },
+      {
+        "timestamp": "0:50",
+        "text": "off apparently the AI learned how to PR"
+      },
+      {
+        "timestamp": "0:52",
+        "text": "itself so I had to downsize to this"
+      },
+      {
+        "timestamp": "0:53",
+        "text": "$2500 a month Studio"
+      }
+    ],
+    "views": 1431643,
+    "likes": 76201
+  },
+  {
+    "id": 12,
+    "title": "Uh oh… AI-search engine for developers has emerged",
+    "duration_seconds": 27,
+    "tags": ["webdev", "app development", "lesson", "tutorial"],
+    "transcript": [
+      {
+        "timestamp": "0:00",
+        "text": "just as I predicted a few weeks ago a"
+      },
+      {
+        "timestamp": "0:02",
+        "text": "brand new search engine for developers"
+      },
+      {
+        "timestamp": "0:03",
+        "text": "has emerged if you ask chat EBT to write"
+      },
+      {
+        "timestamp": "0:05",
+        "text": "you a tutorial with the latest next JS"
+      },
+      {
+        "timestamp": "0:07",
+        "text": "version that dropped last week it'll"
+      },
+      {
+        "timestamp": "0:08",
+        "text": "fail because of its training cutoff but"
+      },
+      {
+        "timestamp": "0:10",
+        "text": "this tool can get the job done perfectly"
+      },
+      {
+        "timestamp": "0:11",
+        "text": "because it pools all the latest"
+      },
+      {
+        "timestamp": "0:13",
+        "text": "documentation from the web while citing"
+      },
+      {
+        "timestamp": "0:15",
+        "text": "its sources and you can tailor it to"
+      },
+      {
+        "timestamp": "0:16",
+        "text": "give you a long-winded expert tutorial"
+      },
+      {
+        "timestamp": "0:18",
+        "text": "where it can size to the point answer"
+      },
+      {
+        "timestamp": "0:20",
+        "text": "it's basically your own programming"
+      },
+      {
+        "timestamp": "0:21",
+        "text": "tutor and that's not good news for me so"
+      },
+      {
+        "timestamp": "0:23",
+        "text": "if you guys know of any coal mines that"
+      },
+      {
+        "timestamp": "0:24",
+        "text": "might be hiring right now please let me"
+      },
+      {
+        "timestamp": "0:26",
+        "text": "know"
+      }
+    ],
+    "views": 3048871,
+    "likes": 158799
+  },
+  {
+    "id": 13,
+    "title": "Meet SAM… Meta’s latest AI model",
+    "duration_seconds": 43,
+    "tags": ["webdev", "app development", "lesson", "tutorial"],
+    "transcript": [
+      {
+        "timestamp": "0:00",
+        "text": "new AI model named Sam from meta just"
+      },
+      {
+        "timestamp": "0:02",
+        "text": "dropped it stands for Segment anything"
+      },
+      {
+        "timestamp": "0:04",
+        "text": "model and is capable of outlining"
+      },
+      {
+        "timestamp": "0:06",
+        "text": "objects in an image in just 50"
+      },
+      {
+        "timestamp": "0:07",
+        "text": "milliseconds it was trained on a massive"
+      },
+      {
+        "timestamp": "0:09",
+        "text": "data set of 1 billion image masks but"
+      },
+      {
+        "timestamp": "0:12",
+        "text": "what makes it unique is that it's"
+      },
+      {
+        "timestamp": "0:13",
+        "text": "promptable a user can provide"
+      },
+      {
+        "timestamp": "0:14",
+        "text": "foregrounder background points a"
+      },
+      {
+        "timestamp": "0:16",
+        "text": "bounding box or just freeform text to"
+      },
+      {
+        "timestamp": "0:18",
+        "text": "determine which objects to segment this"
+      },
+      {
+        "timestamp": "0:20",
+        "text": "is huge because it will make extracting"
+      },
+      {
+        "timestamp": "0:22",
+        "text": "objects from images much easier and even"
+      },
+      {
+        "timestamp": "0:24",
+        "text": "for lifting them into 3D in the near"
+      },
+      {
+        "timestamp": "0:26",
+        "text": "future when we all have VR headsets"
+      },
+      {
+        "timestamp": "0:27",
+        "text": "surgically attached to our faces this"
+      },
+      {
+        "timestamp": "0:29",
+        "text": "Tech could quickly identify undesirable"
+      },
+      {
+        "timestamp": "0:31",
+        "text": "objects like ugly faces then use"
+      },
+      {
+        "timestamp": "0:33",
+        "text": "generative image models to beautify them"
+      },
+      {
+        "timestamp": "0:35",
+        "text": "in real time or when walking down the"
+      },
+      {
+        "timestamp": "0:37",
+        "text": "streets of San Francisco homeless people"
+      },
+      {
+        "timestamp": "0:39",
+        "text": "could be easily erased from the"
+      },
+      {
+        "timestamp": "0:40",
+        "text": "landscape thus making the world a better"
+      },
+      {
+        "timestamp": "0:42",
+        "text": "place"
+      }
+    ],
+    "views": 597492,
+    "likes": 42672
+  },
+  {
+    "id": 14,
+    "title": "the PATH var of righteousness",
+    "duration_seconds": 33,
+    "tags": ["webdev", "app development", "lesson", "tutorial"],
+    "transcript": [
+      {
+        "timestamp": "0:00",
+        "text": "when you run a command like cat from the"
+      },
+      {
+        "timestamp": "0:01",
+        "text": "terminal it just works but when you try"
+      },
+      {
+        "timestamp": "0:03",
+        "text": "to run dog it says command not found"
+      },
+      {
+        "timestamp": "0:06",
+        "text": "that's because your file system is like"
+      },
+      {
+        "timestamp": "0:08",
+        "text": "a big maze the path environment variable"
+      },
+      {
+        "timestamp": "0:10",
+        "text": "is like a map that tells your computer"
+      },
+      {
+        "timestamp": "0:12",
+        "text": "where to find the binaries that actually"
+      },
+      {
+        "timestamp": "0:13",
+        "text": "execute these commands in Linux print"
+      },
+      {
+        "timestamp": "0:16",
+        "text": "the path by putting a dollar sign in"
+      },
+      {
+        "timestamp": "0:18",
+        "text": "front of it notice how it contains a"
+      },
+      {
+        "timestamp": "0:19",
+        "text": "bunch of directories separated by colons"
+      },
+      {
+        "timestamp": "0:21",
+        "text": "when you enter a command the computer"
+      },
+      {
+        "timestamp": "0:23",
+        "text": "will search through these directories"
+      },
+      {
+        "timestamp": "0:24",
+        "text": "then run the first binary it finds with"
+      },
+      {
+        "timestamp": "0:26",
+        "text": "a matching name if the command is not"
+      },
+      {
+        "timestamp": "0:28",
+        "text": "found you may need to update your path"
+      },
+      {
+        "timestamp": "0:29",
+        "text": "by concatenating a new directory to it"
+      },
+      {
+        "timestamp": "0:31",
+        "text": "like so"
+      }
+    ],
+    "views": 642398,
+    "likes": 31702
+  },
+  {
+    "id": 15,
+    "title": "how big is a yottabyte?",
+    "duration_seconds": 33,
+    "tags": ["webdev", "app development", "lesson", "tutorial"],
+    "transcript": [
+      {
+        "timestamp": "0:00",
+        "text": "in the year 1956 The Cutting Edge IBM"
+      },
+      {
+        "timestamp": "0:03",
+        "text": "350 could store about 3.5 megabytes of"
+      },
+      {
+        "timestamp": "0:05",
+        "text": "data or one photo from your iPhone but"
+      },
+      {
+        "timestamp": "0:07",
+        "text": "today you can fit about 200 000 photos"
+      },
+      {
+        "timestamp": "0:09",
+        "text": "on a terabyte the size of your thumbnail"
+      },
+      {
+        "timestamp": "0:11",
+        "text": "now multiply that by 1000 to get a"
+      },
+      {
+        "timestamp": "0:14",
+        "text": "petabyte which takes up about one slot"
+      },
+      {
+        "timestamp": "0:15",
+        "text": "on a server rack get yourself a thousand"
+      },
+      {
+        "timestamp": "0:17",
+        "text": "of these and now you have one exabyte"
+      },
+      {
+        "timestamp": "0:19",
+        "text": "about the size of a small data center a"
+      },
+      {
+        "timestamp": "0:21",
+        "text": "thousand of those and now we're talking"
+      },
+      {
+        "timestamp": "0:23",
+        "text": "about zettabytes all human activity"
+      },
+      {
+        "timestamp": "0:25",
+        "text": "generates about one of these every three"
+      },
+      {
+        "timestamp": "0:26",
+        "text": "days multiply that by a thousand to get"
+      },
+      {
+        "timestamp": "0:28",
+        "text": "a yata bite which is big enough to store"
+      },
+      {
+        "timestamp": "0:29",
+        "text": "all the information ever produced by"
+      },
+      {
+        "timestamp": "0:31",
+        "text": "human since the dawn of man"
+      }
+    ],
+    "views": 2227586,
+    "likes": 139789
+  },
+  {
+    "id": 16,
+    "title": "real eyes realize AI lies",
+    "duration_seconds": 44,
+    "tags": ["webdev", "app development", "lesson", "tutorial"],
+    "transcript": [
+      {
+        "timestamp": "0:00",
+        "text": "I was in a virtual meeting yesterday and"
+      },
+      {
+        "timestamp": "0:01",
+        "text": "this dude would not stop making eye"
+      },
+      {
+        "timestamp": "0:03",
+        "text": "contact with me it was creepy but also"
+      },
+      {
+        "timestamp": "0:05",
+        "text": "fake he used nvidia's new eye contact AI"
+      },
+      {
+        "timestamp": "0:08",
+        "text": "I was reading up about it on CNET then"
+      },
+      {
+        "timestamp": "0:10",
+        "text": "found out that chat GPT replaced human"
+      },
+      {
+        "timestamp": "0:11",
+        "text": "authors there months ago and nobody even"
+      },
+      {
+        "timestamp": "0:13",
+        "text": "noticed this made me depressed so I"
+      },
+      {
+        "timestamp": "0:15",
+        "text": "cuddled my mofflin artificial pet to get"
+      },
+      {
+        "timestamp": "0:17",
+        "text": "some fake emotional gratification I then"
+      },
+      {
+        "timestamp": "0:19",
+        "text": "went to my local Art Gallery but I only"
+      },
+      {
+        "timestamp": "0:21",
+        "text": "found artificial art generated by"
+      },
+      {
+        "timestamp": "0:22",
+        "text": "mid-journey like this Bob Ross piece"
+      },
+      {
+        "timestamp": "0:24",
+        "text": "minus the happy little accidents when I"
+      },
+      {
+        "timestamp": "0:26",
+        "text": "got back to my sleeping pod I was hungry"
+      },
+      {
+        "timestamp": "0:28",
+        "text": "so I pushed a button to generate some"
+      },
+      {
+        "timestamp": "0:29",
+        "text": "nutrient paste formulated for my body"
+      },
+      {
+        "timestamp": "0:31",
+        "text": "based on biofeedback from my neural link"
+      },
+      {
+        "timestamp": "0:33",
+        "text": "finally I settled down with my VR"
+      },
+      {
+        "timestamp": "0:35",
+        "text": "headset to watch Mission Impossible 23"
+      },
+      {
+        "timestamp": "0:37",
+        "text": "But realize Tom Cruise actually died 42"
+      },
+      {
+        "timestamp": "0:39",
+        "text": "years ago and we just keep deepaking him"
+      },
+      {
+        "timestamp": "0:41",
+        "text": "thanks to face swap on GitHub"
+      }
+    ],
+    "views": 2972828,
+    "likes": 172859
+  },
+  {
+    "id": 17,
+    "title": "my code will never stop never stopping",
+    "duration_seconds": 23,
+    "tags": ["webdev", "app development", "lesson", "tutorial"],
+    "transcript": [
+      {
+        "timestamp": "0:00",
+        "text": "CPU goes Burr I opened this project from"
+      },
+      {
+        "timestamp": "0:02",
+        "text": "last year which contains code that I'm"
+      },
+      {
+        "timestamp": "0:04",
+        "text": "embarrassed to say I even wrote what's"
+      },
+      {
+        "timestamp": "0:06",
+        "text": "weird though is that I left this comment"
+      },
+      {
+        "timestamp": "0:08",
+        "text": "that says Jeff do not run this code"
+      },
+      {
+        "timestamp": "0:09",
+        "text": "under any circumcisions I think that's a"
+      },
+      {
+        "timestamp": "0:11",
+        "text": "typo though it looks like just a regular"
+      },
+      {
+        "timestamp": "0:13",
+        "text": "for Loop although it is missing any"
+      },
+      {
+        "timestamp": "0:14",
+        "text": "control Expressions but under no"
+      },
+      {
+        "timestamp": "0:16",
+        "text": "circumstances do I listen to code"
+      },
+      {
+        "timestamp": "0:18",
+        "text": "comments talk to the hand here's what"
+      },
+      {
+        "timestamp": "0:20",
+        "text": "happens when I run it the terminal"
+      },
+      {
+        "timestamp": "0:21",
+        "text": "freezes up and"
+      }
+    ],
+    "views": 840234,
+    "likes": 40080
+  },
+  {
+    "id": 18,
+    "title": "get a grip on grep",
+    "duration_seconds": 44,
+    "tags": ["webdev", "app development", "lesson", "tutorial"],
+    "transcript": [
+      {
+        "timestamp": "0:00",
+        "text": "there's a reason grep is installed on"
+      },
+      {
+        "timestamp": "0:02",
+        "text": "every Linux distro and was copied on"
+      },
+      {
+        "timestamp": "0:03",
+        "text": "Windows Powershell with feinster which"
+      },
+      {
+        "timestamp": "0:05",
+        "text": "is honestly a much better name because"
+      },
+      {
+        "timestamp": "0:07",
+        "text": "grep is all about finding strings across"
+      },
+      {
+        "timestamp": "0:09",
+        "text": "multiple files let's imagine you're"
+      },
+      {
+        "timestamp": "0:10",
+        "text": "being spied on by the CIA and you need"
+      },
+      {
+        "timestamp": "0:12",
+        "text": "to quickly delete all those files"
+      },
+      {
+        "timestamp": "0:14",
+        "text": "referencing the Apollo Moon missions"
+      },
+      {
+        "timestamp": "0:15",
+        "text": "grep can help you by taking a string or"
+      },
+      {
+        "timestamp": "0:17",
+        "text": "regex pattern followed by a file name"
+      },
+      {
+        "timestamp": "0:19",
+        "text": "then return all the lines that contain"
+      },
+      {
+        "timestamp": "0:21",
+        "text": "that text use the end flag to also print"
+      },
+      {
+        "timestamp": "0:23",
+        "text": "the line number or use V to invert it"
+      },
+      {
+        "timestamp": "0:26",
+        "text": "and show all the lines without that text"
+      },
+      {
+        "timestamp": "0:27",
+        "text": "use R to search an entire directory and"
+      },
+      {
+        "timestamp": "0:30",
+        "text": "it also acts as a filter when piped into"
+      },
+      {
+        "timestamp": "0:32",
+        "text": "other commands like LS"
+      },
+      {
+        "timestamp": "0:34",
+        "text": "but if the fed's already busted down"
+      },
+      {
+        "timestamp": "0:37",
+        "text": "your door and shot your dog it's too"
+      },
+      {
+        "timestamp": "0:38",
+        "text": "late you should have watched a video"
+      },
+      {
+        "timestamp": "0:39",
+        "text": "about said or awk which are similar"
+      },
+      {
+        "timestamp": "0:41",
+        "text": "tools that also support find and replace"
+      }
+    ],
+    "views": 495959,
+    "likes": 31911
+  },
+  {
+    "id": 19,
+    "title": "JPG vs PNG vs WEBP vs GIF vs SVG",
+    "duration_seconds": 52,
+    "tags": ["webdev", "app development", "lesson", "tutorial"],
+    "transcript": [
+      {
+        "timestamp": "0:00",
+        "text": "jpeg PNG webp GIF and SVG what's the"
+      },
+      {
+        "timestamp": "0:03",
+        "text": "difference between these image formats"
+      },
+      {
+        "timestamp": "0:04",
+        "text": "let's simplify the equation by"
+      },
+      {
+        "timestamp": "0:06",
+        "text": "separating the raster formats from the"
+      },
+      {
+        "timestamp": "0:08",
+        "text": "vector formats a raster or bitmap is"
+      },
+      {
+        "timestamp": "0:10",
+        "text": "like a grid of pixels best suited for"
+      },
+      {
+        "timestamp": "0:12",
+        "text": "complex pictures like the ones you take"
+      },
+      {
+        "timestamp": "0:13",
+        "text": "on your camera but they require lots of"
+      },
+      {
+        "timestamp": "0:15",
+        "text": "memory at high resolution and lose their"
+      },
+      {
+        "timestamp": "0:17",
+        "text": "Clarity when scaled up JPEG and PNG are"
+      },
+      {
+        "timestamp": "0:19",
+        "text": "the ogs from the 90s jpeg is smaller"
+      },
+      {
+        "timestamp": "0:21",
+        "text": "because it doesn't support transparency"
+      },
+      {
+        "timestamp": "0:23",
+        "text": "and uses lossy compression while PNG has"
+      },
+      {
+        "timestamp": "0:26",
+        "text": "transparency with lossless compression"
+      },
+      {
+        "timestamp": "0:28",
+        "text": "GIF not GIF is similar but can also"
+      },
+      {
+        "timestamp": "0:30",
+        "text": "combine frames to make animations webp"
+      },
+      {
+        "timestamp": "0:32",
+        "text": "is a new format from Google that has the"
+      },
+      {
+        "timestamp": "0:34",
+        "text": "best of all worlds with smaller"
+      },
+      {
+        "timestamp": "0:36",
+        "text": "transparent animatable images on the"
+      },
+      {
+        "timestamp": "0:38",
+        "text": "other side we have vector image formats"
+      },
+      {
+        "timestamp": "0:40",
+        "text": "that are good for flat Graphics like"
+      },
+      {
+        "timestamp": "0:41",
+        "text": "logos and icons because they use"
+      },
+      {
+        "timestamp": "0:43",
+        "text": "geometry and code to represent the image"
+      },
+      {
+        "timestamp": "0:46",
+        "text": "which means it can be scaled to any size"
+      },
+      {
+        "timestamp": "0:47",
+        "text": "without losing resolution hence the name"
+      },
+      {
+        "timestamp": "0:50",
+        "text": "scalable vector graphics"
+      }
+    ],
+    "views": 1316801,
+    "likes": 90830
+  },
+  {
+    "id": 20,
+    "title": "Database Sharting Explained",
+    "duration_seconds": 32,
+    "tags": ["webdev", "app development", "lesson", "tutorial"],
+    "transcript": [
+      {
+        "timestamp": "0:00",
+        "text": "databases can scale up in two ways"
+      },
+      {
+        "timestamp": "0:02",
+        "text": "vertically means the database lives on a"
+      },
+      {
+        "timestamp": "0:04",
+        "text": "single physical machine and is given"
+      },
+      {
+        "timestamp": "0:06",
+        "text": "more CPU cores and RAM to handle more"
+      },
+      {
+        "timestamp": "0:08",
+        "text": "traffic and throughput the problem is"
+      },
+      {
+        "timestamp": "0:10",
+        "text": "that a machine can only get so big the"
+      },
+      {
+        "timestamp": "0:12",
+        "text": "most high traffic apps in the world"
+      },
+      {
+        "timestamp": "0:13",
+        "text": "often use nosql databases like redis and"
+      },
+      {
+        "timestamp": "0:16",
+        "text": "Cassandra that can scale horizontally"
+      },
+      {
+        "timestamp": "0:17",
+        "text": "with sharding data is distributed across"
+      },
+      {
+        "timestamp": "0:19",
+        "text": "multiple machines that can handle read"
+      },
+      {
+        "timestamp": "0:21",
+        "text": "write operations in parallel closer to"
+      },
+      {
+        "timestamp": "0:23",
+        "text": "the end user what's confusing though is"
+      },
+      {
+        "timestamp": "0:25",
+        "text": "that it's still possible for a database"
+      },
+      {
+        "timestamp": "0:27",
+        "text": "to completely fit its pants which is"
+      },
+      {
+        "timestamp": "0:29",
+        "text": "referred to in the industry as database"
+      },
+      {
+        "timestamp": "0:31",
+        "text": "sharding"
+      }
+    ],
+    "views": 850924,
+    "likes": 49272
+  },
+  {
+    "id": 21,
+    "title": "7 killer website features",
+    "duration_seconds": 48,
+    "tags": ["webdev", "app development", "lesson", "tutorial"],
+    "transcript": [
+      {
+        "timestamp": "0:00",
+        "text": "every modern website needs seven"
+      },
+      {
+        "timestamp": "0:01",
+        "text": "features one legally you need the user"
+      },
+      {
+        "timestamp": "0:04",
+        "text": "to accept cookies to exploit their"
+      },
+      {
+        "timestamp": "0:05",
+        "text": "privacy for advertisers provide multiple"
+      },
+      {
+        "timestamp": "0:07",
+        "text": "options to make this as confusing as"
+      },
+      {
+        "timestamp": "0:09",
+        "text": "possible two use the geolocation API to"
+      },
+      {
+        "timestamp": "0:12",
+        "text": "request their location so we know"
+      },
+      {
+        "timestamp": "0:13",
+        "text": "exactly where they live and where"
+      },
+      {
+        "timestamp": "0:14",
+        "text": "they're going three get permission for"
+      },
+      {
+        "timestamp": "0:16",
+        "text": "push notifications because who doesn't"
+      },
+      {
+        "timestamp": "0:18",
+        "text": "love getting unsolicited notifications"
+      },
+      {
+        "timestamp": "0:19",
+        "text": "from some random website for launch an"
+      },
+      {
+        "timestamp": "0:22",
+        "text": "obnoxiously animated modal window to"
+      },
+      {
+        "timestamp": "0:24",
+        "text": "harvest their email for the newsletter"
+      },
+      {
+        "timestamp": "0:25",
+        "text": "5. auto play a video but make sure to"
+      },
+      {
+        "timestamp": "0:28",
+        "text": "disable the controls so it can only be"
+      },
+      {
+        "timestamp": "0:29",
+        "text": "stopped by a skilled JavaScript"
+      },
+      {
+        "timestamp": "0:31",
+        "text": "programmer 6. this user might be a bot"
+      },
+      {
+        "timestamp": "0:33",
+        "text": "so let's verify them with an impossible"
+      },
+      {
+        "timestamp": "0:35",
+        "text": "captcha 7. at this point the user might"
+      },
+      {
+        "timestamp": "0:37",
+        "text": "try to leave to prevent this and still"
+      },
+      {
+        "timestamp": "0:39",
+        "text": "get a conversion disable the back button"
+      },
+      {
+        "timestamp": "0:41",
+        "text": "launch a pop-up that says the user has"
+      },
+      {
+        "timestamp": "0:43",
+        "text": "violated the government and provide a"
+      },
+      {
+        "timestamp": "0:44",
+        "text": "link to your Bitcoin address to resolve"
+      },
+      {
+        "timestamp": "0:46",
+        "text": "for a nominal fee"
+      }
+    ],
+    "views": 3277900,
+    "likes": 196023
+  },
+  {
+    "id": 22,
+    "title": "client got faded, I got paid",
+    "duration_seconds": 35,
+    "tags": ["webdev", "app development", "lesson", "tutorial"],
+    "transcript": [
+      {
+        "timestamp": "0:00",
+        "text": "i built this beautiful website deployed"
+      },
+      {
+        "timestamp": "0:01",
+        "text": "it then my client mysteriously vanished"
+      },
+      {
+        "timestamp": "0:03",
+        "text": "without paying the bill i tried calling"
+      },
+      {
+        "timestamp": "0:05",
+        "text": "the police but they didn't know what a"
+      },
+      {
+        "timestamp": "0:06",
+        "text": "javascript was luckily i'm a developer"
+      },
+      {
+        "timestamp": "0:09",
+        "text": "with a very particular set of skills"
+      },
+      {
+        "timestamp": "0:10",
+        "text": "skills i've acquired over a very long"
+      },
+      {
+        "timestamp": "0:12",
+        "text": "career"
+      },
+      {
+        "timestamp": "0:13",
+        "text": "skills that make me a nightmare for"
+      },
+      {
+        "timestamp": "0:15",
+        "text": "people like you before i deployed i"
+      },
+      {
+        "timestamp": "0:17",
+        "text": "wrote a javascript poison pill a script"
+      },
+      {
+        "timestamp": "0:19",
+        "text": "that checks my api for the payment"
+      },
+      {
+        "timestamp": "0:21",
+        "text": "status and each day it's past two it"
+      },
+      {
+        "timestamp": "0:23",
+        "text": "subtracts .01 from the opacity on the"
+      },
+      {
+        "timestamp": "0:25",
+        "text": "body tag at first you barely notice but"
+      },
+      {
+        "timestamp": "0:27",
+        "text": "each day the website fades out just a"
+      },
+      {
+        "timestamp": "0:29",
+        "text": "little bit by 100 days it's gone"
+      },
+      {
+        "timestamp": "0:31",
+        "text": "completely and the content is replaced"
+      },
+      {
+        "timestamp": "0:33",
+        "text": "with a friendly gaming reminder"
+      }
+    ],
+    "views": 1830952,
+    "likes": 115195
+  },
+  {
+    "id": 23,
+    "title": "my code works… why?",
+    "duration_seconds": 30,
+    "tags": ["webdev", "app development", "lesson", "tutorial"],
+    "transcript": [
+      {
+        "timestamp": "0:00",
+        "text": "so i'm coding along just fine then out"
+      },
+      {
+        "timestamp": "0:01",
+        "text": "of nowhere this error comes up man i"
+      },
+      {
+        "timestamp": "0:03",
+        "text": "hate programming i know i should have"
+      },
+      {
+        "timestamp": "0:04",
+        "text": "written a test first but it's too late"
+      },
+      {
+        "timestamp": "0:06",
+        "text": "now i could try to fix my code but i"
+      },
+      {
+        "timestamp": "0:08",
+        "text": "have no idea what i'm doing let's just"
+      },
+      {
+        "timestamp": "0:10",
+        "text": "google it zero results this is bad"
+      },
+      {
+        "timestamp": "0:12",
+        "text": "really bad i could ask on stack overflow"
+      },
+      {
+        "timestamp": "0:14",
+        "text": "but i'll probably get downvoted into a"
+      },
+      {
+        "timestamp": "0:16",
+        "text": "deep depression maybe there's some kind"
+      },
+      {
+        "timestamp": "0:17",
+        "text": "of udemy course or a hundred second"
+      },
+      {
+        "timestamp": "0:19",
+        "text": "video about it maybe i should have"
+      },
+      {
+        "timestamp": "0:20",
+        "text": "gotten that computer science degree"
+      },
+      {
+        "timestamp": "0:21",
+        "text": "maybe i'm just not cut out for this"
+      },
+      {
+        "timestamp": "0:23",
+        "text": "nobody likes me why do i even exist wait"
+      },
+      {
+        "timestamp": "0:25",
+        "text": "a second i think i think it's working"
+      },
+      {
+        "timestamp": "0:27",
+        "text": "again man i'm a genius i love"
+      },
+      {
+        "timestamp": "0:28",
+        "text": "programming"
+      }
+    ],
+    "views": 2782050,
+    "likes": 181227
+  },
+  {
+    "id": 24,
+    "title": "r u even turing complete?",
+    "duration_seconds": 39,
+    "tags": ["webdev", "app development", "lesson", "tutorial"],
+    "transcript": [
+      {
+        "timestamp": "0:00",
+        "text": "about 100 years ago people got sick of"
+      },
+      {
+        "timestamp": "0:02",
+        "text": "doing math by hand in 1936 a guy named"
+      },
+      {
+        "timestamp": "0:04",
+        "text": "alan turing came up with a concept he"
+      },
+      {
+        "timestamp": "0:07",
+        "text": "called an automatic machine imagine an"
+      },
+      {
+        "timestamp": "0:09",
+        "text": "infinitely long piece of tape then"
+      },
+      {
+        "timestamp": "0:10",
+        "text": "divided up into cells that can hold a"
+      },
+      {
+        "timestamp": "0:12",
+        "text": "one or zero that tape runs through a"
+      },
+      {
+        "timestamp": "0:14",
+        "text": "machine that can read or write the data"
+      },
+      {
+        "timestamp": "0:16",
+        "text": "in one cell at a time a machine like"
+      },
+      {
+        "timestamp": "0:18",
+        "text": "this can support loops and conditional"
+      },
+      {
+        "timestamp": "0:20",
+        "text": "branching which in theory is all you"
+      },
+      {
+        "timestamp": "0:21",
+        "text": "need to build any app or solve any"
+      },
+      {
+        "timestamp": "0:23",
+        "text": "computational problem as long as you"
+      },
+      {
+        "timestamp": "0:25",
+        "text": "have enough memory that is you would be"
+      },
+      {
+        "timestamp": "0:27",
+        "text": "considered turing complete if you can"
+      },
+      {
+        "timestamp": "0:28",
+        "text": "simulate this machine all modern"
+      },
+      {
+        "timestamp": "0:30",
+        "text": "programming languages make the cut but"
+      },
+      {
+        "timestamp": "0:32",
+        "text": "your pocket calculator does not and i"
+      },
+      {
+        "timestamp": "0:33",
+        "text": "apologize if this offends anybody but"
+      },
+      {
+        "timestamp": "0:35",
+        "text": "html combined with css does"
+      }
+    ],
+    "views": 1236900,
+    "likes": 62387
+  },
+  {
+    "id": 25,
+    "title": "Web 1.0-beta",
+    "duration_seconds": 25,
+    "tags": ["webdev", "app development", "lesson", "tutorial"],
+    "transcript": [
+      {
+        "timestamp": "0:00",
+        "text": "what you're looking at right now is the"
+      },
+      {
+        "timestamp": "0:01",
+        "text": "first website ever made it was created"
+      },
+      {
+        "timestamp": "0:03",
+        "text": "at cern in switzerland you know that"
+      },
+      {
+        "timestamp": "0:05",
+        "text": "place where they try to tear the fabric"
+      },
+      {
+        "timestamp": "0:06",
+        "text": "of space-time a british scientist named"
+      },
+      {
+        "timestamp": "0:08",
+        "text": "tim berners-lee wanted a better way to"
+      },
+      {
+        "timestamp": "0:10",
+        "text": "share documents with other scientists"
+      },
+      {
+        "timestamp": "0:12",
+        "text": "around the world so he coded up an app"
+      },
+      {
+        "timestamp": "0:14",
+        "text": "using objective-c for his next computer"
+      },
+      {
+        "timestamp": "0:16",
+        "text": "system and named it world wide web he"
+      },
+      {
+        "timestamp": "0:18",
+        "text": "invented the world's first web browser"
+      },
+      {
+        "timestamp": "0:20",
+        "text": "and you can actually try it out yourself"
+      },
+      {
+        "timestamp": "0:21",
+        "text": "right now with my link in the comments"
+      },
+      {
+        "timestamp": "0:23",
+        "text": "pretty cool right"
+      }
+    ],
+    "views": 528247,
+    "likes": 23241
+  },
+  {
+    "id": 26,
+    "title": "i quit using console.log in prod",
+    "duration_seconds": 39,
+    "tags": ["webdev", "app development", "lesson", "tutorial"],
+    "transcript": [
+      {
+        "timestamp": "0:00",
+        "text": "as javascript developers we often make"
+      },
+      {
+        "timestamp": "0:02",
+        "text": "prolific use of console.log to get our"
+      },
+      {
+        "timestamp": "0:03",
+        "text": "code working everybody's doing it but"
+      },
+      {
+        "timestamp": "0:06",
+        "text": "that's not exactly something we like to"
+      },
+      {
+        "timestamp": "0:07",
+        "text": "brag about"
+      },
+      {
+        "timestamp": "0:09",
+        "text": "more cultured back-end developers who"
+      },
+      {
+        "timestamp": "0:11",
+        "text": "print to the standard output might laugh"
+      },
+      {
+        "timestamp": "0:13",
+        "text": "at you for using a silly debugging toy"
+      },
+      {
+        "timestamp": "0:15",
+        "text": "like console log luckily there are two"
+      },
+      {
+        "timestamp": "0:17",
+        "text": "ways to avoid console log shaming in"
+      },
+      {
+        "timestamp": "0:19",
+        "text": "eslint you can use the no console.log"
+      },
+      {
+        "timestamp": "0:21",
+        "text": "rule to warn you before this pointless"
+      },
+      {
+        "timestamp": "0:23",
+        "text": "code ends up embarrassing you in"
+      },
+      {
+        "timestamp": "0:24",
+        "text": "production option two is to replace"
+      },
+      {
+        "timestamp": "0:26",
+        "text": "console logs with log points in vs code"
+      },
+      {
+        "timestamp": "0:28",
+        "text": "right click next to a line number choose"
+      },
+      {
+        "timestamp": "0:30",
+        "text": "log point add your message and use"
+      },
+      {
+        "timestamp": "0:32",
+        "text": "braces to add expressions or variables"
+      },
+      {
+        "timestamp": "0:34",
+        "text": "from your code now run it in a debugger"
+      },
+      {
+        "timestamp": "0:36",
+        "text": "and you get all the benefits of"
+      },
+      {
+        "timestamp": "0:37",
+        "text": "console.log without the code"
+      }
+    ],
+    "views": 1333860,
+    "likes": 71925
+  },
+  {
+    "id": 27,
+    "title": "WTF is an Abstract Syntax Tree?",
+    "duration_seconds": 36,
+    "tags": ["webdev", "app development", "lesson", "tutorial"],
+    "transcript": [
+      {
+        "timestamp": "0:00",
+        "text": "interviewer what is an abstract syntax"
+      },
+      {
+        "timestamp": "0:02",
+        "text": "tree you"
+      },
+      {
+        "timestamp": "0:05",
+        "text": "when we write code we want to use text"
+      },
+      {
+        "timestamp": "0:07",
+        "text": "that is as concise as possible but"
+      },
+      {
+        "timestamp": "0:08",
+        "text": "things like compilers want a lot more"
+      },
+      {
+        "timestamp": "0:10",
+        "text": "information to fully understand your"
+      },
+      {
+        "timestamp": "0:12",
+        "text": "code so first we perform lexical"
+      },
+      {
+        "timestamp": "0:14",
+        "text": "analysis to tokenize all the different"
+      },
+      {
+        "timestamp": "0:15",
+        "text": "parts of the code like variables"
+      },
+      {
+        "timestamp": "0:17",
+        "text": "operators functions and so on it's like"
+      },
+      {
+        "timestamp": "0:19",
+        "text": "finding all the nouns and verbs in a"
+      },
+      {
+        "timestamp": "0:20",
+        "text": "sentence we then take that list of"
+      },
+      {
+        "timestamp": "0:22",
+        "text": "tokens and parse it into a tree that"
+      },
+      {
+        "timestamp": "0:24",
+        "text": "represents the structure of the code"
+      },
+      {
+        "timestamp": "0:26",
+        "text": "this abstract syntax tree can then be"
+      },
+      {
+        "timestamp": "0:28",
+        "text": "safely used by compilers to generate a"
+      },
+      {
+        "timestamp": "0:30",
+        "text": "different type of code like turn"
+      },
+      {
+        "timestamp": "0:31",
+        "text": "typescript code into javascript or c"
+      },
+      {
+        "timestamp": "0:33",
+        "text": "plus plus into machine code"
+      }
+    ],
+    "views": 718341,
+    "likes": 39642
+  },
+  {
+    "id": 28,
+    "title": "It works on localhost",
+    "duration_seconds": 39,
+    "tags": ["webdev", "app development", "lesson", "tutorial"],
+    "transcript": [
+      {
+        "timestamp": "0:00",
+        "text": "i built a really cool website to see it"
+      },
+      {
+        "timestamp": "0:01",
+        "text": "you can visit http localhost 3000. the"
+      },
+      {
+        "timestamp": "0:04",
+        "text": "only problem is that url only works on"
+      },
+      {
+        "timestamp": "0:07",
+        "text": "my local computer i could go out and buy"
+      },
+      {
+        "timestamp": "0:09",
+        "text": "a domain name web server and ssl"
+      },
+      {
+        "timestamp": "0:11",
+        "text": "certificate then figure out how to get"
+      },
+      {
+        "timestamp": "0:12",
+        "text": "my code to work on the internet but what"
+      },
+      {
+        "timestamp": "0:14",
+        "text": "if i just want to share a quick preview"
+      },
+      {
+        "timestamp": "0:15",
+        "text": "of this website with a friend or maybe"
+      },
+      {
+        "timestamp": "0:17",
+        "text": "test a service worker over https that's"
+      },
+      {
+        "timestamp": "0:20",
+        "text": "where tunnels come in you can use free"
+      },
+      {
+        "timestamp": "0:21",
+        "text": "tools like ngrok or cloudflare tunnels"
+      },
+      {
+        "timestamp": "0:24",
+        "text": "to set up a secure but temporary"
+      },
+      {
+        "timestamp": "0:26",
+        "text": "connection between your localhost and"
+      },
+      {
+        "timestamp": "0:28",
+        "text": "the internet just download the"
+      },
+      {
+        "timestamp": "0:29",
+        "text": "cloudflare tunnel cli tool run the"
+      },
+      {
+        "timestamp": "0:31",
+        "text": "tunnel command and point it to the local"
+      },
+      {
+        "timestamp": "0:33",
+        "text": "host port you want to serve and it will"
+      },
+      {
+        "timestamp": "0:34",
+        "text": "spit out a url where now anybody can"
+      },
+      {
+        "timestamp": "0:37",
+        "text": "view your localhost on the internet"
+      }
+    ],
+    "views": 1109130,
+    "likes": 88894
+  },
+  {
+    "id": 29,
+    "title": "Awesome User Avatars Made Easy",
+    "duration_seconds": 42,
+    "tags": ["webdev", "app development", "lesson", "tutorial"],
+    "transcript": [
+      {
+        "timestamp": "0:00",
+        "text": "when a new user signs up for your app"
+      },
+      {
+        "timestamp": "0:01",
+        "text": "you could assign them with the same"
+      },
+      {
+        "timestamp": "0:03",
+        "text": "grayed out default Avatar that everybody"
+      },
+      {
+        "timestamp": "0:05",
+        "text": "else gets but humans like to feel"
+      },
+      {
+        "timestamp": "0:07",
+        "text": "special you are my friend you are"
+      },
+      {
+        "timestamp": "0:09",
+        "text": "special one option is to generate a"
+      },
+      {
+        "timestamp": "0:12",
+        "text": "random abstract pattern or better yet if"
+      },
+      {
+        "timestamp": "0:14",
+        "text": "you know their name use their initials"
+      },
+      {
+        "timestamp": "0:16",
+        "text": "and a random background color or you"
+      },
+      {
+        "timestamp": "0:18",
+        "text": "might bring things to life with a random"
+      },
+      {
+        "timestamp": "0:20",
+        "text": "robot or monster character or if you"
+      },
+      {
+        "timestamp": "0:22",
+        "text": "know gender draw some random pixel art"
+      },
+      {
+        "timestamp": "0:24",
+        "text": "for that human looks awesome but how do"
+      },
+      {
+        "timestamp": "0:26",
+        "text": "I even program something like that the"
+      },
+      {
+        "timestamp": "0:28",
+        "text": "answer is you don't there's a free and"
+      },
+      {
+        "timestamp": "0:30",
+        "text": "open source tool called dice bear that's"
+      },
+      {
+        "timestamp": "0:32",
+        "text": "already done all the hard work for you"
+      },
+      {
+        "timestamp": "0:34",
+        "text": "just give it a theme and string as a"
+      },
+      {
+        "timestamp": "0:36",
+        "text": "random seed and it will return you with"
+      },
+      {
+        "timestamp": "0:38",
+        "text": "an awesome and unique avatar for every"
+      },
+      {
+        "timestamp": "0:40",
+        "text": "user in your app"
+      }
+    ],
+    "views": 603047,
+    "likes": 47511
+  },
+  {
+    "id": 30,
+    "title": "This weird skill helps you learn to code faster",
+    "duration_seconds": 40,
+    "tags": [
+      "shorts",
+      "science",
+      "brain",
+      "neuroscience",
+      "learn to code",
+      "life hack",
+      "code",
+      "programming",
+      "compsci"
+    ],
+    "transcript": [
+      {
+        "timestamp": "0:00",
+        "text": "there's a programming skill that can"
+      },
+      {
+        "timestamp": "0:01",
+        "text": "literally change your brain chemistry"
+      },
+      {
+        "timestamp": "0:03",
+        "text": "and prime it for higher dimensions of"
+      },
+      {
+        "timestamp": "0:05",
+        "text": "focus"
+      },
+      {
+        "timestamp": "0:05",
+        "text": "this might sound ridiculous but multiple"
+      },
+      {
+        "timestamp": "0:07",
+        "text": "peer-reviewed studies have shown this"
+      },
+      {
+        "timestamp": "0:09",
+        "text": "activity increases white matter"
+      },
+      {
+        "timestamp": "0:11",
+        "text": "or axons in the brain which is the stuff"
+      },
+      {
+        "timestamp": "0:13",
+        "text": "that connects neurons together"
+      },
+      {
+        "timestamp": "0:14",
+        "text": "so what is this amazing skill juggling"
+      },
+      {
+        "timestamp": "0:17",
+        "text": "yes"
+      },
+      {
+        "timestamp": "0:18",
+        "text": "that kind of juggling learning how to"
+      },
+      {
+        "timestamp": "0:19",
+        "text": "juggle is not much different than"
+      },
+      {
+        "timestamp": "0:21",
+        "text": "learning how to code it takes extreme"
+      },
+      {
+        "timestamp": "0:22",
+        "text": "focus and many hours of practice not"
+      },
+      {
+        "timestamp": "0:24",
+        "text": "only will it make you smarter but it"
+      },
+      {
+        "timestamp": "0:26",
+        "text": "also relieves stress"
+      },
+      {
+        "timestamp": "0:27",
+        "text": "gets your arms jacked will make women"
+      },
+      {
+        "timestamp": "0:29",
+        "text": "want to be with you and men want to be"
+      },
+      {
+        "timestamp": "0:31",
+        "text": "you or vice versa and will make your"
+      },
+      {
+        "timestamp": "0:32",
+        "text": "resume stand out so grab some parabolas"
+      },
+      {
+        "timestamp": "0:35",
+        "text": "and get ready for my upcoming juggling"
+      },
+      {
+        "timestamp": "0:37",
+        "text": "for javascript developers course"
+      }
+    ],
+    "views": 738231,
+    "likes": 44219
+  },
+  {
+    "id": 31,
+    "title": "Quick overview of CSS",
+    "duration_seconds": 33,
+    "tags": ["webdev", "app development", "lesson", "tutorial"],
+    "transcript": [
+      {
+        "timestamp": "0:00",
+        "text": "have you ever landed on an ugly website"
+      },
+      {
+        "timestamp": "0:01",
+        "text": "and wondered what their designers were"
+      },
+      {
+        "timestamp": "0:03",
+        "text": "thinking"
+      },
+      {
+        "timestamp": "0:03",
+        "text": "he's so ugly i love him"
+      },
+      {
+        "timestamp": "0:07",
+        "text": "chrome has an experimental feature"
+      },
+      {
+        "timestamp": "0:08",
+        "text": "called css overview"
+      },
+      {
+        "timestamp": "0:10",
+        "text": "enable it from the dev tool settings"
+      },
+      {
+        "timestamp": "0:11",
+        "text": "then click the button to run it it"
+      },
+      {
+        "timestamp": "0:13",
+        "text": "breaks down the color palette and will"
+      },
+      {
+        "timestamp": "0:14",
+        "text": "even point out contrast"
+      },
+      {
+        "timestamp": "0:16",
+        "text": "issues and it also links you to the css"
+      },
+      {
+        "timestamp": "0:18",
+        "text": "for every font style and media query and"
+      },
+      {
+        "timestamp": "0:20",
+        "text": "it even breaks down"
+      },
+      {
+        "timestamp": "0:21",
+        "text": "unused declarations aka useless styles"
+      },
+      {
+        "timestamp": "0:24",
+        "text": "that have no effect on the elements"
+      },
+      {
+        "timestamp": "0:25",
+        "text": "they're applied to"
+      },
+      {
+        "timestamp": "0:27",
+        "text": "[Music]"
+      },
+      {
+        "timestamp": "0:28",
+        "text": "nice this tip has been made possible by"
+      },
+      {
+        "timestamp": "0:30",
+        "text": "viewers like you"
+      },
+      {
+        "timestamp": "0:31",
+        "text": "thanks for watching"
+      }
+    ],
+    "views": 387560,
+    "likes": 29291
+  },
+  {
+    "id": 32,
+    "title": "Why do computers use RGB for colors, and not RBY?",
+    "duration_seconds": 44,
+    "tags": [
+      "webdev",
+      "shorts",
+      "color",
+      "design",
+      "rby vs rgb",
+      "rbg color",
+      "cmyk",
+      "computer colors",
+      "computer science"
+    ],
+    "transcript": [
+      {
+        "timestamp": "0:00",
+        "text": "in kindergarten they taught us that the"
+      },
+      {
+        "timestamp": "0:01",
+        "text": "primary colors were red blue and yellow"
+      },
+      {
+        "timestamp": "0:03",
+        "text": "but that was a lie when you print"
+      },
+      {
+        "timestamp": "0:05",
+        "text": "something it starts with white paper"
+      },
+      {
+        "timestamp": "0:07",
+        "text": "then makes a bunch of little dots using"
+      },
+      {
+        "timestamp": "0:08",
+        "text": "cyan magenta and yellow"
+      },
+      {
+        "timestamp": "0:10",
+        "text": "to create new colors by subtracting"
+      },
+      {
+        "timestamp": "0:12",
+        "text": "light from the reflective surface"
+      },
+      {
+        "timestamp": "0:14",
+        "text": "but computer screens are black and emit"
+      },
+      {
+        "timestamp": "0:16",
+        "text": "their own light thanks to the 23 year"
+      },
+      {
+        "timestamp": "0:18",
+        "text": "old isaac newton we know that combining"
+      },
+      {
+        "timestamp": "0:20",
+        "text": "red"
+      },
+      {
+        "timestamp": "0:20",
+        "text": "green and blue light creates white light"
+      },
+      {
+        "timestamp": "0:22",
+        "text": "makes sense because you're adding the"
+      },
+      {
+        "timestamp": "0:24",
+        "text": "peaks of the visible spectrum together"
+      },
+      {
+        "timestamp": "0:26",
+        "text": "modern displays have millions of"
+      },
+      {
+        "timestamp": "0:27",
+        "text": "individual pixels that change the"
+      },
+      {
+        "timestamp": "0:29",
+        "text": "intensity of red green and blue light"
+      },
+      {
+        "timestamp": "0:31",
+        "text": "to render the images that you're looking"
+      },
+      {
+        "timestamp": "0:33",
+        "text": "at right now the truth is that cmy are"
+      },
+      {
+        "timestamp": "0:35",
+        "text": "the primary subtractive colors"
+      },
+      {
+        "timestamp": "0:37",
+        "text": "and rgb are the primary additive colors"
+      },
+      {
+        "timestamp": "0:39",
+        "text": "and your teachers also lied about that"
+      },
+      {
+        "timestamp": "0:41",
+        "text": "apple that fell on isaac newton's head"
+      }
+    ],
+    "views": 3569778,
+    "likes": 183137
+  },
+  {
+    "id": 33,
+    "title": "Is your memory leaking?",
+    "duration_seconds": 40,
+    "tags": [
+      "webdev",
+      "app development",
+      "lesson",
+      "tutorial",
+      "js",
+      "javascript",
+      "shorts",
+      "memory leak",
+      "js performance",
+      "chrome",
+      "chrome dev tools"
+    ],
+    "transcript": [
+      {
+        "timestamp": "0:00",
+        "text": "are you a webmaster with a slow janky or"
+      },
+      {
+        "timestamp": "0:02",
+        "text": "frozen website"
+      },
+      {
+        "timestamp": "0:03",
+        "text": "it sounds like you might have a memory"
+      },
+      {
+        "timestamp": "0:05",
+        "text": "leak you see normally a javascript app"
+      },
+      {
+        "timestamp": "0:07",
+        "text": "allocates memory to the heap"
+      },
+      {
+        "timestamp": "0:08",
+        "text": "uses it then disposes of it"
+      },
+      {
+        "timestamp": "0:10",
+        "text": "automatically with the garbage collector"
+      },
+      {
+        "timestamp": "0:12",
+        "text": "but if your code references"
+      },
+      {
+        "timestamp": "0:13",
+        "text": "objects that are no longer needed then"
+      },
+      {
+        "timestamp": "0:15",
+        "text": "the garbage collector can't do its job"
+      },
+      {
+        "timestamp": "0:17",
+        "text": "go to the performance panel in chrome"
+      },
+      {
+        "timestamp": "0:18",
+        "text": "dev tools and hit record"
+      },
+      {
+        "timestamp": "0:20",
+        "text": "as you use your website it records cpu"
+      },
+      {
+        "timestamp": "0:22",
+        "text": "usage frames per second and takes a"
+      },
+      {
+        "timestamp": "0:24",
+        "text": "bunch of screenshots along the way"
+      },
+      {
+        "timestamp": "0:25",
+        "text": "but we're interested in this blue line"
+      },
+      {
+        "timestamp": "0:27",
+        "text": "which shows the amount of memory in the"
+      },
+      {
+        "timestamp": "0:29",
+        "text": "heap if it goes up up and up you may"
+      },
+      {
+        "timestamp": "0:31",
+        "text": "want to go to the memory tab in chrome"
+      },
+      {
+        "timestamp": "0:33",
+        "text": "record a heap snapshot and inspect the"
+      },
+      {
+        "timestamp": "0:35",
+        "text": "actual values in it that's how you find"
+      },
+      {
+        "timestamp": "0:37",
+        "text": "a memory leak now it's up to you to fix"
+      },
+      {
+        "timestamp": "0:39",
+        "text": "it"
+      }
+    ],
+    "views": 438729,
+    "likes": 26014
+  },
+  {
+    "id": 34,
+    "title": "TypeScript is Literal Magic",
+    "duration_seconds": 26,
+    "tags": [
+      "webdev",
+      "app development",
+      "typescript",
+      "js",
+      "typescript tips",
+      "programming",
+      "code",
+      "learn to code"
+    ],
+    "transcript": [
+      {
+        "timestamp": "0:00",
+        "text": "in typescript use the type keyword to"
+      },
+      {
+        "timestamp": "0:02",
+        "text": "create your own custom types use a bar"
+      },
+      {
+        "timestamp": "0:04",
+        "text": "to make it a union type allowing it to"
+      },
+      {
+        "timestamp": "0:06",
+        "text": "accept multiple different values"
+      },
+      {
+        "timestamp": "0:07",
+        "text": "that's cool but what if you have another"
+      },
+      {
+        "timestamp": "0:09",
+        "text": "union type and want to combine them into"
+      },
+      {
+        "timestamp": "0:11",
+        "text": "every possible combination in typescript"
+      },
+      {
+        "timestamp": "0:13",
+        "text": "4.1 we got a magic new feature called"
+      },
+      {
+        "timestamp": "0:15",
+        "text": "template literal types create a third"
+      },
+      {
+        "timestamp": "0:17",
+        "text": "type"
+      },
+      {
+        "timestamp": "0:18",
+        "text": "but this time use string interpolation"
+      },
+      {
+        "timestamp": "0:20",
+        "text": "and add the other two types to it you"
+      },
+      {
+        "timestamp": "0:22",
+        "text": "just got yourself 25 types for the price"
+      },
+      {
+        "timestamp": "0:24",
+        "text": "of one"
+      }
+    ],
+    "views": 892044,
+    "likes": 55554
+  },
+  {
+    "id": 35,
+    "title": "God Tier HTML Programming",
+    "duration_seconds": 50,
+    "tags": ["webdev", "app development", "lesson", "tutorial"],
+    "transcript": [
+      {
+        "timestamp": "0:00",
+        "text": "html is my favorite language for"
+      },
+      {
+        "timestamp": "0:02",
+        "text": "programming website documents but"
+      },
+      {
+        "timestamp": "0:03",
+        "text": "writing it by hand is no fun if you want"
+      },
+      {
+        "timestamp": "0:05",
+        "text": "to go fast there's a tool called"
+      },
+      {
+        "timestamp": "0:07",
+        "text": "emmett that's built into vs code and is"
+      },
+      {
+        "timestamp": "0:09",
+        "text": "like snippets on steroids bang"
+      },
+      {
+        "timestamp": "0:11",
+        "text": "tab and we've got a basic html page ctrl"
+      },
+      {
+        "timestamp": "0:13",
+        "text": "g"
+      },
+      {
+        "timestamp": "0:14",
+        "text": "go to line 10. type the name of any"
+      },
+      {
+        "timestamp": "0:15",
+        "text": "element followed by a period add a class"
+      },
+      {
+        "timestamp": "0:18",
+        "text": "or a hash to add an id hit tab to expand"
+      },
+      {
+        "timestamp": "0:20",
+        "text": "don't touch the mouse yet hit ctrl enter"
+      },
+      {
+        "timestamp": "0:22",
+        "text": "for a new line"
+      },
+      {
+        "timestamp": "0:23",
+        "text": "this time i want a header plus a sibling"
+      },
+      {
+        "timestamp": "0:26",
+        "text": "article element"
+      },
+      {
+        "timestamp": "0:26",
+        "text": "in that article i want an unordered list"
+      },
+      {
+        "timestamp": "0:28",
+        "text": "that contains a list"
+      },
+      {
+        "timestamp": "0:30",
+        "text": "item no 5 list items and i want to put"
+      },
+      {
+        "timestamp": "0:32",
+        "text": "some dummy text in each one"
+      },
+      {
+        "timestamp": "0:34",
+        "text": "amazing but oh no i forgot something"
+      },
+      {
+        "timestamp": "0:36",
+        "text": "i'll just use the balance outward"
+      },
+      {
+        "timestamp": "0:37",
+        "text": "command to select the next parent"
+      },
+      {
+        "timestamp": "0:38",
+        "text": "element then use wrap with abbreviation"
+      },
+      {
+        "timestamp": "0:40",
+        "text": "to include the element that i forgot"
+      },
+      {
+        "timestamp": "0:44",
+        "text": "[Applause]"
+      }
+    ],
+    "views": 2465522,
+    "likes": 222619
+  },
+  {
+    "id": 36,
+    "title": "Why do computers suck at math?",
+    "duration_seconds": 54,
+    "tags": [
+      "math",
+      "compsci",
+      "floating point",
+      "computers",
+      "tech",
+      "programming",
+      "code",
+      "learn to code",
+      "dev"
+    ],
+    "transcript": [
+      {
+        "timestamp": "0:00",
+        "text": "I always thought computers were better"
+      },
+      {
+        "timestamp": "0:01",
+        "text": "at math and people until I tried to add"
+      },
+      {
+        "timestamp": "0:03",
+        "text": "0.1 to 0.2 and got an answer of"
+      },
+      {
+        "timestamp": "0:08",
+        "text": "0.34 what the hell JavaScript is just a"
+      },
+      {
+        "timestamp": "0:11",
+        "text": "toy language so I figured it was a bug"
+      },
+      {
+        "timestamp": "0:13",
+        "text": "and tried the same thing in Python but"
+      },
+      {
+        "timestamp": "0:15",
+        "text": "it also gave me the same wrong answer"
+      },
+      {
+        "timestamp": "0:16",
+        "text": "then I discovered that these languages"
+      },
+      {
+        "timestamp": "0:18",
+        "text": "aren't actually broken they just do"
+      },
+      {
+        "timestamp": "0:20",
+        "text": "floating Point arithmetic computers have"
+      },
+      {
+        "timestamp": "0:21",
+        "text": "a limited amount of memory and need to"
+      },
+      {
+        "timestamp": "0:23",
+        "text": "make a trade-off between range and"
+      },
+      {
+        "timestamp": "0:25",
+        "text": "Precision in JavaScript all numbers must"
+      },
+      {
+        "timestamp": "0:27",
+        "text": "be stored within 64 bits that means we"
+      },
+      {
+        "timestamp": "0:29",
+        "text": "can have integer is accurate up to 15"
+      },
+      {
+        "timestamp": "0:31",
+        "text": "digits and a Max of 17 numbers after the"
+      },
+      {
+        "timestamp": "0:34",
+        "text": "decimal point it's called a floating"
+      },
+      {
+        "timestamp": "0:35",
+        "text": "point because there are no fixed number"
+      },
+      {
+        "timestamp": "0:37",
+        "text": "of digits before or after the decimal"
+      },
+      {
+        "timestamp": "0:39",
+        "text": "point allowing it to represent a wide"
+      },
+      {
+        "timestamp": "0:41",
+        "text": "range of numbers both big and small the"
+      },
+      {
+        "timestamp": "0:43",
+        "text": "problem is that computers use a base 2"
+      },
+      {
+        "timestamp": "0:45",
+        "text": "system binary while humans use a base 10"
+      },
+      {
+        "timestamp": "0:48",
+        "text": "system that leads to rounding errors"
+      },
+      {
+        "timestamp": "0:50",
+        "text": "when all the memory has been used up and"
+      },
+      {
+        "timestamp": "0:52",
+        "text": "that's why your computer sucks at math"
+      }
+    ],
+    "views": 8705882,
+    "likes": 406071
+  },
+  {
+    "id": 37,
+    "title": "Async Await try-catch hell",
+    "duration_seconds": 46,
+    "tags": [
+      "webdev",
+      "app development",
+      "lesson",
+      "tutorial",
+      "javascript",
+      "js",
+      "shorts"
+    ],
+    "transcript": [
+      {
+        "timestamp": "0:00",
+        "text": "async await feels like heaven because it"
+      },
+      {
+        "timestamp": "0:02",
+        "text": "avoids the callback hell or pyramid of"
+      },
+      {
+        "timestamp": "0:04",
+        "text": "doom"
+      },
+      {
+        "timestamp": "0:04",
+        "text": "by writing asynchronous code in a clean"
+      },
+      {
+        "timestamp": "0:06",
+        "text": "line-by-line format that is"
+      },
+      {
+        "timestamp": "0:08",
+        "text": "until error handling comes into play"
+      },
+      {
+        "timestamp": "0:10",
+        "text": "because you end up with the tri-catch"
+      },
+      {
+        "timestamp": "0:12",
+        "text": "tower of terror all your beautiful"
+      },
+      {
+        "timestamp": "0:13",
+        "text": "one-liners magically expand to at least"
+      },
+      {
+        "timestamp": "0:15",
+        "text": "five lines of code"
+      },
+      {
+        "timestamp": "0:16",
+        "text": "if you find yourself here the easy way"
+      },
+      {
+        "timestamp": "0:18",
+        "text": "out is to append the catch method"
+      },
+      {
+        "timestamp": "0:19",
+        "text": "to the end of each promise better but"
+      },
+      {
+        "timestamp": "0:21",
+        "text": "that can still get repetitive"
+      },
+      {
+        "timestamp": "0:23",
+        "text": "another option is to create a function"
+      },
+      {
+        "timestamp": "0:25",
+        "text": "that implements one try catch to replace"
+      },
+      {
+        "timestamp": "0:27",
+        "text": "all the others it first resolves the"
+      },
+      {
+        "timestamp": "0:28",
+        "text": "promise then returns an array"
+      },
+      {
+        "timestamp": "0:30",
+        "text": "where the first element is the data and"
+      },
+      {
+        "timestamp": "0:32",
+        "text": "the second element is an error"
+      },
+      {
+        "timestamp": "0:33",
+        "text": "but if there's an error then the data is"
+      },
+      {
+        "timestamp": "0:35",
+        "text": "null and the error is defined"
+      },
+      {
+        "timestamp": "0:37",
+        "text": "now when you call this function in your"
+      },
+      {
+        "timestamp": "0:38",
+        "text": "code you can destructure it to get a"
+      },
+      {
+        "timestamp": "0:40",
+        "text": "clean one-liner with error handling or"
+      },
+      {
+        "timestamp": "0:42",
+        "text": "use a regular if statement if you want"
+      },
+      {
+        "timestamp": "0:43",
+        "text": "to do something else with the error"
+      }
+    ],
+    "views": 1392523,
+    "likes": 80906
+  },
+  {
+    "id": 38,
+    "title": "Fullstack Development Iceberg",
+    "duration_seconds": 40,
+    "tags": [
+      "webdev",
+      "app development",
+      "shorts",
+      "humor",
+      "meme",
+      "fullstack",
+      "development",
+      "learn to code",
+      "roadmap",
+      "code roadmap",
+      "computers",
+      "tech"
+    ],
+    "transcript": [
+      {
+        "timestamp": "0:00",
+        "text": "if you build a website in 2021 you'll"
+      },
+      {
+        "timestamp": "0:02",
+        "text": "likely use a framework like react"
+      },
+      {
+        "timestamp": "0:03",
+        "text": "angular review the actual code will be"
+      },
+      {
+        "timestamp": "0:05",
+        "text": "written with something like typescript"
+      },
+      {
+        "timestamp": "0:07",
+        "text": "or babel which itself is an abstraction"
+      },
+      {
+        "timestamp": "0:09",
+        "text": "on top of javascript or ecmascript which"
+      },
+      {
+        "timestamp": "0:11",
+        "text": "is code that needs to run somewhere"
+      },
+      {
+        "timestamp": "0:13",
+        "text": "like a browser or nodejs which are"
+      },
+      {
+        "timestamp": "0:15",
+        "text": "runtimes that rely on a javascript"
+      },
+      {
+        "timestamp": "0:17",
+        "text": "engine like v8 to create an abstract"
+      },
+      {
+        "timestamp": "0:19",
+        "text": "syntax tree and compile machine code"
+      },
+      {
+        "timestamp": "0:21",
+        "text": "which is a set of instructions that can"
+      },
+      {
+        "timestamp": "0:23",
+        "text": "be executed directly by the cpu which"
+      },
+      {
+        "timestamp": "0:25",
+        "text": "uses a bunch of logic gates to compute"
+      },
+      {
+        "timestamp": "0:27",
+        "text": "things and manage memory which are"
+      },
+      {
+        "timestamp": "0:28",
+        "text": "formed by transistors that use"
+      },
+      {
+        "timestamp": "0:30",
+        "text": "electrical signals to represent ones and"
+      },
+      {
+        "timestamp": "0:32",
+        "text": "zeros which is made possible by the laws"
+      },
+      {
+        "timestamp": "0:34",
+        "text": "of quantum mechanics which is perceived"
+      },
+      {
+        "timestamp": "0:36",
+        "text": "through something we don't understand at"
+      },
+      {
+        "timestamp": "0:37",
+        "text": "all"
+      },
+      {
+        "timestamp": "0:38",
+        "text": "human consciousness"
+      }
+    ],
+    "views": 630600,
+    "likes": 40160
+  },
+  {
+    "id": 39,
+    "title": "I've become my own Arch Enemy",
+    "duration_seconds": 31,
+    "tags": [
+      "linux",
+      "windows",
+      "arch linux",
+      "humor",
+      "azure",
+      "microsoft",
+      "microsoft developers",
+      "linux developers",
+      "shorts",
+      "comedy",
+      "programming",
+      "dev"
+    ],
+    "transcript": [
+      {
+        "timestamp": "0:00",
+        "text": "[Music]"
+      },
+      {
+        "timestamp": "0:00",
+        "text": "um i just realized i wrote some"
+      },
+      {
+        "timestamp": "0:02",
+        "text": "microsoft typescript code"
+      },
+      {
+        "timestamp": "0:03",
+        "text": "using microsoft bs code along with a few"
+      },
+      {
+        "timestamp": "0:06",
+        "text": "microsoft npm packages when i was done i"
+      },
+      {
+        "timestamp": "0:10",
+        "text": "uploaded that code to microsoft github"
+      },
+      {
+        "timestamp": "0:12",
+        "text": "which automatically built and deployed"
+      },
+      {
+        "timestamp": "0:14",
+        "text": "that code to microsoft azure"
+      },
+      {
+        "timestamp": "0:16",
+        "text": "i use arch by the way in the windows sub"
+      },
+      {
+        "timestamp": "0:18",
+        "text": "system for linux"
+      },
+      {
+        "timestamp": "0:20",
+        "text": "it's not your fault don't [ __ ] with me"
+      },
+      {
+        "timestamp": "0:22",
+        "text": "all right don't [ __ ] you it's not your"
+      },
+      {
+        "timestamp": "0:28",
+        "text": "fault"
+      }
+    ],
+    "views": 212688,
+    "likes": 16008
+  },
+  {
+    "id": 40,
+    "title": "TODO: Write Good Code Comments",
+    "duration_seconds": 49,
+    "tags": [
+      "learn to code",
+      "code comments",
+      "comedy",
+      "code",
+      "programming",
+      "humor",
+      "code tips",
+      "education",
+      "js",
+      "python"
+    ],
+    "transcript": [
+      {
+        "timestamp": "0:00",
+        "text": "the best developers don't need to"
+      },
+      {
+        "timestamp": "0:01",
+        "text": "comment on their code because they write"
+      },
+      {
+        "timestamp": "0:02",
+        "text": "self-describing code that is so elegant"
+      },
+      {
+        "timestamp": "0:04",
+        "text": "that it reads like a haiku"
+      },
+      {
+        "timestamp": "0:05",
+        "text": "the rest of us though need comments like"
+      },
+      {
+        "timestamp": "0:07",
+        "text": "this dear future me please forgive me i"
+      },
+      {
+        "timestamp": "0:09",
+        "text": "can't even begin to express how sorry i"
+      },
+      {
+        "timestamp": "0:11",
+        "text": "am"
+      },
+      {
+        "timestamp": "0:11",
+        "text": "the most useless comments though are the"
+      },
+      {
+        "timestamp": "0:13",
+        "text": "ones that tell you exactly what the code"
+      },
+      {
+        "timestamp": "0:15",
+        "text": "does"
+      },
+      {
+        "timestamp": "0:15",
+        "text": "like this is a variable for storing a"
+      },
+      {
+        "timestamp": "0:17",
+        "text": "number so you think i did good"
+      },
+      {
+        "timestamp": "0:18",
+        "text": "your teammates don't care what the code"
+      },
+      {
+        "timestamp": "0:20",
+        "text": "does but they do want to know why it's"
+      },
+      {
+        "timestamp": "0:22",
+        "text": "breaking the build"
+      },
+      {
+        "timestamp": "0:23",
+        "text": "use comments to explain why your code is"
+      },
+      {
+        "timestamp": "0:24",
+        "text": "there and use industry standards like"
+      },
+      {
+        "timestamp": "0:26",
+        "text": "jstoc to have comments appear in your"
+      },
+      {
+        "timestamp": "0:28",
+        "text": "editor's intellisense"
+      },
+      {
+        "timestamp": "0:30",
+        "text": "when your code is truly unfixable make"
+      },
+      {
+        "timestamp": "0:31",
+        "text": "sure to add a warning for other"
+      },
+      {
+        "timestamp": "0:33",
+        "text": "developers and give them a counter to"
+      },
+      {
+        "timestamp": "0:35",
+        "text": "increment the number of hours wasted"
+      },
+      {
+        "timestamp": "0:36",
+        "text": "if the project itself is inherently"
+      },
+      {
+        "timestamp": "0:38",
+        "text": "flawed make sure to write out a"
+      },
+      {
+        "timestamp": "0:39",
+        "text": "manifesto like this guy"
+      },
+      {
+        "timestamp": "0:40",
+        "text": "my hate for pst has grown to a raging"
+      },
+      {
+        "timestamp": "0:43",
+        "text": "fire that burns with the fierce passion"
+      },
+      {
+        "timestamp": "0:45",
+        "text": "of a million suns psd"
+      },
+      {
+        "timestamp": "0:47",
+        "text": "is not my favorite file format"
+      }
+    ],
+    "views": 1018590,
+    "likes": 64988
+  },
+  {
+    "id": 41,
+    "title": "Easy Hand-Drawn SVG Animation",
+    "duration_seconds": 42,
+    "tags": [
+      "svg",
+      "shorts",
+      "animation",
+      "css",
+      "css animation",
+      "draw svg",
+      "svg animation"
+    ],
+    "transcript": [
+      {
+        "timestamp": "0:00",
+        "text": "svgs are cool but even cooler when they"
+      },
+      {
+        "timestamp": "0:02",
+        "text": "look like they're being drawn in real"
+      },
+      {
+        "timestamp": "0:03",
+        "text": "time"
+      },
+      {
+        "timestamp": "0:04",
+        "text": "step one create an svg path that is"
+      },
+      {
+        "timestamp": "0:06",
+        "text": "styled with a stroke"
+      },
+      {
+        "timestamp": "0:07",
+        "text": "and then export it to your html then add"
+      },
+      {
+        "timestamp": "0:09",
+        "text": "an id to the path you want to animate"
+      },
+      {
+        "timestamp": "0:11",
+        "text": "step two add a dash to the stroke using"
+      },
+      {
+        "timestamp": "0:13",
+        "text": "the dash array property"
+      },
+      {
+        "timestamp": "0:15",
+        "text": "but make the dash the same length as the"
+      },
+      {
+        "timestamp": "0:17",
+        "text": "path itself you can get the exact length"
+      },
+      {
+        "timestamp": "0:19",
+        "text": "of the path by opening up the svg in the"
+      },
+      {
+        "timestamp": "0:21",
+        "text": "browser then grab the path with the id"
+      },
+      {
+        "timestamp": "0:23",
+        "text": "and call get total length step 3 make"
+      },
+      {
+        "timestamp": "0:25",
+        "text": "the dash invisible by moving it or"
+      },
+      {
+        "timestamp": "0:27",
+        "text": "offsetting it by the same length step"
+      },
+      {
+        "timestamp": "0:29",
+        "text": "four"
+      },
+      {
+        "timestamp": "0:30",
+        "text": "create a keyframes animation that"
+      },
+      {
+        "timestamp": "0:31",
+        "text": "animates the dash offset back to zero"
+      },
+      {
+        "timestamp": "0:33",
+        "text": "assign it to the path and make sure the"
+      },
+      {
+        "timestamp": "0:35",
+        "text": "fill mode is forwards so that it ends"
+      },
+      {
+        "timestamp": "0:37",
+        "text": "with the fully drawn svg"
+      },
+      {
+        "timestamp": "0:38",
+        "text": "and that is how a professional web"
+      },
+      {
+        "timestamp": "0:40",
+        "text": "developer signs their name"
+      }
+    ],
+    "views": 596273,
+    "likes": 57803
+  },
+  {
+    "id": 42,
+    "title": "Top 3 Ways to Center a DIV with CSS",
+    "duration_seconds": 37,
+    "tags": [
+      "css",
+      "shorts",
+      "webdev",
+      "dev tips",
+      "css centering",
+      "flexbox",
+      "css grid"
+    ],
+    "transcript": [
+      {
+        "timestamp": "0:00",
+        "text": "the most difficult thing a web developer"
+      },
+      {
+        "timestamp": "0:01",
+        "text": "ever has to do is center a div both"
+      },
+      {
+        "timestamp": "0:03",
+        "text": "horizontally and vertically with css"
+      },
+      {
+        "timestamp": "0:06",
+        "text": "there are hundreds of ways to get the"
+      },
+      {
+        "timestamp": "0:07",
+        "text": "job done but the classic approach is to"
+      },
+      {
+        "timestamp": "0:10",
+        "text": "use absolute positioning then move it"
+      },
+      {
+        "timestamp": "0:11",
+        "text": "down and to the right by 50"
+      },
+      {
+        "timestamp": "0:13",
+        "text": "by using the top and left properties"
+      },
+      {
+        "timestamp": "0:15",
+        "text": "then move it back the other direction by"
+      },
+      {
+        "timestamp": "0:17",
+        "text": "translating it 50"
+      },
+      {
+        "timestamp": "0:18",
+        "text": "this confusing hack was the gold"
+      },
+      {
+        "timestamp": "0:20",
+        "text": "standard until flexbox came around where"
+      },
+      {
+        "timestamp": "0:22",
+        "text": "we can make the parent div"
+      },
+      {
+        "timestamp": "0:23",
+        "text": "a flexible column or row then align and"
+      },
+      {
+        "timestamp": "0:25",
+        "text": "justify the children"
+      },
+      {
+        "timestamp": "0:26",
+        "text": "in the center that's a great option but"
+      },
+      {
+        "timestamp": "0:27",
+        "text": "today we can do it with even fewer lines"
+      },
+      {
+        "timestamp": "0:29",
+        "text": "of code using grid layout just to find"
+      },
+      {
+        "timestamp": "0:31",
+        "text": "the parent div as a grid and then tell"
+      },
+      {
+        "timestamp": "0:33",
+        "text": "it to place the items in the center"
+      },
+      {
+        "timestamp": "0:34",
+        "text": "yes it's just that simple"
+      }
+    ],
+    "views": 1476785,
+    "likes": 103081
+  },
+  {
+    "id": 43,
+    "title": "Reverse Engineer CSS Animations",
+    "duration_seconds": 39,
+    "tags": [
+      "webdev",
+      "app development",
+      "lesson",
+      "css",
+      "animation",
+      "css animation",
+      "chrome",
+      "dev tips",
+      "shorts",
+      "css tips"
+    ],
+    "transcript": [
+      {
+        "timestamp": "0:00",
+        "text": "the best way to convince your friends"
+      },
+      {
+        "timestamp": "0:01",
+        "text": "you're a good web developer is to put"
+      },
+      {
+        "timestamp": "0:02",
+        "text": "fancy animations on your homepage"
+      },
+      {
+        "timestamp": "0:06",
+        "text": "and the best way to do that is to"
+      },
+      {
+        "timestamp": "0:07",
+        "text": "reverse engineer other websites like"
+      },
+      {
+        "timestamp": "0:09",
+        "text": "this animated loading sequence on the"
+      },
+      {
+        "timestamp": "0:11",
+        "text": "gatsby home page open chrome dev tools"
+      },
+      {
+        "timestamp": "0:13",
+        "text": "then hit ctrl p"
+      },
+      {
+        "timestamp": "0:14",
+        "text": "to bring up the animation panel it"
+      },
+      {
+        "timestamp": "0:16",
+        "text": "automatically records every css"
+      },
+      {
+        "timestamp": "0:18",
+        "text": "animation on the page"
+      },
+      {
+        "timestamp": "0:19",
+        "text": "allowing you to visualize and modify the"
+      },
+      {
+        "timestamp": "0:21",
+        "text": "keyframes now double-click to highlight"
+      },
+      {
+        "timestamp": "0:23",
+        "text": "an element in the dom if necessary you"
+      },
+      {
+        "timestamp": "0:25",
+        "text": "can right-click"
+      },
+      {
+        "timestamp": "0:26",
+        "text": "and force it state if it's a hover"
+      },
+      {
+        "timestamp": "0:27",
+        "text": "animation now go to the styles tab and"
+      },
+      {
+        "timestamp": "0:29",
+        "text": "play around with the css code then"
+      },
+      {
+        "timestamp": "0:31",
+        "text": "animate like a pro by using your mouse"
+      },
+      {
+        "timestamp": "0:33",
+        "text": "to do a right-click"
+      },
+      {
+        "timestamp": "0:34",
+        "text": "copy then go into your project and do a"
+      },
+      {
+        "timestamp": "0:36",
+        "text": "right-click paste"
+      }
+    ],
+    "views": 2059106,
+    "likes": 143174
+  },
+  {
+    "id": 44,
+    "title": "VS Code Path Trick w/ JavaScript",
+    "duration_seconds": 25,
+    "tags": [
+      "tutorial",
+      "learn",
+      "learn to code",
+      "vs code",
+      "vscode",
+      "js",
+      "javascript",
+      "code tips",
+      "typescript"
+    ],
+    "transcript": [
+      {
+        "timestamp": "0:00",
+        "text": "one thing that sucks about javascript"
+      },
+      {
+        "timestamp": "0:01",
+        "text": "development is that when your code lives"
+      },
+      {
+        "timestamp": "0:03",
+        "text": "in different directories you'll need to"
+      },
+      {
+        "timestamp": "0:05",
+        "text": "import modules by writing out big long"
+      },
+      {
+        "timestamp": "0:07",
+        "text": "relative paths"
+      },
+      {
+        "timestamp": "0:08",
+        "text": "it's outrageous egregious you can put an"
+      },
+      {
+        "timestamp": "0:10",
+        "text": "end to this madness with vs code by"
+      },
+      {
+        "timestamp": "0:12",
+        "text": "creating a js config file"
+      },
+      {
+        "timestamp": "0:14",
+        "text": "inside the file you can map paths in"
+      },
+      {
+        "timestamp": "0:16",
+        "text": "your project to a keyword of your choice"
+      },
+      {
+        "timestamp": "0:18",
+        "text": "now the component's directory is mapped"
+      },
+      {
+        "timestamp": "0:20",
+        "text": "to at components"
+      },
+      {
+        "timestamp": "0:21",
+        "text": "and we never have to worry about"
+      },
+      {
+        "timestamp": "0:22",
+        "text": "relative paths ever again"
+      }
+    ],
+    "views": 481866,
+    "likes": 43613
+  }
+]
