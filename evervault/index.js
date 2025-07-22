@@ -1,6 +1,6 @@
 const chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
-const randomChar = () => chars[Math.floor(Math.random() * (chars.length - 1))];
+const randomChar = () => chars[Math.floor(Math.random() * chars.length)];
 const randomString = (length) =>
   Array.from(Array(length)).map(randomChar).join("");
 
