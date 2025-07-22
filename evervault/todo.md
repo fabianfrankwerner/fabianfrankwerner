@@ -1,0 +1,6 @@
+- create files
+- link files
+- create html boilerplate
+- use bem class naming (https://getbem.com/naming/)
+- javascript
+- css in order
