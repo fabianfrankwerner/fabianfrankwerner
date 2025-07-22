@@ -29,7 +29,7 @@ body {
   padding: 0;
 }
 
-.card-track {
+.track {
   height: 100%;
   width: var(--card-size);
   display: flex;
@@ -37,7 +37,7 @@ body {
   position: relative;
 }
 
-.card-wrapper {
+.wrapper {
   width: 100%;
   position: relative;
 }
@@ -54,7 +54,7 @@ body {
   cursor: pointer;
 }
 
-.card-image {
+.card--image {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -62,11 +62,11 @@ body {
   z-index: 4;
 }
 
-.card-image > img {
+.card--image > img {
   width: var(--logo-size);
 }
 
-.card-gradient {
+.card--gradient {
   height: 100%;
   width: 100%;
   position: absolute;
@@ -81,7 +81,7 @@ body {
   z-index: 3;
 }
 
-.card-letters {
+.card--letters {
   --x: 0px;
   --y: 0px;
   position: absolute;
@@ -104,7 +104,7 @@ body {
   scale: 1.03;
 }
 
-.card:hover .card-letters {
+.card:hover .card--letters {
   opacity: 1;
 }
 
@@ -120,8 +120,8 @@ body {
 
 /* -- Extra Styles -- */
 
-.card-track:before,
-.card-track:after {
+.track:before,
+.track:after {
   content: "";
   height: 100vh;
   width: 1px;
@@ -130,18 +130,18 @@ body {
   translate: 0% -50%;
 }
 
-.card-track:before {
+.track:before {
   left: -1px;
   border-left: var(--border);
 }
 
-.card-track:after {
+.track:after {
   right: -1px;
   border-right: var(--border);
 }
 
-.card-wrapper:before,
-.card-wrapper:after {
+.wrapper:before,
+.wrapper:after {
   content: "";
   width: 100vw;
   position: absolute;
@@ -149,17 +149,17 @@ body {
   translate: -50%;
 }
 
-.card-wrapper:before {
+.wrapper:before {
   top: -1px;
   border-top: var(--border);
 }
 
-.card-wrapper:after {
+.wrapper:after {
   bottom: -1px;
   border-bottom: var(--border);
 }
 
-.card-corners {
+.card--corners {
   height: 100%;
   width: 100%;
   position: absolute;
@@ -169,7 +169,7 @@ body {
   pointer-events: none;
 }
 
-.card-corners > .card-corner {
+.card--corners > .card--corner {
   display: block;
   height: 9px;
   width: 1px;
@@ -177,7 +177,7 @@ body {
   background-color: white;
 }
 
-.card-corners > .card-corner:after {
+.card--corners > .card--corner:after {
   content: "";
   width: 9px;
   height: 1px;
@@ -187,22 +187,22 @@ body {
   background-color: white;
 }
 
-.card-corners > .card-corner:nth-child(1) {
+.card--corners > .card--corner:nth-child(1) {
   left: -1px;
   top: -5px;
 }
 
-.card-corners > .card-corner:nth-child(2) {
+.card--corners > .card--corner:nth-child(2) {
   right: -1px;
   top: -5px;
 }
 
-.card-corners > .card-corner:nth-child(3) {
+.card--corners > .card--corner:nth-child(3) {
   right: -1px;
   bottom: -5px;
 }
 
-.card-corners > .card-corner:nth-child(4) {
+.card--corners > .card--corner:nth-child(4) {
   left: -1px;
   bottom: -5px;
 }
