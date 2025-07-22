@@ -95,7 +95,7 @@ body {
   word-wrap: break-word;
   opacity: 0;
   transition: opacity 400ms;
-  -webkit-mask-image: radial-gradient(
+  mask-image: radial-gradient(
     calc(var(--card-size) * 0.8) circle at var(--x) var(--y),
     rgb(255 255 255) 20%,
     rgb(255 255 255 / 25%),
