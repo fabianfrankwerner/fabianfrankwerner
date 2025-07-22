@@ -5,9 +5,9 @@
   --border-rgb: 255 255 255;
   --border: 1px solid rgb(var(--border-rgb) / 20%);
 
-  --hyperplexed-main-rgb: 41 121 255;
-  --hyperplexed-main-light-rgb: 56 182 255;
-  --hyperplexed-secondary-rgb: 42 252 152;
+  --main-rgb: 41 121 255;
+  --main-light-rgb: 56 182 255;
+  --secondary-rgb: 42 252 152;
 
   --card-size: 480px;
   --font-size: 0.8rem;
@@ -72,9 +72,9 @@ body {
   position: absolute;
   background: radial-gradient(
     rgb(var(--background-light-rgb)) 40%,
-    rgb(var(--hyperplexed-main-rgb)) 50%,
-    rgb(var(--hyperplexed-main-light-rgb)),
-    rgb(var(--hyperplexed-secondary-rgb))
+    rgb(var(--main-rgb)) 50%,
+    rgb(var(--main-light-rgb)),
+    rgb(var(--secondary-rgb))
   );
   mix-blend-mode: darken;
   pointer-events: none;
