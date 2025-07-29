@@ -1,5 +1,7 @@
+import Home from "./components/Home";
+
 function App() {
-  return <p class="text-3xl font-bold underline">Hello, World!</p>;
+  return <Home></Home>;
 }
 
 export default App;
