@@ -11,7 +11,7 @@ const Navigation = () => {
         />
       </Link>
       <Link to="store">
-        <p className="text-3xl sm:text-4xl font-bold text-green-700 transition-transform hover:scale-105">
+        <p className="text-3xl sm:text-4xl font-bold text-green-800 transition-transform hover:scale-105">
           Store
         </p>
       </Link>
