@@ -18,7 +18,7 @@ const App = () => {
           </p>
           <div className="mt-10 flex items-center justify-center gap-x-6">
             <Link to="store">
-              <span className="rounded-md bg-green-800 px-5 py-3 text-lg font-semibold text-white shadow-lg hover:bg-green-900 hover:scale-105 hover:shadow-xl transition-all duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-700 cursor-pointer">
+              <span className="rounded-md bg-green-800 px-5 py-3 text-lg font-semibold text-green-100 hover:text-green-200 shadow-lg hover:bg-green-900 hover:scale-110 hover:shadow-xl transition-all duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-700 cursor-pointer">
                 Shop now <span aria-hidden="true">→</span>
               </span>
             </Link>
