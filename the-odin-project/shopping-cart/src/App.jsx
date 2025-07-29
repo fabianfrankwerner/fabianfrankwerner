@@ -1,8 +1,11 @@
-import Navigation from "./components/Navigation";
-import Home from "./components/Home";
+import Shop from "./components/Shop";
 
 function App() {
-  return <Navigation></Navigation>;
+  return (
+    <>
+      <Shop></Shop>
+    </>
+  );
 }
 
 export default App;
