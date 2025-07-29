@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom";
+import { useBasket } from "./BasketContext";
 
 const Navigation = () => {
+  const { getItemCount } = useBasket();
+
   return (
     <nav className="flex items-center justify-between bg-green-100 shadow-lg px-4 py-4 sm:px-8 sm:py-6 rounded-lg mt-4 sm:mt-6 mb-8 mx-auto max-w-xs sm:max-w-md gap-2 sm:gap-4 hover:bg-green-900 hover:scale-105 hover:shadow-xl transition-all duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-700 cursor-pointer">
       <Link to="/">
@@ -22,9 +25,11 @@ const Navigation = () => {
             alt="Basket"
             className="h-10 w-10 object-contain"
           />
-          <span className="absolute -bottom-2 -right-2 bg-green-600 text-white text-xs rounded-full px-2 py-0.5">
-            5
-          </span>
+          {getItemCount() > 0 && (
+            <span className="absolute -bottom-2 -right-2 bg-green-600 text-white text-xs rounded-full px-2 py-0.5 min-w-[20px] text-center">
+              {getItemCount()}
+            </span>
+          )}
         </button>
       </Link>
     </nav>

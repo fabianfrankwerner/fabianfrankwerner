@@ -1,24 +1,18 @@
-import React, { useState } from "react";
+import React from "react";
 import vegetables from "../vegetables";
+import { useBasket } from "./BasketContext";
 
 const Store = () => {
-  const [basket, setBasket] = useState([]);
+  const { addToBasket, getItemCount } = useBasket();
 
-  const addToBasket = (vegetable) => {
-    setBasket((prev) => [...prev, vegetable]);
+  const handleAddToBasket = (vegetable) => {
+    addToBasket(vegetable);
     // Optional: Show a brief success message
     console.log(`Added ${vegetable.name} to basket!`);
   };
 
   return (
     <div className="min-h-screen p-6">
-      {/* Basket counter */}
-      <div className="flex justify-center mt-4">
-        <div className="bg-green-700 text-white px-4 py-2 rounded-full font-semibold">
-          🛒 Basket: {basket.length} items
-        </div>
-      </div>
-
       {/* Vegetables Grid */}
       <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {vegetables.map((veg, idx) => (
@@ -82,7 +76,7 @@ const Store = () => {
 
               {/* Add to Basket Button */}
               <button
-                onClick={() => addToBasket(veg)}
+                onClick={() => handleAddToBasket(veg)}
                 disabled={!veg.inStock}
                 className={`w-full py-3 px-4 rounded-lg font-semibold transition-all duration-200 ${
                   veg.inStock
