@@ -1,4 +1,4 @@
-import vegetables from "./vegetables";
+import vegetables from "../vegetables";
 
 const Store = () => {
   return (
