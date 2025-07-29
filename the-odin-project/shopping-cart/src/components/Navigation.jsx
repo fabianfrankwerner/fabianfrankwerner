@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const Navigation = () => {
   return (
-    <nav className="flex items-center justify-between bg-green-100 shadow-lg px-8 py-6 rounded-lg mt-6 mb-8 mx-auto max-w-xl">
+    <nav className="flex items-center justify-between bg-green-100 shadow-lg px-4 py-4 sm:px-8 sm:py-6 rounded-lg mt-4 sm:mt-6 mb-8 mx-auto max-w-xs sm:max-w-md gap-2 sm:gap-4">
       <Link to="/">
         <img
           src="../../seed.svg"
@@ -11,7 +11,7 @@ const Navigation = () => {
         />
       </Link>
       <Link to="store">
-        <p className="text-3xl font-bold text-green-700 transition-transform hover:scale-105">
+        <p className="text-3xl sm:text-4xl font-bold text-green-700 transition-transform hover:scale-105">
           Store
         </p>
       </Link>
