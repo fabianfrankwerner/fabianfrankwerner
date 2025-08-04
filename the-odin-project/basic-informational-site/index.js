@@ -1,19 +1,12 @@
-// Import the HTTP module
-const http = require("http");
+const http = require("node:http");
 
-// Create a server object
 const server = http.createServer((req, res) => {
-  // Set the response HTTP header with HTTP status and Content type
-  res.writeHead(200, { "Content-Type": "text/plain" });
-
-  // Send the response body as 'Hello, World!'
-  res.end("Hello, World!\n");
+  res.writeHead(200, { "Content-Type": "application/json" });
+  res.end(
+    JSON.stringify({
+      data: "Hello, World!",
+    })
+  );
 });
 
-// Define the port to listen on
-const PORT = 8080;
-
-// Start the server and listen on the specified port
-server.listen(PORT, "localhost", () => {
-  console.log(`Server running at http://localhost:${PORT}/`);
-});
+server.listen(8080);
