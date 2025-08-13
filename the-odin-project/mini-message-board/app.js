@@ -2,7 +2,9 @@ const express = require("express");
 const app = express();
 
 app.get("/", (req, res) => res.send("Index"));
-app.get("/new", (req, res) => res.send("Message"));
+// change to app.post()
+app.get("/new", (req, res) => res.send("New Message"));
+app.get("/*splat", (req, res) => res.send("404"));
 
 const PORT = 3000;
 app.listen(PORT, (error) => {
