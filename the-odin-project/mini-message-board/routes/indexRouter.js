@@ -18,6 +18,5 @@ const messages = [
 indexRouter.get("/", (req, res) =>
   res.render("index", { title: "Board", messages: messages })
 );
-indexRouter.get("/*splat", (req, res) => res.send("404"));
 
 module.exports = indexRouter;
