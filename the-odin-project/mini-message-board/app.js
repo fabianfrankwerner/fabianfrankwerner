@@ -1,7 +1,8 @@
 const express = require("express");
 const app = express();
 
-app.get("/", (req, res) => res.send("Hello, world!"));
+app.get("/", (req, res) => res.send("Index"));
+app.get("/new", (req, res) => res.send("Message"));
 
 const PORT = 3000;
 app.listen(PORT, (error) => {
