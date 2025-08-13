@@ -18,5 +18,6 @@ const messages = [
 indexRouter.get("/", (req, res) =>
   res.render("index", { title: "Board", messages: messages })
 );
+// indexRouter.post("/new", (req, res) => );
 
 module.exports = indexRouter;
