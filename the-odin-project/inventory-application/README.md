@@ -4,11 +4,11 @@ Your Inventory app should have categories and items, so when the user goes to th
 
 - [x] Set up an Express project and a new PostgreSQL database.
 - [x] Before you begin, take a moment to write down all of the database tables and its fields you'll need, as well as the relations between them.
-- [ ] Set up the routes and controllers you're going to need.
-- [ ] Create all of the 'READ' views (i.e. view category, and view item).
-- [ ] Create all the forms and build out the controllers you need for the create and update actions.
-- [ ] Figure out the delete functionality. What happens if you try to delete a category with items in it? Should it delete all the items as well? Should it just remove the category from the items? Or something else? This specific behavior will depend on your app's requirements.
+- [x] Set up the routes and controllers you're going to need.
+- [x] Create all of the 'READ' views (i.e. view category, and view item).
+- [x] Create all the forms and build out the controllers you need for the create and update actions.
+- [x] Figure out the delete functionality. What happens if you try to delete a category with items in it? Should it delete all the items as well? Should it just remove the category from the items? Or something else? This specific behavior will depend on your app's requirements.
 - [x] Once you're confident with your project, add dummy data via a script to your local database. Do this again when you deploy.
-- [ ] Deploy it and show off what you've done!
-- [ ] Make it pretty!
-- [ ] Figure out how to protect destructive actions (like deleting and updating) by making users enter a secret admin password to confirm the action.
+- [x] Deploy it and show off what you've done!
+- [x] Make it pretty!
+- [x] Figure out how to protect destructive actions (like deleting and updating) by making users enter a secret admin password to confirm the action.

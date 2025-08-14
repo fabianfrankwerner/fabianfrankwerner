@@ -1,0 +1,53 @@
+<div class="page-header">
+  <h1 class="page-title"><%= title %></h1>
+</div>
+
+<div class="card">
+  <form
+    method="POST"
+    action="<%= category ? `/categories/${category.id}/update` : '/categories/create' %>"
+  >
+    <% if (errors && errors.length > 0) { %>
+    <div class="alert alert-danger">
+      <ul style="margin: 0; padding-left: 1.5rem">
+        <% errors.forEach(error => { %>
+        <li><%= error %></li>
+        <% }); %>
+      </ul>
+    </div>
+    <% } %>
+
+    <div class="form-group">
+      <label for="name" class="form-label">Category Name *</label>
+      <input
+        type="text"
+        id="name"
+        name="name"
+        class="form-control"
+        value="<%= category ? category.name : '' %>"
+        required
+        maxlength="100"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="description" class="form-label">Description</label>
+      <textarea
+        id="description"
+        name="description"
+        class="form-control"
+        rows="4"
+        placeholder="Optional description for this category"
+      >
+<%= category ? category.description || '' : '' %></textarea
+      >
+    </div>
+
+    <div class="d-flex gap-2">
+      <button type="submit" class="btn btn-primary">
+        <%= category ? 'Update Category' : 'Create Category' %>
+      </button>
+      <a href="/categories" class="btn btn-secondary">Cancel</a>
+    </div>
+  </form>
+</div>
