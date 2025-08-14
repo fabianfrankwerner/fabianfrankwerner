@@ -4,11 +4,10 @@
   "description": "Your Inventory app should have categories and items, so when the user goes to the home-page they can choose a category to view, and then get a list of every item in that category. You should include all of the CRUD methods for both items and categories, so anybody that’s visiting the site can Create, Read, Update or Delete any Item or Category.",
   "main": "index.js",
   "scripts": {
-    "start": "node app.js",
-    "db:check": "node scripts/db-check.js",
-    "db:schema": "psql \"$DATABASE_URL\" -v ON_ERROR_STOP=1 -f db/schema.sql",
-    "db:seed": "psql \"$DATABASE_URL\" -v ON_ERROR_STOP=1 -f db/seed.sql",
-    "db:reset": "psql \"$DATABASE_URL\" -v ON_ERROR_STOP=1 -c \"DROP TABLE IF EXISTS items, categories CASCADE;\" && npm run db:schema && npm run db:seed"
+    "db:check": "dotenv -e .env -- node scripts/db-check.js",
+    "db:schema": "node scripts/create-tables.js",
+    "db:seed": "node scripts/seed-data.js",
+    "db:reset": "dotenv -e .env -- psql \"$DATABASE_URL\" -v ON_ERROR_STOP=1 -c \"DROP TABLE IF EXISTS items, categories CASCADE;\" && npm run db:schema && npm run db:seed"
   },
   "keywords": [],
   "author": "",
@@ -20,5 +19,8 @@
     "express": "^5.1.0",
     "express-validator": "^7.2.1",
     "pg": "^8.16.3"
+  },
+  "devDependencies": {
+    "dotenv-cli": "^10.0.0"
   }
 }
