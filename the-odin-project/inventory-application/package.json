@@ -4,7 +4,11 @@
   "description": "Your Inventory app should have categories and items, so when the user goes to the home-page they can choose a category to view, and then get a list of every item in that category. You should include all of the CRUD methods for both items and categories, so anybody that’s visiting the site can Create, Read, Update or Delete any Item or Category.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app.js",
+    "db:check": "node scripts/db-check.js",
+    "db:schema": "psql \"$DATABASE_URL\" -v ON_ERROR_STOP=1 -f db/schema.sql",
+    "db:seed": "psql \"$DATABASE_URL\" -v ON_ERROR_STOP=1 -f db/seed.sql",
+    "db:reset": "psql \"$DATABASE_URL\" -v ON_ERROR_STOP=1 -c \"DROP TABLE IF EXISTS items, categories CASCADE;\" && npm run db:schema && npm run db:seed"
   },
   "keywords": [],
   "author": "",

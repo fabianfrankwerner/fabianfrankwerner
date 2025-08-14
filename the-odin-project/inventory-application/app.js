@@ -1,22 +1,16 @@
-require("dotenv").config();
-
-const { Pool } = require("pg");
+const path = require("node:path");
 const express = require("express");
-
 const app = express();
-const PORT = process.env.PORT || 4242;
 
-app.get("/", async (_, res) => {
-  const pool = new Pool({
-    connectionString: process.env.DATABASE_URL,
-  });
-  const client = await pool.connect();
-  const result = await client.query("SELECT version()");
-  client.release();
-  const { version } = result.rows[0];
-  res.json({ version });
-});
+app.set("views", path.join(__dirname, "views"));
+app.set("view engine", "ejs");
 
-app.listen(PORT, () => {
-  console.log(`Listening to http://localhost:${PORT}`);
+app.use(express.urlencoded({ extended: true }));
+
+const PORT = 3000;
+app.listen(PORT, (error) => {
+  if (error) {
+    throw error;
+  }
+  console.log(`Listening on port http://localhost:${PORT}`);
 });
