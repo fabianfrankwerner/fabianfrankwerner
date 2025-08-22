@@ -1,25 +1,6 @@
 const db = require("../db/queries");
 const bcrypt = require("bcryptjs");
-// sanitize and validate the form fields
 const { body, validationResult } = require("express-validator");
-
-// const alphaErr = "must only contain letters.";
-// const lengthErr = "must be between 1 and 10 characters.";
-
-// const validateUser = [
-//   body("first_name")
-//     .trim()
-//     .isAlpha()
-//     .withMessage(`First name ${alphaErr}`)
-//     .isLength({ min: 1, max: 10 })
-//     .withMessage(`First name ${lengthErr}`),
-//   body("last_name")
-//     .trim()
-//     .isAlpha()
-//     .withMessage(`Last name ${alphaErr}`)
-//     .isLength({ min: 1, max: 10 })
-//     .withMessage(`Last name ${lengthErr}`),
-// ];
 
 async function signUpGet(req, res) {
   res.render("sign-up-form", { title: "Sign-Up Form" });
@@ -27,11 +8,51 @@ async function signUpGet(req, res) {
 
 async function signUpPost(req, res, next) {
   try {
-    await body("password").isLength({ min: 5 }).run(req);
+    await body("first_name")
+      .trim()
+      .escape()
+      .isLength({ min: 1, max: 100 })
+      .withMessage("First name must be between 1 and 100 characters")
+      .isAlpha("en-US", { ignore: " -'" })
+      .withMessage(
+        "First name can only contain letters, spaces, hyphens, and apostrophes"
+      )
+      .run(req);
+
+    await body("last_name")
+      .trim()
+      .escape()
+      .isLength({ min: 1, max: 100 })
+      .withMessage("Last name must be between 1 and 100 characters")
+      .isAlpha("en-US", { ignore: " -'" })
+      .withMessage(
+        "Last name can only contain letters, spaces, hyphens, and apostrophes"
+      )
+      .run(req);
+
+    await body("email")
+      .trim()
+      .normalizeEmail()
+      .isEmail()
+      .withMessage("Please enter a valid email address")
+      .isLength({ max: 255 })
+      .withMessage("Email address is too long")
+      .run(req);
+
+    await body("password")
+      .isLength({ min: 8, max: 255 })
+      .withMessage("Password must be between 8 and 255 characters")
+      .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/)
+      .withMessage(
+        "Password must contain at least one lowercase letter, one uppercase letter, and one number"
+      )
+      .run(req);
+
     await body("confirm_password")
       .custom((value, { req }) => {
         return value === req.body.password;
       })
+      .withMessage("Password confirmation does not match password")
       .run(req);
 
     const errors = validationResult(req);
