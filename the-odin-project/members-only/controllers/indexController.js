@@ -27,10 +27,21 @@ async function signUpGet(req, res) {
 
 async function signUpPost(req, res, next) {
   try {
-    body("password").isLength({ min: 5 }),
-      body("confirm_password").custom((value, { req }) => {
+    await body("password").isLength({ min: 5 }).run(req);
+    await body("confirm_password")
+      .custom((value, { req }) => {
         return value === req.body.password;
+      })
+      .run(req);
+
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.render("sign-up-form", {
+        title: "Sign-Up Form",
+        errors: errors.array(),
+        formData: req.body,
       });
+    }
 
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
     await db.insertUser(
