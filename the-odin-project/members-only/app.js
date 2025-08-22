@@ -6,7 +6,11 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 
 const pool = new Pool({
-  // add your configuration
+  host: "localhost",
+  user: "fabianfrankwerner",
+  database: "members_only",
+  password: "",
+  port: 5432,
 });
 
 const app = express();
