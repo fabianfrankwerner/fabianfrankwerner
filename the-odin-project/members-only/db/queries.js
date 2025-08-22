@@ -1,15 +1,12 @@
 const pool = require("./pool");
 
-// async function getAllUsernames() {
-//   const { rows } = await pool.query("SELECT * FROM usernames");
-//   return rows;
-// }
+async function insertUser(first_name, last_name, email, password) {
+  await pool.query(
+    "INSERT INTO users (first_name, last_name, email, password) VALUES ($1, $2, $3, $4)",
+    [first_name, last_name, email, password]
+  );
+}
 
-// async function insertUsername(username) {
-//   await pool.query("INSERT INTO usernames (username) VALUES ($1)", [username]);
-// }
-
-// module.exports = {
-//   getAllUsernames,
-//   insertUsername,
-// };
+module.exports = {
+  insertUser,
+};
