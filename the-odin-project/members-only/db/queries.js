@@ -7,6 +7,20 @@ async function insertUser(first_name, last_name, email, password) {
   );
 }
 
+async function getUserByEmail(email) {
+  const { rows } = await pool.query("SELECT * FROM users WHERE email = $1", [
+    email,
+  ]);
+  return rows[0];
+}
+
+async function getUserById(id) {
+  const { rows } = await pool.query("SELECT * FROM users WHERE id = $1", [id]);
+  return rows[0];
+}
+
 module.exports = {
   insertUser,
+  getUserByEmail,
+  getUserById,
 };
