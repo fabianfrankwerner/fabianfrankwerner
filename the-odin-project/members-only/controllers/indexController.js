@@ -78,7 +78,15 @@ async function signUpPost(req, res, next) {
   }
 }
 
+async function logInGet(req, res) {
+  res.render("log-in-form", { title: "Log-In Form" });
+}
+
+async function logInPost(req, res) {}
+
 module.exports = {
   signUpGet,
   signUpPost,
+  logInGet,
+  logInPost,
 };
