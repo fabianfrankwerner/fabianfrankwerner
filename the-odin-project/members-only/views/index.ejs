@@ -9,8 +9,62 @@
     <p><a href="/sign-up">Sign-Up Page</a></p>
     <% if (locals.user) {%>
     <h2>Welcome Back <%= user.first_name %> <%= user.last_name %>!</h2>
+    <p>Status: <%= user.membership_status %></p>
     <a href="/log-out">Log-Out</a>
-    <% } else { %>
+
+    <!-- Upgrade form for logged-in users -->
+    <form action="/upgrade" method="POST">
+      <label for="upgrade">Secret Passcode</label>
+      <input
+        id="upgrade"
+        name="upgrade"
+        type="text"
+        placeholder="Enter secret passcode"
+      />
+      <button type="submit">Upgrade</button>
+    </form>
+
+    <!-- Create message form for members and admins -->
+    <% if (user.membership_status === 'MEMBER' || user.membership_status ===
+    'ADMIN') { %>
+    <h3>Create Message</h3>
+    <form action="/messages" method="POST">
+      <label for="title">Title:</label>
+      <input id="title" name="title" type="text" required />
+      <br />
+      <label for="body">Message:</label>
+      <textarea id="body" name="body" required></textarea>
+      <br />
+      <button type="submit">Post Message</button>
+    </form>
+    <% } %>
+
+    <!-- Messages section -->
+    <h3>Messages</h3>
+    <% if (locals.messages && messages.length > 0) { %> <%
+    messages.forEach(function(message) { %>
+    <div style="border: 1px solid #ccc; margin: 10px 0; padding: 10px">
+      <h4><%= message.title %></h4>
+      <p><%= message.body %></p>
+      <small
+        >By: <%= message.first_name %> <%= message.last_name %> (<%=
+        message.membership_status %>) - <%= message.created_at %></small
+      >
+      <% if (user.membership_status === 'ADMIN') { %>
+      <form
+        action="/messages/<%= message.id %>/delete"
+        method="POST"
+        style="display: inline"
+      >
+        <button type="submit" onclick="return confirm('Are you sure?')">
+          Delete
+        </button>
+      </form>
+      <% } %>
+    </div>
+    <% }); %> <% } else { %>
+    <p>No messages yet.</p>
+    <% } %> <% } else { %>
     <h2>Please Log-In</h2>
     <p><a href="/log-in">Log-In Page</a></p>
     <%}%>

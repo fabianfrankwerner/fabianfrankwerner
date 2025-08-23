@@ -152,10 +152,116 @@ async function logOutGet(req, res, next) {
   });
 }
 
+async function upgradePost(req, res, next) {
+  try {
+    const passcode = req.body.upgrade;
+    const user = req.user;
+
+    if (!user) {
+      return res.redirect("/log-in");
+    }
+
+    // Secret passcodes
+    const MEMBER_PASSCODE = "1234";
+    const ADMIN_PASSCODE = "9999";
+
+    let newStatus = null;
+
+    if (passcode === MEMBER_PASSCODE) {
+      // Guest can become member
+      if (user.membership_status === "GUEST") {
+        newStatus = "MEMBER";
+      }
+    } else if (passcode === ADMIN_PASSCODE) {
+      // Guest or member can become admin
+      if (
+        user.membership_status === "GUEST" ||
+        user.membership_status === "MEMBER"
+      ) {
+        newStatus = "ADMIN";
+      }
+    }
+
+    if (newStatus) {
+      await db.updateMembershipStatus(user.id, newStatus);
+      // Update the user object in session
+      user.membership_status = newStatus;
+      res.redirect("/");
+    } else {
+      // Invalid passcode or downgrade attempt
+      res.redirect("/");
+    }
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+}
+
+async function indexGet(req, res) {
+  try {
+    const messages = await db.getAllMessages();
+    res.render("index", { user: req.user, messages });
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+}
+
+async function createMessagePost(req, res, next) {
+  try {
+    const { title, body } = req.body;
+    const user = req.user;
+
+    if (!user) {
+      return res.redirect("/log-in");
+    }
+
+    // Only members and admins can create messages
+    if (
+      user.membership_status !== "MEMBER" &&
+      user.membership_status !== "ADMIN"
+    ) {
+      return res.redirect("/");
+    }
+
+    await db.createMessage(title, body, user.id);
+    res.redirect("/");
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+}
+
+async function deleteMessagePost(req, res, next) {
+  try {
+    const messageId = req.params.id;
+    const user = req.user;
+
+    if (!user) {
+      return res.redirect("/log-in");
+    }
+
+    // Only admins can delete messages
+    if (user.membership_status !== "ADMIN") {
+      return res.redirect("/");
+    }
+
+    await db.deleteMessage(messageId);
+    res.redirect("/");
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+}
+
 module.exports = {
   signUpGet,
   signUpPost,
   logInGet,
   logInPost,
   logOutGet,
+  upgradePost,
+  indexGet,
+  createMessagePost,
+  deleteMessagePost,
 };
