@@ -89,27 +89,33 @@ async function logInGet(req, res) {
 // refactor to query
 
 passport.use(
-  new LocalStrategy(async (email, password, done) => {
-    try {
-      const { rows } = await pool.query(
-        "SELECT * FROM users WHERE email = $1",
-        [email]
-      );
-      const user = rows[0];
+  new LocalStrategy(
+    {
+      usernameField: "email",
+      passwordField: "password",
+    },
+    async (email, password, done) => {
+      try {
+        const { rows } = await pool.query(
+          "SELECT * FROM users WHERE email = $1",
+          [email]
+        );
+        const user = rows[0];
 
-      if (!user) {
-        return done(null, false, { message: "Incorrect email" });
-      }
+        if (!user) {
+          return done(null, false, { message: "Incorrect email" });
+        }
 
-      const match = await bcrypt.compare(password, user.password);
-      if (!match) {
-        return done(null, false, { message: "Incorrect password" });
+        const match = await bcrypt.compare(password, user.password);
+        if (!match) {
+          return done(null, false, { message: "Incorrect password" });
+        }
+        return done(null, user);
+      } catch (err) {
+        return done(err);
       }
-      return done(null, user);
-    } catch (err) {
-      return done(err);
     }
-  })
+  )
 );
 
 passport.serializeUser((user, done) => {
@@ -129,10 +135,32 @@ passport.deserializeUser(async (id, done) => {
   }
 });
 
-async function logInPost() {
-  passport.authenticate("local", {
-    successRedirect: "/",
-    failureRedirect: "/",
+async function logInPost(req, res, next) {
+  passport.authenticate("local", (err, user, info) => {
+    if (err) {
+      return next(err);
+    }
+    if (!user) {
+      return res.render("log-in-form", {
+        title: "Log-In Form",
+        errors: [{ msg: info.message }],
+      });
+    }
+    req.logIn(user, (err) => {
+      if (err) {
+        return next(err);
+      }
+      return res.redirect("/");
+    });
+  })(req, res, next);
+}
+
+async function logOutGet(req, res, next) {
+  req.logout((err) => {
+    if (err) {
+      return next(err);
+    }
+    res.redirect("/");
   });
 }
 
@@ -141,4 +169,5 @@ module.exports = {
   signUpPost,
   logInGet,
   logInPost,
+  logOutGet,
 };

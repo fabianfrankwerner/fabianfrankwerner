@@ -10,6 +10,7 @@ app.set("view engine", "ejs");
 
 app.use(session({ secret: "cats", resave: false, saveUninitialized: false }));
 app.use(express.urlencoded({ extended: true }));
+app.use(passport.initialize());
 app.use(passport.session());
 
 app.use("/", indexRouter);
