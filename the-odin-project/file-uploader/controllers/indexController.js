@@ -101,25 +101,24 @@ passport.deserializeUser(async (id, done) => {
   }
 });
 
-// async function logInPost(req, res, next) {
-//   passport.authenticate("local", (err, user, info) => {
-//     if (err) {
-//       return next(err);
-//     }
-//     if (!user) {
-//       return res.render("log-in-form", {
-//         title: "Log-In Form",
-//         errors: [{ msg: info.message }],
-//       });
-//     }
-//     req.logIn(user, (err) => {
-//       if (err) {
-//         return next(err);
-//       }
-//       return res.redirect("/");
-//     });
-//   })(req, res, next);
-// }
+async function logInPost(req, res, next) {
+  passport.authenticate("local", (err, user, info) => {
+    if (err) {
+      return next(err);
+    }
+    if (!user) {
+      return res.render("log-in-form", {
+        errors: [{ msg: info.message }],
+      });
+    }
+    req.logIn(user, (err) => {
+      if (err) {
+        return next(err);
+      }
+      return res.redirect("/");
+    });
+  })(req, res, next);
+}
 
 // async function logOutGet(req, res, next) {
 //   req.logout((err) => {
