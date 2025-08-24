@@ -29,6 +29,13 @@ async function signUpPost(req, res) {
         name: req.body.name,
         email: req.body.email,
         password: hashedPassword,
+        // folders: {
+        //   create: [
+        //     {
+        //       name: "Default Folder",
+        //     },
+        //   ],
+        // },
       },
     });
     res.redirect("/");
@@ -104,7 +111,7 @@ async function logInPost(req, res, next) {
       if (err) {
         return next(err);
       }
-      return res.redirect("/");
+      return res.redirect("/folders");
     });
   })(req, res, next);
 }
@@ -118,6 +125,38 @@ async function logOutGet(req, res, next) {
   });
 }
 
+function foldersGet(req, res) {
+  try {
+    // pass folders to render?
+    return res.render("folders");
+  } catch (e) {
+    console.error("Failed to render:", e);
+  }
+}
+
+async function foldersPost(req, res) {
+  try {
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+    await prisma.user.create({
+      data: {
+        name: req.body.name,
+        email: req.body.email,
+        password: hashedPassword,
+        // folders: {
+        //   create: [
+        //     {
+        //       name: "Default Folder",
+        //     },
+        //   ],
+        // },
+      },
+    });
+    res.redirect("/");
+  } catch (e) {
+    console.error("Failed to sign-up:", e);
+  }
+}
+
 module.exports = {
   indexGet,
   signUpGet,
@@ -125,4 +164,6 @@ module.exports = {
   logInGet,
   logInPost,
   logOutGet,
+  foldersGet,
+  foldersPost,
 };

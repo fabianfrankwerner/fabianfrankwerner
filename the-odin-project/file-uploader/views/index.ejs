@@ -8,10 +8,11 @@
     <h1>Home</h1>
     <% if (locals.user) { %>
     <h2>Welcome back, <%= user.name %>!</h2>
+    <a href="/folders">Folders</a>
     <a href="/log-out">Log-Out (<%= user.email %>)</a>
     <% } else { %>
-    <a href="/sign-up">Sign-Up Form</a>
     <a href="/log-in">Log-In Form</a>
+    <a href="/sign-up">Sign-Up Form</a>
     <% } %>
   </body>
 </html>

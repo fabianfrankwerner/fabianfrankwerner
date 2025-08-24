@@ -14,6 +14,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use("/", indexRouter);
+// app.use("/folders", folderRouter); -> add Update & Delete within a folder
 
 app.listen(3000, (error) => {
   if (error) {
