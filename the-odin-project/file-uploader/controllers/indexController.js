@@ -29,7 +29,7 @@ async function signUpPost(req, res) {
         name: req.body.name,
         email: req.body.email,
         password: hashedPassword,
-        folder: {
+        folders: {
           create: [
             {
               name: "Default Folder",
@@ -38,7 +38,7 @@ async function signUpPost(req, res) {
         },
       },
     });
-    res.redirect("/");
+    res.redirect("/log-in");
   } catch (e) {
     console.error("Failed to sign-up:", e);
   }
