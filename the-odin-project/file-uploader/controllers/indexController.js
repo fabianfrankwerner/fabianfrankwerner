@@ -127,7 +127,7 @@ async function logOutGet(req, res, next) {
 
 function foldersGet(req, res) {
   try {
-    // pass folders to render?
+    // pass all folders to render, sorted (by last updated?)
     return res.render("folders");
   } catch (e) {
     console.error("Failed to render:", e);
@@ -136,24 +136,14 @@ function foldersGet(req, res) {
 
 async function foldersPost(req, res) {
   try {
-    const hashedPassword = await bcrypt.hash(req.body.password, 10);
-    await prisma.user.create({
+    await prisma.folder.create({
       data: {
         name: req.body.name,
-        email: req.body.email,
-        password: hashedPassword,
-        // folders: {
-        //   create: [
-        //     {
-        //       name: "Default Folder",
-        //     },
-        //   ],
-        // },
       },
     });
-    res.redirect("/");
+    res.redirect("/folders");
   } catch (e) {
-    console.error("Failed to sign-up:", e);
+    console.error("Failed to create folder:", e);
   }
 }
 
