@@ -1,8 +1,15 @@
-const db = require("../db/queries");
 const bcrypt = require("bcryptjs");
 const { body, validationResult } = require("express-validator");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
+
+function indexGet(req, res) {
+  try {
+    return res.render("index", { user: req.user ?? null });
+  } catch (err) {
+    console.error("Failed to render index:", err);
+  }
+}
 
 // async function signUpGet(req, res) {
 //   res.render("sign-up-form", { title: "Sign-Up Form" });
@@ -197,16 +204,6 @@ const LocalStrategy = require("passport-local").Strategy;
 //   }
 // }
 
-// async function indexGet(req, res) {
-//   try {
-//     const messages = await db.getAllMessages();
-//     res.render("index", { user: req.user, messages });
-//   } catch (error) {
-//     console.error(error);
-//     next(error);
-//   }
-// }
-
 // async function createMessagePost(req, res, next) {
 //   try {
 //     const { title, body } = req.body;
@@ -254,14 +251,6 @@ const LocalStrategy = require("passport-local").Strategy;
 //   }
 // }
 
-// module.exports = {
-//   signUpGet,
-//   signUpPost,
-//   logInGet,
-//   logInPost,
-//   logOutGet,
-//   upgradePost,
-//   indexGet,
-//   createMessagePost,
-//   deleteMessagePost,
-// };
+module.exports = {
+  indexGet,
+};
