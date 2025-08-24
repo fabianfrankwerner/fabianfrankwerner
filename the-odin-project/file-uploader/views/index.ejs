@@ -7,11 +7,12 @@
   <body>
     <h1>Home</h1>
     <% if (locals.user) { %>
+    <!-- Display name if any here -->
     <h2>Welcome back!</h2>
     <a href="/log-out">Log-Out</a>
     <% } else { %>
-    <a href="/sign-up">Sign-Up Page</a>
-    <a href="/log-in">Log-In Page</a>
+    <a href="/sign-up">Sign-Up Form</a>
+    <a href="/log-in">Log-In Form</a>
     <% } %>
   </body>
 </html>

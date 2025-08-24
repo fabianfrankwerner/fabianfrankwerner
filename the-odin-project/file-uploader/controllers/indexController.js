@@ -37,9 +37,13 @@ async function signUpPost(req, res) {
   }
 }
 
-// async function logInGet(req, res) {
-//   res.render("log-in-form", { title: "Log-In Form" });
-// }
+function logInGet(req, res) {
+  try {
+    return res.render("log-in-form");
+  } catch (e) {
+    console.error("Failed to render:", e);
+  }
+}
 
 // passport.use(
 //   new LocalStrategy(
@@ -113,4 +117,5 @@ module.exports = {
   indexGet,
   signUpGet,
   signUpPost,
+  logInGet,
 };
