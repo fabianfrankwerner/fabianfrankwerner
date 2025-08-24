@@ -53,21 +53,14 @@ passport.use(
     },
     async (email, password, done) => {
       try {
-        // const { rows } = await pool.query("SELECT * FROM users WHERE email = $1", [
-        //     email,
-        //   ]);
-        //   return rows[0];
-
         const user = await prisma.user.findUnique({
           where: {
             email: email,
           },
         });
-
         if (!user) {
           return done(null, false, { message: "Incorrect email" });
         }
-
         const match = await bcrypt.compare(password, user.password);
         if (!match) {
           return done(null, false, { message: "Incorrect password" });
@@ -86,15 +79,11 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser(async (id, done) => {
   try {
-    // const { rows } = await pool.query("SELECT * FROM users WHERE id = $1", [id]);
-    // return rows[0];
-
     const user = await prisma.user.findUnique({
       where: {
         id: id,
       },
     });
-
     done(null, user);
   } catch (err) {
     done(err);
@@ -120,14 +109,14 @@ async function logInPost(req, res, next) {
   })(req, res, next);
 }
 
-// async function logOutGet(req, res, next) {
-//   req.logout((err) => {
-//     if (err) {
-//       return next(err);
-//     }
-//     res.redirect("/");
-//   });
-// }
+async function logOutGet(req, res, next) {
+  req.logout((err) => {
+    if (err) {
+      return next(err);
+    }
+    res.redirect("/");
+  });
+}
 
 module.exports = {
   indexGet,
@@ -135,4 +124,5 @@ module.exports = {
   signUpPost,
   logInGet,
   logInPost,
+  logOutGet,
 };
