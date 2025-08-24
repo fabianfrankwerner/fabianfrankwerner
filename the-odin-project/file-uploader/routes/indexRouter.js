@@ -10,7 +10,14 @@ indexRouter.get("/log-in", indexController.logInGet);
 indexRouter.post("/log-in", indexController.logInPost);
 indexRouter.get("/log-out", indexController.logOutGet);
 
-indexRouter.get("/folders", indexController.foldersGet);
-indexRouter.post("/folders", indexController.foldersPost);
+function ensureAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect("/log-in");
+}
+
+indexRouter.get("/folders", ensureAuthenticated, indexController.foldersGet);
+indexRouter.post("/folders", ensureAuthenticated, indexController.foldersPost);
 
 module.exports = indexRouter;

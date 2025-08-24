@@ -7,12 +7,45 @@
   <body>
     <h1>Folders</h1>
     <a href="/">Home</a>
+    <a href="/log-out">Log Out</a>
+
+    <% if (typeof error !== 'undefined' && error) { %>
+    <div><%= error %></div>
+    <% } %>
+
     <form action="/folders" method="POST">
       <label for="name">Name</label>
-      <input id="name" name="name" placeholder="Name" type="text" />
+      <input id="name" name="name" placeholder="Name" type="text" required />
       <button type="submit">Create Folder</button>
     </form>
 
-    <!-- Render all folders -->
+    <% if (typeof folders !== 'undefined' && folders.length > 0) { %> <%
+    folders.forEach(function(folder) { %>
+    <div>
+      <h2><%= folder.name %></h2>
+      <div>
+        Created: <%= new Date(folder.createdAt).toLocaleDateString() %> <% if
+        (folder.files && folder.files.length > 0) { %> | <%= folder.files.length
+        %> file<%= folder.files.length !== 1 ? 's' : '' %> <% } %>
+      </div>
+
+      <% if (folder.files && folder.files.length > 0) { %>
+      <div>
+        <h3>Files:</h3>
+        <% folder.files.forEach(function(file) { %>
+        <div>
+          <strong><%= file.name %></strong>
+          (<%= (file.size / 1024).toFixed(2) %> KB) - <%= new
+          Date(file.createdAt).toLocaleDateString() %>
+        </div>
+        <% }); %>
+      </div>
+      <% } else { %>
+      <div>No files in this folder</div>
+      <% } %>
+    </div>
+    <% }); %> <% } else { %>
+    <p>No folders yet. Create your first folder above!</p>
+    <% } %>
   </body>
 </html>

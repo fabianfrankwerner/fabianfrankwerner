@@ -29,13 +29,13 @@ async function signUpPost(req, res) {
         name: req.body.name,
         email: req.body.email,
         password: hashedPassword,
-        // folders: {
-        //   create: [
-        //     {
-        //       name: "Default Folder",
-        //     },
-        //   ],
-        // },
+        folder: {
+          create: [
+            {
+              name: "Default Folder",
+            },
+          ],
+        },
       },
     });
     res.redirect("/");
@@ -125,25 +125,71 @@ async function logOutGet(req, res, next) {
   });
 }
 
-function foldersGet(req, res) {
+async function foldersGet(req, res) {
   try {
-    // pass all folders to render, sorted (by last updated?)
-    return res.render("folders");
+    // Fetch all folders for the authenticated user, sorted by creation date (newest first)
+    const folders = await prisma.folder.findMany({
+      where: {
+        userId: req.user.id,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+      include: {
+        files: {
+          select: {
+            id: true,
+            name: true,
+            size: true,
+            mimeType: true,
+            createdAt: true,
+          },
+        },
+      },
+    });
+
+    return res.render("folders", {
+      user: req.user,
+      folders: folders,
+    });
   } catch (e) {
-    console.error("Failed to render:", e);
+    console.error("Failed to render folders:", e);
+    return res.status(500).render("folders", {
+      user: req.user,
+      folders: [],
+      error: "Failed to load folders",
+    });
   }
 }
 
 async function foldersPost(req, res) {
   try {
+    // Validate input
+    const { name } = req.body;
+    if (!name || name.trim().length === 0) {
+      return res.render("folders", {
+        user: req.user,
+        folders: [],
+        error: "Folder name is required",
+      });
+    }
+
+    // Create new folder for the authenticated user
     await prisma.folder.create({
       data: {
-        name: req.body.name,
+        name: name.trim(),
+        userId: req.user.id,
       },
     });
+
     res.redirect("/folders");
   } catch (e) {
     console.error("Failed to create folder:", e);
+    return res.render("folders", {
+      user: req.user,
+      folders: [],
+      error: "Failed to create folder",
+    });
   }
 }
 
