@@ -2,138 +2,25 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Sign-Up Page</title>
-    <!-- <style>
-      .error {
-        color: red;
-        font-size: 0.9em;
-        margin-top: 5px;
-      }
-      .form-group {
-        margin-bottom: 15px;
-      }
-      label {
-        display: block;
-        margin-bottom: 5px;
-      }
-      input {
-        width: 100%;
-        padding: 8px;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-      }
-      input.error-field {
-        border-color: red;
-      }
-      button {
-        background-color: #007bff;
-        color: white;
-        padding: 10px 20px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-      }
-      button:hover {
-        background-color: #0056b3;
-      }
-    </style> -->
+    <title>Sign-Up Form</title>
   </head>
   <body>
-    <h1>Sign-Up Page</h1>
-
-    <p><a href="/">Home Page</a></p>
-
-    <% if (typeof errors !== 'undefined' && errors.length > 0) { %>
-    <div style="color: red; margin-bottom: 20px">
-      <h3>Please fix the following errors:</h3>
-      <ul>
-        <% errors.forEach(function(error) { %>
-        <li><%= error.msg %></li>
-        <% }); %>
-      </ul>
-    </div>
-    <% } %>
-
+    <h1>Sign-Up Form</h1>
+    <p><a href="/">Home</a></p>
     <form action="/sign-up" method="POST">
-      <div class="form-group">
-        <label for="first_name">First Name</label>
-        <input
-          id="first_name"
-          name="first_name"
-          placeholder="First Name"
-          type="text"
-          value="<%= typeof formData !== 'undefined' ? formData.first_name || '' : '' %>"
-          class="<%= typeof errors !== 'undefined' && errors.find(e => e.path === 'first_name') ? 'error-field' : '' %>"
-        />
-        <% if (typeof errors !== 'undefined') { %> <% const firstNameError =
-        errors.find(e => e.path === 'first_name'); %> <% if (firstNameError) {
-        %>
-        <div class="error"><%= firstNameError.msg %></div>
-        <% } %> <% } %>
-      </div>
-
-      <div class="form-group">
-        <label for="last_name">Last Name</label>
-        <input
-          id="last_name"
-          name="last_name"
-          placeholder="Last Name"
-          type="text"
-          value="<%= typeof formData !== 'undefined' ? formData.last_name || '' : '' %>"
-          class="<%= typeof errors !== 'undefined' && errors.find(e => e.path === 'last_name') ? 'error-field' : '' %>"
-        />
-        <% if (typeof errors !== 'undefined') { %> <% const lastNameError =
-        errors.find(e => e.path === 'last_name'); %> <% if (lastNameError) { %>
-        <div class="error"><%= lastNameError.msg %></div>
-        <% } %> <% } %>
-      </div>
-
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input
-          id="email"
-          name="email"
-          placeholder="Email"
-          type="email"
-          value="<%= typeof formData !== 'undefined' ? formData.email || '' : '' %>"
-          class="<%= typeof errors !== 'undefined' && errors.find(e => e.path === 'email') ? 'error-field' : '' %>"
-        />
-        <% if (typeof errors !== 'undefined') { %> <% const emailError =
-        errors.find(e => e.path === 'email'); %> <% if (emailError) { %>
-        <div class="error"><%= emailError.msg %></div>
-        <% } %> <% } %>
-      </div>
-
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input
-          id="password"
-          name="password"
-          type="password"
-          class="<%= typeof errors !== 'undefined' && errors.find(e => e.path === 'password') ? 'error-field' : '' %>"
-        />
-        <% if (typeof errors !== 'undefined') { %> <% const passwordError =
-        errors.find(e => e.path === 'password'); %> <% if (passwordError) { %>
-        <div class="error"><%= passwordError.msg %></div>
-        <% } %> <% } %>
-      </div>
-
-      <div class="form-group">
-        <label for="confirm_password">Confirm Password</label>
-        <input
-          id="confirm_password"
-          name="confirm_password"
-          type="password"
-          class="<%= typeof errors !== 'undefined' && errors.find(e => e.path === 'confirm_password') ? 'error-field' : '' %>"
-        />
-        <% if (typeof errors !== 'undefined') { %> <% const confirmPasswordError
-        = errors.find(e => e.path === 'confirm_password'); %> <% if
-        (confirmPasswordError) { %>
-        <div class="error"><%= confirmPasswordError.msg %></div>
-        <% } %> <% } %>
-      </div>
-
-      <button type="submit">Sign Up</button>
+      <label for="name">Name</label>
+      <input id="name" name="name" placeholder="Name" type="text" />
+      <label for="email">Email*</label>
+      <input
+        id="email"
+        name="email"
+        placeholder="Email"
+        type="email"
+        required
+      />
+      <label for="password">Password*</label>
+      <input id="password" name="password" type="password" required />
+      <button type="submit">Sign-Up</button>
     </form>
   </body>
 </html>

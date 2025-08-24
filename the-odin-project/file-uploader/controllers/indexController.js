@@ -1,19 +1,23 @@
 const bcrypt = require("bcryptjs");
-const { body, validationResult } = require("express-validator");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
+const { body, validationResult } = require("express-validator");
 
 function indexGet(req, res) {
   try {
-    return res.render("index", { user: req.user ?? null });
+    return res.render("index", { user: req.user });
   } catch (err) {
-    console.error("Failed to render index:", err);
+    console.error("Failed to render:", err);
   }
 }
 
-// async function signUpGet(req, res) {
-//   res.render("sign-up-form", { title: "Sign-Up Form" });
-// }
+async function signUpGet(req, res) {
+  try {
+    return res.render("sign-up-form");
+  } catch (err) {
+    console.error("Failed to render:", err);
+  }
+}
 
 // async function signUpPost(req, res, next) {
 //   try {
@@ -253,4 +257,5 @@ function indexGet(req, res) {
 
 module.exports = {
   indexGet,
+  signUpGet,
 };
