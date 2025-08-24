@@ -7,3 +7,37 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String // hashed password
+  name      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  folders Folder[]
+  files   File[]
+}
+
+model Folder {
+  id        String   @id @default(uuid())
+  name      String
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  files     File[]
+  createdAt DateTime @default(now())
+}
+
+model File {
+  id        String   @id @default(uuid())
+  name      String
+  size      Int // size in bytes
+  mimeType  String // "image/png", "application/pdf", etc.
+  path      String // local storage path or cloud URL
+  folderId  String?
+  folder    Folder?  @relation(fields: [folderId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+}
