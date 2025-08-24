@@ -45,44 +45,61 @@ function logInGet(req, res) {
   }
 }
 
-// passport.use(
-//   new LocalStrategy(
-//     {
-//       usernameField: "email",
-//       passwordField: "password",
-//     },
-//     async (email, password, done) => {
-//       try {
-//         const user = await db.getUserByEmail(email);
+passport.use(
+  new LocalStrategy(
+    {
+      usernameField: "email",
+      passwordField: "password",
+    },
+    async (email, password, done) => {
+      try {
+        // const { rows } = await pool.query("SELECT * FROM users WHERE email = $1", [
+        //     email,
+        //   ]);
+        //   return rows[0];
 
-//         if (!user) {
-//           return done(null, false, { message: "Incorrect email" });
-//         }
+        const user = await prisma.user.findUnique({
+          where: {
+            email: email,
+          },
+        });
 
-//         const match = await bcrypt.compare(password, user.password);
-//         if (!match) {
-//           return done(null, false, { message: "Incorrect password" });
-//         }
-//         return done(null, user);
-//       } catch (err) {
-//         return done(err);
-//       }
-//     }
-//   )
-// );
+        if (!user) {
+          return done(null, false, { message: "Incorrect email" });
+        }
 
-// passport.serializeUser((user, done) => {
-//   done(null, user.id);
-// });
+        const match = await bcrypt.compare(password, user.password);
+        if (!match) {
+          return done(null, false, { message: "Incorrect password" });
+        }
+        return done(null, user);
+      } catch (err) {
+        return done(err);
+      }
+    }
+  )
+);
 
-// passport.deserializeUser(async (id, done) => {
-//   try {
-//     const user = await db.getUserById(id);
-//     done(null, user);
-//   } catch (err) {
-//     done(err);
-//   }
-// });
+passport.serializeUser((user, done) => {
+  done(null, user.id);
+});
+
+passport.deserializeUser(async (id, done) => {
+  try {
+    // const { rows } = await pool.query("SELECT * FROM users WHERE id = $1", [id]);
+    // return rows[0];
+
+    const user = await prisma.user.findUnique({
+      where: {
+        id: id,
+      },
+    });
+
+    done(null, user);
+  } catch (err) {
+    done(err);
+  }
+});
 
 // async function logInPost(req, res, next) {
 //   passport.authenticate("local", (err, user, info) => {
@@ -118,4 +135,5 @@ module.exports = {
   signUpGet,
   signUpPost,
   logInGet,
+  logInPost,
 };
