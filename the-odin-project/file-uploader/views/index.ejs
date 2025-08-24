@@ -7,9 +7,8 @@
   <body>
     <h1>Home</h1>
     <% if (locals.user) { %>
-    <!-- Display name if any here -->
-    <h2>Welcome back!</h2>
-    <a href="/log-out">Log-Out</a>
+    <h2>Welcome back, <%= user.name %>!</h2>
+    <a href="/log-out">Log-Out (<%= user.email %>)</a>
     <% } else { %>
     <a href="/sign-up">Sign-Up Form</a>
     <a href="/log-in">Log-In Form</a>
