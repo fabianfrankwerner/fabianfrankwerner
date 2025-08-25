@@ -194,8 +194,49 @@ async function foldersPost(req, res) {
 }
 
 async function folderGet(req, res) {
-  const id = req.params.folderId
-  
+  try {
+    const id = req.params.folderId;
+
+    // Fetch the specific folder with its files for the authenticated user
+    const folder = await prisma.folder.findFirst({
+      where: {
+        id: id,
+        userId: req.user.id,
+      },
+      include: {
+        files: {
+          select: {
+            id: true,
+            name: true,
+            size: true,
+            mimeType: true,
+            createdAt: true,
+          },
+          orderBy: {
+            createdAt: "desc",
+          },
+        },
+      },
+    });
+
+    if (!folder) {
+      return res.status(404).render("folder", {
+        user: req.user,
+        error: "Folder not found",
+      });
+    }
+
+    return res.render("folder", {
+      user: req.user,
+      folder: folder,
+    });
+  } catch (e) {
+    console.error("Failed to render folder:", e);
+    return res.status(500).render("folder", {
+      user: req.user,
+      error: "Failed to load folder",
+    });
+  }
 }
 
 module.exports = {

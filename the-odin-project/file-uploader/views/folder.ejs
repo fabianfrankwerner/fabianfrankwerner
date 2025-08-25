@@ -2,13 +2,50 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Title</title>
+    <title><%= folder ? folder.name : 'Folder' %></title>
   </head>
   <body>
-    <h1>Title</h1>
+    <h1><%= folder ? folder.name : 'Folder' %></h1>
     <a href="/">Home</a>
+    <a href="/folders">Folders</a>
     <a href="/log-out">Log Out</a>
 
-    
+    <% if (typeof error !== 'undefined' && error) { %>
+    <div><%= error %></div>
+    <% } %> <% if (typeof folder !== 'undefined' && folder) { %>
+    <div>
+      <h2>Folder Details</h2>
+      <p><strong>Name:</strong> <%= folder.name %></p>
+      <p>
+        <strong>Created:</strong> <%= new
+        Date(folder.createdAt).toLocaleDateString() %>
+      </p>
+      <p>
+        <strong>Files:</strong> <%= folder.files ? folder.files.length : 0 %>
+        file<%= (folder.files && folder.files.length !== 1) ? 's' : '' %>
+      </p>
+    </div>
+
+    <% if (folder.files && folder.files.length > 0) { %>
+    <div>
+      <h2>Files in this folder:</h2>
+      <% folder.files.forEach(function(file) { %>
+      <div>
+        <strong><%= file.name %></strong>
+        (<%= (file.size / 1024).toFixed(2) %> KB) - <%= new
+        Date(file.createdAt).toLocaleDateString() %>
+        <br />
+        <small>Type: <%= file.mimeType %></small>
+      </div>
+      <% }); %>
+    </div>
+    <% } else { %>
+    <div>
+      <h2>Files</h2>
+      <p>No files in this folder yet.</p>
+    </div>
+    <% } %> <% } else { %>
+    <p>Folder not found or you don't have permission to view it.</p>
+    <% } %>
   </body>
 </html>
