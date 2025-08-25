@@ -27,7 +27,7 @@ model Post {
   content   String
   published Boolean   @default(false)
   authorId  String
-  author    User      @relation(fields: [authorId], references: [id])
+  author    User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
   comments  Comment[]
 
   createdAt DateTime @default(now())
@@ -49,5 +49,4 @@ model Comment {
 enum Role {
   USER
   AUTHOR
-  ADMIN
 }
