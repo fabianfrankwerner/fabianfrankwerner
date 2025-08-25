@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blog API - Frontend</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <!-- Header -->
+      <header class="header">
+        <div class="header-content">
+          <h1 class="logo">
+            <i class="fas fa-blog"></i>
+            Blog API
+          </h1>
+          <nav class="nav">
+            <button class="nav-btn active" data-section="posts">
+              <i class="fas fa-newspaper"></i>
+              Posts
+            </button>
+            <button class="nav-btn" data-section="login">
+              <i class="fas fa-sign-in-alt"></i>
+              Login
+            </button>
+            <button class="nav-btn" data-section="register">
+              <i class="fas fa-user-plus"></i>
+              Register
+            </button>
+          </nav>
+        </div>
+      </header>
+
+      <!-- Main Content -->
+      <main class="main">
+        <!-- Posts Section -->
+        <section id="posts" class="section active">
+          <div class="section-header">
+            <h2>Published Posts</h2>
+            <div
+              class="loading-spinner"
+              id="posts-loading"
+              style="display: none"
+            >
+              <i class="fas fa-spinner fa-spin"></i>
+            </div>
+          </div>
+          <div class="posts-grid" id="posts-container">
+            <!-- Posts will be loaded here -->
+          </div>
+        </section>
+
+        <!-- Login Section -->
+        <section id="login" class="section">
+          <div class="auth-container">
+            <div class="auth-card">
+              <h2><i class="fas fa-sign-in-alt"></i> Login</h2>
+              <form id="login-form" class="auth-form">
+                <div class="form-group">
+                  <label for="login-email">Email</label>
+                  <input type="email" id="login-email" name="email" required />
+                </div>
+                <div class="form-group">
+                  <label for="login-password">Password</label>
+                  <input
+                    type="password"
+                    id="login-password"
+                    name="password"
+                    required
+                  />
+                </div>
+                <button type="submit" class="btn btn-primary">
+                  <i class="fas fa-sign-in-alt"></i>
+                  Login
+                </button>
+              </form>
+              <div class="auth-message" id="login-message"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Register Section -->
+        <section id="register" class="section">
+          <div class="auth-container">
+            <div class="auth-card">
+              <h2><i class="fas fa-user-plus"></i> Register</h2>
+              <form id="register-form" class="auth-form">
+                <div class="form-group">
+                  <label for="register-username">Username</label>
+                  <input
+                    type="text"
+                    id="register-username"
+                    name="username"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="register-email">Email</label>
+                  <input
+                    type="email"
+                    id="register-email"
+                    name="email"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="register-password">Password</label>
+                  <input
+                    type="password"
+                    id="register-password"
+                    name="password"
+                    required
+                  />
+                </div>
+                <button type="submit" class="btn btn-primary">
+                  <i class="fas fa-user-plus"></i>
+                  Register
+                </button>
+              </form>
+              <div class="auth-message" id="register-message"></div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <!-- Post Modal -->
+      <div id="post-modal" class="modal">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 id="modal-title"></h2>
+            <button class="modal-close" id="modal-close">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="post-meta">
+              <span class="author" id="modal-author"></span>
+              <span class="date" id="modal-date"></span>
+            </div>
+            <div class="post-content" id="modal-content"></div>
+
+            <!-- Comments Section -->
+            <div class="comments-section">
+              <h3>Comments</h3>
+              <div class="comments-list" id="modal-comments">
+                <!-- Comments will be loaded here -->
+              </div>
+              <form id="comment-form" class="comment-form">
+                <div class="form-group">
+                  <textarea
+                    id="comment-content"
+                    placeholder="Write a comment..."
+                    required
+                  ></textarea>
+                </div>
+                <button type="submit" class="btn btn-secondary">
+                  <i class="fas fa-comment"></i>
+                  Add Comment
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Success/Error Messages -->
+      <div id="notification" class="notification"></div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

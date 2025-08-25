@@ -10,7 +10,6 @@ const postRouter = Router();
 
 // Public routes (no authentication required)
 postRouter.get("/published", postController.getPublishedPosts);
-postRouter.get("/:id", postController.getPostById);
 
 // Protected routes (authentication required)
 postRouter.get(
@@ -25,6 +24,9 @@ postRouter.post(
   requireAuthor,
   postController.createPost
 );
+
+// Parameterized routes (must come after specific routes)
+postRouter.get("/:id", postController.getPostById);
 postRouter.put(
   "/:id",
   authenticateToken,
