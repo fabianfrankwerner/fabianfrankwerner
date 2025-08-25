@@ -63,7 +63,7 @@ const getCommentById = async (req, res) => {
 const createComment = async (req, res) => {
   try {
     const { content, postId } = req.body;
-    const userId = req.user.userId; // This will come from JWT middleware
+    const userId = req.user.userId;
 
     const post = await prisma.post.findUnique({
       where: { id: postId },
@@ -111,7 +111,6 @@ const updateComment = async (req, res) => {
   try {
     const { id } = req.params;
     const { content } = req.body;
-    const userId = req.user.userId;
 
     const comment = await prisma.comment.findUnique({
       where: { id },
@@ -119,12 +118,6 @@ const updateComment = async (req, res) => {
 
     if (!comment) {
       return res.status(404).json({ error: "Comment not found" });
-    }
-
-    if (comment.userId !== userId && req.user.role !== "AUTHOR") {
-      return res
-        .status(403)
-        .json({ error: "Not authorized to update this comment" });
     }
 
     const updatedComment = await prisma.comment.update({
@@ -157,7 +150,6 @@ const updateComment = async (req, res) => {
 const deleteComment = async (req, res) => {
   try {
     const { id } = req.params;
-    const userId = req.user.userId;
 
     const comment = await prisma.comment.findUnique({
       where: { id },
@@ -165,12 +157,6 @@ const deleteComment = async (req, res) => {
 
     if (!comment) {
       return res.status(404).json({ error: "Comment not found" });
-    }
-
-    if (comment.userId !== userId && req.user.role !== "AUTHOR") {
-      return res
-        .status(403)
-        .json({ error: "Not authorized to delete this comment" });
     }
 
     await prisma.comment.delete({

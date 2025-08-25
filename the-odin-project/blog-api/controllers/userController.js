@@ -111,12 +111,20 @@ const updateUser = async (req, res) => {
   try {
     const { id } = req.params;
     const { email, username, password, role } = req.body;
+    const userId = req.user.userId;
+
+    // Check if user is updating their own profile or has AUTHOR role
+    if (id !== userId && req.user.role !== "AUTHOR") {
+      return res
+        .status(403)
+        .json({ error: "Not authorized to update this user" });
+    }
 
     const updateData = {};
     if (email) updateData.email = email;
     if (username) updateData.username = username;
     if (password) updateData.password = await bcrypt.hash(password, 10);
-    if (role) updateData.role = role;
+    if (role && req.user.role === "AUTHOR") updateData.role = role;
 
     const user = await prisma.user.update({
       where: { id },

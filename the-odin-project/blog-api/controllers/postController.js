@@ -111,7 +111,7 @@ const getPostById = async (req, res) => {
 const createPost = async (req, res) => {
   try {
     const { title, content, published = false } = req.body;
-    const authorId = req.user.userId; // This will come from JWT middleware
+    const authorId = req.user.userId;
 
     const post = await prisma.post.create({
       data: {
@@ -141,23 +141,13 @@ const updatePost = async (req, res) => {
   try {
     const { id } = req.params;
     const { title, content, published } = req.body;
-    const userId = req.user.userId;
 
     const post = await prisma.post.findUnique({
       where: { id },
-      include: {
-        author: true,
-      },
     });
 
     if (!post) {
       return res.status(404).json({ error: "Post not found" });
-    }
-
-    if (post.authorId !== userId && req.user.role !== "AUTHOR") {
-      return res
-        .status(403)
-        .json({ error: "Not authorized to update this post" });
     }
 
     const updatedPost = await prisma.post.update({
@@ -187,7 +177,6 @@ const updatePost = async (req, res) => {
 const deletePost = async (req, res) => {
   try {
     const { id } = req.params;
-    const userId = req.user.userId;
 
     const post = await prisma.post.findUnique({
       where: { id },
@@ -195,12 +184,6 @@ const deletePost = async (req, res) => {
 
     if (!post) {
       return res.status(404).json({ error: "Post not found" });
-    }
-
-    if (post.authorId !== userId && req.user.role !== "AUTHOR") {
-      return res
-        .status(403)
-        .json({ error: "Not authorized to delete this post" });
     }
 
     await prisma.post.delete({
@@ -216,7 +199,6 @@ const deletePost = async (req, res) => {
 const publishPost = async (req, res) => {
   try {
     const { id } = req.params;
-    const userId = req.user.userId;
 
     const post = await prisma.post.findUnique({
       where: { id },
@@ -224,12 +206,6 @@ const publishPost = async (req, res) => {
 
     if (!post) {
       return res.status(404).json({ error: "Post not found" });
-    }
-
-    if (post.authorId !== userId && req.user.role !== "AUTHOR") {
-      return res
-        .status(403)
-        .json({ error: "Not authorized to publish this post" });
     }
 
     const updatedPost = await prisma.post.update({
@@ -257,7 +233,6 @@ const publishPost = async (req, res) => {
 const unpublishPost = async (req, res) => {
   try {
     const { id } = req.params;
-    const userId = req.user.userId;
 
     const post = await prisma.post.findUnique({
       where: { id },
@@ -265,12 +240,6 @@ const unpublishPost = async (req, res) => {
 
     if (!post) {
       return res.status(404).json({ error: "Post not found" });
-    }
-
-    if (post.authorId !== userId && req.user.role !== "AUTHOR") {
-      return res
-        .status(403)
-        .json({ error: "Not authorized to unpublish this post" });
     }
 
     const updatedPost = await prisma.post.update({
