@@ -18,6 +18,7 @@ const postModal = document.getElementById("post-modal");
 const modalClose = document.getElementById("modal-close");
 const commentForm = document.getElementById("comment-form");
 const notification = document.getElementById("notification");
+const adminBtn = document.getElementById("admin-btn");
 
 // Initialize the application
 document.addEventListener("DOMContentLoaded", () => {
@@ -44,14 +45,21 @@ function initializeApp() {
 // Navigation
 function setupNavigation() {
   navButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-      const targetSection = button.dataset.section;
-      showSection(targetSection);
+    if (button.dataset.section) {
+      button.addEventListener("click", () => {
+        const targetSection = button.dataset.section;
+        showSection(targetSection);
 
-      // Update active button
-      navButtons.forEach((btn) => btn.classList.remove("active"));
-      button.classList.add("active");
-    });
+        // Update active button
+        navButtons.forEach((btn) => btn.classList.remove("active"));
+        button.classList.add("active");
+      });
+    }
+  });
+
+  // Admin button click handler
+  adminBtn.addEventListener("click", () => {
+    window.location.href = "/admin.html";
   });
 }
 
@@ -74,6 +82,11 @@ function updateNavigation() {
 
     loginBtn.innerHTML = `<i class="fas fa-user"></i> ${currentUser.username}`;
     registerBtn.innerHTML = `<i class="fas fa-sign-out-alt"></i> Logout`;
+
+    // Show admin button for AUTHOR users
+    if (currentUser.role === "AUTHOR") {
+      adminBtn.style.display = "flex";
+    }
 
     // Change logout functionality
     registerBtn.onclick = logout;
@@ -313,6 +326,9 @@ function logout() {
 
   loginBtn.innerHTML = `<i class="fas fa-sign-in-alt"></i> Login`;
   registerBtn.innerHTML = `<i class="fas fa-user-plus"></i> Register`;
+
+  // Hide admin button
+  adminBtn.style.display = "none";
 
   // Reset event listeners
   setupNavigation();
