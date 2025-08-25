@@ -62,4 +62,11 @@ indexRouter.post(
   indexController.fileUploadPost
 );
 
+// Download a file
+indexRouter.get(
+  "/files/:fileId/download",
+  ensureAuthenticated,
+  indexController.fileDownloadGet
+);
+
 module.exports = indexRouter;

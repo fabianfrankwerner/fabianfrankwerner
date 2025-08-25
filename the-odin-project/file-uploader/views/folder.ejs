@@ -73,6 +73,11 @@
         Date(file.createdAt).toLocaleDateString() %>
         <br />
         <small>Type: <%= file.mimeType %></small>
+        <div>
+          <a href="/files/<%= file.id %>/download">
+            <button type="button">Download</button>
+          </a>
+        </div>
       </div>
       <% }); %>
     </div>

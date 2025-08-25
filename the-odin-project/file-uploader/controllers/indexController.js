@@ -359,6 +359,29 @@ async function fileUploadPost(req, res) {
   }
 }
 
+async function fileDownloadGet(req, res) {
+  try {
+    const fileId = req.params.fileId;
+    const userId = req.user.id;
+
+    const file = await prisma.file.findFirst({
+      where: { id: fileId, userId: userId },
+    });
+
+    if (!file) {
+      return res.status(404).send("File not found");
+    }
+
+    const filename = path.basename(file.path);
+    const absolutePath = path.join(__dirname, "..", "uploads", filename);
+
+    return res.download(absolutePath, file.name);
+  } catch (e) {
+    console.error("Failed to download file:", e);
+    return res.status(500).send("Failed to download file");
+  }
+}
+
 module.exports = {
   indexGet,
   signUpGet,
@@ -372,4 +395,5 @@ module.exports = {
   folderRenamePost,
   folderDeletePost,
   fileUploadPost,
+  fileDownloadGet,
 };
