@@ -19,5 +19,6 @@ function ensureAuthenticated(req, res, next) {
 
 indexRouter.get("/folders", ensureAuthenticated, indexController.foldersGet);
 indexRouter.post("/folders", ensureAuthenticated, indexController.foldersPost);
+indexRouter.get("/folders/:folderId", ensureAuthenticated, indexController.folderGet);
 
 module.exports = indexRouter;

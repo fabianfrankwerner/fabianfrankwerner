@@ -193,6 +193,11 @@ async function foldersPost(req, res) {
   }
 }
 
+async function folderGet(req, res) {
+  const id = req.params.folderId
+  
+}
+
 module.exports = {
   indexGet,
   signUpGet,
@@ -202,4 +207,5 @@ module.exports = {
   logOutGet,
   foldersGet,
   foldersPost,
+  folderGet,
 };
