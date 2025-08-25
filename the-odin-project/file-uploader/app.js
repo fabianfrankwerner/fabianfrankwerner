@@ -1,4 +1,5 @@
 const path = require("node:path");
+const fs = require("node:fs");
 const express = require("express");
 const indexRouter = require("./routes/indexRouter");
 const passport = require("passport");
@@ -13,6 +14,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.json());
+
+// Static uploads directory
+const uploadsDir = path.join(__dirname, "uploads");
+fs.mkdirSync(uploadsDir, { recursive: true });
+app.use("/uploads", express.static(uploadsDir));
 
 app.use("/", indexRouter);
 

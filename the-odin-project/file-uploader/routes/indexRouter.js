@@ -1,7 +1,26 @@
 const { Router } = require("express");
 const indexController = require("../controllers/indexController");
+const multer = require("multer");
+const path = require("node:path");
+const fs = require("node:fs");
 
 const indexRouter = Router();
+
+// Configure multer storage
+const uploadsDir = path.join(__dirname, "..", "uploads");
+fs.mkdirSync(uploadsDir, { recursive: true });
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, uploadsDir);
+  },
+  filename: function (req, file, cb) {
+    const safeOriginal = file.originalname.replace(/\s+/g, "_");
+    cb(null, `${Date.now()}-${safeOriginal}`);
+  },
+});
+
+const upload = multer({ storage });
 
 indexRouter.get("/", indexController.indexGet);
 indexRouter.get("/sign-up", indexController.signUpGet);
@@ -33,6 +52,14 @@ indexRouter.post(
   "/folders/:folderId/delete",
   ensureAuthenticated,
   indexController.folderDeletePost
+);
+
+// Upload a file to a folder
+indexRouter.post(
+  "/folders/:folderId/files",
+  ensureAuthenticated,
+  upload.single("file"),
+  indexController.fileUploadPost
 );
 
 module.exports = indexRouter;

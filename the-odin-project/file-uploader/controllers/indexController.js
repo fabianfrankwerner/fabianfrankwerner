@@ -2,6 +2,7 @@ const bcrypt = require("bcryptjs");
 const passport = require("passport");
 const { PrismaClient } = require("../generated/prisma");
 const LocalStrategy = require("passport-local").Strategy;
+const path = require("node:path");
 
 const prisma = new PrismaClient();
 
@@ -311,6 +312,53 @@ async function folderDeletePost(req, res) {
   }
 }
 
+async function fileUploadPost(req, res) {
+  try {
+    const folderId = req.params.folderId;
+    const userId = req.user.id;
+
+    // Verify folder ownership
+    const folder = await prisma.folder.findFirst({
+      where: { id: folderId, userId: userId },
+    });
+    if (!folder) {
+      return res.status(404).render("folder", {
+        user: req.user,
+        error: "Folder not found",
+      });
+    }
+
+    if (!req.file) {
+      return res.status(400).render("folder", {
+        user: req.user,
+        folder: folder,
+        error: "No file uploaded",
+      });
+    }
+
+    const relativePath = path.posix.join("/uploads", req.file.filename);
+
+    await prisma.file.create({
+      data: {
+        name: req.file.originalname,
+        size: req.file.size,
+        mimeType: req.file.mimetype,
+        path: relativePath,
+        folderId: folderId,
+        userId: userId,
+      },
+    });
+
+    return res.redirect(`/folders/${folderId}`);
+  } catch (e) {
+    console.error("Failed to upload file:", e);
+    return res.status(500).render("folder", {
+      user: req.user,
+      error: "Failed to upload file",
+    });
+  }
+}
+
 module.exports = {
   indexGet,
   signUpGet,
@@ -323,4 +371,5 @@ module.exports = {
   folderGet,
   folderRenamePost,
   folderDeletePost,
+  fileUploadPost,
 };

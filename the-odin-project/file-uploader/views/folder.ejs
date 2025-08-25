@@ -50,6 +50,17 @@
         <strong>Files:</strong> <%= folder.files ? folder.files.length : 0 %>
         file<%= (folder.files && folder.files.length !== 1) ? 's' : '' %>
       </p>
+      <div>
+        <h3>Upload a file</h3>
+        <form
+          action="/folders/<%= folder.id %>/files"
+          method="POST"
+          enctype="multipart/form-data"
+        >
+          <input type="file" name="file" id="file" required />
+          <button type="submit">Upload</button>
+        </form>
+      </div>
     </div>
 
     <% if (folder.files && folder.files.length > 0) { %>
