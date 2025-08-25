@@ -1,33 +1,31 @@
+const express = require("express");
 const userController = require("../controllers/userController");
 const { authenticateToken, requireAuthor } = require("../middleware/auth");
-const { Router } = require("express");
 
-const userRouter = Router();
+const router = express.Router();
 
-// Public routes (no authentication required)
-userRouter.post("/login", userController.login);
-userRouter.post("/register", userController.register);
+// Public routes
+router.post("/login", userController.login);
+router.post("/register", userController.register);
 
-// Protected routes (authentication required)
-userRouter.get(
-  "/",
+// Upgrade route - allows users to upgrade their own role (must be before /:id routes)
+router.patch("/upgrade", authenticateToken, userController.upgradeUser);
+
+// Protected routes
+router.get("/", authenticateToken, requireAuthor, userController.getAllUsers);
+router.get(
+  "/:id",
   authenticateToken,
   requireAuthor,
-  userController.getAllUsers
+  userController.getUserById
 );
-userRouter.get("/:id", authenticateToken, userController.getUserById);
-userRouter.post(
-  "/",
-  authenticateToken,
-  requireAuthor,
-  userController.createUser
-);
-userRouter.put("/:id", authenticateToken, userController.updateUser);
-userRouter.delete(
+router.post("/", authenticateToken, requireAuthor, userController.createUser);
+router.put("/:id", authenticateToken, requireAuthor, userController.updateUser);
+router.delete(
   "/:id",
   authenticateToken,
   requireAuthor,
   userController.deleteUser
 );
 
-module.exports = userRouter;
+module.exports = router;

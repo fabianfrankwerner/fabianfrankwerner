@@ -12,8 +12,10 @@ const postsContainer = document.getElementById("posts-container");
 const postsLoading = document.getElementById("posts-loading");
 const loginForm = document.getElementById("login-form");
 const registerForm = document.getElementById("register-form");
+const upgradeForm = document.getElementById("upgrade-form");
 const loginMessage = document.getElementById("login-message");
 const registerMessage = document.getElementById("register-message");
+const upgradeMessage = document.getElementById("upgrade-message");
 const postModal = document.getElementById("post-modal");
 const modalClose = document.getElementById("modal-close");
 const commentForm = document.getElementById("comment-form");
@@ -59,6 +61,24 @@ function setupNavigation() {
 
   // Admin button click handler
   adminBtn.addEventListener("click", () => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      showNotification(
+        "Please login first to access the admin dashboard",
+        "error"
+      );
+      return;
+    }
+
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (!user || user.role !== "AUTHOR") {
+      showNotification(
+        "Author role required. Please upgrade your account.",
+        "error"
+      );
+      return;
+    }
+
     window.location.href = "/admin.html";
   });
 }
@@ -82,11 +102,6 @@ function updateNavigation() {
 
     loginBtn.innerHTML = `<i class="fas fa-user"></i> ${currentUser.username}`;
     registerBtn.innerHTML = `<i class="fas fa-sign-out-alt"></i> Logout`;
-
-    // Show admin button for AUTHOR users
-    if (currentUser.role === "AUTHOR") {
-      adminBtn.style.display = "flex";
-    }
 
     // Change logout functionality
     registerBtn.onclick = logout;
@@ -239,6 +254,7 @@ function displayComments(comments) {
 function setupForms() {
   loginForm.addEventListener("submit", handleLogin);
   registerForm.addEventListener("submit", handleRegister);
+  upgradeForm.addEventListener("submit", handleUpgrade);
   commentForm.addEventListener("submit", handleComment);
 }
 
@@ -315,6 +331,60 @@ async function handleRegister(e) {
   }
 }
 
+async function handleUpgrade(e) {
+  e.preventDefault();
+
+  const formData = new FormData(upgradeForm);
+  const code = formData.get("code");
+
+  // Check if user is logged in
+  const token = localStorage.getItem("token");
+  if (!token) {
+    showMessage(upgradeMessage, "Please login first before upgrading", "error");
+    return;
+  }
+
+  try {
+    // Secret code validation (you can change this to any code you want)
+    const SECRET_CODE = "ADMIN2024";
+
+    if (code !== SECRET_CODE) {
+      showMessage(upgradeMessage, "Invalid secret code", "error");
+      return;
+    }
+
+    // Update user role to AUTHOR
+    const response = await apiRequest("/users/upgrade", {
+      method: "PATCH",
+      body: JSON.stringify({ role: "AUTHOR" }),
+    });
+
+    // Update stored user info
+    currentUser = response;
+    localStorage.setItem("user", JSON.stringify(response));
+
+    showMessage(
+      upgradeMessage,
+      "Account upgraded to Author successfully! You can now access the admin dashboard.",
+      "success"
+    );
+
+    // Clear the form
+    upgradeForm.reset();
+
+    // Switch to posts section after a delay
+    setTimeout(() => {
+      showSection("posts");
+      document.querySelector('[data-section="posts"]').classList.add("active");
+      document
+        .querySelector('[data-section="upgrade"]')
+        .classList.remove("active");
+    }, 2000);
+  } catch (error) {
+    showMessage(upgradeMessage, error.message, "error");
+  }
+}
+
 function logout() {
   localStorage.removeItem("token");
   localStorage.removeItem("user");
@@ -326,9 +396,6 @@ function logout() {
 
   loginBtn.innerHTML = `<i class="fas fa-sign-in-alt"></i> Login`;
   registerBtn.innerHTML = `<i class="fas fa-user-plus"></i> Register`;
-
-  // Hide admin button
-  adminBtn.style.display = "none";
 
   // Reset event listeners
   setupNavigation();

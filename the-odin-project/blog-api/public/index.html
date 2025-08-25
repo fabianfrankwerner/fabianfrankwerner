@@ -40,6 +40,10 @@
               <i class="fas fa-cogs"></i>
               Admin
             </button>
+            <button class="nav-btn" data-section="upgrade">
+              <i class="fas fa-crown"></i>
+              Upgrade
+            </button>
           </nav>
         </div>
       </header>
@@ -131,6 +135,48 @@
                 </button>
               </form>
               <div class="auth-message" id="register-message"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Upgrade Section -->
+        <section id="upgrade" class="section">
+          <div class="auth-container">
+            <div class="auth-card">
+              <h2><i class="fas fa-crown"></i> Upgrade to Author</h2>
+              <p class="upgrade-description">
+                Enter the secret code to upgrade your account to Author status
+                and gain access to the admin dashboard.
+              </p>
+              <form id="upgrade-form" class="auth-form">
+                <div class="form-group">
+                  <label for="upgrade-code">Secret Code</label>
+                  <input
+                    type="password"
+                    id="upgrade-code"
+                    name="code"
+                    placeholder="Enter secret code..."
+                    required
+                  />
+                </div>
+                <button type="submit" class="btn btn-primary">
+                  <i class="fas fa-crown"></i>
+                  Upgrade Account
+                </button>
+              </form>
+              <div class="auth-message" id="upgrade-message"></div>
+              <div class="upgrade-info">
+                <h3>Author Benefits:</h3>
+                <ul>
+                  <li>
+                    <i class="fas fa-check"></i> Create and edit blog posts
+                  </li>
+                  <li><i class="fas fa-check"></i> Publish/unpublish posts</li>
+                  <li><i class="fas fa-check"></i> Manage comments</li>
+                  <li><i class="fas fa-check"></i> Access admin dashboard</li>
+                  <li><i class="fas fa-check"></i> Full content management</li>
+                </ul>
+              </div>
             </div>
           </div>
         </section>
