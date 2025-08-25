@@ -22,7 +22,7 @@
     <% if (typeof folders !== 'undefined' && folders.length > 0) { %> <%
     folders.forEach(function(folder) { %>
     <div>
-      <h2><%= folder.name %></h2>
+      <a href="/folders/<%= folder.id %>"><h2><%= folder.name %></h2></a>
       <div>
         Created: <%= new Date(folder.createdAt).toLocaleDateString() %> <% if
         (folder.files && folder.files.length > 0) { %> | <%= folder.files.length
