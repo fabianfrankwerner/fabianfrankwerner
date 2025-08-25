@@ -5,7 +5,7 @@
     <title><%= folder ? folder.name : 'Folder' %></title>
   </head>
   <body>
-    <h1><%= folder ? folder.name : 'Folder' %></h1>
+    <h1 id="folder-name"><%= folder ? folder.name : 'Folder' %></h1>
     <a href="/">Home</a>
     <a href="/folders">Folders</a>
     <a href="/log-out">Log Out</a>
@@ -15,7 +15,33 @@
     <% } %> <% if (typeof folder !== 'undefined' && folder) { %>
     <div>
       <h2>Folder Details</h2>
-      <p><strong>Name:</strong> <%= folder.name %></p>
+      <div id="folder-actions">
+        <p>
+          <strong>Name:</strong>
+          <span id="folder-name-display"><%= folder.name %></span>
+        </p>
+        <button onclick="showRenameForm()">Rename Folder</button>
+        <button
+          onclick="deleteFolder()"
+          style="background-color: #ff4444; color: white"
+        >
+          Delete Folder
+        </button>
+      </div>
+
+      <div id="rename-form" style="display: none">
+        <form onsubmit="renameFolder(event)">
+          <input
+            type="text"
+            id="new-folder-name"
+            value="<%= folder.name %>"
+            required
+          />
+          <button type="submit">Save</button>
+          <button type="button" onclick="hideRenameForm()">Cancel</button>
+        </form>
+      </div>
+
       <p>
         <strong>Created:</strong> <%= new
         Date(folder.createdAt).toLocaleDateString() %>
@@ -47,5 +73,91 @@
     <% } %> <% } else { %>
     <p>Folder not found or you don't have permission to view it.</p>
     <% } %>
+
+    <script>
+      const folderId = '<%= folder ? folder.id : "" %>';
+
+      function showRenameForm() {
+        document.getElementById("folder-actions").style.display = "none";
+        document.getElementById("rename-form").style.display = "block";
+        document.getElementById("new-folder-name").focus();
+      }
+
+      function hideRenameForm() {
+        document.getElementById("folder-actions").style.display = "block";
+        document.getElementById("rename-form").style.display = "none";
+      }
+
+      async function renameFolder(event) {
+        event.preventDefault();
+
+        const newName = document.getElementById("new-folder-name").value.trim();
+        if (!newName) {
+          alert("Folder name is required");
+          return;
+        }
+
+        try {
+          const response = await fetch(`/folders/${folderId}/rename`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ name: newName }),
+          });
+
+          const data = await response.json();
+
+          if (data.success) {
+            // Update the display
+            document.getElementById("folder-name").textContent = newName;
+            document.getElementById("folder-name-display").textContent =
+              newName;
+            document.title = newName;
+
+            // Hide the form and show actions
+            hideRenameForm();
+
+            alert("Folder renamed successfully!");
+          } else {
+            alert(data.error || "Failed to rename folder");
+          }
+        } catch (error) {
+          console.error("Error:", error);
+          alert("Failed to rename folder");
+        }
+      }
+
+      async function deleteFolder() {
+        if (
+          !confirm(
+            "Are you sure you want to delete this folder? This action cannot be undone and will delete all files in the folder."
+          )
+        ) {
+          return;
+        }
+
+        try {
+          const response = await fetch(`/folders/${folderId}/delete`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+
+          const data = await response.json();
+
+          if (data.success) {
+            alert("Folder deleted successfully!");
+            window.location.href = "/folders";
+          } else {
+            alert(data.error || "Failed to delete folder");
+          }
+        } catch (error) {
+          console.error("Error:", error);
+          alert("Failed to delete folder");
+        }
+      }
+    </script>
   </body>
 </html>

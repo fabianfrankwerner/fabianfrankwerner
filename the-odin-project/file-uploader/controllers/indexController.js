@@ -239,6 +239,78 @@ async function folderGet(req, res) {
   }
 }
 
+async function folderRenamePost(req, res) {
+  try {
+    const id = req.params.folderId;
+    const { name } = req.body;
+
+    // Validate input
+    if (!name || name.trim().length === 0) {
+      return res.status(400).json({ error: "Folder name is required" });
+    }
+
+    // Check if folder exists and belongs to the user
+    const existingFolder = await prisma.folder.findFirst({
+      where: {
+        id: id,
+        userId: req.user.id,
+      },
+    });
+
+    if (!existingFolder) {
+      return res.status(404).json({ error: "Folder not found" });
+    }
+
+    // Update the folder name
+    await prisma.folder.update({
+      where: {
+        id: id,
+      },
+      data: {
+        name: name.trim(),
+      },
+    });
+
+    res.json({ success: true, name: name.trim() });
+  } catch (e) {
+    console.error("Failed to rename folder:", e);
+    res.status(500).json({ error: "Failed to rename folder" });
+  }
+}
+
+async function folderDeletePost(req, res) {
+  try {
+    const id = req.params.folderId;
+
+    // Check if folder exists and belongs to the user
+    const existingFolder = await prisma.folder.findFirst({
+      where: {
+        id: id,
+        userId: req.user.id,
+      },
+      include: {
+        files: true,
+      },
+    });
+
+    if (!existingFolder) {
+      return res.status(404).json({ error: "Folder not found" });
+    }
+
+    // Delete the folder (this will cascade delete all files in the folder)
+    await prisma.folder.delete({
+      where: {
+        id: id,
+      },
+    });
+
+    res.json({ success: true });
+  } catch (e) {
+    console.error("Failed to delete folder:", e);
+    res.status(500).json({ error: "Failed to delete folder" });
+  }
+}
+
 module.exports = {
   indexGet,
   signUpGet,
@@ -249,4 +321,6 @@ module.exports = {
   foldersGet,
   foldersPost,
   folderGet,
+  folderRenamePost,
+  folderDeletePost,
 };
