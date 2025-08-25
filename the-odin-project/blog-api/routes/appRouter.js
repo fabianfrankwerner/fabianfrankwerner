@@ -3,4 +3,6 @@ const { Router } = require("express");
 
 const appRouter = Router();
 
-module.exports = indexRouter;
+appRouter.get("/", appController.index);
+
+module.exports = appRouter;

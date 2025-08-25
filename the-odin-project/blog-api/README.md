@@ -8,7 +8,7 @@
   - A useful feature for a blog is the ability to have posts that are in the database but not published for the public to read. How might you designate published vs unpublished posts in your DB?
   - You will want a user model that will contain any blog authors and any normal user accounts. Even if you decide to only have a single author and no normal user accounts, a minimal user model will still be helpful to allow for easier route protection via authentication.
 - [x] Set up your Express app, and define the models in Prisma.
-- [ ] Set up your routes and controllers! Think about RESTful organization for this one. Most of the examples in the previous lesson were centered around posts and comments so this shouldn’t be too tricky.
+- [x] Set up your routes and controllers! Think about RESTful organization for this one. Most of the examples in the previous lesson were centered around posts and comments so this shouldn’t be too tricky.
   - You can test your routes however you want. Using `curl` in a terminal is one handy way, but it can be just as effective to use a web browser. There are some platforms that allow you to send `PUT` and `POST`requests without needing to set up and fill out HTML forms. [**Postman**](https://www.postman.com/downloads/) is probably the most popular.
 - [ ] Certain routes will need to be protected via authentication. You wouldn’t want any random stranger online to edit your articles! If you also implement normal user accounts then you may also want to protect some routes behind being logged in.
   - Though there are many ways you can handle authentication, in this project, use JWTs.

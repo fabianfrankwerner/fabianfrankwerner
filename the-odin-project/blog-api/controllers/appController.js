@@ -1,8 +1,9 @@
-const LocalStrategy = require("passport-local").Strategy;
-const { PrismaClient } = require("../generated/prisma");
-const passport = require("passport");
-const bcrypt = require("bcryptjs");
+const index = async (req, res) => {
+  try {
+    res.json({ message: "Hello, World!" });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
 
-const prisma = new PrismaClient();
-
-module.exports = {};
+module.exports = { index };
