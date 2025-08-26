@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "node --watch src/index.js",
+    "migrate": "prisma migrate dev --name init",
+    "generate": "prisma generate",
+    "seed": "node src/seed.js"
   },
   "keywords": [],
   "author": "",
