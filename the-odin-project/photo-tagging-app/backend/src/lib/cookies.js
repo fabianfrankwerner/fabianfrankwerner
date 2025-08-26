@@ -1,3 +1,4 @@
+require("dotenv").config();
 const { randomUUID } = require("crypto");
 
 function ensureSessionCookie(req, res) {
