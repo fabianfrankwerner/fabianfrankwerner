@@ -41,26 +41,61 @@ export default function GamePage() {
   async function handleGuess({ characterSlug, x, y }) {
     if (!session) return;
     try {
-      const res = await apiPost("/api/guess", {
+      console.log("SENDING GUESS:", {
         sessionId: session.id,
         characterSlug,
         x,
         y,
       });
+      // include debug=1 temporarily to get target bounds back
+      const res = await apiPost(`/api/guess?debug=1`, {
+        sessionId: session.id,
+        characterSlug,
+        x,
+        y,
+      });
+      console.log("GUESS RESPONSE:", res);
+
+      if (res.debug) {
+        // helpful for debugging — read these values and compare to click location
+        console.log("DEBUG target bounds (normalized):", res.debug.target);
+        console.log("TOLERANCE:", res.debug.tol);
+        console.log("CHECKED BOUNDS:", res.debug.checkedBounds);
+      }
+
       if (res.correct) {
         setFound((p) =>
           p.includes(characterSlug) ? p : [...p, characterSlug]
         );
         setMarkers((p) => [...p, res.marker]);
       } else {
-        // show a simple alert for now
-        alert(res.message || "Incorrect. Try again.");
+        alert(res.message || "Incorrect — try again.");
       }
     } catch (err) {
       console.error(err);
       alert("Error submitting guess");
     }
   }
+
+  // function handleClick(e) {
+  //   const img = imgRef.current;
+  //   if (!img) return;
+  //   const rect = img.getBoundingClientRect();
+  //   const xPx = e.clientX - rect.left;
+  //   const yPx = e.clientY - rect.top;
+  //   const normX = xPx / rect.width;
+  //   const normY = yPx / rect.height;
+  //   setTarget({ xPx, yPx, normX, normY });
+
+  //   console.log(
+  //     "CLICK coords px:",
+  //     { xPx, yPx },
+  //     "normalized:",
+  //     { normX, normY },
+  //     "rect:",
+  //     { width: rect.width, height: rect.height }
+  //   );
+  // }
 
   if (!level || !session) return <div>Loading...</div>;
 
