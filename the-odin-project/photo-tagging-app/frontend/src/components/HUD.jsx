@@ -1,37 +1,34 @@
 import { useEffect, useState } from "react";
 
-export default function HUD({ session, characters, foundCharacters }) {
-  const [time, setTime] = useState(0);
+export default function HUD({
+  session,
+  characters = [],
+  foundCharacters = [],
+}) {
+  const [seconds, setSeconds] = useState(0);
 
-  // Update timer every second
   useEffect(() => {
     if (!session?.startedAt) return;
-
     const start = new Date(session.startedAt).getTime();
-
-    const interval = setInterval(() => {
-      const now = Date.now();
-      setTime(Math.floor((now - start) / 1000)); // seconds elapsed
+    const t = setInterval(() => {
+      setSeconds(Math.floor((Date.now() - start) / 1000));
     }, 1000);
-
-    return () => clearInterval(interval);
+    return () => clearInterval(t);
   }, [session]);
 
-  const remaining = characters.filter((c) => !foundCharacters.includes(c.name));
+  const remaining = characters
+    .filter((c) => !foundCharacters.includes(c.slug))
+    .map((c) => c.name);
 
   return (
-    <div className="fixed top-0 left-0 w-full flex justify-between p-4 bg-black/70 text-white text-sm z-50">
-      {/* Remaining Characters */}
-      <div>
+    <div className="hud">
+      <div className="remaining">
         <strong>Find:</strong>{" "}
-        {remaining.length > 0
-          ? remaining.map((c) => c.name).join(", ")
-          : "🎉 All found!"}
+        {remaining.length ? remaining.join(", ") : "All found!"}
       </div>
-
-      {/* Timer */}
-      <div>
-        ⏱ {Math.floor(time / 60)}:{(time % 60).toString().padStart(2, "0")}
+      <div className="timer">
+        ⏱ {Math.floor(seconds / 60)}:
+        {(seconds % 60).toString().padStart(2, "0")}
       </div>
     </div>
   );

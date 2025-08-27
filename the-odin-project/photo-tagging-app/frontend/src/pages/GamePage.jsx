@@ -1,72 +1,110 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { apiGet, apiPost } from "../lib/api";
 import HUD from "../components/HUD";
+import GameImage from "../components/GameImage";
 import FinishModal from "../components/FinishModal";
 
 export default function GamePage() {
   const { levelId } = useParams();
-  const [session, setSession] = useState(null);
   const [level, setLevel] = useState(null);
-  const [foundCharacters, setFoundCharacters] = useState([]);
+  const [session, setSession] = useState(null);
+  const [found, setFound] = useState([]); // array of character slugs
+  const [markers, setMarkers] = useState([]);
   const [finished, setFinished] = useState(false);
 
-  // Load level + start session
+  // load level and start session
   useEffect(() => {
-    async function init() {
-      // Fetch level info
-      const resLevel = await fetch(`/api/levels/${levelId}`, {
-        credentials: "include",
-      });
-      const lvl = await resLevel.json();
-      setLevel(lvl);
-
-      // Start a session
-      const resSession = await fetch("/api/sessions/start", {
-        method: "POST",
-        credentials: "include",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ levelId }),
-      });
-      const sess = await resSession.json();
-      setSession(sess);
-    }
-    init();
+    (async () => {
+      try {
+        const lvl = await apiGet(`/api/levels/${levelId}`);
+        setLevel(lvl);
+        const sess = await apiPost("/api/sessions/start", { levelId });
+        setSession(sess);
+      } catch (err) {
+        console.error(err);
+      }
+    })();
   }, [levelId]);
 
+  // when found all characters, open finish modal
   useEffect(() => {
-    if (level && foundCharacters.length === level.characters.length) {
+    if (
+      level &&
+      found.length === level.characters.length &&
+      level.characters.length > 0
+    ) {
       setFinished(true);
     }
-  }, [foundCharacters, level]);
+  }, [found, level]);
 
-  if (!level || !session) return <p>Loading...</p>;
+  async function handleGuess({ characterSlug, x, y }) {
+    if (!session) return;
+    try {
+      const res = await apiPost("/api/guess", {
+        sessionId: session.id,
+        characterSlug,
+        x,
+        y,
+      });
+      if (res.correct) {
+        setFound((p) =>
+          p.includes(characterSlug) ? p : [...p, characterSlug]
+        );
+        setMarkers((p) => [...p, res.marker]);
+      } else {
+        // show a simple alert for now
+        alert(res.message || "Incorrect. Try again.");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Error submitting guess");
+    }
+  }
+
+  if (!level || !session) return <div>Loading...</div>;
 
   return (
-    <div>
-      <HUD
-        session={session}
-        characters={level.characters}
-        foundCharacters={foundCharacters}
-      />
+    <div className="game-wrap">
+      <div className="game-column">
+        <GameImage
+          src={level.imageUrl}
+          characters={level.characters}
+          onGuess={handleGuess}
+          markers={markers}
+        />
+      </div>
 
-      {/* Replace this with your actual tagging image logic */}
-      <div className="mt-20 text-center">
-        <h2 className="text-xl font-bold mb-4">{level.name}</h2>
-        <p>Game UI goes here (click on characters in the picture)</p>
-        <button
-          className="mt-4 bg-green-600 text-white px-4 py-2 rounded"
-          onClick={() => {
-            // fake: mark next character as found
-            const next = level.characters.find(
-              (c) => !foundCharacters.includes(c.name)
-            );
-            if (next) {
-              setFoundCharacters([...foundCharacters, next.name]);
-            }
+      <div className="sidebar">
+        <HUD
+          session={session}
+          characters={level.characters}
+          foundCharacters={found}
+        />
+        <div
+          style={{
+            marginTop: 12,
+            background: "#fff",
+            padding: 10,
+            borderRadius: 6,
           }}
         >
-          Mark Next Character Found
-        </button>
+          <h4>Characters</h4>
+          <ul>
+            {level.characters.map((c) => (
+              <li
+                key={c.slug}
+                style={{
+                  textDecoration: found.includes(c.slug)
+                    ? "line-through"
+                    : "none",
+                }}
+              >
+                {c.name}
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
 
       {finished && <FinishModal sessionId={session.id} levelId={level.id} />}

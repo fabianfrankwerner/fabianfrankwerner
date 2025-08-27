@@ -1,44 +1,56 @@
 import { useState } from "react";
+import { apiPost } from "../lib/api";
 
-export default function FinishModal({ sessionId, levelId, onFinish }) {
+export default function FinishModal({ sessionId, levelId }) {
   const [name, setName] = useState("");
 
   async function handleSubmit(e) {
     e.preventDefault();
-
-    await fetch("/api/sessions/finish", {
-      method: "POST",
-      credentials: "include",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        sessionId,
-        playerName: name,
-      }),
-    });
-
-    // Redirect to leaderboard
-    window.location.href = `/leaderboard/${levelId}`;
+    try {
+      await apiPost("/api/sessions/finish", { sessionId, playerName: name });
+      window.location.href = `/leaderboard/${levelId}`;
+    } catch (err) {
+      console.error(err);
+      alert("Failed to submit score.");
+    }
   }
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black/70 z-50">
-      <div className="bg-white rounded-xl p-6 w-80">
-        <h2 className="text-lg font-bold mb-4">You finished! 🎉</h2>
-        <form onSubmit={handleSubmit} className="space-y-3">
-          <input
-            type="text"
-            placeholder="Enter your name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            className="border p-2 w-full rounded"
-            required
-          />
-          <button
-            type="submit"
-            className="bg-blue-600 text-white px-4 py-2 rounded w-full"
-          >
-            Submit Score
-          </button>
+    <div className="modal-backdrop">
+      <div className="modal">
+        <h3 style={{ marginTop: 0 }}>You finished! 🎉</h3>
+        <form onSubmit={handleSubmit}>
+          <div style={{ marginBottom: 10 }}>
+            <input
+              required
+              placeholder="Your name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              style={{ width: "100%", padding: 8 }}
+            />
+          </div>
+          <div style={{ display: "flex", gap: 8 }}>
+            <button
+              type="submit"
+              style={{
+                flex: 1,
+                padding: 8,
+                background: "#1c6ef2",
+                color: "white",
+                border: "none",
+                borderRadius: 4,
+              }}
+            >
+              Submit
+            </button>
+            <button
+              type="button"
+              onClick={() => window.location.reload()}
+              style={{ padding: 8 }}
+            >
+              Cancel
+            </button>
+          </div>
         </form>
       </div>
     </div>
