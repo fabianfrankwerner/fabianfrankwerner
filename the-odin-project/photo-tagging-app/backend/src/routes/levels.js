@@ -2,26 +2,31 @@ const express = require("express");
 const prisma = require("../lib/prisma");
 const router = express.Router();
 
+// GET /api/levels
 router.get("/", async (req, res) => {
   const levels = await prisma.level.findMany({
-    select: { id: true, title: true, imageUrl: true },
+    select: {
+      id: true,
+      title: true,
+      imageUrl: true,
+      naturalWidth: true,
+      naturalHeight: true,
+    },
   });
   res.json(levels);
 });
 
+// GET /api/levels/:id
 router.get("/:id", async (req, res) => {
   const { id } = req.params;
   const level = await prisma.level.findUnique({
     where: { id },
-    include: {
-      targets: {
-        include: { character: { select: { name: true, slug: true } } },
-      },
-    },
+    include: { targets: { include: { character: true } } },
   });
+  if (!level) return res.status(404).json({ message: "Level not found" });
 
-  if (!level) return res.status(404).send("Not found");
-  const characters = level.targets.map((t) => ({
+  // produce character list (unique characters)
+  const chars = level.targets.map((t) => ({
     name: t.character.name,
     slug: t.character.slug,
   }));
@@ -29,7 +34,9 @@ router.get("/:id", async (req, res) => {
     id: level.id,
     title: level.title,
     imageUrl: level.imageUrl,
-    characters,
+    naturalWidth: level.naturalWidth,
+    naturalHeight: level.naturalHeight,
+    characters: chars,
   });
 });
 

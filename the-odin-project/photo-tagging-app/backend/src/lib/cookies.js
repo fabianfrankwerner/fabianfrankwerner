@@ -1,4 +1,3 @@
-require("dotenv").config();
 const { randomUUID } = require("crypto");
 
 function ensureSessionCookie(req, res) {
@@ -8,7 +7,7 @@ function ensureSessionCookie(req, res) {
     res.cookie("sessionId", sessionId, {
       httpOnly: true,
       sameSite: "lax",
-      secure: process.env.NODE_ENV === "production",
+      // secure: true in production with https
     });
   }
   return sessionId;
