@@ -77,26 +77,6 @@ export default function GamePage() {
     }
   }
 
-  // function handleClick(e) {
-  //   const img = imgRef.current;
-  //   if (!img) return;
-  //   const rect = img.getBoundingClientRect();
-  //   const xPx = e.clientX - rect.left;
-  //   const yPx = e.clientY - rect.top;
-  //   const normX = xPx / rect.width;
-  //   const normY = yPx / rect.height;
-  //   setTarget({ xPx, yPx, normX, normY });
-
-  //   console.log(
-  //     "CLICK coords px:",
-  //     { xPx, yPx },
-  //     "normalized:",
-  //     { normX, normY },
-  //     "rect:",
-  //     { width: rect.width, height: rect.height }
-  //   );
-  // }
-
   if (!level || !session) return <div>Loading...</div>;
 
   return (
