@@ -499,7 +499,12 @@ function UserDiscovery() {
     api.myFunctions.getUserProfile,
     searchUsername ? { username: searchUsername } : "skip",
   );
+  const followStatus = useQuery(
+    api.myFunctions.getFollowStatus,
+    searchedUser ? { targetUserId: searchedUser.userId } : "skip",
+  );
   const sendFollowRequest = useMutation(api.myFunctions.sendFollowRequest);
+  const unfollowUser = useMutation(api.myFunctions.unfollowUser);
   const [isFollowing, setIsFollowing] = useState(false);
 
   const handleSearch = async (e: React.FormEvent) => {
@@ -532,16 +537,22 @@ function UserDiscovery() {
     }
   }, [getUserProfile, searchUsername]);
 
-  const handleFollow = async () => {
+  const handleFollowToggle = async () => {
     if (!searchedUser || isFollowing) return;
 
     setIsFollowing(true);
     try {
-      await sendFollowRequest({ toUserId: searchedUser.userId });
+      if (followStatus?.isFollowing) {
+        // Unfollow
+        await unfollowUser({ targetUserId: searchedUser.userId });
+      } else {
+        // Follow
+        await sendFollowRequest({ toUserId: searchedUser.userId });
+      }
       setError(null);
     } catch (err) {
       setError(
-        err instanceof Error ? err.message : "Failed to send follow request",
+        err instanceof Error ? err.message : "Failed to update follow status",
       );
     } finally {
       setIsFollowing(false);
@@ -586,11 +597,21 @@ function UserDiscovery() {
               )}
             </div>
             <button
-              className="bg-white text-black px-4 py-2 font-bold border-4 border-white hover:bg-black hover:text-white transition-all duration-150 disabled:opacity-50"
-              onClick={() => void handleFollow()}
-              disabled={isFollowing}
+              className={`px-4 py-2 font-bold border-4 transition-all duration-150 disabled:opacity-50 ${
+                followStatus?.isFollowing
+                  ? "bg-green-500 text-black border-green-500 hover:bg-black hover:text-green-500"
+                  : "bg-white text-black border-white hover:bg-black hover:text-white"
+              }`}
+              onClick={() => void handleFollowToggle()}
+              disabled={isFollowing || followStatus === undefined}
             >
-              {isFollowing ? "SENDING..." : "FOLLOW"}
+              {isFollowing
+                ? "UPDATING..."
+                : followStatus?.isFollowing
+                  ? "FOLLOWED"
+                  : followStatus?.status === "pending"
+                    ? "PENDING"
+                    : "FOLLOW"}
             </button>
           </div>
         </div>

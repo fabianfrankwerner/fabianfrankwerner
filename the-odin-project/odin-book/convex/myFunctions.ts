@@ -417,6 +417,33 @@ export const respondToFollowRequest = mutation({
   },
 });
 
+export const unfollowUser = mutation({
+  args: { targetUserId: v.id("users") },
+  returns: v.null(),
+  handler: async (ctx, args) => {
+    const currentUserId = await getAuthUserId(ctx);
+    if (!currentUserId) throw new Error("Not authenticated");
+
+    if (currentUserId === args.targetUserId) {
+      throw new Error("Cannot unfollow yourself");
+    }
+
+    const followRequest = await ctx.db
+      .query("followRequests")
+      .withIndex("by_fromUser_and_toUser", (q) =>
+        q.eq("fromUserId", currentUserId).eq("toUserId", args.targetUserId),
+      )
+      .unique();
+
+    if (!followRequest) {
+      throw new Error("Follow relationship not found");
+    }
+
+    await ctx.db.delete(followRequest._id);
+    return null;
+  },
+});
+
 export const getFollowRequests = query({
   args: {},
   returns: v.array(
@@ -564,5 +591,50 @@ export const getFollowers = query({
     );
 
     return followersWithUsers;
+  },
+});
+
+// Check if current user is following a specific user
+export const getFollowStatus = query({
+  args: { targetUserId: v.id("users") },
+  returns: v.union(
+    v.object({
+      isFollowing: v.boolean(),
+      requestId: v.optional(v.id("followRequests")),
+      status: v.union(
+        v.literal("pending"),
+        v.literal("accepted"),
+        v.literal("rejected"),
+      ),
+    }),
+    v.null(),
+  ),
+  handler: async (ctx, args) => {
+    const currentUserId = await getAuthUserId(ctx);
+    if (!currentUserId) return null;
+
+    if (currentUserId === args.targetUserId) {
+      return null; // Can't follow yourself
+    }
+
+    const followRequest = await ctx.db
+      .query("followRequests")
+      .withIndex("by_fromUser_and_toUser", (q) =>
+        q.eq("fromUserId", currentUserId).eq("toUserId", args.targetUserId),
+      )
+      .unique();
+
+    if (!followRequest) {
+      return {
+        isFollowing: false,
+        status: "pending" as const,
+      };
+    }
+
+    return {
+      isFollowing: followRequest.status === "accepted",
+      requestId: followRequest._id,
+      status: followRequest.status,
+    };
   },
 });
