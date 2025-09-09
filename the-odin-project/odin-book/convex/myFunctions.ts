@@ -9,6 +9,7 @@ export const getCurrentUserProfile = query({
   returns: v.union(
     v.object({
       _id: v.id("profiles"),
+      _creationTime: v.number(),
       userId: v.id("users"),
       username: v.string(),
       displayName: v.string(),
@@ -38,11 +39,7 @@ export const createProfile = mutation({
   },
   returns: v.id("profiles"),
   handler: async (ctx, args) => {
-    console.log("createProfile called with args:", args);
-
     const userId = await getAuthUserId(ctx);
-    console.log("User ID:", userId);
-
     if (!userId) throw new Error("Not authenticated");
 
     // Check if username is already taken
@@ -52,20 +49,15 @@ export const createProfile = mutation({
       .unique();
 
     if (existingProfile) {
-      console.log("Username already taken:", args.username);
       throw new Error("Username already taken");
     }
 
-    console.log("Creating profile for user:", userId);
-    const profileId = await ctx.db.insert("profiles", {
+    return await ctx.db.insert("profiles", {
       userId,
       username: args.username,
       displayName: args.displayName,
       bio: args.bio,
     });
-
-    console.log("Profile created with ID:", profileId);
-    return profileId;
   },
 });
 
@@ -74,6 +66,7 @@ export const getUserProfile = query({
   returns: v.union(
     v.object({
       _id: v.id("profiles"),
+      _creationTime: v.number(),
       userId: v.id("users"),
       username: v.string(),
       displayName: v.string(),

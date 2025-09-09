@@ -119,9 +119,6 @@ function Content() {
     "feed",
   );
 
-  console.log("Content - profile:", profile);
-  console.log("Content - feed:", feed);
-
   if (profile === undefined || feed === undefined) {
     return (
       <div className="text-center mt-16">
@@ -133,7 +130,6 @@ function Content() {
   }
 
   if (!profile) {
-    console.log("No profile found, showing ProfileSetup");
     return <ProfileSetup />;
   }
 
@@ -216,23 +212,12 @@ function ProfileSetup() {
     setError(null);
 
     try {
-      console.log("Creating profile with:", {
+      await createProfile({
         username: username.trim(),
         displayName: displayName.trim(),
         bio: bio.trim() || undefined,
       });
-
-      const result = await createProfile({
-        username: username.trim(),
-        displayName: displayName.trim(),
-        bio: bio.trim() || undefined,
-      });
-
-      console.log("Profile creation result:", result);
-
-      console.log("Profile created successfully");
     } catch (err) {
-      console.error("Profile creation error:", err);
       setError(err instanceof Error ? err.message : "Failed to create profile");
     } finally {
       setIsSubmitting(false);
