@@ -1,45 +1,104 @@
-# Welcome to your Convex + React (Vite) + Convex Auth app
+# DEVTHREADS - A Brutalistic Developer Social Platform
 
-This is a [Convex](https://convex.dev/) project created with [`npm create convex`](https://www.npmjs.com/package/create-convex).
+A minimal, brutalistic threads clone built for developer content using Vite, React, and Convex.
 
-After the initial setup (<2 minutes) you'll have a working full-stack app using:
+## Features
 
-- Convex as your backend (database, server logic)
-- [React](https://react.dev/) as your frontend (web page interactivity)
-- [Vite](https://vitest.dev/) for optimized web hosting
-- [Tailwind](https://tailwindcss.com/) for building great looking UI
-- [Convex Auth](https://labs.convex.dev/auth) for authentication
+- ✅ **User Authentication** - Sign up and sign in with email/password
+- ✅ **User Profiles** - Create profiles with username, display name, and bio
+- ✅ **Follow System** - Send follow requests and manage connections
+- ✅ **Posts** - Create and share text-based posts
+- ✅ **Likes** - Like and unlike posts
+- ✅ **Comments** - Comment on posts with threaded discussions
+- ✅ **Feed** - View posts from users you follow
+- ✅ **User Discovery** - Search for and follow other developers
 
-## Get started
+## Tech Stack
 
-If you just cloned this codebase and didn't use `npm create convex`, run:
+- **Frontend**: React + TypeScript + Vite
+- **Backend**: Convex (database, real-time sync, serverless functions)
+- **Authentication**: Convex Auth
+- **Styling**: Tailwind CSS with brutalistic design
+- **Deployment**: Convex Cloud
+
+## Getting Started
+
+1. **Install dependencies**:
+
+   ```bash
+   npm install
+   ```
+
+2. **Set up Convex**:
+
+   ```bash
+   npx convex dev
+   ```
+
+3. **Start the development server**:
+
+   ```bash
+   npm run dev
+   ```
+
+4. **Open your browser** to `http://localhost:5173`
+
+## Design Philosophy
+
+DEVTHREADS embraces a brutalistic design aesthetic:
+
+- **Black and white color scheme** with high contrast
+- **Monospace typography** for a developer-focused feel
+- **Bold borders and sharp edges** for a raw, unpolished look
+- **Minimal animations** with quick, snappy transitions
+- **Functional over beautiful** - every element serves a purpose
+
+## Project Structure
 
 ```
-npm install
-npm run dev
+src/
+├── App.tsx          # Main application component
+├── index.css        # Brutalistic styling
+└── main.tsx         # Application entry point
+
+convex/
+├── schema.ts        # Database schema
+├── myFunctions.ts   # Convex functions (queries, mutations)
+├── auth.ts          # Authentication configuration
+└── http.ts          # HTTP routes
 ```
 
-If you're reading this README on GitHub and want to use this template, run:
+## Key Components
 
-```
-npm create convex@latest -- -t react-vite-convexauth
-```
+- **ProfileSetup** - First-time user profile creation
+- **CreatePost** - Post creation form
+- **Feed** - Timeline of posts from followed users
+- **PostCard** - Individual post display with likes and comments
+- **Comments** - Comment system for posts
+- **UserDiscovery** - Search and follow other users
+- **FollowRequests** - Manage incoming follow requests
 
-For more information on how to configure Convex Auth, check out the [Convex Auth docs](https://labs.convex.dev/auth/).
+## Database Schema
 
-For more examples of different Convex Auth flows, check out this [example repo](https://www.convex.dev/templates/convex-auth).
+- **profiles** - User profile information
+- **posts** - User posts with content and metadata
+- **comments** - Comments on posts
+- **likes** - Post likes by users
+- **followRequests** - Follow relationships and requests
 
-## Learn more
+## Contributing
 
-To learn more about developing your project with Convex, check out:
+This is a learning project demonstrating modern full-stack development with Convex. Feel free to fork and extend with additional features like:
 
-- The [Tour of Convex](https://docs.convex.dev/get-started) for a thorough introduction to Convex principles.
-- The rest of [Convex docs](https://docs.convex.dev/) to learn about all Convex features.
-- [Stack](https://stack.convex.dev/) for in-depth articles on advanced topics.
+- Image uploads for posts
+- Real-time notifications
+- User mentions and hashtags
+- Post search and filtering
+- Advanced user profiles
 
-## Join the community
+## Learn More
 
-Join thousands of developers building full-stack apps with Convex:
-
-- Join the [Convex Discord community](https://convex.dev/community) to get help in real-time.
-- Follow [Convex on GitHub](https://github.com/get-convex/), star and contribute to the open-source implementation of Convex.
+- [Convex Documentation](https://docs.convex.dev/)
+- [Convex Auth](https://labs.convex.dev/auth)
+- [React Documentation](https://react.dev/)
+- [Tailwind CSS](https://tailwindcss.com/)

@@ -9,19 +9,18 @@ import {
 } from "convex/react";
 import { api } from "../convex/_generated/api";
 import { useAuthActions } from "@convex-dev/auth/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function App() {
   return (
-    <>
-      <header className="sticky top-0 z-10 bg-light dark:bg-dark p-4 border-b-2 border-slate-200 dark:border-slate-800">
-        Convex + React + Convex Auth
-        <SignOutButton />
+    <div className="min-h-screen bg-black text-white font-mono">
+      <header className="sticky top-0 z-10 bg-black border-b-4 border-white p-4">
+        <div className="max-w-4xl mx-auto flex justify-between items-center">
+          <h1 className="text-2xl font-bold tracking-wider">DEVTHREADS</h1>
+          <SignOutButton />
+        </div>
       </header>
-      <main className="p-8 flex flex-col gap-16">
-        <h1 className="text-4xl font-bold text-center">
-          Convex + React + Convex Auth
-        </h1>
+      <main className="max-w-4xl mx-auto p-4">
         <Authenticated>
           <Content />
         </Authenticated>
@@ -29,7 +28,7 @@ export default function App() {
           <SignInForm />
         </Unauthenticated>
       </main>
-    </>
+    </div>
   );
 }
 
@@ -40,10 +39,10 @@ function SignOutButton() {
     <>
       {isAuthenticated && (
         <button
-          className="bg-slate-200 dark:bg-slate-800 text-dark dark:text-light rounded-md px-2 py-1"
+          className="bg-white text-black px-4 py-2 font-bold border-4 border-white hover:bg-black hover:text-white transition-all duration-150"
           onClick={() => void signOut()}
         >
-          Sign out
+          LOGOUT
         </button>
       )}
     </>
@@ -55,164 +54,607 @@ function SignInForm() {
   const [flow, setFlow] = useState<"signIn" | "signUp">("signIn");
   const [error, setError] = useState<string | null>(null);
   return (
-    <div className="flex flex-col gap-8 w-96 mx-auto">
-      <p>Log in to see the numbers</p>
-      <form
-        className="flex flex-col gap-2"
-        onSubmit={(e) => {
-          e.preventDefault();
-          const formData = new FormData(e.target as HTMLFormElement);
-          formData.set("flow", flow);
-          void signIn("password", formData).catch((error) => {
-            setError(error.message);
-          });
-        }}
-      >
-        <input
-          className="bg-light dark:bg-dark text-dark dark:text-light rounded-md p-2 border-2 border-slate-200 dark:border-slate-800"
-          type="email"
-          name="email"
-          placeholder="Email"
-        />
-        <input
-          className="bg-light dark:bg-dark text-dark dark:text-light rounded-md p-2 border-2 border-slate-200 dark:border-slate-800"
-          type="password"
-          name="password"
-          placeholder="Password"
-        />
-        <button
-          className="bg-dark dark:bg-light text-light dark:text-dark rounded-md"
-          type="submit"
+    <div className="max-w-md mx-auto mt-16">
+      <div className="border-4 border-white p-8">
+        <h2 className="text-3xl font-bold mb-8 text-center tracking-wider">
+          {flow === "signIn" ? "LOGIN" : "REGISTER"}
+        </h2>
+        <form
+          className="flex flex-col gap-4"
+          onSubmit={(e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target as HTMLFormElement);
+            formData.set("flow", flow);
+            void signIn("password", formData).catch((error) => {
+              setError(error.message);
+            });
+          }}
         >
-          {flow === "signIn" ? "Sign in" : "Sign up"}
-        </button>
-        <div className="flex flex-row gap-2">
-          <span>
-            {flow === "signIn"
-              ? "Don't have an account?"
-              : "Already have an account?"}
-          </span>
-          <span
-            className="text-dark dark:text-light underline hover:no-underline cursor-pointer"
+          <input
+            className="bg-black text-white border-4 border-white p-4 font-mono focus:outline-none focus:bg-white focus:text-black transition-all duration-150"
+            type="email"
+            name="email"
+            placeholder="EMAIL"
+            required
+          />
+          <input
+            className="bg-black text-white border-4 border-white p-4 font-mono focus:outline-none focus:bg-white focus:text-black transition-all duration-150"
+            type="password"
+            name="password"
+            placeholder="PASSWORD"
+            required
+          />
+          <button
+            className="bg-white text-black p-4 font-bold border-4 border-white hover:bg-black hover:text-white transition-all duration-150"
+            type="submit"
+          >
+            {flow === "signIn" ? "LOGIN" : "REGISTER"}
+          </button>
+        </form>
+        <div className="mt-4 text-center">
+          <button
+            className="underline hover:no-underline"
             onClick={() => setFlow(flow === "signIn" ? "signUp" : "signIn")}
           >
-            {flow === "signIn" ? "Sign up instead" : "Sign in instead"}
-          </span>
+            {flow === "signIn"
+              ? "Need an account? Register"
+              : "Have an account? Login"}
+          </button>
         </div>
         {error && (
-          <div className="bg-red-500/20 border-2 border-red-500/50 rounded-md p-2">
-            <p className="text-dark dark:text-light font-mono text-xs">
-              Error signing in: {error}
-            </p>
+          <div className="mt-4 p-4 border-4 border-red-500 bg-red-500 text-black font-bold">
+            ERROR: {error}
           </div>
         )}
-      </form>
+      </div>
     </div>
   );
 }
 
 function Content() {
-  const { viewer, numbers } =
-    useQuery(api.myFunctions.listNumbers, {
-      count: 10,
-    }) ?? {};
-  const addNumber = useMutation(api.myFunctions.addNumber);
+  const profile = useQuery(api.myFunctions.getCurrentUserProfile);
+  const feed = useQuery(api.myFunctions.getFeed, { limit: 20 });
+  const followRequests = useQuery(api.myFunctions.getFollowRequests);
+  const [activeTab, setActiveTab] = useState<"feed" | "discover" | "requests">(
+    "feed",
+  );
 
-  if (viewer === undefined || numbers === undefined) {
+  if (profile === undefined || feed === undefined) {
     return (
-      <div className="mx-auto">
-        <p>loading... (consider a loading skeleton)</p>
+      <div className="text-center mt-16">
+        <div className="border-4 border-white p-8 inline-block">
+          <p className="text-xl">LOADING...</p>
+        </div>
       </div>
     );
   }
 
+  if (!profile) {
+    return <ProfileSetup />;
+  }
+
   return (
-    <div className="flex flex-col gap-8 max-w-lg mx-auto">
-      <p>Welcome {viewer ?? "Anonymous"}!</p>
-      <p>
-        Click the button below and open this page in another window - this data
-        is persisted in the Convex cloud database!
-      </p>
-      <p>
-        <button
-          className="bg-dark dark:bg-light text-light dark:text-dark text-sm px-4 py-2 rounded-md border-2"
-          onClick={() => {
-            void addNumber({ value: Math.floor(Math.random() * 10) });
-          }}
-        >
-          Add a random number
-        </button>
-      </p>
-      <p>
-        Numbers:{" "}
-        {numbers?.length === 0
-          ? "Click the button!"
-          : (numbers?.join(", ") ?? "...")}
-      </p>
-      <p>
-        Edit{" "}
-        <code className="text-sm font-bold font-mono bg-slate-200 dark:bg-slate-800 px-1 py-0.5 rounded-md">
-          convex/myFunctions.ts
-        </code>{" "}
-        to change your backend
-      </p>
-      <p>
-        Edit{" "}
-        <code className="text-sm font-bold font-mono bg-slate-200 dark:bg-slate-800 px-1 py-0.5 rounded-md">
-          src/App.tsx
-        </code>{" "}
-        to change your frontend
-      </p>
-      <div className="flex flex-col">
-        <p className="text-lg font-bold">Useful resources:</p>
-        <div className="flex gap-2">
-          <div className="flex flex-col gap-2 w-1/2">
-            <ResourceCard
-              title="Convex docs"
-              description="Read comprehensive documentation for all Convex features."
-              href="https://docs.convex.dev/home"
-            />
-            <ResourceCard
-              title="Stack articles"
-              description="Learn about best practices, use cases, and more from a growing
-            collection of articles, videos, and walkthroughs."
-              href="https://www.typescriptlang.org/docs/handbook/2/basic-types.html"
-            />
-          </div>
-          <div className="flex flex-col gap-2 w-1/2">
-            <ResourceCard
-              title="Templates"
-              description="Browse our collection of templates to get started quickly."
-              href="https://www.convex.dev/templates"
-            />
-            <ResourceCard
-              title="Discord"
-              description="Join our developer community to ask questions, trade tips & tricks,
-            and show off your projects."
-              href="https://www.convex.dev/community"
-            />
-          </div>
+    <div className="space-y-8">
+      <div className="border-4 border-white p-4">
+        <div className="flex gap-4 mb-4">
+          <button
+            className={`px-4 py-2 border-4 border-white font-bold ${
+              activeTab === "feed"
+                ? "bg-white text-black"
+                : "bg-black text-white hover:bg-white hover:text-black"
+            }`}
+            onClick={() => setActiveTab("feed")}
+          >
+            FEED
+          </button>
+          <button
+            className={`px-4 py-2 border-4 border-white font-bold ${
+              activeTab === "discover"
+                ? "bg-white text-black"
+                : "bg-black text-white hover:bg-white hover:text-black"
+            }`}
+            onClick={() => setActiveTab("discover")}
+          >
+            DISCOVER
+          </button>
+          {followRequests && followRequests.length > 0 && (
+            <button
+              className={`px-4 py-2 border-4 border-white font-bold ${
+                activeTab === "requests"
+                  ? "bg-white text-black"
+                  : "bg-black text-white hover:bg-white hover:text-black"
+              }`}
+              onClick={() => setActiveTab("requests")}
+            >
+              REQUESTS ({followRequests.length})
+            </button>
+          )}
         </div>
+
+        {activeTab === "feed" && (
+          <div className="space-y-8">
+            <CreatePost />
+            <Feed posts={feed} />
+          </div>
+        )}
+
+        {activeTab === "discover" && <UserDiscovery />}
+
+        {activeTab === "requests" && <FollowRequests />}
       </div>
     </div>
   );
 }
 
-function ResourceCard({
-  title,
-  description,
-  href,
-}: {
-  title: string;
-  description: string;
-  href: string;
-}) {
+function ProfileSetup() {
+  const createProfile = useMutation(api.myFunctions.createProfile);
+  const [username, setUsername] = useState("");
+  const [displayName, setDisplayName] = useState("");
+  const [bio, setBio] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (isSubmitting) return;
+
+    setIsSubmitting(true);
+    setError(null);
+
+    try {
+      await createProfile({
+        username: username.trim(),
+        displayName: displayName.trim(),
+        bio: bio.trim() || undefined,
+      });
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to create profile");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
-    <div className="flex flex-col gap-2 bg-slate-200 dark:bg-slate-800 p-4 rounded-md h-28 overflow-auto">
-      <a href={href} className="text-sm underline hover:no-underline">
-        {title}
-      </a>
-      <p className="text-xs">{description}</p>
+    <div className="max-w-md mx-auto mt-16">
+      <div className="border-4 border-white p-8">
+        <h2 className="text-3xl font-bold mb-8 text-center tracking-wider">
+          SETUP PROFILE
+        </h2>
+        <form onSubmit={(e) => void handleSubmit(e)} className="space-y-4">
+          <input
+            className="w-full bg-black text-white border-4 border-white p-4 font-mono focus:outline-none focus:bg-white focus:text-black transition-all duration-150"
+            type="text"
+            placeholder="USERNAME"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
+          />
+          <input
+            className="w-full bg-black text-white border-4 border-white p-4 font-mono focus:outline-none focus:bg-white focus:text-black transition-all duration-150"
+            type="text"
+            placeholder="DISPLAY NAME"
+            value={displayName}
+            onChange={(e) => setDisplayName(e.target.value)}
+            required
+          />
+          <textarea
+            className="w-full bg-black text-white border-4 border-white p-4 font-mono focus:outline-none focus:bg-white focus:text-black transition-all duration-150 resize-none"
+            placeholder="BIO (OPTIONAL)"
+            rows={3}
+            value={bio}
+            onChange={(e) => setBio(e.target.value)}
+          />
+          <button
+            className="w-full bg-white text-black p-4 font-bold border-4 border-white hover:bg-black hover:text-white transition-all duration-150 disabled:opacity-50"
+            type="submit"
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? "CREATING..." : "CREATE PROFILE"}
+          </button>
+        </form>
+        {error && (
+          <div className="mt-4 p-4 border-4 border-red-500 bg-red-500 text-black font-bold">
+            ERROR: {error}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function CreatePost() {
+  const createPost = useMutation(api.myFunctions.createPost);
+  const [content, setContent] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (isSubmitting || !content.trim()) return;
+
+    setIsSubmitting(true);
+    try {
+      await createPost({ content: content.trim() });
+      setContent("");
+    } catch (err) {
+      console.error("Failed to create post:", err);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  return (
+    <div className="border-4 border-white p-6">
+      <h2 className="text-xl font-bold mb-4 tracking-wider">NEW POST</h2>
+      <form onSubmit={(e) => void handleSubmit(e)}>
+        <textarea
+          className="w-full bg-black text-white border-4 border-white p-4 font-mono focus:outline-none focus:bg-white focus:text-black transition-all duration-150 resize-none"
+          placeholder="What's on your mind, developer?"
+          rows={4}
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
+          maxLength={500}
+        />
+        <div className="flex justify-between items-center mt-4">
+          <span className="text-sm">{content.length}/500</span>
+          <button
+            className="bg-white text-black px-6 py-2 font-bold border-4 border-white hover:bg-black hover:text-white transition-all duration-150 disabled:opacity-50"
+            type="submit"
+            disabled={isSubmitting || !content.trim()}
+          >
+            {isSubmitting ? "POSTING..." : "POST"}
+          </button>
+        </div>
+      </form>
+    </div>
+  );
+}
+
+function Feed({ posts }: { posts: any[] }) {
+  if (posts.length === 0) {
+    return (
+      <div className="border-4 border-white p-8 text-center">
+        <p className="text-xl">NO POSTS YET</p>
+        <p className="mt-2">Be the first to post something!</p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-6">
+      <h2 className="text-2xl font-bold tracking-wider">FEED</h2>
+      {posts.map((post) => (
+        <PostCard key={post._id} post={post} />
+      ))}
+    </div>
+  );
+}
+
+function PostCard({ post }: { post: any }) {
+  const toggleLike = useMutation(api.myFunctions.toggleLike);
+  const [showComments, setShowComments] = useState(false);
+  const [isLiking, setIsLiking] = useState(false);
+
+  const handleLike = async () => {
+    if (isLiking) return;
+    setIsLiking(true);
+    try {
+      await toggleLike({ postId: post._id });
+    } catch (err) {
+      console.error("Failed to toggle like:", err);
+    } finally {
+      setIsLiking(false);
+    }
+  };
+
+  const formatTime = (timestamp: number) => {
+    const date = new Date(timestamp);
+    const now = new Date();
+    const diff = now.getTime() - date.getTime();
+    const minutes = Math.floor(diff / 60000);
+    const hours = Math.floor(diff / 3600000);
+    const days = Math.floor(diff / 86400000);
+
+    if (minutes < 1) return "now";
+    if (minutes < 60) return `${minutes}m`;
+    if (hours < 24) return `${hours}h`;
+    return `${days}d`;
+  };
+
+  return (
+    <div className="border-4 border-white p-6">
+      <div className="flex justify-between items-start mb-4">
+        <div>
+          <h3 className="font-bold text-lg">@{post.author.username}</h3>
+          <p className="text-sm opacity-70">{post.author.displayName}</p>
+        </div>
+        <span className="text-sm opacity-70">{formatTime(post.createdAt)}</span>
+      </div>
+
+      <div className="mb-4">
+        <p className="whitespace-pre-wrap">{post.content}</p>
+      </div>
+
+      <div className="flex gap-6 text-sm">
+        <button
+          className={`flex items-center gap-2 font-bold hover:underline ${
+            post.isLiked ? "text-red-500" : ""
+          }`}
+          onClick={() => void handleLike()}
+          disabled={isLiking}
+        >
+          {post.isLiked ? "♥" : "♡"} {post.likesCount}
+        </button>
+        <button
+          className="flex items-center gap-2 font-bold hover:underline"
+          onClick={() => setShowComments(!showComments)}
+        >
+          💬 {post.commentsCount}
+        </button>
+      </div>
+
+      {showComments && (
+        <div className="mt-4 pt-4 border-t-2 border-white">
+          <Comments postId={post._id} />
+        </div>
+      )}
+    </div>
+  );
+}
+
+function Comments({ postId }: { postId: any }) {
+  const comments = useQuery(api.myFunctions.getComments, { postId });
+  const addComment = useMutation(api.myFunctions.addComment);
+  const [content, setContent] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (isSubmitting || !content.trim()) return;
+
+    setIsSubmitting(true);
+    try {
+      await addComment({ postId, content: content.trim() });
+      setContent("");
+    } catch (err) {
+      console.error("Failed to add comment:", err);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const formatTime = (timestamp: number) => {
+    const date = new Date(timestamp);
+    const now = new Date();
+    const diff = now.getTime() - date.getTime();
+    const minutes = Math.floor(diff / 60000);
+    const hours = Math.floor(diff / 3600000);
+    const days = Math.floor(diff / 86400000);
+
+    if (minutes < 1) return "now";
+    if (minutes < 60) return `${minutes}m`;
+    if (hours < 24) return `${hours}h`;
+    return `${days}d`;
+  };
+
+  return (
+    <div className="space-y-4">
+      <form onSubmit={(e) => void handleSubmit(e)} className="flex gap-2">
+        <input
+          className="flex-1 bg-black text-white border-2 border-white p-2 font-mono focus:outline-none focus:bg-white focus:text-black transition-all duration-150"
+          type="text"
+          placeholder="Add a comment..."
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
+          maxLength={200}
+        />
+        <button
+          className="bg-white text-black px-4 py-2 font-bold border-2 border-white hover:bg-black hover:text-white transition-all duration-150 disabled:opacity-50"
+          type="submit"
+          disabled={isSubmitting || !content.trim()}
+        >
+          {isSubmitting ? "..." : "POST"}
+        </button>
+      </form>
+
+      {comments && comments.length > 0 && (
+        <div className="space-y-3">
+          {comments.map((comment) => (
+            <div key={comment._id} className="border-2 border-white p-3">
+              <div className="flex justify-between items-start mb-2">
+                <div>
+                  <span className="font-bold">@{comment.author.username}</span>
+                  <span className="text-sm opacity-70 ml-2">
+                    {comment.author.displayName}
+                  </span>
+                </div>
+                <span className="text-xs opacity-70">
+                  {formatTime(comment.createdAt)}
+                </span>
+              </div>
+              <p className="whitespace-pre-wrap">{comment.content}</p>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function UserDiscovery() {
+  const [searchUsername, setSearchUsername] = useState("");
+  const [searchedUser, setSearchedUser] = useState<any>(null);
+  const [isSearching, setIsSearching] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const getUserProfile = useQuery(
+    api.myFunctions.getUserProfile,
+    searchUsername ? { username: searchUsername } : "skip",
+  );
+  const sendFollowRequest = useMutation(api.myFunctions.sendFollowRequest);
+  const [isFollowing, setIsFollowing] = useState(false);
+
+  const handleSearch = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!searchUsername.trim()) return;
+
+    setIsSearching(true);
+    setError(null);
+    setSearchedUser(null);
+
+    try {
+      // The query will automatically run when searchUsername changes
+      // We just need to wait for it to complete
+    } catch {
+      setError("Failed to search for user");
+    } finally {
+      setIsSearching(false);
+    }
+  };
+
+  // Update searchedUser when getUserProfile changes
+  useEffect(() => {
+    if (getUserProfile !== undefined) {
+      setSearchedUser(getUserProfile);
+      if (getUserProfile === null && searchUsername) {
+        setError("User not found");
+      } else {
+        setError(null);
+      }
+    }
+  }, [getUserProfile, searchUsername]);
+
+  const handleFollow = async () => {
+    if (!searchedUser || isFollowing) return;
+
+    setIsFollowing(true);
+    try {
+      await sendFollowRequest({ toUserId: searchedUser.userId });
+      setError(null);
+    } catch (err) {
+      setError(
+        err instanceof Error ? err.message : "Failed to send follow request",
+      );
+    } finally {
+      setIsFollowing(false);
+    }
+  };
+
+  return (
+    <div className="space-y-6">
+      <h2 className="text-2xl font-bold tracking-wider">DISCOVER USERS</h2>
+
+      <form onSubmit={(e) => void handleSearch(e)} className="flex gap-2">
+        <input
+          className="flex-1 bg-black text-white border-4 border-white p-4 font-mono focus:outline-none focus:bg-white focus:text-black transition-all duration-150"
+          type="text"
+          placeholder="SEARCH USERNAME"
+          value={searchUsername}
+          onChange={(e) => setSearchUsername(e.target.value)}
+        />
+        <button
+          className="bg-white text-black px-6 py-4 font-bold border-4 border-white hover:bg-black hover:text-white transition-all duration-150 disabled:opacity-50"
+          type="submit"
+          disabled={isSearching || !searchUsername.trim()}
+        >
+          {isSearching ? "SEARCHING..." : "SEARCH"}
+        </button>
+      </form>
+
+      {error && (
+        <div className="p-4 border-4 border-red-500 bg-red-500 text-black font-bold">
+          ERROR: {error}
+        </div>
+      )}
+
+      {searchedUser && (
+        <div className="border-4 border-white p-6">
+          <div className="flex justify-between items-start">
+            <div>
+              <h3 className="text-xl font-bold">@{searchedUser.username}</h3>
+              <p className="text-lg">{searchedUser.displayName}</p>
+              {searchedUser.bio && (
+                <p className="mt-2 opacity-70">{searchedUser.bio}</p>
+              )}
+            </div>
+            <button
+              className="bg-white text-black px-4 py-2 font-bold border-4 border-white hover:bg-black hover:text-white transition-all duration-150 disabled:opacity-50"
+              onClick={() => void handleFollow()}
+              disabled={isFollowing}
+            >
+              {isFollowing ? "SENDING..." : "FOLLOW"}
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function FollowRequests() {
+  const followRequests = useQuery(api.myFunctions.getFollowRequests);
+  const respondToFollowRequest = useMutation(
+    api.myFunctions.respondToFollowRequest,
+  );
+  const [respondingTo, setRespondingTo] = useState<string | null>(null);
+
+  const handleRespond = async (
+    requestId: any,
+    status: "accepted" | "rejected",
+  ) => {
+    setRespondingTo(requestId);
+    try {
+      await respondToFollowRequest({ requestId, status });
+    } catch (err) {
+      console.error("Failed to respond to follow request:", err);
+    } finally {
+      setRespondingTo(null);
+    }
+  };
+
+  if (!followRequests || followRequests.length === 0) {
+    return (
+      <div className="text-center py-8">
+        <p className="text-xl">NO PENDING REQUESTS</p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-6">
+      <h2 className="text-2xl font-bold tracking-wider">FOLLOW REQUESTS</h2>
+
+      <div className="space-y-4">
+        {followRequests.map((request) => (
+          <div key={request._id} className="border-4 border-white p-6">
+            <div className="flex justify-between items-start">
+              <div>
+                <h3 className="text-xl font-bold">
+                  @{request.fromUser.username}
+                </h3>
+                <p className="text-lg">{request.fromUser.displayName}</p>
+                <p className="text-sm opacity-70 mt-2">
+                  Requested {new Date(request.createdAt).toLocaleDateString()}
+                </p>
+              </div>
+              <div className="flex gap-2">
+                <button
+                  className="bg-green-500 text-black px-4 py-2 font-bold border-4 border-green-500 hover:bg-black hover:text-green-500 transition-all duration-150 disabled:opacity-50"
+                  onClick={() => void handleRespond(request._id, "accepted")}
+                  disabled={respondingTo === request._id}
+                >
+                  {respondingTo === request._id ? "..." : "ACCEPT"}
+                </button>
+                <button
+                  className="bg-red-500 text-black px-4 py-2 font-bold border-4 border-red-500 hover:bg-black hover:text-red-500 transition-all duration-150 disabled:opacity-50"
+                  onClick={() => void handleRespond(request._id, "rejected")}
+                  disabled={respondingTo === request._id}
+                >
+                  {respondingTo === request._id ? "..." : "REJECT"}
+                </button>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
