@@ -111,6 +111,7 @@ export const getFeed = query({
   returns: v.array(
     v.object({
       _id: v.id("posts"),
+      _creationTime: v.number(),
       authorId: v.id("users"),
       content: v.string(),
       createdAt: v.number(),
@@ -199,6 +200,7 @@ export const getPost = query({
   returns: v.union(
     v.object({
       _id: v.id("posts"),
+      _creationTime: v.number(),
       authorId: v.id("users"),
       content: v.string(),
       createdAt: v.number(),
@@ -315,6 +317,7 @@ export const getComments = query({
   returns: v.array(
     v.object({
       _id: v.id("comments"),
+      _creationTime: v.number(),
       postId: v.id("posts"),
       authorId: v.id("users"),
       content: v.string(),
@@ -419,6 +422,7 @@ export const getFollowRequests = query({
   returns: v.array(
     v.object({
       _id: v.id("followRequests"),
+      _creationTime: v.number(),
       fromUserId: v.id("users"),
       toUserId: v.id("users"),
       status: v.union(
@@ -472,6 +476,7 @@ export const getFollowing = query({
   returns: v.array(
     v.object({
       _id: v.id("followRequests"),
+      _creationTime: v.number(),
       toUserId: v.id("users"),
       toUser: v.object({
         username: v.string(),
@@ -519,6 +524,7 @@ export const getFollowers = query({
   returns: v.array(
     v.object({
       _id: v.id("followRequests"),
+      _creationTime: v.number(),
       fromUserId: v.id("users"),
       fromUser: v.object({
         username: v.string(),
