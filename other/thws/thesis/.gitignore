@@ -6,9 +6,10 @@
 *.log
 *.out
 *.pdf
-*.synctex.gz
+*.gz
 *.toc
 *.bcf
 *.lof
 *.lot
 *.xml
+*.lol
