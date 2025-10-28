@@ -8,3 +8,7 @@
 *.pdf
 *.synctex.gz
 *.toc
+*.bcf
+*.lof
+*.lot
+*.xml
