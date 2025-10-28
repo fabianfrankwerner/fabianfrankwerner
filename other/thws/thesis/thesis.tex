@@ -37,7 +37,7 @@
 \def\BaAuthor{Fabian Frank Werner}
 \def\BaAuthorStudyProgram{E-Commerce}
 \def\BaType{Bachelorarbeit}
-\def\BaTitle{The Impact of AI Transparency on Advertising Credibility}
+\def\BaTitle{The Impact of AI Transparency\\on Advertising Credibility}
 \def\BaSupervisorOne{Prof.\ Dr.\ Karsten Huffstadt}
 \def\BaSupervisorTwo{Prof.\ Dr.\ habil.\ Nicholas Müller}
 \def\BaDeadline{\today}
@@ -156,15 +156,13 @@ pdfkeywords={Keywords}
 
 \begin{document}
 
-
 %%%%%%%%%%%%%%%%%%%
 %% Titelseite
 %%%%%%%%%%%%%%%%%%%
 
 \frontmatter
-\titlehead{%  {\centering Seitenkopf}
-  {Technische Hochschule Würzburg-Schweinfurt\\
-   Fakultät Informatik und Wirtschaftsinformatik}}
+\titlehead{\centering
+  {Technische Hochschule Würzburg-Schweinfurt\\Fakultät Informatik und Wirtschaftsinformatik}}
 \subject{\BaType}
 \title{\BaTitle\\[15mm]}
 \subtitle{\normalsize{vorgelegt an der Technischen Hochschule W\"{u}rzburg-Schweinfurt in der Fakult\"{a}t Informatik und Wirtschaftsinformatik zum Abschluss eines Studiums im Studiengang \BaAuthorStudyProgram}}
@@ -172,7 +170,7 @@ pdfkeywords={Keywords}
 \date{\normalsize{Eingereicht am: \BaDeadline}}
 \publishers{
   % Uncomment the following line if you want the QR code to be placed on the title page
-  %\centering\includegraphics[width=4cm]{barcode_default}\\[1cm]
+  % \centering\includegraphics[width=4cm]{barcode_default}\\[1cm]
   \normalsize{Erstprüfer: \BaSupervisorOne}\\
   \normalsize{Zweitprüfer: \BaSupervisorTwo}\\
 }
@@ -183,30 +181,27 @@ pdfkeywords={Keywords}
 }
 \forcetwosidetitle
 
-
 %%%%%%%%%%%%%%%%%%%
-%% abstract
+%% Abstract
 %%%%%%%%%%%%%%%%%%%
 
-\section*{Zusammenfassung}
+\chapter*{Abstract (English)}
 
 TODO
 
-\section*{Abstract}
+\chapter*{Abstract (Deutsch)}
 
 TODO
 
-\newpage
-\chapter*{Danksagung}
-
-
+% \newpage
+% \chapter*{Danksagung}
 
 %%%%%%%%%%%%%%%%%%%
 %% Inhaltsverzeichnis
 %%%%%%%%%%%%%%%%%%%
+
+% - [ ] Change to english
 \tableofcontents
-
-
 
 %%%%%%%%%%%%%%%%%%%
 %% Main part of the thesis
