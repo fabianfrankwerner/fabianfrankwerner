@@ -58,8 +58,6 @@ an Ihren Betreuer bzw. Ihre Betreuerin und _nicht_ an das Dekanat.
 
 # Checkliste für die Abgabe der Arbeit
 
-Vor der Abgabe der Arbeit prüfen Sie bitte folgende Punkte:
-
 - [ ] Enthält das Deckblatt den Titel der Arbeit, Ihren Namen, die Namen der beiden Prüfer bzw. Prüferinnen und das Datum der tatsächlichen Abgabe?
 
 - [ ] Sind die beiden Kurzfassungen auf Deutsch und Englisch enthalten?
