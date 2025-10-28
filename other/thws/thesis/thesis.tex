@@ -1,7 +1,4 @@
 \documentclass[12pt,twoside=false,a4paper,parskip]{scrbook}
-% use the following line instead of the class above if you want double-sided printing
-% don't remove openright as it looks better in case of double-sided print
-% \documentclass[12pt,twoside,a4paper,parskip,openright]{scrbook} 
 \usepackage[utf8]{inputenc}
 \usepackage{csquotes}
 \usepackage[ngerman]{babel}
@@ -32,21 +29,20 @@
 \usepackage{booktabs}
 \usepackage[style=numeric,backend=biber,sorting=none]{biblatex}
 \bibliography{references}
-\usepackage[htt]{hyphenat} % texttt do line breaks
-
+\usepackage[htt]{hyphenat}
 
 %%%%%%%%%%%%%%%%%%%
 %% definitions
 %%%%%%%%%%%%%%%%%%%
-\def\BaAuthor{Super Mario}
-\def\BaAuthorStudyProgram{Informatik} %% Wirtschaftsinformatik, E-Commerce, Informationssysteme
-\def\BaType{Bachelorarbeit} %% Masterarbeit
-\def\BaTitle{Entwicklung eines ganz tollen Algorithmus}
-\def\BaSupervisorOne{Prof.\ Dr.\ A B}
-\def\BaSupervisorTwo{Prof.\ Dr.\ C D}
+\def\BaAuthor{Fabian Frank Werner}
+\def\BaAuthorStudyProgram{E-Commerce}
+\def\BaType{Bachelorarbeit}
+\def\BaTitle{The Impact of AI Transparency on Advertising Credibility}
+\def\BaSupervisorOne{Prof.\ Dr.\ Karsten Huffstadt}
+\def\BaSupervisorTwo{Prof.\ Dr.\ habil.\ Nicholas Müller}
 \def\BaDeadline{\today}
 
-%\def\iswithfullname{1} % uncomment this to create non-anonymous version
+\def\iswithfullname{1} % (un)comment this to create (non-)anonymous version
 \ifdefined\iswithfullname
   \def\ShowBaAuthor{\BaAuthor}
 \else
@@ -125,7 +121,7 @@ pdfkeywords={Keywords}
   identifierstyle=\color{darkblue},
   keywordstyle=\color{cyan},
   backgroundcolor=\color{background},
-  morekeywords={xmlns,version,type}% list your attributes here
+  morekeywords={xmlns,version,type} % list your attributes here
 }
 
 \lstset{language=Java,
@@ -152,12 +148,11 @@ pdfkeywords={Keywords}
 \newcommand*{\forcetwosidetitle}[1][1]{%
  \begingroup
    \cleardoubleoddpage
-   \KOMAoptions{titlepage=true}% useful e.g. for scrartcl
+   \KOMAoptions{titlepage=true} % useful e.g. for scrartcl
    \csname @twosidetrue\endcsname
    \maketitle[{#1}]
  \endgroup
 }
-
 
 \begin{document}
 
@@ -165,7 +160,6 @@ pdfkeywords={Keywords}
 %%%%%%%%%%%%%%%%%%%
 %% Titelseite
 %%%%%%%%%%%%%%%%%%%
-
 
 \frontmatter
 \titlehead{%  {\centering Seitenkopf}
