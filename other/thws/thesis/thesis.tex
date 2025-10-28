@@ -1,7 +1,8 @@
 \documentclass[12pt,twoside=false,a4paper,parskip]{scrbook}
 \usepackage[utf8]{inputenc}
 \usepackage{csquotes}
-\usepackage[ngerman]{babel}
+%\usepackage[ngerman]{babel}
+\usepackage[english]{babel}
 \usepackage{floatflt}
 \usepackage{subfigure}
 \usepackage[pdftex]{graphicx}
@@ -36,7 +37,7 @@
 %%%%%%%%%%%%%%%%%%%
 \def\BaAuthor{Fabian Frank Werner}
 \def\BaAuthorStudyProgram{E-Commerce}
-\def\BaType{Bachelorarbeit}
+\def\BaType{Bachelor's Thesis}
 \def\BaTitle{The Impact of AI Transparency\\on Advertising Credibility}
 \def\BaSupervisorOne{Prof.\ Dr.\ Karsten Huffstadt}
 \def\BaSupervisorTwo{Prof.\ Dr.\ habil.\ Nicholas Müller}
@@ -157,22 +158,20 @@ pdfkeywords={Keywords}
 \begin{document}
 
 %%%%%%%%%%%%%%%%%%%
-%% Head
+%% Title Page
 %%%%%%%%%%%%%%%%%%%
 
 \frontmatter
 \titlehead{\centering
-  {Technische Hochschule Würzburg-Schweinfurt\\Fakultät Informatik und Wirtschaftsinformatik}}
+  {Technical University of Applied Sciences Würzburg-Schweinfurt\\Faculty of Computer Science and Business Information Systems}}
 \subject{\BaType}
 \title{\BaTitle\\[15mm]}
-\subtitle{\normalsize{vorgelegt an der Technischen Hochschule W\"{u}rzburg-Schweinfurt in der Fakult\"{a}t Informatik und Wirtschaftsinformatik zum Abschluss eines Studiums im Studiengang \BaAuthorStudyProgram}}
+\subtitle{\normalsize{Submitted to the Faculty of Computer Science and Business Information Systems at the Technical University of Applied Sciences Würzburg-Schweinfurt in partial fulfillment of the requirements for the degree in the study program \BaAuthorStudyProgram.}}
 \author{\ShowBaAuthor}
-\date{\normalsize{Eingereicht am: \BaDeadline}}
+\date{\normalsize{Submitted on: \BaDeadline}}
 \publishers{
-  % Uncomment the following line if you want the QR code to be placed on the title page
-  % \centering\includegraphics[width=4cm]{barcode_default}\\[1cm]
-  \normalsize{Erstprüfer: \BaSupervisorOne}\\
-  \normalsize{Zweitprüfer: \BaSupervisorTwo}\\
+  \normalsize{Primary Supervisor: \BaSupervisorOne}\\
+  \normalsize{Secondary Supervisor: \BaSupervisorTwo}\\
 }
 
 \lowertitleback{
@@ -185,22 +184,22 @@ pdfkeywords={Keywords}
 %% Abstract
 %%%%%%%%%%%%%%%%%%%
 
-\chapter*{Abstract (English)}
+\chapter*{Abstract}
 
 TODO
 
-\chapter*{Abstract (Deutsch)}
+%\chapter*{Zusammenfassung}
 
-TODO
+%TODO
 
 % \newpage
 % \chapter*{Danksagung}
 
 %%%%%%%%%%%%%%%%%%%
-%% TOC
+%% Contents
 %%%%%%%%%%%%%%%%%%%
 
-% - [ ] Change to english
+\renewcommand{\contentsname}{Table of Contents}
 \tableofcontents
 
 %%%%%%%%%%%%%%%%%%%
@@ -261,14 +260,14 @@ Lorem ipsum dolor sit amet.
 %%%%%%%%%%%%%%%%%%%
 
 \listoffigures
-\addcontentsline{toc}{chapter}{Verzeichnisse}
+\addcontentsline{toc}{chapter}{List of Figures}
 
 %%%%%%%%%%%%%%%%%%%
 %% Appendix
 %%%%%%%%%%%%%%%%%%%
 
 \appendix
-\addchap{Anhänge}
+\addchap{Appendix}
 
 \addsec{Anhang A: Eine tolle Tabelle.}
 \label{appendix:antworttypen}
@@ -290,22 +289,23 @@ Titel 2 & Beschreibung 2 \\
 %% Tables
 %%%%%%%%%%%%%%%%%%%
 
-\listoftables
+%\listoftables
+%\addcontentsline{toc}{chapter}{List of Tables}
 
 %%%%%%%%%%%%%%%%%%%
 %% Listings
 %%%%%%%%%%%%%%%%%%%
 
 %\lstlistoflistings
-%\addcontentsline{toc}{chapter}{Listings}
+%\addcontentsline{toc}{chapter}{List of Listings}
 
 \cleardoublepage
 \phantomsection
-\addcontentsline{toc}{chapter}{Literatur}
+\addcontentsline{toc}{chapter}{References}
 \printbibliography
 
 %%%%%%%%%%%%%%%%%%%
-%% Formals
+%% - [ ] Formals
 %%%%%%%%%%%%%%%%%%%
 
 \addchap{Eidesstattliche Erklärung}
