@@ -166,7 +166,7 @@ pdfkeywords={Keywords}
   {Technical University of Applied Sciences Würzburg-Schweinfurt\\Faculty of Computer Science and Business Information Systems}}
 \subject{\BaType}
 \title{\BaTitle\\[15mm]}
-\subtitle{\normalsize{Submitted to the Faculty of Computer Science and Business Information Systems at the Technical University of Applied Sciences Würzburg-Schweinfurt in partial fulfillment of the requirements for the degree in the study program \BaAuthorStudyProgram.}}
+\subtitle{\normalsize{Submitted to the Technical University of Applied Sciences Würzburg-Schweinfurt at the Faculty of Computer Science and Business Information Systems\\for the completion of the degree program in \BaAuthorStudyProgram.}}
 \author{\ShowBaAuthor}
 \date{\normalsize{Submitted on: \BaDeadline}}
 \publishers{
@@ -192,18 +192,39 @@ TODO
 
 %TODO
 
-% \newpage
-% \chapter*{Danksagung}
+%%%%%%%%%%%%%%%%%%%
+%% Acknowledgements
+%%%%%%%%%%%%%%%%%%%
+
+% \chapter*{Acknowledgements}
 
 %%%%%%%%%%%%%%%%%%%
-%% Contents
+%% Table of Contents
 %%%%%%%%%%%%%%%%%%%
 
 \renewcommand{\contentsname}{Table of Contents}
 \tableofcontents
 
 %%%%%%%%%%%%%%%%%%%
-%% Content
+%% List of Figures
+%%%%%%%%%%%%%%%%%%%
+
+\listoffigures
+\addcontentsline{toc}{chapter}{List of Figures}
+
+%%%%%%%%%%%%%%%%%%%
+%% List of Tables
+%%%%%%%%%%%%%%%%%%%
+
+\listoftables
+\addcontentsline{toc}{chapter}{List of Tables}
+
+%%%%%%%%%%%%%%%%%%%
+%% List of Algorithms, List of Abbreviations, List of Symbols
+%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%
+%% Contents
 %%%%%%%%%%%%%%%%%%%
 
 \mainmatter
@@ -229,7 +250,7 @@ Lorem ipsum dolor sit amet: \ref{fig:user-flow-diagramm}.
 
 \chapter{Grundlagen}
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vehicula felis lectus, nec aliquet arcu aliquam vitae. Quisque laoreet consequat ante, eget pretium quam hendrerit at. Pellentesque nec purus eget erat mattis varius. Nullam ut vulputate velit. Suspendisse in dui in eros iaculis tempus. Phasellus vel est arcu. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Integer elementum, nulla eu faucibus dignissim, orci justo imperdiet lorem, luctus consectetur orci orci a nunc.
+Lorem \cite{gamageLabelingSyntheticContent2025} ipsum dolor sit amet, consectetur adipiscing elit. Ut vehicula felis lectus, nec aliquet arcu aliquam vitae. Quisque laoreet consequat ante, eget pretium quam hendrerit at. Pellentesque nec purus eget erat mattis varius. Nullam ut vulputate velit. Suspendisse in dui in eros iaculis tempus. Phasellus vel est arcu. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Integer elementum, nulla eu faucibus dignissim, orci justo imperdiet lorem, luctus consectetur orci orci a nunc.
 
 Praesent at nunc nec tortor viverra viverra. Morbi in feugiat lectus. Vestibulum iaculis ipsum at eros viverra volutpat in id ipsum. Donec condimentum, ligula viverra pharetra tincidunt, nunc dui malesuada nisi, vitae mollis lacus massa quis velit. Integer feugiat ipsum a volutpat scelerisque. Nulla facilisis augue nunc. Curabitur eget consectetur nulla. Integer accumsan sem non nisi tristique dictum.
 
@@ -256,14 +277,7 @@ Lorem ipsum dolor sit amet.
 \backmatter
 
 %%%%%%%%%%%%%%%%%%%
-%% Figures
-%%%%%%%%%%%%%%%%%%%
-
-\listoffigures
-\addcontentsline{toc}{chapter}{List of Figures}
-
-%%%%%%%%%%%%%%%%%%%
-%% Appendix
+%% Appendix (1) or Appendices (>1)
 %%%%%%%%%%%%%%%%%%%
 
 \appendix
@@ -285,27 +299,18 @@ Titel 2 & Beschreibung 2 \\
 \caption{Übersicht der tollen Antworten.}
 \end{table}
 
-%%%%%%%%%%%%%%%%%%%
-%% Tables
-%%%%%%%%%%%%%%%%%%%
-
-%\listoftables
-%\addcontentsline{toc}{chapter}{List of Tables}
-
-%%%%%%%%%%%%%%%%%%%
-%% Listings
-%%%%%%%%%%%%%%%%%%%
-
-%\lstlistoflistings
-%\addcontentsline{toc}{chapter}{List of Listings}
-
 \cleardoublepage
 \phantomsection
-\addcontentsline{toc}{chapter}{References}
-\printbibliography
 
 %%%%%%%%%%%%%%%%%%%
-%% - [ ] Formals
+%% References
+%%%%%%%%%%%%%%%%%%%
+
+\addcontentsline{toc}{chapter}{References}
+\printbibliography[title=References]
+
+%%%%%%%%%%%%%%%%%%%
+%% Formalia
 %%%%%%%%%%%%%%%%%%%
 
 \addchap{Eidesstattliche Erklärung}
