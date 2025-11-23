@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Redirecting...</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      const formA =
+        "https://docs.google.com/forms/d/e/1FAIpQLSfOG7aNCVJyktDvO_41Vm6vIGtPVOWDwfeFHmcX0GW3CvFtPQ/viewform";
+      const formB =
+        "https://docs.google.com/forms/d/e/1FAIpQLSegLQ9-SfyhOHnN5mHFwpaBD1cnekxwRm5n5HvINOFnc2VKMQ/viewform";
+
+      const targetUrl = Math.random() < 0.5 ? formA : formB;
+
+      window.location.href = targetUrl;
+    </script>
+  </head>
+  <body>
+    <h1>Redirecting...</h1>
+  </body>
+</html>
