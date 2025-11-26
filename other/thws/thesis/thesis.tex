@@ -855,7 +855,61 @@ These findings indicate that the general attitude towards AI did not serve as a 
 
 \section{Exploratory Analyses}\label{sec:results_exploratory_analyses}
 
-here we go
+While the primary hypothesis testing did not reveal a significant main effect of the AI label across the total dataset, further exploratory analyses were conducted to investigate potential nuances that might be masked by the aggregation of data. Specifically, the analysis focused on the influence of product type (hedonic vs. utilitarian) and key demographic factors (age and gender).
+
+As identified in the confound check (Section \ref{sec:results_manipulation_and_confound_checks}), the two stimuli used in the experiment represented distinct product categories: \enquote{Premium Chocolate} (hedonic) and \enquote{Running Shoe} (utilitarian). To determine if the AI label had a differential impact depending on the nature of the product, the dataset was split by product type, and the effect of the label was tested within each subgroup using the Mann-Whitney U test.
+
+For the chocolate advertisement, comparisons between the labeled (Group A) and unlabeled (Group B) conditions yielded no statistically significant differences across any of the four credibility dimensions.
+
+\begin{itemize}
+    \item \textbf{Competence}: $p=0.842$
+    \item \textbf{Trustworthiness}: $p=0.899$
+    \item \textbf{Clarity}: $p=0.129$
+    \item \textbf{Engagement}: $p=0.105$
+\end{itemize}
+
+These results suggest that for a product driven by sensory pleasure and emotion, the explicit disclosure of AI generation did not alter consumer perception. The visual appeal of the chocolate appeared to be robust against any potential \enquote{algorithm aversion.}
+
+Similarly, for the running shoe advertisement, comparisons between the labeled (Group C) and unlabeled (Group D) conditions also showed no statistically significant differences.
+
+\begin{itemize}
+    \item \textbf{Competence}: $p=0.730$
+    \item \textbf{Trustworthiness}: $p=0.361$
+    \item \textbf{Clarity}: $p=0.324$
+    \item \textbf{Engagement}: $p=0.582$
+\end{itemize}
+
+Consequently, the null result observed in the main hypothesis testing appears consistent across both product categories. The presence of an AI label did not significantly diminish the credibility of either the emotional (hedonic) or the functional (utilitarian) product advertisement in the general sample.
+
+While gender did not yield any significant interaction effects with the AI label (all $p>0.05$ for female participants), a striking pattern emerged when analyzing the data by age cohorts. The sample was divided into two groups: Younger Adults (Under 30, $n=101$) and Older Adults (Over 30, $n=39$).
+
+For participants under 30, the presence of the AI label had no significant impact on any credibility dimension. This cohort, largely consisting of \enquote{digital natives,} appears to be indifferent to the disclosure of AI generation in advertising.
+
+In stark contrast, participants over the age of 30 showed a significant negative reaction to the AI label. As summarized in Table \ref{tab:age_exploratory}, the labeled advertisements were rated significantly lower than the unlabeled ones across three key dimensions:
+
+\begin{itemize}
+    \item \textbf{Competence}: The labeled ads were perceived as significantly less competent ($M_{\mathrm{Label}}=2.56$ vs.\ $M_{\mathrm{NoLabel}}=2.99$; $U=368.5$, $p=0.037$).
+    \item \textbf{Trustworthiness}: Trustworthiness ratings dropped significantly when the label was present ($M_{\mathrm{Label}}=2.53$ vs.\ $M_{\mathrm{NoLabel}}=3.02$; $U=367.5$, $p=0.035$).
+    \item \textbf{Engagement}: The labeled ads were also found to be significantly less engaging ($M_{\mathrm{Label}}=2.94$ vs.\ $M_{\mathrm{NoLabel}}=3.56$; $U=365.5$, $p=0.032$).
+\end{itemize}
+
+This finding uncovers a hidden \enquote{algorithm aversion} that is specific to older demographics. While the aggregate data masked this effect due to the large proportion of students in the sample, this exploratory analysis suggests that age is a critical boundary condition for the acceptance of disclosed AI content.
+
+\begin{table}[H]
+  \centering
+  \caption{Effect of AI Label on Credibility for Participants Over 30 Years ($n=39$)}
+  \label{tab:age_exploratory}
+  \begin{tabular}{l|ccccc}
+    \hline
+    \textbf{Dimension} & \textbf{No Label} & \textbf{Label} & \textbf{U-Statistic} & \textbf{p-value} & \textbf{Result} \\
+    \hline
+    Competence      & 2.99 & 2.56 & 368.5 & \textbf{.037} & Significant \\
+    Trustworthiness & 3.02 & 2.53 & 367.5 & \textbf{.035} & Significant \\
+    Clarity         & 3.61 & 3.34 & 423.5 & .513         & Not Sig. \\
+    Engagement      & 3.56 & 2.94 & 365.5 & \textbf{.032} & Significant \\
+    \hline
+  \end{tabular}
+\end{table}
 
 
 
