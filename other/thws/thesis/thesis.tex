@@ -599,17 +599,23 @@ To determine the appropriate statistical procedures for hypothesis testing, the 
 
 \begin{table}[H]
   \centering
-  \scriptsize
+  {\fontsize{10}{12}\selectfont
   \renewcommand{\arraystretch}{2.5}
-  \begin{tabular}{|l|cc|cc|cc|}
-  \hline
-  \textbf{Dimension} & \multicolumn{2}{c|}{\textbf{Total Dataset}} & \multicolumn{2}{c|}{\textbf{No Label (Control)}} & \multicolumn{2}{c|}{\textbf{Label (Treatment)}} \\
-   & \textbf{S-W ($p$)} & \textbf{K-S ($p$)} & \textbf{S-W ($p$)} & \textbf{K-S ($p$)} & \textbf{S-W ($p$)} & \textbf{K-S ($p$)} \\ \hline
-  \textbf{Competence} & \textbf{.001} & \textbf{.021} & .070 & .249 & \textbf{.008} & .071 \\ \hline
-  \textbf{Trustworthiness} & \textbf{.023} & .065 & .079 & .233 & .398 & .474 \\ \hline
-  \textbf{Clarity} & \textbf{.000} & \textbf{.008} & \textbf{.000} & .097 & \textbf{.001} & .087 \\ \hline
-  \textbf{Engagement} & \textbf{.000} & \textbf{.003} & \textbf{.011} & .240 & \textbf{.008} & \textbf{.027} \\ \hline
+  \begin{tabular}{|p{3.75cm}|p{1.5cm}p{1.5cm}|p{1.5cm}p{1.5cm}|p{1.5cm}p{1.5cm}|}
+    \hline
+    \textbf{Dimension} & \multicolumn{2}{c|}{\textbf{Total Dataset}} & \multicolumn{2}{c|}{\textbf{No Label (Control)}} & \multicolumn{2}{c|}{\textbf{Label (Treatment)}} \\
+     & \textbf{S-W ($p$)} & \textbf{K-S ($p$)} & \textbf{S-W ($p$)} & \textbf{K-S ($p$)} & \textbf{S-W ($p$)} & \textbf{K-S ($p$)} \\
+    \hline
+    \textbf{Competence}      & \textbf{.001} & \textbf{.021} & .070 & .249 & \textbf{.008} & .071 \\
+    \hline
+    \textbf{Trustworthiness} & \textbf{.023} & .065         & .079 & .233 & .398         & .474 \\
+    \hline
+    \textbf{Clarity}         & \textbf{.000} & \textbf{.008} & \textbf{.000} & .097 & \textbf{.001} & .087 \\
+    \hline
+    \textbf{Engagement}      & \textbf{.000} & \textbf{.003} & \textbf{.011} & .240 & \textbf{.008} & \textbf{.027} \\
+    \hline
   \end{tabular}
+  }
   \caption{Tests of Normality}
   \label{tab:normality_tests}
 \end{table}
