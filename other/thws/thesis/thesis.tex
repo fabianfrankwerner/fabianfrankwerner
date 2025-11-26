@@ -589,7 +589,34 @@ This measure allows for the segmentation of the sample into groups with positive
 
 \section{Data Analysis Strategy}\label{sec:research_methodology_data_analysis_strategy}
 
-lets go
+Upon completion of the data collection phase, the raw dataset was exported from Google Forms in CSV format. The data was subsequently subjected to a rigorous cleaning and preparation process to ensure structural integrity for analysis. This involved recoding raw categorical data into numerical values, screening for and eliminating inconsistent or incomplete responses, and removing variables that were irrelevant to the specific hypotheses of this study \cite{raithelQuantitativeForschung2006, mooiConciseGuideMarket2011}.
+
+Descriptive statistics regarding socio-demographics and the moderator variable (General AI Attitude) were visualized using the Python library matplotlib. Pie charts were generated to illustrate the distribution of gender and country of residence, providing a clear overview of the sample composition. For the analysis of age distribution, formal education levels, occupational status, and the general attitude towards AI, histograms were employed. These histograms map the frequency of occurrences for specific variable values, providing insights into the distribution patterns of the sample data \cite{mooiConciseGuideMarket2011}.
+
+The primary hypothesis testing was conducted using Google Colab, a hosted Jupyter Notebook service that provides free access to computing resources \cite{Colabgoogle}. The cleaned dataset was imported into the environment using the Python libraries pandas and scipy. To prepare the data for inferential analysis, aggregated mean scores were calculated for the four superordinate credibility dimensions (Competence, Trustworthiness, Clarity, and Engagement) based on the individual items associated with each dimension.
+
+To determine the appropriate statistical procedures for hypothesis testing, the assumption of normality was assessed using both the Shapiro-Wilk and Kolmogorov-Smirnov tests \cite{mooiConciseGuideMarket2011}, which were conducted using Python's scipy library. While these tests can occasionally yield diverging results depending on the sample size and distribution characteristics \cite{brauneckerHowStatistikUnd2021}, in the context of this study, they produced consistent findings. The null hypothesis for these tests posits that the data follows a normal distribution; a significance value (p-value) below 0.05 necessitates the rejection of the null hypothesis in favor of the alternative hypothesis \cite{steinerFragebogenForschungsideeZur2021}. The results of these tests are presented in Table \ref{tab:normality_tests}, where bold values indicate a statistically significant deviation from a normal distribution.
+
+\begin{table}[H]
+  \centering
+  \scriptsize % Slightly smaller font size to ensure fit
+  \renewcommand{\arraystretch}{1.5}
+  \begin{tabular}{|l|cc|cc|cc|}
+  \hline
+  \textbf{Dimension} & \multicolumn{2}{c|}{\textbf{Total Dataset}} & \multicolumn{2}{c|}{\textbf{No Label (Control)}} & \multicolumn{2}{c|}{\textbf{Label (Treatment)}} \\
+   & \textbf{S-W ($p$)} & \textbf{K-S ($p$)} & \textbf{S-W ($p$)} & \textbf{K-S ($p$)} & \textbf{S-W ($p$)} & \textbf{K-S ($p$)} \\ \hline
+  \textbf{Competence} & \textbf{.001} & \textbf{.021} & .070 & .249 & \textbf{.008} & .071 \\ \hline
+  \textbf{Trustworthiness} & \textbf{.023} & .065 & .079 & .233 & .398 & .474 \\ \hline
+  \textbf{Clarity} & \textbf{.000} & \textbf{.008} & \textbf{.000} & .097 & \textbf{.001} & .087 \\ \hline
+  \textbf{Engagement} & \textbf{.000} & \textbf{.003} & \textbf{.011} & .240 & \textbf{.008} & \textbf{.027} \\ \hline
+  \end{tabular}
+  \caption{Tests of Normality}
+  \label{tab:normality_tests}
+\end{table}
+
+As the data demonstrates, non-normal distributions are prevalent not only in the aggregate dataset but also across both the labeled and unlabeled experimental conditions. Consequently, the null hypothesis of normality was rejected for the majority of variables.
+
+Due to this violation of the normality assumption, parametric tests such as the independent samples t-test or Analysis of Variance (ANOVA) could not be utilized. Instead, robust non-parametric tests were employed to analyze the hypotheses. Specifically, the analysis utilized rank-based procedures such as the Mann-Whitney U Test (often referred to as the Wilcoxon rank-sum test for independent samples) and the Kruskal-Wallis Test. These methods compare rank sums rather than means and are valid even in the absence of normal distribution, effectively bypassing distribution issues by converting scores to ranks and minimizing the influence of outliers \cite{brauneckerHowStatistikUnd2021, steinerFragebogenForschungsideeZur2021, fieldDiscoveringStatisticsUsing2018}.
 
 
 
