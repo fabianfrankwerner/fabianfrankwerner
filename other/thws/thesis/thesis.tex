@@ -1,7 +1,6 @@
 \documentclass[12pt,twoside=false,a4paper,parskip]{scrbook}
 \usepackage[utf8]{inputenc}
 \usepackage{csquotes}
-%\usepackage[ngerman]{babel}
 \usepackage[english]{babel}
 \usepackage{floatflt}
 \usepackage{subcaption}
@@ -155,10 +154,6 @@ pdfkeywords={Keywords}
 
 \begin{document}
 
-%%%%%%%%%%%%%%%%%%%
-%% Title Page
-%%%%%%%%%%%%%%%%%%%
-
 \frontmatter
 \titlehead{\centering
   {Technical University of Applied Sciences Würzburg-Schweinfurt\\Faculty of Computer Science and Business Information Systems}}
@@ -178,10 +173,6 @@ pdfkeywords={Keywords}
 }
 \forcetwosidetitle
 
-%%%%%%%%%%%%%%%%%%%
-%% Abstract
-%%%%%%%%%%%%%%%%%%%
-
 \chapter*{Abstract}
 
 As artificial intelligence (AI) fundamentally reshapes the landscape of digital advertising, the question of how consumers perceive AI-generated content (AIGC) has become a critical concern for marketers. Specifically, the strategic dilemma of whether to transparently disclose the use of AI remains unresolved. This thesis investigates the impact of AI transparency on the perceived credibility of advertising, examining whether a disclosure label (\enquote{AI-generated}) influences consumer perceptions of \textit{Competence}, \textit{Trustworthiness}, \textit{Clarity}, and \textit{Engagement}. Furthermore, it explores the moderating role of consumers' general attitude towards AI.
@@ -194,46 +185,18 @@ These findings challenge the universal applicability of \enquote{algorithm avers
 
 %\chapter*{Zusammenfassung}
 
-%TODO
-
-%%%%%%%%%%%%%%%%%%%
-%% Acknowledgements
-%%%%%%%%%%%%%%%%%%%
-
-% \chapter*{Acknowledgements}
-
-%%%%%%%%%%%%%%%%%%%
-%% Table of Contents
-%%%%%%%%%%%%%%%%%%%
-
 \renewcommand{\contentsname}{Table of Contents}
 \tableofcontents
-
-%%%%%%%%%%%%%%%%%%%
-%% List of Figures
-%%%%%%%%%%%%%%%%%%%
 
 \listoffigures
 \addcontentsline{toc}{chapter}{List of Figures}
 
-%%%%%%%%%%%%%%%%%%%
-%% List of Tables
-%%%%%%%%%%%%%%%%%%%
-
 \listoftables
 \addcontentsline{toc}{chapter}{List of Tables}
 
-%%%%%%%%%%%%%%%%%%%
-%% List of Algorithms, List of Abbreviations, List of Symbols
-%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%
-%% Contents
-%%%%%%%%%%%%%%%%%%%
-
 \mainmatter
 
-\chapter{Introduction}\label{ch:introduction} % 4-5 Pages
+\chapter{Introduction}\label{ch:introduction}
 
 This introductory chapter establishes the context and framework for the entire study.
 
@@ -285,7 +248,7 @@ Finally, Chapter \ref{ch:conclusion} concludes the thesis with a concluding summ
 
 
 
-\chapter{Theoretical Foundations and Hypothesis Development}\label{ch:theoretical_foundations_and_hypothesis_development} % 14-18 Pages
+\chapter{Theoretical Foundations and Hypothesis Development}\label{ch:theoretical_foundations_and_hypothesis_development}
 
 The following chapter establishes the theoretical foundation for the present thesis and summarizes the current state of research. The objective is to develop a comprehensive understanding of the central constructs, critically review existing knowledge, and identify the research gaps that necessitate this study.
 
@@ -440,7 +403,7 @@ Therefore, the general attitude toward AI is hypothesized to act as a moderator,
 
 
 
-\chapter{Research Methodology}\label{ch:research_methodology} % 6-8 Pages
+\chapter{Research Methodology}\label{ch:research_methodology}
 
 This chapter details the empirical methodology used to test the hypotheses developed in Chapter \ref{ch:theoretical_foundations_and_hypothesis_development}. It provides a comprehensive overview of the research design, data collection, and analysis procedures.
 
@@ -632,7 +595,7 @@ Due to this violation of the normality assumption, parametric tests such as the 
 
 
 
-\chapter{Results}\label{ch:results} % 8-10 Pages
+\chapter{Results}\label{ch:results}
 
 This chapter presents the empirical findings of the study.
 
@@ -919,7 +882,7 @@ This finding uncovers a hidden \enquote{algorithm aversion} that is specific to 
 
 
 
-\chapter{Discussion}\label{ch:discussion} % 4-6 Pages
+\chapter{Discussion}\label{ch:discussion}
 
 The primary objective of this thesis was to investigate the impact of AI transparency on consumer perception. Specifically, it sought to answer the research question:
 
@@ -984,7 +947,7 @@ For marketing practitioners, the results of this study provide clear, actionable
 
 
 
-\chapter{Conclusion}\label{ch:conclusion} % 2-3 Pages
+\chapter{Conclusion}\label{ch:conclusion}
 
 This final chapter concludes the thesis by summarizing the key findings in relation to the research question and the established theoretical framework (Section \ref{sec:conclusion_concluding_summary}). Building on these results, the study's limitations are critically examined, and avenues for future research are proposed (Section \ref{sec:conclusion_limitations_and_future_research_directions}).
 
@@ -1026,10 +989,6 @@ Despite these limitations, this thesis provides a robust foundation for understa
 
 \backmatter
 
-%%%%%%%%%%%%%%%%%%%
-%% Appendix (1) or Appendices (>1)
-%%%%%%%%%%%%%%%%%%%
-
 \appendix
 \addchap{Appendix}
 
@@ -1052,16 +1011,8 @@ Despite these limitations, this thesis provides a robust foundation for understa
 \cleardoublepage
 \phantomsection
 
-%%%%%%%%%%%%%%%%%%%
-%% References
-%%%%%%%%%%%%%%%%%%%
-
 \addcontentsline{toc}{chapter}{References}
 \printbibliography[title=References]
-
-%%%%%%%%%%%%%%%%%%%
-%% Formalia (German?)
-%%%%%%%%%%%%%%%%%%%
 
 \addchap{Erklärung zur Verwendung von KI-Systemen}
 Als Hilfsmittel zur Erstellung der vorliegenden Bacheloararbeit wurde generative KI verwendet. Die Nutzung dieser generativen KI diente der Unterstützung bei der Recherche und Ideenfindung sowie deren Formulierung. Alle wissenschaftlichen Analysen, Interpretationen und Schlussfolgerungen basieren auf eigener Arbeit und wurden lediglich durch den kritischen Umgang mit den von der KI generierten Vorschlägen ergänzt.
