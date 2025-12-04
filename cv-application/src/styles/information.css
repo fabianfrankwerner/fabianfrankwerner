@@ -1,0 +1,27 @@
+.info-section {
+    margin-bottom: 32px;
+  }
+  
+  .info-section label {
+    display: block;
+    margin-bottom: 12px;
+    color: #2b6cb0;
+    font-weight: 500;
+  }
+  
+  .info-section input {
+    width: 100%;
+    padding: 8px 12px;
+    margin-top: 4px;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    font-size: 1em;
+    background: #f7fafc;
+    transition: border 0.2s;
+  }
+  
+  .info-section input:focus {
+    border: 1.5px solid #3182ce;
+    outline: none;
+    background: #fff;
+  }

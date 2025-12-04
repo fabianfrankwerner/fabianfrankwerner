@@ -1,0 +1,26 @@
+body {
+  margin: 0;
+  display: grid;
+  place-items: center;
+  height: 100vh;
+  background-color: black;
+  color: white;
+  font-family: sans-serif;
+}
+
+button {
+  margin: 25px;
+  padding: 25px;
+  border: white solid 2.5px;
+  background-color: black;
+  border-radius: 5px;
+}
+
+.results {
+  display: flex;
+  gap: 25px;
+}
+
+.result-message {
+  font-weight: bold;
+}

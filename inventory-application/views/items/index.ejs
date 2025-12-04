@@ -1,0 +1,90 @@
+<div class="page-header d-flex justify-between align-center">
+  <div>
+    <h1 class="page-title">All Items</h1>
+    <p>Manage your inventory items</p>
+  </div>
+  <a href="/items/create" class="btn btn-success">Create Item</a>
+</div>
+
+<% if (items.length === 0) { %>
+<div class="card">
+  <div class="text-center">
+    <h3>No items found</h3>
+    <p>Get started by creating your first item.</p>
+    <a href="/items/create" class="btn btn-primary">Create Item</a>
+  </div>
+</div>
+<% } else { %>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Image</th>
+      <th>Name</th>
+      <th>Category</th>
+      <th>Description</th>
+      <th>Price</th>
+      <th>Stock</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% items.forEach(item => { %>
+    <tr>
+      <td>
+        <% if (item.image_url) { %>
+        <img
+          src="<%= item.image_url %>"
+          alt="<%= item.name %>"
+          class="item-image"
+        />
+        <% } else { %>
+        <div
+          class="item-image"
+          style="
+            background-color: #e9ecef;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6c757d;
+          "
+        >
+          No Image
+        </div>
+        <% } %>
+      </td>
+      <td><strong><%= item.name %></strong></td>
+      <td>
+        <a href="/categories/<%= item.category_id %>"
+          ><%= item.category_name %></a
+        >
+      </td>
+      <td><%= item.description || 'No description' %></td>
+      <td class="price">$<%= parseFloat(item.price).toFixed(2) %></td>
+      <td>
+        <% if (item.stock_quantity === 0) { %>
+        <span class="stock-low">Out of Stock</span>
+        <% } else if (item.stock_quantity <= 5) { %>
+        <span class="stock-medium"><%= item.stock_quantity %></span>
+        <% } else { %>
+        <span class="stock-ok"><%= item.stock_quantity %></span>
+        <% } %>
+      </td>
+      <td class="actions">
+        <a href="/items/<%= item.id %>" class="btn btn-primary btn-sm">View</a>
+        <a href="/items/<%= item.id %>/update" class="btn btn-warning btn-sm"
+          >Edit</a
+        >
+        <form
+          method="POST"
+          action="/items/<%= item.id %>/delete"
+          style="display: inline"
+          onsubmit="return confirm('Are you sure you want to delete this item?')"
+        >
+          <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+        </form>
+      </td>
+    </tr>
+    <% }); %>
+  </tbody>
+</table>
+<% } %>

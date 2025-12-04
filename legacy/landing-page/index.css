@@ -1,0 +1,130 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+
+/*
+STYLING
+*/
+
+body {
+  margin: 0;
+  font-family: Roboto, sans-serif;
+}
+
+nav,
+header,
+footer {
+  background-color: #1f2937;
+}
+
+header > div > h1 {
+  font-size: 48px;
+  font-weight: extra-bold;
+  color: #f9faf8;
+}
+
+header > div > p,
+nav > ul {
+  font-size: 18px;
+  color: #e5e7eb;
+}
+
+nav > h3 {
+  font-size: 24px;
+  color: #f9faf8;
+}
+
+button,
+.cta {
+  background-color: #3882f6;
+  color: #f9faf8;
+}
+
+.information > h2 {
+  font-size: 36px;
+  font-weight: extra-bold;
+  color: #1f2937;
+}
+
+.quote {
+  background-color: #e5e7eb;
+}
+
+.quote > h1 {
+  font-size: 36px;
+  font-weight: lighter;
+  color: #1f2937;
+}
+
+.cta,
+footer {
+  color: #f9faf8;
+}
+
+nav > ul {
+  list-style-type: none;
+}
+
+button {
+  border-radius: 12px;
+  padding: 12px;
+  border: #f9faf8 solid 2px;
+}
+
+/*
+LAYOUT
+*/
+
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px;
+}
+
+nav > ul {
+  display: flex;
+  gap: 24px;
+}
+
+footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+}
+
+.quote {
+  padding: 48px;
+}
+
+.quote > p {
+  text-align: right;
+}
+
+.cta {
+  margin: 48px;
+  padding: 24px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px;
+  gap: 48px;
+}
+
+.information > h2 {
+  text-align: center;
+}
+
+.columns {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 24px;
+  gap: 48px;
+}

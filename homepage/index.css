@@ -1,0 +1,420 @@
+/* FONTS */
+
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap");
+
+/* RESET */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    interpolate-size: allow-keywords;
+  }
+}
+
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+p {
+  text-wrap: pretty;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-wrap: balance;
+}
+
+#root,
+#__next {
+  isolation: isolate;
+}
+
+body {
+  font-family: Roboto, sans-serif;
+  padding: 50px;
+  background-color: #0891b2;
+}
+
+/* GLOBAL */
+
+h1,
+h2,
+h3 {
+  font-family: Playfair Display, serif;
+  font-weight: 300;
+  color: white;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+}
+
+/* HEADER */
+
+header {
+  display: flex;
+}
+
+header svg,
+main svg {
+  height: 25px;
+  width: 25px;
+  fill: black;
+  flex-shrink: 0;
+}
+
+header svg:hover,
+main svg:hover {
+  cursor: pointer;
+  fill: #0891b2;
+}
+
+.header--h1 {
+  color: white;
+}
+
+.header--right {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  background-color: white;
+  padding: 25px;
+}
+
+.header--socials {
+  justify-content: end;
+}
+
+/* MAIN */
+
+.header--h2 {
+  color: black;
+}
+
+/* Grid container for cards */
+.cards-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+/* Card styles */
+.card {
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  background: white;
+  width: 320px;
+  min-height: 340px;
+  transition: transform 0.15s;
+}
+
+.card:hover {
+  transform: translateY(-1px) scale(1.01);
+  /* box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12); */
+}
+
+/* Top colored area */
+.card .card-image {
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 140px;
+  font-size: 2rem;
+  font-family: Playfair Display, serif;
+  text-align: center;
+}
+
+/* Bottom area */
+.card .card-content {
+  padding: 20px 16px 16px 16px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.card .card-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.card .card-title {
+  font-family: Playfair Display, serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #222;
+}
+
+.card .card-icons {
+  display: flex;
+  gap: 8px;
+}
+
+.card .card-description {
+  font-size: 0.95rem;
+  color: #444;
+  margin-top: 4px;
+}
+
+/* FOOTER */
+
+footer {
+  color: white;
+  display: flex;
+  gap: 50px;
+}
+
+.footer--left {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.footer--phone,
+.footer--email,
+.socials {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+footer svg {
+  height: 25px;
+  width: 25px;
+  fill: white;
+  flex-shrink: 0;
+}
+
+footer svg:hover {
+  cursor: pointer;
+  fill: black;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 50px;
+  width: 100%;
+}
+
+.card {
+  width: 100%; /* Make cards responsive inside the grid */
+  min-width: 0; /* Prevent overflow in grid */
+  /* Remove any fixed width if present */
+}
+
+@media (max-width: 900px) {
+  .cards {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+}
+
+/* Responsive images */
+img,
+.footer--image,
+.header--left img {
+  width: 100%;
+  height: auto;
+  max-width: none;
+  border-radius: 0;
+  object-fit: cover;
+  display: block;
+}
+
+.footer--image {
+  width: 100% !important;
+  height: auto;
+  max-width: none !important;
+  display: block;
+  object-fit: cover;
+}
+
+/* Responsive header/footer layout */
+@media (max-width: 1100px) {
+  header,
+  footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 30px;
+  }
+  .header--left,
+  .header--right,
+  .footer--left,
+  .footer--right {
+    width: 100%;
+    max-width: 100%;
+  }
+  .footer--right {
+    display: flex;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 700px) {
+  body {
+    padding: 20px;
+    gap: 40px;
+  }
+  .header--right {
+    padding: 15px;
+    gap: 15px;
+  }
+  .card .card-content {
+    padding: 14px 8px 10px 8px;
+  }
+  .card .card-image {
+    font-size: 1.2rem;
+    height: 90px;
+  }
+  h1,
+  h2,
+  h3 {
+    font-size: 1.2rem;
+  }
+}
+
+/* HEADER LEFT IMAGE CONTAINER */
+.header--left {
+  width: 400px;
+  min-width: 320px;
+  max-width: 450px;
+  margin-right: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.header--image-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1/1;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  background: #fff;
+}
+
+.header--image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.header--h1-overlay {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  margin: 0;
+  padding: 24px 24px 16px 24px;
+  color: white;
+  font-family: "Playfair Display", serif;
+  font-size: 2.8rem;
+  font-weight: 400;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  background: linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.45) 60%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  width: 100%;
+  box-sizing: border-box;
+  letter-spacing: 1px;
+}
+
+/* HEADER RIGHT */
+.header--right {
+  background: white;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* MAIN BACKGROUND */
+body {
+  background: #0891b2;
+}
+
+/* FOOTER */
+footer {
+  background: #0891b2;
+  padding: 40px 0 0 0;
+  border-top: none;
+}
+
+/* Responsive header image and overlay */
+@media (max-width: 1100px) {
+    .header--left {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      margin-right: 0;
+    }
+    .header--image-container {
+      aspect-ratio: 2/1; /* Wider on tablets */
+      max-width: 100%;
+      min-width: 0;
+    }
+    .header--h1-overlay {
+      font-size: 2.2rem;
+      padding: 18px 18px 12px 18px;
+    }
+  }
+  
+  @media (max-width: 700px) {
+    .header--image-container {
+      aspect-ratio: 1.5/1;
+      min-width: 0;
+    }
+    .header--h1-overlay {
+      font-size: 1.3rem;
+      padding: 10px 10px 8px 10px;
+    }
+  }

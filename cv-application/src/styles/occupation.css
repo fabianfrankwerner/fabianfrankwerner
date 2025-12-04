@@ -1,0 +1,27 @@
+.occupation-section {
+  margin-bottom: 32px;
+}
+
+.occupation-section label {
+  display: block;
+  margin-bottom: 12px;
+  color: #d69e2e;
+  font-weight: 500;
+}
+
+.occupation-section input {
+  width: 100%;
+  padding: 8px 12px;
+  margin-top: 4px;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  font-size: 1em;
+  background: #f7fafc;
+  transition: border 0.2s;
+}
+
+.occupation-section input:focus {
+  border: 1.5px solid #d69e2e;
+  outline: none;
+  background: #fff;
+}
