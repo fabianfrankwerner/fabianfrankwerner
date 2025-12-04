@@ -1,66 +1,153 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Google Clone - Tailwind CSS</title>
-    <link rel="stylesheet" href="output.css">
-     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-</head>
-<body class="h-screen flex flex-col bg-google-bg text-google-textGray font-sans text-sm">
-
-    <header class="flex justify-between items-center p-5 shrink-0">
-        <div class="flex space-x-4">
-            <a href="#" class="hover:underline">About</a>
-            <a href="#" class="hover:underline">Store</a>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tailwind CSS</title>
+    <link rel="stylesheet" href="output.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
+    />
+  </head>
+  <body
+    class="min-h-screen flex flex-col bg-google-bg text-google-textGray font-sans text-sm leading-normal"
+  >
+    <header class="flex justify-between items-center py-[6px] px-5 shrink-0">
+      <div class="nav-left flex">
+        <a
+          href="#"
+          class="mx-[15px] cursor-pointer text-google-textMain text-[13px] no-underline hover:underline"
+          >About</a
+        >
+        <a
+          href="#"
+          class="mx-[15px] cursor-pointer text-google-textMain text-[13px] no-underline hover:underline"
+          >Store</a
+        >
+      </div>
+      <div class="nav-right flex items-center">
+        <a
+          href="#"
+          class="mx-[15px] cursor-pointer text-google-textMain text-[13px] no-underline hover:underline"
+          >Gmail</a
+        >
+        <a
+          href="#"
+          class="mx-[15px] cursor-pointer text-google-textMain text-[13px] no-underline hover:underline"
+          >Images</a
+        >
+        <span
+          class="material-symbols-outlined icon-btn mx-2 cursor-pointer text-google-textMain p-2 rounded-full flex items-center justify-center hover:bg-white/10"
+          >apps</span
+        >
+        <div
+          class="avatar w-8 h-8 bg-[#8e24aa] text-white rounded-full flex justify-center items-center ml-2 text-lg font-medium cursor-pointer"
+        >
+          U
         </div>
-        <div class="flex items-center space-x-4">
-            <a href="#" class="hover:underline">Gmail</a>
-            <a href="#" class="hover:underline">Images</a>
-            <span class="material-symbols-outlined cursor-pointer p-2 rounded-full hover:bg-zinc-800">apps</span>
-            <div class="w-8 h-8 bg-purple-600 text-white rounded-full flex justify-center items-center text-lg">U</div>
-        </div>
+      </div>
     </header>
 
-    <main class="flex-grow flex flex-col items-center pt-32">
-        <div class="text-8xl font-bold mb-8" style="font-family: 'Product Sans', sans-serif;">
-             <span class="text-google-blue">G</span><span class="text-google-red">o</span><span class="text-google-yellow">o</span><span class="text-google-blue">g</span><span class="text-google-green">l</span><span class="text-google-red">e</span>
-        </div>
+    <main
+      class="flex-grow flex flex-col items-center justify-center pt-0 -mt-[100px]"
+    >
+      <div class="logo-container mb-[15px] flex justify-center items-center">
+        <img
+          src="../google.gif"
+          alt="Google Logo"
+          class="logo-gif h-[184px] w-auto object-contain max-w-[544px]"
+        />
+      </div>
 
-        <div class="bg-google-element border border-gray-500 rounded-full w-full max-w-xl h-[46px] flex items-center px-4 mb-8 hover:bg-[#3c4043] hover:shadow-md hover:border-transparent transition-shadow">
-            <span class="material-symbols-outlined text-gray-400 mr-3">search</span>
-            <input type="text" class="flex-grow bg-transparent border-none outline-none text-google-textMain text-base">
-            <span class="material-symbols-outlined text-gray-400 mx-1 cursor-pointer">mic</span>
-            <span class="material-symbols-outlined text-gray-400 mx-1 cursor-pointer">lens_blur</span>
-        </div>
+      <div
+        class="search-container bg-google-element border border-google-border rounded-3xl w-full max-w-[584px] h-11 flex items-center px-4 mb-[30px] relative transition-all duration-200 ease-in-out hover:bg-google-elementHover hover:shadow-[0_1px_6px_0_rgba(23,23,23,0.5)] hover:border-transparent"
+      >
+        <span
+          class="material-symbols-outlined search-icon text-google-icon cursor-pointer mr-3 text-xl flex items-center"
+          >search</span
+        >
+        <input
+          type="text"
+          class="flex-grow bg-transparent border-none outline-none text-google-textMain text-base px-3 font-sans"
+        />
+        <span
+          class="material-symbols-outlined mic-icon text-google-icon cursor-pointer mx-2 text-xl flex items-center rounded-full transition-colors duration-200 hover:bg-white/10"
+          >mic</span
+        >
+      </div>
 
-        <div class="flex justify-center space-x-3">
-            <button class="bg-google-element text-google-textMain px-4 py-[11px] rounded-[4px] border border-transparent hover:border-gray-500">Google Search</button>
-            <button class="bg-google-element text-google-textMain px-4 py-[11px] rounded-[4px] border border-transparent hover:border-gray-500">I'm Feeling Lucky</button>
-        </div>
+      <div class="buttons flex gap-[11px] mb-[30px]">
+        <button
+          class="bg-google-element border border-transparent text-google-textMain py-[11px] px-5 rounded text-sm cursor-pointer font-sans transition-all duration-200 hover:border-google-border hover:shadow-[0_1px_1px_rgba(0,0,0,0.1)]"
+        >
+          Google Search
+        </button>
+        <button
+          class="bg-google-element border border-transparent text-google-textMain py-[11px] px-5 rounded text-sm cursor-pointer font-sans transition-all duration-200 hover:border-google-border hover:shadow-[0_1px_1px_rgba(0,0,0,0.1)]"
+        >
+          I'm Feeling Lucky
+        </button>
+      </div>
 
-        <div class="mt-8 text-small">
-            Google offered in: <a href="#" class="text-google-link hover:underline">Deutsch</a>
-        </div>
+      <div
+        class="language-offer mt-0 text-google-textGray text-[13px] font-sans"
+      >
+        Google offered in:
+        <a href="#" class="text-google-link no-underline hover:underline"
+          >Deutsch</a
+        >
+      </div>
     </main>
 
     <footer class="bg-google-footer shrink-0">
-        <div class="px-8 py-4 border-b border-zinc-700">
-            Germany
+      <div
+        class="footer-top py-[15px] px-[30px] border-b border-[#3c4043] text-google-textGray text-[15px] font-sans"
+      >
+        Germany
+      </div>
+      <div
+        class="footer-bottom flex flex-wrap justify-center md:justify-between py-[15px] px-[30px]"
+      >
+        <div
+          class="footer-links-left flex items-center flex-wrap justify-center md:justify-start mb-2.5 md:mb-0"
+        >
+          <a
+            href="#"
+            class="mr-[27px] whitespace-nowrap text-google-textGray text-sm no-underline font-sans hover:underline"
+            >Advertising</a
+          >
+          <a
+            href="#"
+            class="mr-[27px] whitespace-nowrap text-google-textGray text-sm no-underline font-sans hover:underline"
+            >Business</a
+          >
+          <a
+            href="#"
+            class="mr-[27px] whitespace-nowrap text-google-textGray text-sm no-underline font-sans hover:underline"
+            >How Search works</a
+          >
         </div>
-        <div class="flex flex-wrap md:justify-between justify-center px-8 py-4">
-            <div class="flex flex-wrap justify-center space-x-6 mb-3 md:mb-0">
-                <a href="#" class="hover:underline">Advertising</a>
-                <a href="#" class="hover:underline">Business</a>
-                <a href="#" class="hover:underline">How Search works</a>
-            </div>
-            <div class="flex flex-wrap justify-center space-x-6">
-                <a href="#" class="hover:underline">Privacy</a>
-                <a href="#" class="hover:underline">Terms</a>
-                <a href="#" class="hover:underline">Settings</a>
-            </div>
+        <div
+          class="footer-links-right flex items-center flex-wrap justify-center md:justify-start"
+        >
+          <a
+            href="#"
+            class="mr-[27px] whitespace-nowrap text-google-textGray text-sm no-underline font-sans hover:underline"
+            >Privacy</a
+          >
+          <a
+            href="#"
+            class="mr-[27px] whitespace-nowrap text-google-textGray text-sm no-underline font-sans hover:underline"
+            >Terms</a
+          >
+          <a
+            href="#"
+            class="mr-[27px] whitespace-nowrap text-google-textGray text-sm no-underline font-sans hover:underline"
+            >Settings</a
+          >
         </div>
+      </div>
     </footer>
-
-</body>
+  </body>
 </html>
