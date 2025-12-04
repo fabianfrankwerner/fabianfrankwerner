@@ -1,0 +1,78 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+}
+
+.container {
+    max-width: 800px;
+}
+
+/* Post Styles */
+.post {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    transition: box-shadow 0.3s ease;
+}
+
+.post:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.post-content {
+    margin: 12px 0;
+}
+
+.username-link {
+    text-decoration: none;
+    color: #2c3e50;
+    font-weight: bold;
+}
+
+.username-link:hover {
+    text-decoration: underline;
+}
+
+/* New Post */
+.new-post-container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+}
+
+#post-content {
+    min-height: 100px;
+    margin-bottom: 10px;
+}
+
+/* Profile Page */
+.profile-header {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.profile-stats {
+    display: flex;
+    gap: 20px;
+    margin: 15px 0;
+}
+
+/* Pagination Controls */
+.pagination-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+}
+
+/* Edit Textarea */
+.edit-textarea {
+    width: 100%;
+    min-height: 80px;
+    margin-bottom: 10px;
+}

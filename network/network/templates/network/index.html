@@ -1,0 +1,235 @@
+{% extends "network/layout.html" %}
+
+{% block body %}
+    {% if user.is_authenticated %}
+    <div class="new-post-container mb-4">
+        <h3>New Post</h3>
+        <textarea id="post-content" class="form-control" placeholder="What's on your mind?"></textarea>
+        <button id="submit-post" class="btn btn-primary mt-2">Post</button>
+    </div>
+    {% endif %}
+
+    <h2>All Posts</h2>
+    <div id="posts-view"></div>
+    <div id="pagination-controls" class="pagination-controls">
+        <button id="prev-page" class="btn btn-outline-primary">Previous</button>
+        <span id="page-number" class="mx-3">Page 1</span>
+        <button id="next-page" class="btn btn-outline-primary">Next</button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load all posts when the page loads
+            loadPosts(1);
+
+            // Submit new post
+            const submitPostBtn = document.querySelector('#submit-post');
+            if (submitPostBtn) {
+                submitPostBtn.onclick = submitPost;
+            }
+
+            // Pagination controls
+            document.querySelector("#next-page").addEventListener("click", () => {
+                const currentPage = parseInt(document.querySelector("#page-number").innerText.split(' ')[1]);
+                loadPosts(currentPage + 1);
+            });
+
+            document.querySelector("#prev-page").addEventListener("click", () => {
+                const currentPage = parseInt(document.querySelector("#page-number").innerText.split(' ')[1]);
+                if (currentPage > 1) {
+                    loadPosts(currentPage - 1);
+                }
+            });
+        });
+
+        // Function to submit a new post
+        function submitPost() {
+            const content = document.querySelector('#post-content').value;
+            if (!content) {
+                alert('Post content cannot be empty!');
+                return;
+            }
+
+            fetch('/post', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken')
+                },
+                body: JSON.stringify({ content: content })
+            })
+            .then(response => response.json())
+            .then(result => {
+                console.log(result);
+                document.querySelector('#post-content').value = '';
+                loadPosts(1); // Reload posts to show the new post
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        // Function to load posts
+        function loadPosts(page) {
+            fetch(`/posts?page=${page}`)
+            .then(response => response.json())
+            .then(data => {
+                displayPosts(data);
+                updatePagination(data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        // Function to display posts
+        function displayPosts(data) {
+            const postsView = document.querySelector('#posts-view');
+            postsView.innerHTML = "";
+
+            data.posts.forEach(post => {
+                const postDiv = document.createElement('div');
+                postDiv.className = 'post card mb-3';
+                postDiv.dataset.postId = post.id;
+
+                let postContent = `
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <a href="/profile/${post.user}" class="username-link">${post.user}</a>
+                        </h5>
+                        <div class="post-content">${post.content}</div>
+                        <div class="post-actions mt-3">
+                            <small class="text-muted">${post.timestamp}</small>
+                            <button class="btn btn-sm ${post.liked_by_user ? 'btn-danger' : 'btn-outline-danger'} like-button" data-post-id="${post.id}">
+                                ❤ <span class="like-count">${post.likes}</span>
+                            </button>
+                `;
+
+                // Add edit button if it's the user's post
+                if (post.is_users_post) {
+                    postContent += `
+                            <button class="btn btn-sm btn-outline-secondary edit-button ms-2" data-post-id="${post.id}">Edit</button>
+                    `;
+                }
+
+                postContent += `
+                        </div>
+                    </div>
+                `;
+
+                postDiv.innerHTML = postContent;
+                postsView.appendChild(postDiv);
+            });
+
+            // Add event listeners for like buttons
+            document.querySelectorAll('.like-button').forEach(button => {
+                button.addEventListener('click', function() {
+                    likePost(this.dataset.postId);
+                });
+            });
+
+            // Add event listeners for edit buttons
+            document.querySelectorAll('.edit-button').forEach(button => {
+                button.addEventListener('click', function() {
+                    editPost(this.dataset.postId);
+                });
+            });
+        }
+
+        // Function to update pagination controls
+        function updatePagination(data) {
+            document.querySelector("#page-number").innerText = `Page ${data.current_page}`;
+            document.querySelector("#prev-page").disabled = !data.has_previous;
+            document.querySelector("#next-page").disabled = !data.has_next;
+        }
+
+        // Function to like/unlike a post
+        function likePost(postId) {
+            fetch(`/like_post/${postId}`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': getCookie('csrftoken')
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                const likeButton = document.querySelector(`.like-button[data-post-id="${postId}"]`);
+                const likeCount = likeButton.querySelector('.like-count');
+
+                likeCount.innerText = data.count;
+                if (data.liked) {
+                    likeButton.classList.remove('btn-outline-danger');
+                    likeButton.classList.add('btn-danger');
+                } else {
+                    likeButton.classList.remove('btn-danger');
+                    likeButton.classList.add('btn-outline-danger');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        // Function to edit a post
+        function editPost(postId) {
+            const postDiv = document.querySelector(`.post[data-post-id="${postId}"]`);
+            const contentDiv = postDiv.querySelector('.post-content');
+            const currentContent = contentDiv.innerText;
+
+            // Replace content with textarea
+            contentDiv.innerHTML = `
+                <textarea class="form-control edit-textarea">${currentContent}</textarea>
+                <div class="mt-2">
+                    <button class="btn btn-sm btn-primary save-edit-button">Save</button>
+                    <button class="btn btn-sm btn-outline-secondary cancel-edit-button">Cancel</button>
+                </div>
+            `;
+
+            // Add event listeners for save and cancel buttons
+            contentDiv.querySelector('.save-edit-button').addEventListener('click', function() {
+                saveEditedPost(postId, contentDiv.querySelector('.edit-textarea').value);
+            });
+
+            contentDiv.querySelector('.cancel-edit-button').addEventListener('click', function() {
+                contentDiv.innerHTML = currentContent;
+            });
+        }
+
+        // Function to save an edited post
+        function saveEditedPost(postId, newContent) {
+            fetch(`/edit_post/${postId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken')
+                },
+                body: JSON.stringify({ content: newContent })
+            })
+            .then(response => response.json())
+            .then(data => {
+                const postDiv = document.querySelector(`.post[data-post-id="${postId}"]`);
+                const contentDiv = postDiv.querySelector('.post-content');
+                contentDiv.innerHTML = data.content;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        // Function to get CSRF token from cookies
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    </script>
+{% endblock %}

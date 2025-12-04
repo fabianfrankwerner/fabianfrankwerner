@@ -1,0 +1,20 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Listings in category: {{ category }}</h2>
+
+    {% if listings %}
+        <ul>
+            {% for listing in listings %}
+                <li>
+                    <a href="{% url 'listing' listing.id %}">{{ listing.title }}</a> -
+                    ${{ listing.current_price|default:listing.starting_bid }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No active listings in this category.</p>
+    {% endif %}
+
+    <a href="{% url 'categories' %}">← Back to Categories</a>
+{% endblock %}
