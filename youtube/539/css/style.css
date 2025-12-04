@@ -1,0 +1,187 @@
+/* CSS Variables for Dark Theme Theme */
+:root {
+  --bg-primary: #202124;
+  --bg-secondary: #171717; /* Footer */
+  --bg-element: #303134; /* Search bar & Buttons */
+  --text-primary: #e8eaed;
+  --text-secondary: #bdc1c6;
+  --link-color: #8ab4f8;
+}
+
+/* Reset & Basic Setup */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-secondary);
+  font-size: 14px;
+  /* Ensures footer sticks to bottom */
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Header Styles */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  flex-shrink: 0; /* Prevents header crushing */
+}
+
+.nav-left a,
+.nav-right a,
+.icon-btn {
+  margin: 0 10px;
+  cursor: pointer;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  background-color: #8e24aa; /* Random avatar color */
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 10px;
+  font-size: 18px;
+}
+
+/* Main Content Styles */
+main {
+  flex-grow: 1; /* Takes up available space */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* Optical center adjust roughly */
+  padding-top: 100px;
+}
+
+.logo {
+  font-size: 90px;
+  font-family: "Product Sans", Arial, sans-serif; /* Approximation */
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+
+.search-container {
+  background-color: var(--bg-element);
+  border: 1px solid #5f6368;
+  border-radius: 24px;
+  width: 100%;
+  max-width: 584px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  padding: 0 15px;
+  margin-bottom: 30px;
+}
+
+.search-container:hover {
+  background-color: #3c4043;
+  box-shadow: 0 1px 6px 0 rgba(23, 23, 23, 0.5);
+  border-color: transparent;
+}
+
+.search-container input {
+  flex-grow: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text-primary);
+  font-size: 16px;
+  padding: 0 15px;
+}
+
+.search-icon,
+.mic-icon,
+.lens-icon {
+  color: #9aa0a6;
+  cursor: pointer;
+  margin: 0 5px;
+}
+
+.buttons button {
+  background-color: var(--bg-element);
+  border: 1px solid transparent;
+  color: var(--text-primary);
+  padding: 11px 16px;
+  border-radius: 4px;
+  font-size: 14px;
+  margin: 0 6px;
+  cursor: pointer;
+}
+
+.buttons button:hover {
+  border: 1px solid #5f6368;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+.language-offer {
+  margin-top: 30px;
+  color: var(--text-secondary);
+  font-size: small;
+}
+
+.language-offer a {
+  color: var(--link-color);
+}
+
+/* Footer Styles */
+footer {
+  background-color: var(--bg-secondary);
+  flex-shrink: 0;
+}
+
+.footer-top {
+  padding: 15px 30px;
+  border-bottom: 1px solid #3c4043;
+}
+
+.footer-bottom {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 15px 30px;
+}
+
+/* Responsive footer switch for small screens */
+@media (max-width: 768px) {
+  .footer-bottom {
+    justify-content: center;
+  }
+  .footer-links-left,
+  .footer-links-right {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+}
+
+.footer-bottom a {
+  margin-right: 25px;
+  white-space: nowrap;
+}
