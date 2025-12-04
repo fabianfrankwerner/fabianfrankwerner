@@ -1,0 +1,19 @@
+body {
+  background-color: black;
+  font-family: sans-serif;
+  color: white;
+  text-align: center;
+}
+
+nav {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  background-color: white;
+  padding: 25px;
+}
+
+button {
+  background-color: white;
+  border: none;
+}

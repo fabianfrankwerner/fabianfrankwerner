@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MailForge - Your Personal Newsletter Platform</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        color: #333;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      .header {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        padding: 30px;
+        text-align: center;
+        margin-bottom: 30px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .header h1 {
+        color: white;
+        font-size: 2.5em;
+        margin-bottom: 10px;
+        font-weight: 700;
+      }
+
+      .header p {
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 1.1em;
+      }
+
+      .main-content {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: 30px;
+        margin-bottom: 30px;
+      }
+
+      .sidebar {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 15px;
+        padding: 25px;
+        height: fit-content;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      }
+
+      .content-area {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 15px;
+        padding: 25px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      }
+
+      .section-title {
+        font-size: 1.3em;
+        font-weight: 600;
+        margin-bottom: 20px;
+        color: #2c3e50;
+        border-bottom: 2px solid #3498db;
+        padding-bottom: 10px;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+        color: #2c3e50;
+      }
+
+      .form-group input,
+      .form-group select,
+      .form-group textarea {
+        width: 100%;
+        padding: 12px;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        font-size: 14px;
+        transition: border-color 0.3s ease;
+      }
+
+      .form-group input:focus,
+      .form-group select:focus,
+      .form-group textarea:focus {
+        outline: none;
+        border-color: #3498db;
+        box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+      }
+
+      .btn {
+        background: linear-gradient(135deg, #3498db, #2980b9);
+        color: white;
+        padding: 12px 24px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(52, 152, 219, 0.4);
+      }
+
+      .btn-secondary {
+        background: linear-gradient(135deg, #95a5a6, #7f8c8d);
+      }
+
+      .btn-danger {
+        background: linear-gradient(135deg, #e74c3c, #c0392b);
+      }
+
+      .source-item {
+        background: #f8f9fa;
+        border: 1px solid #e9ecef;
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: all 0.3s ease;
+      }
+
+      .source-item:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+
+      .source-info {
+        flex: 1;
+      }
+
+      .source-name {
+        font-weight: 600;
+        color: #2c3e50;
+        margin-bottom: 5px;
+      }
+
+      .source-url {
+        color: #7f8c8d;
+        font-size: 0.9em;
+      }
+
+      .source-actions {
+        display: flex;
+        gap: 10px;
+      }
+
+      .newsletter-item {
+        background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        border: 1px solid #dee2e6;
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 20px;
+        transition: all 0.3s ease;
+      }
+
+      .newsletter-item:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .newsletter-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+      }
+
+      .newsletter-title {
+        font-size: 1.2em;
+        font-weight: 600;
+        color: #2c3e50;
+      }
+
+      .newsletter-date {
+        color: #7f8c8d;
+        font-size: 0.9em;
+      }
+
+      .newsletter-preview {
+        color: #555;
+        line-height: 1.6;
+        margin-bottom: 15px;
+      }
+
+      .newsletter-actions {
+        display: flex;
+        gap: 10px;
+      }
+
+      .tabs {
+        display: flex;
+        border-bottom: 2px solid #e0e0e0;
+        margin-bottom: 20px;
+      }
+
+      .tab {
+        padding: 12px 20px;
+        cursor: pointer;
+        border: none;
+        background: none;
+        font-size: 14px;
+        font-weight: 500;
+        color: #7f8c8d;
+        transition: all 0.3s ease;
+        border-bottom: 2px solid transparent;
+      }
+
+      .tab.active {
+        color: #3498db;
+        border-bottom-color: #3498db;
+      }
+
+      .tab:hover {
+        color: #2980b9;
+      }
+
+      .tab-content {
+        display: none;
+      }
+
+      .tab-content.active {
+        display: block;
+      }
+
+      .status-indicator {
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        margin-right: 8px;
+      }
+
+      .status-active {
+        background: #27ae60;
+      }
+
+      .status-inactive {
+        background: #e74c3c;
+      }
+
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+        margin-bottom: 30px;
+      }
+
+      .stat-card {
+        background: linear-gradient(135deg, #3498db, #2980b9);
+        color: white;
+        padding: 20px;
+        border-radius: 12px;
+        text-align: center;
+        box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+      }
+
+      .stat-number {
+        font-size: 2em;
+        font-weight: 700;
+        margin-bottom: 5px;
+      }
+
+      .stat-label {
+        font-size: 0.9em;
+        opacity: 0.9;
+      }
+
+      .empty-state {
+        text-align: center;
+        padding: 40px;
+        color: #7f8c8d;
+      }
+
+      .empty-state-icon {
+        font-size: 3em;
+        margin-bottom: 20px;
+      }
+
+      @media (max-width: 768px) {
+        .main-content {
+          grid-template-columns: 1fr;
+        }
+
+        .header h1 {
+          font-size: 2em;
+        }
+
+        .stats-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .notification {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 15px 20px;
+        border-radius: 8px;
+        color: white;
+        font-weight: 500;
+        z-index: 1000;
+        transform: translateX(400px);
+        transition: transform 0.3s ease;
+      }
+
+      .notification.show {
+        transform: translateX(0);
+      }
+
+      .notification.success {
+        background: #27ae60;
+      }
+
+      .notification.error {
+        background: #e74c3c;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>📧 MailForge</h1>
+        <p>Your personal newsletter aggregation platform</p>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-number" id="totalSources">0</div>
+          <div class="stat-label">Active Sources</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" id="totalNewsletters">0</div>
+          <div class="stat-label">Newsletters</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" id="unreadCount">0</div>
+          <div class="stat-label">Unread</div>
+        </div>
+      </div>
+
+      <div class="main-content">
+        <div class="sidebar">
+          <div class="tabs">
+            <button class="tab active" onclick="switchTab('sources')">
+              Sources
+            </button>
+            <button class="tab" onclick="switchTab('settings')">
+              Settings
+            </button>
+          </div>
+
+          <div id="sources-tab" class="tab-content active">
+            <h2 class="section-title">Newsletter Sources</h2>
+
+            <div class="form-group">
+              <label for="sourceType">Source Type:</label>
+              <select id="sourceType">
+                <option value="rss">RSS Feed</option>
+                <option value="newsletter">Newsletter</option>
+                <option value="website">Website</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="sourceName">Source Name:</label>
+              <input
+                type="text"
+                id="sourceName"
+                placeholder="e.g., TechCrunch"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="sourceUrl">URL:</label>
+              <input
+                type="url"
+                id="sourceUrl"
+                placeholder="https://example.com/feed"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="updateFreq">Update Frequency:</label>
+              <select id="updateFreq">
+                <option value="hourly">Every Hour</option>
+                <option value="daily">Daily</option>
+                <option value="weekly">Weekly</option>
+              </select>
+            </div>
+
+            <button class="btn" onclick="addSource()">Add Source</button>
+
+            <div id="sourcesList">
+              <!-- Sources will be dynamically added here -->
+            </div>
+          </div>
+
+          <div id="settings-tab" class="tab-content">
+            <h2 class="section-title">Settings</h2>
+
+            <div class="form-group">
+              <label for="emailAddress">Email Address:</label>
+              <input
+                type="email"
+                id="emailAddress"
+                placeholder="your@email.com"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="digestFreq">Digest Frequency:</label>
+              <select id="digestFreq">
+                <option value="daily">Daily</option>
+                <option value="weekly">Weekly</option>
+                <option value="monthly">Monthly</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="digestTime">Send Time:</label>
+              <input type="time" id="digestTime" value="09:00" />
+            </div>
+
+            <button class="btn" onclick="saveSettings()">Save Settings</button>
+            <button class="btn btn-secondary" onclick="exportData()">
+              Export Data
+            </button>
+          </div>
+        </div>
+
+        <div class="content-area">
+          <div class="tabs">
+            <button class="tab active" onclick="switchContentTab('inbox')">
+              Inbox
+            </button>
+            <button class="tab" onclick="switchContentTab('digest')">
+              Digest
+            </button>
+            <button class="tab" onclick="switchContentTab('archive')">
+              Archive
+            </button>
+          </div>
+
+          <div id="inbox-tab" class="tab-content active">
+            <h2 class="section-title">Recent Newsletters</h2>
+            <div id="newslettersList">
+              <!-- Newsletters will be dynamically added here -->
+            </div>
+          </div>
+
+          <div id="digest-tab" class="tab-content">
+            <h2 class="section-title">Create Digest</h2>
+            <div class="form-group">
+              <label for="digestTitle">Digest Title:</label>
+              <input
+                type="text"
+                id="digestTitle"
+                placeholder="My Weekly Digest"
+              />
+            </div>
+            <div class="form-group">
+              <label for="digestContent">Content:</label>
+              <textarea
+                id="digestContent"
+                rows="10"
+                placeholder="Select newsletters to include in your digest..."
+              ></textarea>
+            </div>
+            <button class="btn" onclick="createDigest()">Create Digest</button>
+            <button class="btn btn-secondary" onclick="previewDigest()">
+              Preview
+            </button>
+          </div>
+
+          <div id="archive-tab" class="tab-content">
+            <h2 class="section-title">Archived Newsletters</h2>
+            <div id="archiveList">
+              <!-- Archived newsletters will be shown here -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Application state
+      let appState = {
+        sources: [],
+        newsletters: [],
+        settings: {
+          emailAddress: "",
+          digestFreq: "daily",
+          digestTime: "09:00",
+        },
+        archivedNewsletters: [],
+      };
+
+      // Initialize the app
+      function initApp() {
+        loadFromStorage();
+        renderSources();
+        renderNewsletters();
+        updateStats();
+
+        // Simulate some initial data if empty
+        if (appState.sources.length === 0) {
+          addDemoData();
+        }
+      }
+
+      // Add demo data
+      function addDemoData() {
+        const demoSources = [
+          {
+            id: 1,
+            name: "TechCrunch",
+            url: "https://techcrunch.com/feed",
+            type: "rss",
+            frequency: "daily",
+            active: true,
+          },
+          {
+            id: 2,
+            name: "Morning Brew",
+            url: "https://morningbrew.com/feed",
+            type: "newsletter",
+            frequency: "daily",
+            active: true,
+          },
+          {
+            id: 3,
+            name: "The Hustle",
+            url: "https://thehustle.co/feed",
+            type: "newsletter",
+            frequency: "daily",
+            active: true,
+          },
+        ];
+
+        const demoNewsletters = [
+          {
+            id: 1,
+            title: "Tech Startup Funding Reaches Record High",
+            source: "TechCrunch",
+            date: new Date().toLocaleDateString(),
+            preview:
+              "Venture capital funding for tech startups has reached unprecedented levels this quarter, with AI and fintech leading the charge...",
+            read: false,
+            url: "https://techcrunch.com/article-1",
+          },
+          {
+            id: 2,
+            title: "Morning Market Update",
+            source: "Morning Brew",
+            date: new Date().toLocaleDateString(),
+            preview:
+              "Markets opened strong today with tech stocks leading gains. Key highlights include...",
+            read: false,
+            url: "https://morningbrew.com/article-2",
+          },
+          {
+            id: 3,
+            title: "The Future of Remote Work",
+            source: "The Hustle",
+            date: new Date().toLocaleDateString(),
+            preview:
+              "Companies are reshaping their remote work policies as we enter a new era of hybrid employment...",
+            read: true,
+            url: "https://thehustle.co/article-3",
+          },
+        ];
+
+        appState.sources = demoSources;
+        appState.newsletters = demoNewsletters;
+        saveToStorage();
+        renderSources();
+        renderNewsletters();
+        updateStats();
+      }
+
+      // Tab switching functions
+      function switchTab(tabName) {
+        document
+          .querySelectorAll(".sidebar .tab")
+          .forEach((tab) => tab.classList.remove("active"));
+        document
+          .querySelectorAll(".sidebar .tab-content")
+          .forEach((content) => content.classList.remove("active"));
+
+        event.target.classList.add("active");
+        document.getElementById(tabName + "-tab").classList.add("active");
+      }
+
+      function switchContentTab(tabName) {
+        document
+          .querySelectorAll(".content-area .tab")
+          .forEach((tab) => tab.classList.remove("active"));
+        document
+          .querySelectorAll(".content-area .tab-content")
+          .forEach((content) => content.classList.remove("active"));
+
+        event.target.classList.add("active");
+        document.getElementById(tabName + "-tab").classList.add("active");
+      }
+
+      // Add new source
+      function addSource() {
+        const name = document.getElementById("sourceName").value;
+        const url = document.getElementById("sourceUrl").value;
+        const type = document.getElementById("sourceType").value;
+        const frequency = document.getElementById("updateFreq").value;
+
+        if (!name || !url) {
+          showNotification("Please fill in all fields", "error");
+          return;
+        }
+
+        const newSource = {
+          id: Date.now(),
+          name,
+          url,
+          type,
+          frequency,
+          active: true,
+        };
+
+        appState.sources.push(newSource);
+        saveToStorage();
+        renderSources();
+        updateStats();
+
+        // Clear form
+        document.getElementById("sourceName").value = "";
+        document.getElementById("sourceUrl").value = "";
+
+        showNotification("Source added successfully!", "success");
+      }
+
+      // Render sources list
+      function renderSources() {
+        const sourcesList = document.getElementById("sourcesList");
+
+        if (appState.sources.length === 0) {
+          sourcesList.innerHTML =
+            '<div class="empty-state"><div class="empty-state-icon">📭</div><p>No sources added yet. Add your first newsletter source above!</p></div>';
+          return;
+        }
+
+        sourcesList.innerHTML = appState.sources
+          .map(
+            (source) => `
+                <div class="source-item">
+                    <div class="source-info">
+                        <div class="source-name">
+                            <span class="status-indicator ${
+                              source.active
+                                ? "status-active"
+                                : "status-inactive"
+                            }"></span>
+                            ${source.name}
+                        </div>
+                        <div class="source-url">${source.url}</div>
+                    </div>
+                    <div class="source-actions">
+                        <button class="btn btn-secondary" onclick="toggleSource(${
+                          source.id
+                        })">
+                            ${source.active ? "Pause" : "Resume"}
+                        </button>
+                        <button class="btn btn-danger" onclick="removeSource(${
+                          source.id
+                        })">Remove</button>
+                    </div>
+                </div>
+            `
+          )
+          .join("");
+      }
+
+      // Toggle source active status
+      function toggleSource(id) {
+        const source = appState.sources.find((s) => s.id === id);
+        if (source) {
+          source.active = !source.active;
+          saveToStorage();
+          renderSources();
+          updateStats();
+        }
+      }
+
+      // Remove source
+      function removeSource(id) {
+        if (confirm("Are you sure you want to remove this source?")) {
+          appState.sources = appState.sources.filter((s) => s.id !== id);
+          saveToStorage();
+          renderSources();
+          updateStats();
+          showNotification("Source removed successfully!", "success");
+        }
+      }
+
+      // Render newsletters
+      function renderNewsletters() {
+        const newslettersList = document.getElementById("newslettersList");
+
+        if (appState.newsletters.length === 0) {
+          newslettersList.innerHTML =
+            '<div class="empty-state"><div class="empty-state-icon">📰</div><p>No newsletters yet. Your newsletters will appear here once sources are added and synced!</p></div>';
+          return;
+        }
+
+        newslettersList.innerHTML = appState.newsletters
+          .map(
+            (newsletter) => `
+                <div class="newsletter-item">
+                    <div class="newsletter-header">
+                        <div class="newsletter-title">${newsletter.title}</div>
+                        <div class="newsletter-date">${newsletter.date}</div>
+                    </div>
+                    <div class="newsletter-preview">${newsletter.preview}</div>
+                    <div class="newsletter-actions">
+                        <button class="btn" onclick="readNewsletter(${
+                          newsletter.id
+                        })">
+                            ${newsletter.read ? "Read Again" : "Read"}
+                        </button>
+                        <button class="btn btn-secondary" onclick="archiveNewsletter(${
+                          newsletter.id
+                        })">Archive</button>
+                        <button class="btn btn-secondary" onclick="addToDigest(${
+                          newsletter.id
+                        })">Add to Digest</button>
+                    </div>
+                </div>
+            `
+          )
+          .join("");
+      }
+
+      // Newsletter actions
+      function readNewsletter(id) {
+        const newsletter = appState.newsletters.find((n) => n.id === id);
+        if (newsletter) {
+          newsletter.read = true;
+          saveToStorage();
+          renderNewsletters();
+          updateStats();
+          window.open(newsletter.url, "_blank");
+        }
+      }
+
+      function archiveNewsletter(id) {
+        const newsletter = appState.newsletters.find((n) => n.id === id);
+        if (newsletter) {
+          appState.archivedNewsletters.push(newsletter);
+          appState.newsletters = appState.newsletters.filter(
+            (n) => n.id !== id
+          );
+          saveToStorage();
+          renderNewsletters();
+          renderArchive();
+          updateStats();
+          showNotification("Newsletter archived!", "success");
+        }
+      }
+
+      function addToDigest(id) {
+        const newsletter = appState.newsletters.find((n) => n.id === id);
+        if (newsletter) {
+          const digestContent = document.getElementById("digestContent");
+          digestContent.value += `\n\n## ${newsletter.title}\n${newsletter.preview}`;
+          switchContentTab("digest");
+          showNotification("Added to digest!", "success");
+        }
+      }
+
+      // Render archive
+      function renderArchive() {
+        const archiveList = document.getElementById("archiveList");
+
+        if (appState.archivedNewsletters.length === 0) {
+          archiveList.innerHTML =
+            '<div class="empty-state"><div class="empty-state-icon">📚</div><p>No archived newsletters yet.</p></div>';
+          return;
+        }
+
+        archiveList.innerHTML = appState.archivedNewsletters
+          .map(
+            (newsletter) => `
+                <div class="newsletter-item">
+                    <div class="newsletter-header">
+                        <div class="newsletter-title">${newsletter.title}</div>
+                        <div class="newsletter-date">${newsletter.date}</div>
+                    </div>
+                    <div class="newsletter-preview">${newsletter.preview}</div>
+                    <div class="newsletter-actions">
+                        <button class="btn" onclick="restoreNewsletter(${newsletter.id})">Restore</button>
+                        <button class="btn btn-danger" onclick="deleteNewsletter(${newsletter.id})">Delete</button>
+                    </div>
+                </div>
+            `
+          )
+          .join("");
+      }
+
+      function restoreNewsletter(id) {
+        const newsletter = appState.archivedNewsletters.find(
+          (n) => n.id === id
+        );
+        if (newsletter) {
+          appState.newsletters.push(newsletter);
+          appState.archivedNewsletters = appState.archivedNewsletters.filter(
+            (n) => n.id !== id
+          );
+          saveToStorage();
+          renderNewsletters();
+          renderArchive();
+          updateStats();
+          showNotification("Newsletter restored!", "success");
+        }
+      }
+
+      function deleteNewsletter(id) {
+        if (
+          confirm(
+            "Are you sure you want to permanently delete this newsletter?"
+          )
+        ) {
+          appState.archivedNewsletters = appState.archivedNewsletters.filter(
+            (n) => n.id !== id
+          );
+          saveToStorage();
+          renderArchive();
+          showNotification("Newsletter deleted!", "success");
+        }
+      }
+
+      // Digest functions
+      function createDigest() {
+        const title = document.getElementById("digestTitle").value;
+        const content = document.getElementById("digestContent").value;
+
+        if (!title || !content) {
+          showNotification("Please fill in title and content", "error");
+          return;
+        }
+
+        // In a real app, this would send the digest via email
+        showNotification("Digest created and sent!", "success");
+
+        // Clear form
+        document.getElementById("digestTitle").value = "";
+        document.getElementById("digestContent").value = "";
+      }
+
+      function previewDigest() {
+        const title =
+          document.getElementById("digestTitle").value || "Newsletter Digest";
+        const content =
+          document.getElementById("digestContent").value ||
+          "No content added yet.";
+
+        const previewWindow = window.open("", "_blank");
+        previewWindow.document.write(`
+                <html>
+                    <head>
+                        <title>${title}</title>
+                        <style>
+                            body { font-family: Arial, sans-serif; padding: 20px; max-width: 600px; margin: 0 auto; }
+                            h1 { color: #333; }
+                            pre { white-space: pre-wrap; font-family: inherit; }
+                        </style>
+                    </head>
+                    <body>
+                        <h1>${title}</h1>
+                        <pre>${content}</pre>
+                    </body>
+                </html>
+            `);
+      }
+
+      // Settings functions
+      function saveSettings() {
+        appState.settings = {
+          emailAddress: document.getElementById("emailAddress").value,
+          digestFreq: document.getElementById("digestFreq").value,
+          digestTime: document.getElementById("digestTime").value,
+        };
+        saveToStorage();
+        showNotification("Settings saved!", "success");
+      }
+
+      function exportData() {
+        const dataStr = JSON.stringify(appState, null, 2);
+        const dataBlob = new Blob([dataStr], { type: "application/json" });
+        const url = URL.createObjectURL(dataBlob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = "mailforge-data.json";
+        link.click();
+        URL.revokeObjectURL(url);
+        showNotification("Data exported!", "success");
+      }
+
+      // Update statistics
+      function updateStats() {
+        document.getElementById("totalSources").textContent =
+          appState.sources.filter((s) => s.active).length;
+        document.getElementById("totalNewsletters").textContent =
+          appState.newsletters.length;
+        document.getElementById("unreadCount").textContent =
+          appState.newsletters.filter((n) => !n.read).length;
+      }
+
+      // Storage functions
+      function saveToStorage() {
+        localStorage.setItem("mailforge-data", JSON.stringify(appState));
+      }
+
+      function loadFromStorage() {
+        const saved = localStorage.getItem("mailforge-data");
+        if (saved) {
+          appState = JSON.parse(saved);
+
+          // Populate settings form
+          document.getElementById("emailAddress").value =
+            appState.settings.emailAddress || "";
+          document.getElementById("digestFreq").value =
+            appState.settings.digestFreq || "daily";
+          document.getElementById("digestTime").value =
+            appState.settings.digestTime || "09:00";
+        }
+      }
+
+      // Notification system
+      function showNotification(message, type) {
+        const notification = document.createElement("div");
+        notification.className = `notification ${type}`;
+        notification.textContent = message;
+        document.body.appendChild(notification);
+
+        setTimeout(() => notification.classList.add("show"), 100);
+        setTimeout(() => {
+          notification.classList.remove("show");
+          setTimeout(() => document.body.removeChild(notification), 300);
+        }, 3000);
+      }
+
+      // Initialize app when page loads
+      window.addEventListener("load", initApp);
+    </script>
+  </body>
+</html>

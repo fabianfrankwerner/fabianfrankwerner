@@ -1,0 +1,23 @@
+body {
+  margin: 0;
+  height: 100vh;
+  display: grid;
+  place-items: center;
+  background-color: #000;
+  font-family: sans-serif;
+}
+
+.evaluate {
+  padding-left: 10px;
+  padding-right: 10px;
+  height: 40px;
+  background-color: #0a0a0a;
+  border-radius: 6px;
+  border: #2d2d2d solid 1px;
+  color: #ededed;
+  font-weight: 500;
+}
+
+.evaluate:hover {
+  background-color: #0f0f0f;
+}
