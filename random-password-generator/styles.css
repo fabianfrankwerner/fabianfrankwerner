@@ -1,0 +1,81 @@
+@import url("https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200..800;1,200..800&display=swap");
+
+:root {
+  --blue: #1f2937;
+  --white: #ffffff;
+  --green-light: #4adf86;
+  --green-dark: #55f991;
+  --gray: #d5d4d8;
+  --accent-min: #2f3e53;
+  --accent-max: #273549;
+  --green-button: #10b981;
+  --background: #1c1c1c;
+}
+
+body {
+  margin: 0;
+  background-color: var(--blue);
+  font-family: "Karla", sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+h1 {
+  color: var(--white);
+  margin-bottom: 10px;
+}
+
+span {
+  color: var(--green-light);
+}
+
+p {
+  color: var(--gray);
+  margin-bottom: 50px;
+}
+
+button {
+  color: var(--white);
+  background-color: var(--green-button);
+  border-radius: 5px;
+  padding: 10px 16px;
+  border: none;
+  font-weight: bold;
+  margin-bottom: 35px;
+}
+
+button:hover {
+  color: var(--green-button);
+  background-color: var(--white);
+}
+
+.line {
+  width: 100%;
+  border: 1px solid var(--accent-min);
+  margin-bottom: 35px;
+}
+
+.password {
+  color: var(--green-dark);
+  background-color: var(--accent-max);
+  padding: 10px 15px;
+  border-radius: 5px;
+}
+
+.passwords {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 25px;
+}
+
+.card {
+  background-color: var(--blue);
+  border-radius: 25px;
+  padding: 50px;
+  width: 375px;
+  height: 375px;
+  box-shadow: 0 0px 10px rgba(0, 0, 0, 0.15), 0 0px 10px rgba(0, 0, 0, 0.1);
+}

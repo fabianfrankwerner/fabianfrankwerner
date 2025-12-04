@@ -1,0 +1,111 @@
+:root {
+  --black: #000;
+  --white: #fff;
+  --grey: #808080;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--white);
+  width: 375px;
+  border: solid var(--grey) 1px;
+  font-family: sans-serif;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+header {
+  height: 67px;
+  border-bottom: solid var(--grey) 1px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  width: 127px;
+  height: 33.02px;
+  margin-left: 15.5px;
+}
+
+.avatar {
+  margin-right: 15.5px;
+}
+
+.avatar,
+.user-avatar {
+  border-radius: 50%;
+  width: 34px;
+  height: 34px;
+}
+
+.post {
+  height: 575px;
+}
+
+.user-info {
+  width: 348px;
+  height: 34px;
+  margin: 10px 15.5px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 7px;
+}
+
+.user-name {
+  font-size: 13px;
+  font-weight: bold;
+  margin-bottom: 0px;
+}
+
+.user-location {
+  font-size: 12px;
+  margin-top: 0px;
+}
+
+.user-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+}
+
+.post-image {
+  height: 375px;
+  width: 375px;
+}
+
+.post-icons {
+  width: 104.34px;
+  height: 22.13px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 21px 260.66px 11.87px 10px;
+}
+
+.post-engagement,
+.post-caption {
+  font-size: 13px;
+  margin-left: 13px;
+}
+
+.post-engagement {
+  margin-bottom: 12px;
+  font-weight: bold;
+}
+
+.post-caption {
+  margin-bottom: 16px;
+}
+
+.bold {
+  font-weight: bold;
+}

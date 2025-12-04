@@ -1,0 +1,58 @@
+@font-face {
+  font-family: Cursed-Timer;
+  src: url("./font/cursed-timer.ttf");
+}
+
+:root {
+  --black: #080001;
+  --gray: #9aabd8;
+  --white: #eeeeee;
+  --blue: #1b244a;
+  --red: #f94f6d;
+}
+
+body {
+  margin: 0;
+  background-color: var(--blue);
+}
+
+.container {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+button {
+  color: var(--gray);
+  background-color: var(--blue);
+  border: var(--gray) solid 2px;
+  border-radius: 5px;
+  padding: 10px;
+  font-family: Cursed-Timer, Verdana, Geneva, Tahoma, sans-serif;
+}
+
+button:hover {
+  background-color: var(--gray);
+  color: var(--blue);
+}
+
+.add-points-btns-home {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
+.board-title-home {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  color: var(--white);
+}
+
+.home-points-text {
+  font-family: Cursed-Timer, Verdana, Geneva, Tahoma, sans-serif;
+  color: var(--red);
+  background-color: var(--black);
+  text-align: center;
+  padding: 20px;
+  border-radius: 5px;
+  font-size: 50px;
+}
