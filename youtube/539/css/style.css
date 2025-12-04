@@ -1,8 +1,7 @@
-/* CSS Variables for Dark Theme Theme */
 :root {
   --bg-primary: #1f1f1f;
-  --bg-secondary: #171717; /* Footer */
-  --bg-element: #303134; /* Search bar & Buttons */
+  --bg-secondary: #171717;
+  --bg-element: #303134;
   --bg-element-hover: #3c4043;
   --text-primary: #e8eaed;
   --text-secondary: #bdc1c6;
@@ -11,7 +10,6 @@
   --icon-color: #9aa0a6;
 }
 
-/* Reset & Basic Setup */
 * {
   margin: 0;
   padding: 0;
@@ -23,29 +21,18 @@ body {
   background-color: var(--bg-primary);
   color: var(--text-secondary);
   font-size: 14px;
-  /* Ensures footer sticks to bottom */
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   line-height: 1.5;
 }
 
-a {
-  text-decoration: none;
-  color: inherit;
-}
-
-a:hover {
-  text-decoration: underline;
-}
-
-/* Header Styles */
 header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 6px 20px;
-  flex-shrink: 0; /* Prevents header crushing */
+  flex-shrink: 0;
 }
 
 .nav-left a,
@@ -97,9 +84,8 @@ header {
   cursor: pointer;
 }
 
-/* Main Content Styles */
 main {
-  flex-grow: 1; /* Takes up available space */
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -163,8 +149,7 @@ main {
   align-items: center;
 }
 
-.mic-icon,
-.lens-icon {
+.mic-icon {
   color: var(--icon-color);
   cursor: pointer;
   margin: 0 8px;
@@ -175,39 +160,8 @@ main {
   transition: background-color 0.2s;
 }
 
-.mic-icon:hover,
-.lens-icon:hover {
+.mic-icon:hover {
   background-color: rgba(255, 255, 255, 0.1);
-}
-
-.ai-mode-btn {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  background: transparent;
-  border: none;
-  color: var(--text-primary);
-  font-size: 14px;
-  padding: 6px 12px;
-  margin-left: 4px;
-  cursor: pointer;
-  border-radius: 4px;
-  transition: background-color 0.2s;
-  font-family: arial, sans-serif;
-}
-
-.ai-mode-btn:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-}
-
-.ai-mode-text {
-  font-size: 14px;
-  font-weight: 400;
-}
-
-.ai-mode-icon {
-  font-size: 18px;
-  color: var(--icon-color);
 }
 
 .buttons {
@@ -249,7 +203,6 @@ main {
   text-decoration: underline;
 }
 
-/* Footer Styles */
 footer {
   background-color: var(--bg-secondary);
   flex-shrink: 0;
@@ -270,7 +223,6 @@ footer {
   padding: 15px 30px;
 }
 
-/* Responsive footer switch for small screens */
 @media (max-width: 768px) {
   .footer-bottom {
     justify-content: center;
