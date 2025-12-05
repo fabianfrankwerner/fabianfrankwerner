@@ -5,6 +5,7 @@ import twoOne from './scenes/twoOne?scene';
 import oneTwo from './scenes/oneTwo?scene';
 import oneThree from './scenes/oneThree?scene';
 import twoThree from './scenes/twoThree?scene';
+import oneFour from './scenes/oneFour?scene';
 
 import './global.css';
 
@@ -20,6 +21,7 @@ export default makeProject({
     //twoOne,
     //oneTwo,
     //oneThree,
-    twoThree
+    //twoThree,
+    oneFour,
     ]
 });
