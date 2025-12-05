@@ -17,10 +17,8 @@ export default makeScene2D(function* (view) {
   view.add(
     <Code
       ref={code}
-      fontSize={54}
+      fontSize={108}
       fontFamily={"Space Mono"}
-      offsetX={-1}
-      x={-400}
       code={"const number = 7;"}
     />
   );
