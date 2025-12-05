@@ -23,13 +23,10 @@ export default makeScene2D(function* (view) {
       code={""}
     />
   );
-  yield* waitFor(1);
 
   // append immediately
   code().code.append(`touch style.css`);
 
   // animate using the signal signature
   yield* code().code.append('\ntouch index.html', 2);
-
-  yield* waitFor(1);
 });
