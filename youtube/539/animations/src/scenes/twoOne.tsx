@@ -23,7 +23,6 @@ export default makeScene2D(function* (view) {
       code={""}
     />
   );
-  yield* waitFor(1);
 
   // append immediately
   code().code.append(`npm init`);
@@ -33,6 +32,4 @@ export default makeScene2D(function* (view) {
 
   // animate using the signal signature
   yield* code().code.append('\nnpx tailwindcss init', 2);
-
-  yield* waitFor(1);
 });
