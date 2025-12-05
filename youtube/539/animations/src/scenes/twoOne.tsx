@@ -26,10 +26,13 @@ export default makeScene2D(function* (view) {
   yield* waitFor(1);
 
   // append immediately
-  code().code.append(`touch style.css`);
+  code().code.append(`npm init`);
 
   // animate using the signal signature
-  yield* code().code.append('\ntouch index.html', 2);
+  yield* code().code.append('\nnpm install tailwindcss', 2);
+
+  // animate using the signal signature
+  yield* code().code.append('\nnpx tailwindcss init', 2);
 
   yield* waitFor(1);
 });
