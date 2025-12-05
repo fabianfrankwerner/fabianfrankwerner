@@ -1,5 +1,13 @@
-import { makeScene2D, Code } from "@motion-canvas/2d";
+import { makeScene2D, Code, LezerHighlighter } from "@motion-canvas/2d";
 import { all, createRef, DEFAULT, waitFor } from "@motion-canvas/core";
+
+// import {parser} from '@lezer/javascript';
+// import {parser} from '@lezer/json';
+import {parser} from '@lezer/html';
+
+// const JavaScript = new LezerHighlighter(parser);
+// const JSON = new LezerHighlighter(parser);
+const HTML = new LezerHighlighter(parser); // https://motioncanvas.io/docs/code#multiple-languages
 
 export default makeScene2D(function* (view) {
   const code = createRef<Code>();
