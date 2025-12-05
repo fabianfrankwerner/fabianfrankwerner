@@ -12,6 +12,7 @@
     "@lezer/html": "^1.3.12",
     "@lezer/javascript": "^1.5.4",
     "@lezer/json": "^1.0.3",
+    "@lezer/markdown": "^1.6.0",
     "@motion-canvas/2d": "^3.17.2",
     "@motion-canvas/core": "^3.17.2",
     "@motion-canvas/ffmpeg": "^1.1.0"

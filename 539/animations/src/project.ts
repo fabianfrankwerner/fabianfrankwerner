@@ -7,8 +7,8 @@ import './global.css';
 import {Code, LezerHighlighter} from '@motion-canvas/2d';
 import {parser} from '@lezer/css';
 
-Code.defaultHighlighter = new LezerHighlighter(parser);
+Code.defaultHighlighter = new LezerHighlighter(parser); // https://motioncanvas.io/docs/code#multiple-languages
 
 export default makeProject({
-  scenes: [example],
+  scenes: [example]
 });
