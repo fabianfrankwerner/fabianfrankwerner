@@ -10,6 +10,7 @@ import oneFive from './scenes/oneFive?scene';
 import oneSix from './scenes/oneSix?scene';
 import oneSeven from './scenes/oneSeven?scene';
 import experiment from './scenes/experiment?scene';
+import plot from './scenes/plot?scene';
 
 import './global.css';
 
@@ -30,6 +31,7 @@ export default makeProject({
     //oneFive,
     //oneSix,
     //oneSeven,
-    experiment
+    //experiment,
+    plot
     ]
 });
