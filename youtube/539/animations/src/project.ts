@@ -5,7 +5,7 @@ import example from './scenes/example?scene';
 import './global.css';
 
 import {Code, LezerHighlighter} from '@motion-canvas/2d';
-import {parser} from '@lezer/javascript';
+import {parser} from '@lezer/css';
 
 Code.defaultHighlighter = new LezerHighlighter(parser);
 
