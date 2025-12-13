@@ -29,9 +29,9 @@ export default makeProject({
     //twoThree,
     //oneFour,
     //oneFive,
-    //oneSix,
+    // oneSix,
     //oneSeven,
-    //experiment,
-    plot
+    experiment,
+    // plot
     ]
 });
