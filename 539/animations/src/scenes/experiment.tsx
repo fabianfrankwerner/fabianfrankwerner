@@ -17,7 +17,7 @@ export default makeScene2D(function* (view) {
   const TARGET_PADDING = 20; // The padding we want to add
 
   // Colors (Pixel-perfect from your uploaded images)
-  const C_BG = "#202020";
+  const C_BG = "#000000";
   const C_HATCH_BG = "#202020";
   const C_CONTENT = "#e0e0e0";
   const C_DIM = "#e0e0e0";
@@ -132,7 +132,7 @@ export default makeScene2D(function* (view) {
   // Step 2: "Adding padding increases the width..."
   // Animate padding 0 -> 24px in Content-Box mode.
   // Visual: Box explodes to 176px.
-  yield* padding(TARGET_PADDING, 2);
+  yield* padding(TARGET_PADDING, 1.3);
   yield* waitFor(1);
 
   // Step 3: "It makes layout math a nightmare."
@@ -144,7 +144,7 @@ export default makeScene2D(function* (view) {
   yield* borderBoxMode(1, 1.5, easeInOutCubic);
 
   // Step 5: Show that it works.
-  yield* waitFor(2);
+  // yield* waitFor(1);
 });
 
 // --- HELPER COMPONENT ---
