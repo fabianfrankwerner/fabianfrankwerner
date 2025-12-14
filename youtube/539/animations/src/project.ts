@@ -22,16 +22,16 @@ Code.defaultHighlighter = new LezerHighlighter(parser);
 export default makeProject({
   scenes: 
     [
-    //oneOne, 
-    //twoOne,
-    //oneTwo,
-    //oneThree,
-    //twoThree,
-    //oneFour,
-    //oneFive,
+    // oneOne, 
+    // twoOne,
+    // oneTwo,
+    // oneThree,
+    // twoThree,
+    // oneFour,
+    // oneFive,
     // oneSix,
-    //oneSeven,
-    experiment,
-    // plot
+    // oneSeven,
+    // experiment,
+    plot
     ]
 });

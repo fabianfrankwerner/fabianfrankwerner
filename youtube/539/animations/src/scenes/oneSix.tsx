@@ -37,7 +37,9 @@ export default makeScene2D(function* (view) {
     2
   );
 
-  yield* code().selection(code().findFirstRange("hover"), 2);
+  yield* code().selection(code().findFirstRange(":hover"), 2);
+
+  yield* waitFor(4)
 
   yield* code().code(``, 2);
 
@@ -50,9 +52,9 @@ export default makeScene2D(function* (view) {
     />
   );
 
-  yield* waitFor(2)
+  yield* waitFor(6)
 
   yield* code().code.append('\n\nshadow-[0_1px_6px_0_rgba(23,23,23,0.5)]', 2);
 
-  yield* waitFor(2)
+  yield* waitFor(10)
 });

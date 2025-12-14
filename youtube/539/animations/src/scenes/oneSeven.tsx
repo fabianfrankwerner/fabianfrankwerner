@@ -29,9 +29,9 @@ export default makeScene2D(function* (view) {
     />
   );
 
-  yield* waitFor(2)
+  yield* waitFor(10)
 
   yield* code().code(`.h-\[46px\] { height: 46px; }`, 2);
 
-  yield* waitFor(2)
+  yield* waitFor(14)
 });

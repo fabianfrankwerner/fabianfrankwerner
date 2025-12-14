@@ -39,6 +39,8 @@ export default makeScene2D(function* (view) {
 
   yield* code().selection(code().findAllRanges(`class="..."`), 2);
 
+  yield* waitFor(4)
+
   yield* code().code(``, 2);
 
   view.add(
@@ -59,6 +61,8 @@ export default makeScene2D(function* (view) {
 
   yield* code().selection(code().findFirstRange("@apply"), 2);
 
+  yield* waitFor(4)
+
   yield* code().code(``, 2);
 
   view.add(
@@ -75,6 +79,8 @@ export default makeScene2D(function* (view) {
 
   yield* code().selection(code().findFirstRange("btn-google"), 2);
 
+  yield* waitFor(4)
+
   yield* code().code(``, 2);
 
   view.add(
@@ -87,5 +93,5 @@ export default makeScene2D(function* (view) {
     />
   );
 
-  yield* waitFor(2);
+  yield* waitFor(6);
 });

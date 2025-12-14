@@ -30,8 +30,8 @@ export default makeScene2D(function* (view) {
   --bg-element: #303134;
   --link-color: #8ab4f8;
 }`,
-    2
+    9
   );
 
-  yield* code().selection(code().findFirstRange("--bg-primary"), 2);
+  yield* code().selection(code().findFirstRange("--bg-primary"), 10);
 });

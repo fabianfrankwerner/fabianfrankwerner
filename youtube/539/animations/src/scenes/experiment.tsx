@@ -18,10 +18,10 @@ export default makeScene2D(function* (view) {
 
   // Colors (Pixel-perfect from your uploaded images)
   const C_BG = "#000000";
-  const C_HATCH_BG = "#202020";
-  const C_CONTENT = "#e0e0e0";
-  const C_DIM = "#e0e0e0";
-  const C_HATCH_LINES = "#e0e0e0";
+  const C_HATCH_BG = "#000000";
+  const C_CONTENT = "#ffffff";
+  const C_DIM = "#ffffff";
+  const C_HATCH_LINES = "#ffffff";
 
   // --- SIGNALS ---
   // Controls the amount of padding applied (0 to 24)
@@ -127,13 +127,13 @@ export default makeScene2D(function* (view) {
 
   // Step 1: Start with CSS Width 128px, No Padding.
   // Visual: 128px Box.
-  yield* waitFor(1);
+  yield* waitFor(2);
 
   // Step 2: "Adding padding increases the width..."
   // Animate padding 0 -> 24px in Content-Box mode.
   // Visual: Box explodes to 176px.
-  yield* padding(TARGET_PADDING, 1.3);
-  yield* waitFor(1);
+  yield* padding(TARGET_PADDING, 6);
+  yield* waitFor(2);
 
   // Step 3: "It makes layout math a nightmare."
   // Pause to let viewer digest the 176px number.
@@ -141,10 +141,10 @@ export default makeScene2D(function* (view) {
 
   // Step 4: The Fix. Switch to Border-Box.
   // Visual: Outer box shrinks back to 128px. Inner box shrinks.
-  yield* borderBoxMode(1, 1.5, easeInOutCubic);
+  yield* borderBoxMode(2, 1.5, easeInOutCubic);
 
   // Step 5: Show that it works.
-  // yield* waitFor(1);
+  yield* waitFor(2);
 });
 
 // --- HELPER COMPONENT ---

@@ -30,8 +30,10 @@ export default makeScene2D(function* (view) {
   padding: 0;
   box-sizing: border-box;
 }`,
-    2
+    6
   );
 
-  yield* code().selection(code().findFirstRange("border-box"), 2);
+  yield* code().selection(code().findFirstRange("border-box"), 6);
+
+  yield* waitFor(1)
 });
