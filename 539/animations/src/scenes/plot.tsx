@@ -26,7 +26,7 @@ export default makeScene2D(function* (view) {
   const AXIS_OFFSET = 81; // Scaled offset
 
   // Colors
-  const C_BG = "#1e1e1e";
+  const C_BG = "#000000";
   const C_GRID = "#333";
   const C_AXIS = "#808080";
   const C_VANILLA = "#663399";
@@ -133,12 +133,12 @@ export default makeScene2D(function* (view) {
 
   // --- ANIMATION SCRIPT ---
 
-  yield* waitFor(1);
+  yield* waitFor(4);
 
   // Animate the graph drawing
-  yield* progress(1, 4, easeOutCubic);
+  yield* progress(1, 14, easeOutCubic);
 
-  yield* waitFor(2);
+  yield* waitFor(6);
 });
 
 // --- HELPER COMPONENT FOR THE CURVES ---

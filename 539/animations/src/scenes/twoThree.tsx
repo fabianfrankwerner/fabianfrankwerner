@@ -47,4 +47,6 @@ export default makeScene2D(function* (view) {
 }`,
     2
   );
+
+  yield* waitFor(2)
 });

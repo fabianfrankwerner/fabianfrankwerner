@@ -32,7 +32,11 @@ export default makeScene2D(function* (view) {
 
   yield* code().code(`<div class="nav-right">`, 2);
 
+  yield* waitFor(4)
+
   yield* code().selection(code().findFirstRange("nav-right"), 2);
+
+  yield* waitFor(2)
 
   yield* code().code(``, 2);
 
@@ -50,7 +54,10 @@ export default makeScene2D(function* (view) {
     2
   );
 
+  
   yield* code().selection(code().findFirstRange("display: flex"), 2);
+  
+  yield* waitFor(8)
 
   yield* code().code(``, 2);
 
@@ -66,7 +73,11 @@ export default makeScene2D(function* (view) {
 
   yield* code().code(`<div class="nav-right flex items-center gap-4">`, 2);
 
-  yield* code().selection(code().findFirstRange("gap-4"), 4);
+  yield* waitFor(4)
 
-  yield* code().code(``, 2);
+  yield* code().selection(code().findFirstRange("gap-4"), 2);
+
+  yield* waitFor(12)
+
+  // yield* code().code(``, 3);
 });
