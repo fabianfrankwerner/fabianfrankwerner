@@ -1,42 +1,84 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
+:root {
+  --bg-color: #1a1a1a;
+  --text-color: #ffffff;
+  --accent-color: #646cff;
+  --card-bg: #242424;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.container {
+  width: 100%;
+  max-width: 800px;
   padding: 2rem;
+}
+
+h1 {
   text-align: center;
+  margin-bottom: 2rem;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.search-input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  border: 1px solid #444;
+  background: var(--card-bg);
+  color: white;
+  font-size: 1rem;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.coin-table {
+  width: 100%;
+  border-collapse: collapse;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.coin-row {
+  border-bottom: 1px solid #333;
+  display: grid;
+  grid-template-columns: auto 1fr 1fr 1fr;
+  align-items: center;
+  padding: 15px 0;
+  gap: 1rem;
 }
 
-.card {
-  padding: 2em;
+.coin-name-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-.read-the-docs {
-  color: #888;
+.coin-icon {
+  width: 30px;
+  height: 30px;
+}
+
+.positive {
+  color: #0ecb81;
+}
+.negative {
+  color: #f6465d;
+}
+
+button {
+  background-color: var(--accent-color);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+button:hover {
+  opacity: 0.9;
 }
