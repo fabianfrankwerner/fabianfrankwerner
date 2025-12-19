@@ -1,35 +1,58 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState, useEffect } from "react";
+import type { ChangeEvent } from "react";
+import "./App.css"; // We reuse the same CSS
+import { getCoins } from "./api";
+import CoinTable from "./components/CoinTable";
+import type { Coin } from "./types";
 
 function App() {
-  const [count, setCount] = useState(0)
+  // We explicitly tell useState that this array will only ever contain Coin objects
+  const [coins, setCoins] = useState<Coin[]>([]);
+
+  // Type inference works fine here (infers string), but we can be explicit:
+  const [search, setSearch] = useState<string>("");
+
+  useEffect(() => {
+    // We can type the async function, though TS infers return type is Promise<void>
+    const fetchData = async () => {
+      const data = await getCoins();
+      setCoins(data);
+      // If getCoins returned generic objects, setCoins(data) would error here.
+    };
+
+    fetchData();
+
+    const interval = setInterval(fetchData, 60000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Event Handler Typing
+  // We specify that 'e' is a ChangeEvent coming from an HTMLInputElement
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value);
+  };
+
+  // Safe filtering
+  const filteredCoins = coins.filter(
+    (coin) =>
+      coin.name.toLowerCase().includes(search.toLowerCase()) ||
+      coin.symbol.toLowerCase().includes(search.toLowerCase())
+  );
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div className="container">
+      <h1>Crypto Tracker (TypeScript)</h1>
+
+      <input
+        type="text"
+        placeholder="Search for a currency..."
+        className="search-input"
+        onChange={handleChange} // TS checks if handleChange signature matches onChange expectation
+      />
+
+      <CoinTable coins={filteredCoins} />
+    </div>
+  );
 }
 
-export default App
+export default App;
