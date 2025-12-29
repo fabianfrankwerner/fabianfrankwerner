@@ -1,0 +1,88 @@
+:root {
+  --bg: #111;
+  --card: #222;
+  --text: #eee;
+  --accent: #00d4ff;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: sans-serif;
+  display: flex;
+  justify-content: center;
+  padding-top: 50px;
+}
+
+.container {
+  width: 100%;
+  max-width: 600px;
+}
+
+input {
+  display: block;
+  width: 100%;
+  padding: 15px;
+  margin: 10px 0;
+  background: var(--card);
+  border: 1px solid #333;
+  color: white;
+  border-radius: 5px;
+}
+
+button {
+  width: 100%;
+  padding: 15px;
+  background: var(--accent);
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.card,
+.stat-card {
+  background: var(--card);
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #333;
+}
+
+.big-number {
+  font-size: 3rem;
+  font-weight: bold;
+  color: var(--accent);
+}
+
+.back-btn {
+  color: #888;
+  text-decoration: none;
+  display: block;
+  margin-bottom: 20px;
+}
+
+.error {
+  color: #ff4444;
+  background: rgba(255, 68, 68, 0.1);
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
