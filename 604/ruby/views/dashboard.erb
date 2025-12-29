@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Results</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div class="container dashboard">
+        <a href="/" class="back-btn">← Back</a>
+        <h2><%= @user %> / <%= @repo %></h2>
+        
+        <div class="stat-card">
+            <h3>Total Commits Analyzed</h3>
+            <div class="big-number"><%= @stats[:total_commits] %></div>
+        </div>
+
+        <div class="grid">
+            <div class="card">
+                <h3>Top Contributors</h3>
+                <ul>
+                <% @stats[:top_authors].each do |author, count| %>
+                    <li>
+                        <span><%= author %></span>
+                        <strong><%= count %></strong>
+                    </li>
+                <% end %>
+                </ul>
+            </div>
+            
+            <div class="card">
+                <h3>Busiest Days</h3>
+                <ul>
+                <% @stats[:busiest_days].each do |day, count| %>
+                    <li>
+                        <span><%= day %></span>
+                        <strong><%= count %></strong>
+                    </li>
+                <% end %>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
