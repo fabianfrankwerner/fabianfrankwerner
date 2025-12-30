@@ -9,12 +9,10 @@ export default makeScene2D(function* (view) {
       ref={code}
       fontSize={108}
       fontFamily={"Geist Mono"}
-      code={"print()"}
+      code={`\
+        def greet name
+  "Hello, #{name}"
+end`}
     />
   );
-
-  // append immediately
-  code().code.append(`# Comment`, 4);
-
-  yield* waitFor(2.7);
 });
