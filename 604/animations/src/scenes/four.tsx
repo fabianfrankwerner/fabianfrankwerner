@@ -21,11 +21,7 @@ def analyze_repo(user, repo):
 
   yield* waitFor(2);
 
-  yield* all(code().selection(lines(2), 2), code().selection(lines(4), 2));
-
-  yield* code().selection(DEFAULT, 2);
-
-  yield* all(code().selection(lines(3), 2), code().selection(lines(5), 2));
+  yield* all(code().selection(lines(2,5), 6));
 
   yield* code().selection(DEFAULT, 2);
 
@@ -46,11 +42,9 @@ end`,
 
   yield* waitFor(2);
 
-  yield* code().selection(code().findAllRanges(/end/gi), 2);
+  yield* code().selection(code().findAllRanges(/end/gi), 4);
 
   yield* code().selection(DEFAULT, 2);
-
-  yield* waitFor(2);
 
   yield* code().code(
     `\
