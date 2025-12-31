@@ -1,6 +1,6 @@
 import { makeProject } from "@motion-canvas/core";
 
-import seven from "./scenes/seven?scene";
+import three from "./scenes/three?scene";
 
 import "./global.css";
 
@@ -10,5 +10,5 @@ import { parser } from "@lezer/python";
 Code.defaultHighlighter = new LezerHighlighter(parser);
 
 export default makeProject({
-  scenes: [seven],
+  scenes: [three],
 });
