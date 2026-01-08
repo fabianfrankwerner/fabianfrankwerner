@@ -10,32 +10,26 @@ export default makeScene2D(function* (view) {
       fontSize={81}
       fontFamily={"Geist Mono"}
       code={`\
-// next.config.mjs`}
+MDX`}
     />
   );
 
-  yield* waitFor(1);
+  yield* code().code(`/* MDX */`, 1)
 
-yield* code().code.append(`\n\nimport { remarkCodeHike, recmaCodeHike } from "codehike/mdx"
-
-// ...`, 1);
-
-yield* waitFor(1);
-
-yield* code().code.append(`\n\n/** @type {import('codehike/mdx').CodeHikeConfig} */
-const chConfig = {
-  components: { code: "Code" },
-}
-  
-// ...`, 1);
-  
-  yield* waitFor(2);
-
-  yield* code().code(
-    `\
-MDX`,
-    2
+  yield* code().code.append(
+    `\n
+// !focus(1:5)
+function dolor(ipsum, dolor = 1) {
+  const sit = ipsum == null ? 0 : ipsum.sit
+  dolor = sit - amet(dolor)
+  return sit ? consectetur(ipsum) : []
+}`,
+    1
   );
+
+  // yield* waitFor(1);
+
+  yield* code().selection(lines(3,7), 1);
 
   yield* waitFor(2);
 
