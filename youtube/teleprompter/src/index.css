@@ -1,0 +1,219 @@
+:root {
+  --bg-color: #000000;
+  --text-color: #ffffff;
+  --text-dim: #444444; /* Darker gray for desaturated text */
+  --header-bg: rgba(17, 24, 39, 0.9); /* Gray-900 with opacity */
+  --border-color: #1f2937; /* Gray-800 */
+  
+  --btn-primary: #2563eb;
+  --btn-primary-hover: #1d4ed8;
+  
+  --btn-secondary: #374151;
+  --btn-secondary-hover: #4b5563;
+  
+  --btn-success: #16a34a;
+  --btn-success-hover: #15803d;
+  
+  --btn-danger: #dc2626;
+  --btn-danger-hover: #b91c1c;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  margin: 0;
+  padding: 0;
+  font-family: "Geist Sans", "Geist", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  overflow: hidden;
+}
+
+.font-mono {
+  font-family: "Geist Mono", monospace;
+}
+
+.md-code {
+  font-family: "Geist Mono", monospace;
+  background-color: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 0.1em 0.3em;
+  border-radius: 0.3em;
+  font-size: 0.9em;
+}
+
+.md-bold {
+  font-weight: 700;
+}
+
+.md-italic {
+  font-style: italic;
+}
+
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header / Controls */
+.controls-header {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1rem;
+  background-color: var(--header-bg);
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 50;
+  transition: opacity 0.3s;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.controls-group {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 768px) {
+  .controls-header {
+    justify-content: center;
+    max-height: 40vh;
+    overflow-y: auto;
+  }
+  
+  .controls-group {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .main-content {
+    padding: 1rem;
+    padding-bottom: 12rem; /* More space for wrapped header */
+  }
+}
+
+.btn {
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  color: white;
+  transition: background-color 0.2s;
+  font-size: 1rem;
+}
+
+.btn-primary { background-color: var(--btn-primary); }
+.btn-primary:hover { background-color: var(--btn-primary-hover); }
+
+.btn-secondary { background-color: var(--btn-secondary); }
+.btn-secondary:hover { background-color: var(--btn-secondary-hover); }
+
+.btn-success { background-color: var(--btn-success); }
+.btn-success:hover { background-color: var(--btn-success-hover); }
+
+.btn-danger { background-color: var(--btn-danger); }
+.btn-danger:hover { background-color: var(--btn-danger-hover); }
+
+.size-control {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #9ca3af; /* Gray-400 */
+  font-size: 0.875rem;
+}
+
+.size-slider {
+  width: 8rem;
+}
+
+.size-value {
+  width: 3rem;
+  text-align: center;
+}
+
+/* Main Content */
+.main-content {
+  flex: 1;
+  padding: 2rem;
+  padding-bottom: 8rem; /* Space for fixed header */
+  box-sizing: border-box;
+  overflow-y: auto; /* Enable scrolling within this container */
+  display: flex;
+  flex-direction: column;
+}
+
+.script-editor {
+  width: 100%;
+  height: 80vh;
+  background-color: #111827; /* Gray-900 */
+  color: white;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  font-size: 1.25rem;
+  border: none;
+  resize: none;
+  box-sizing: border-box;
+}
+
+.script-editor:focus {
+  outline: 2px solid var(--btn-primary);
+}
+
+.prompter-display {
+  max-width: 1024px;
+  width: 100%;
+  margin: 0 auto;
+  line-height: 1.5;
+  margin-top: auto; /* Push text to bottom if it doesn't fill the screen */
+}
+
+.word {
+  display: inline-block;
+  margin-right: 0.25em;
+  transition: color 0.3s ease;
+}
+
+.word.past {
+  color: var(--text-dim);
+}
+
+.word.future {
+  color: var(--text-color);
+}
+
+/* Markdown Styles */
+.md-h1 { font-size: 2em; font-weight: 800; display: block; width: 100%; margin-top: 0.5em; margin-bottom: 0.5em; }
+.md-h2 { font-size: 1.5em; font-weight: 700; display: block; width: 100%; margin-top: 0.5em; margin-bottom: 0.25em; }
+.md-h3 { font-size: 1.25em; font-weight: 600; display: block; width: 100%; margin-top: 0.5em; margin-bottom: 0.25em; }
+
+.md-hr {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color: var(--border-color);
+  margin: 1em 0;
+  border: none;
+}
+
+.md-newline {
+  display: block;
+  width: 100%;
+  height: 0;
+  margin: 0;
+}
+
+.list-bullet {
+  color: var(--btn-primary);
+  font-weight: bold;
+}
+
+.list-number {
+  color: var(--btn-primary);
+  font-weight: bold;
+}
