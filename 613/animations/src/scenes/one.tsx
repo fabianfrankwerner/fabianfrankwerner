@@ -36,8 +36,6 @@ yield* code().code.append(`\n\nimport { Elysia } from "elysia"`, 1)
 
 yield* code().code.append(`\n\nconst app = new Elysia()`, 1)
 
-// yield* waitFor(1);
-
 yield* code().code.append(`
   .get("/", "Hello Elysia")
 `, 1)
@@ -54,4 +52,8 @@ yield* code().code.append(`  .listen(3000);
 yield* code().selection(code().findAllRanges(/.get/gi), 1);
 
 yield* code().selection(DEFAULT, 1);
+
+yield* code().code.replace(lines(7), `  .post("/form", ({ body }) => body) // {"hello": "Elysia"}\n`, 1);
+
+yield* waitFor(4);
 });
