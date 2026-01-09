@@ -10,34 +10,38 @@ export default makeScene2D(function* (view) {
       fontSize={81}
       fontFamily={"Geist Mono"}
       code={`\
-// bun create elysia app`}
+bun create elysia app`}
     />
   );
 
   yield* waitFor(1);
 
-yield* code().code.append(`\n\nimport { remarkCodeHike, recmaCodeHike } from "codehike/mdx"
+yield* code().code.append(`\n\n// ---
 
-// ...`, 1);
+cd app`, 1);
+
+yield* code().code.append(`\n\n// ---
+
+bun run src/index.ts`, 1);
 
 yield* waitFor(1);
 
-yield* code().code.append(`\n\n/** @type {import('codehike/mdx').CodeHikeConfig} */
-const chConfig = {
-  components: { code: "Code" },
-}
+// yield* code().code.append(`\n\n/** @type {import('codehike/mdx').CodeHikeConfig} */
+// const chConfig = {
+//   components: { code: "Code" },
+// }
   
-// ...`, 1);
+// // ...`, 1);
   
-  yield* waitFor(2);
+//   yield* waitFor(2);
 
-  yield* code().code(
-    `\
-MDX`,
-    2
-  );
+//   yield* code().code(
+//     `\
+// MDX`,
+//     2
+//   );
 
-  yield* waitFor(2);
+//   yield* waitFor(2);
 
 //   yield* code().code.append('\n\n# Poetry?', 1);
 //   yield* code().code.append('\n\n# Pipenv?', 1);
@@ -48,14 +52,7 @@ MDX`,
 
 //   // 18
 
-//   yield* code().code(
-//     `\
-// # Ruby
-// source 'https://rubygems.org'
-// gem 'sinatra'
-// gem 'httparty'`,
-//     2
-//   );
+
 
 //   yield* waitFor(4);
 
