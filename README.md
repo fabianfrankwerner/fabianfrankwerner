@@ -1,29 +1,36 @@
-# Simultan
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-Simultan is an open-source **content scheduling and crossposting engine** built for developers who hate marketing tools. No drag-and-drop calendars, no "AI magic," no fluff. Just a markdown editor and a deploy button for your social presence.
+## Getting Started
 
-## ⚡ Features
+First, run the development server:
 
-- **Brutalist "Dev-Native" UI:** A terminal-inspired interface using the **Lyra** preset from Shadcn/UI.
-- **Markdown First:** Write posts like you write code. Full syntax highlighting and preview.
-- **"Deploy" Your Content:** Treat social posts like commits. Stage them, schedule them, and push to production.
-- **Simultaneous Scheduling:** Post to multiple platforms at the exact same second using **Convex Scheduled Functions**.
-- **Privacy Focused:** Self-hostable. Your API keys stay in your database, not ours.
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
+```
 
-## 🔌 Supported Integrations
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-- **Bluesky** (Native AT Protocol)
-- **LinkedIn** (OAuth 2.0)
-- **Dev.to / Hashnode** (For long-form devlogs)
-- **Mastodon** (ActivityPub)
-- *(Coming Soon)* Twitter/X & Threads
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-## 🛠️ The Stack
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-Built on the bleeding edge for maximum performance and type safety.
+## Learn More
 
-- **Framework:** [Next.js 15](https://nextjs.org/) (App Router + React Compiler)
-- **Backend & Database:** [Convex](https://convex.dev/) (Real-time + Built-in Scheduler)
-- **Styling:** [Tailwind CSS](https://tailwindcss.com/) + [Shadcn UI](https://ui.shadcn.com/)
-- **Auth:** [Clerk](https://clerk.com/) or GitHub OAuth
-- **Type Safety:** TypeScript + Biome
+To learn more about Next.js, take a look at the following resources:
+
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+
+## Deploy on Vercel
+
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
