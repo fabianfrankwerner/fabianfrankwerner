@@ -1,36 +1,46 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Phase 1: Foundation & The "Realtime" Core
 
-## Getting Started
+- [ ] Install and initialize Convex (`npm install convex`).
+- [ ] Install and configure Clerk (`@clerk/nextjs`).
+- [ ] Integration: Configure `auth.config.ts` in Convex to verify Clerk JWTs (securing your backend).
+- [ ] Create a `ConvexProviderWithClerk` wrapper in your root layout to sync auth state.
+- [ ] Define the initial `schema.ts` in Convex (Users, Posts tables).
+- [ ] Create a "User Sync" webhook: When a user signs up in Clerk, trigger a Convex http-action to store them in your `users` table.
 
-First, run the development server:
+# Phase 2: The "Zen" Editor (Convex Powered)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- [ ] Implement the Tiptap editor with Markdown extensions.
+- [ ] Realtime Save: Create a Convex mutation (`saveDraft`) that triggers on a debounced keystroke (replacing the need for a manual "Save" button).
+- [ ] Live Threading: Build a `useQuery` subscription that fetches the current draft; if you edit it in one tab, it updates instantly in another.
+- [ ] Create the "Twitter Preview" component that reads directly from the reactive Convex query.
+- [ ] Implement "Thread Logic": A function to split text blocks by `\n\n` or a specific delimiter into an array of strings in the DB.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+# Phase 3: The Scheduling Engine (Convex Crons)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- [ ] Create Convex Actions (internal API handlers) to post to X/Twitter and LinkedIn APIs (Actions allow `fetch`, Mutations do not).
+- [ ] The Queue: Define a schema for `scheduled_posts` with a `unix_timestamp`.
+- [ ] Scheduler: Use `ctx.scheduler.runAt` in Convex to schedule the posting Action at the exact user-defined time.
+- [ ] Cron Jobs: Set up a `crons.ts` file in Convex to run a cleanup job every night (e.g., mark "failed" posts).
+- [ ] Build the Calendar UI: Dragging a post updates its `scheduled_time` field, which automatically cancels the old scheduled job and creates a new one via a Mutation.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+# Phase 4: Media & Assets (Convex Storage)
 
-## Learn More
+- [ ] Use Convex File Storage: Implement an `uploadUrl` generation flow for drag-and-drop image uploading in the editor.
+- [ ] Store the `storageId` in the Post document.
+- [ ] Build a "Media Gallery" component that queries all files uploaded by the current user.
+- [ ] Add image optimization/rendering using the `next/image` component with the URLs returned by `ctx.storage.getUrl`.
 
-To learn more about Next.js, take a look at the following resources:
+# Phase 5: Monetization (Stripe + Clerk Organizations)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- [ ] Team Support: Enable "Organizations" in the Clerk Dashboard.
+- [ ] Update Convex functions to check `ctx.auth.getUserIdentity()` for organization permissions (e.g., `org_role: 'admin'`).
+- [ ] Payments: Create a Convex Action to handle Stripe Checkout session creation.
+- [ ] Webhooks: Create a Convex HTTP action to handle Stripe webhooks (upgrading the `subscriptionStatus` in the `orgs` table).
+- [ ] The Gate: Add a check at the top of your "Schedule" mutation: `if (postCount > freeLimit) throw new Error("Upgrade needed")`.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+# Phase 6: Open Source & Self-Hosting
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [ ] Create a `docker-compose.yml` for the -Self-Hosted- version of Convex (Convex is open source, but the cloud version is managed).
+- [ ] Write a "One-Click Deploy" guide for Vercel.
+- [ ] Add a visual architecture diagram in the README showing how Next.js, Clerk, and Convex interact.
+- [ ] License: Add the license file (AGPL or MIT).
