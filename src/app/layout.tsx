@@ -28,7 +28,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased font-mono`}
+        className={`${geistSans.variable} ${geistMono.variable} font-mono antialiased`}
       >
         <ClerkProvider>
           <ConvexClientProvider>

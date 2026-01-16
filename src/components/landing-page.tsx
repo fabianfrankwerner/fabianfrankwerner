@@ -14,24 +14,24 @@ import { Separator } from "@/components/ui/separator";
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="flex min-h-screen flex-col">
       {/* Hero Section */}
-      <section className="flex-1 flex items-center justify-center px-4 py-16 sm:py-24">
-        <div className="max-w-4xl mx-auto text-center space-y-8">
+      <section className="flex flex-1 items-center justify-center px-4 py-16 sm:py-24">
+        <div className="mx-auto max-w-4xl space-y-8 text-center">
           <div className="space-y-4">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight">
+            <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
               Schedule Your Social Media
               <br />
               <span className="text-primary">In Real-Time</span>
             </h1>
-            <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto">
+            <p className="mx-auto max-w-2xl text-lg text-muted-foreground sm:text-xl">
               Create, edit, and schedule posts across X and LinkedIn with
               real-time collaboration. No more manual saves—your changes sync
               instantly.
             </p>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+          <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
             <SignUpButton mode="modal">
               <Button size="lg" className="w-full sm:w-auto">
                 Get Started
@@ -49,19 +49,19 @@ export default function LandingPage() {
       <Separator />
 
       {/* Features Section */}
-      <section className="py-16 px-4">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12 space-y-2">
+      <section className="px-4 py-16">
+        <div className="mx-auto max-w-6xl">
+          <div className="mb-12 space-y-2 text-center">
             <h2 className="text-3xl font-bold">Powerful Features</h2>
             <p className="text-muted-foreground">
               Everything you need to manage your social media presence
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
             <Card>
               <CardHeader>
-                <div className="flex items-center justify-between mb-2">
+                <div className="mb-2 flex items-center justify-between">
                   <CardTitle>Real-Time Editing</CardTitle>
                   <Badge variant="secondary">Convex</Badge>
                 </div>
@@ -80,7 +80,7 @@ export default function LandingPage() {
 
             <Card>
               <CardHeader>
-                <div className="flex items-center justify-between mb-2">
+                <div className="mb-2 flex items-center justify-between">
                   <CardTitle>Multi-Platform</CardTitle>
                   <Badge variant="secondary">X & LinkedIn</Badge>
                 </div>
@@ -99,7 +99,7 @@ export default function LandingPage() {
 
             <Card>
               <CardHeader>
-                <div className="flex items-center justify-between mb-2">
+                <div className="mb-2 flex items-center justify-between">
                   <CardTitle>Zen Editor</CardTitle>
                   <Badge variant="secondary">Markdown</Badge>
                 </div>
@@ -118,7 +118,7 @@ export default function LandingPage() {
 
             <Card>
               <CardHeader>
-                <div className="flex items-center justify-between mb-2">
+                <div className="mb-2 flex items-center justify-between">
                   <CardTitle>Media Management</CardTitle>
                   <Badge variant="secondary">Storage</Badge>
                 </div>
@@ -141,8 +141,8 @@ export default function LandingPage() {
       <Separator />
 
       {/* CTA Section */}
-      <section className="py-16 px-4">
-        <div className="max-w-4xl mx-auto text-center space-y-8">
+      <section className="px-4 py-16">
+        <div className="mx-auto max-w-4xl space-y-8 text-center">
           <div className="space-y-4">
             <h2 className="text-3xl font-bold">Ready to Get Started?</h2>
             <p className="text-lg text-muted-foreground">
@@ -150,7 +150,7 @@ export default function LandingPage() {
             </p>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col justify-center gap-4 sm:flex-row">
             <SignUpButton mode="modal">
               <Button size="lg" className="w-full sm:w-auto">
                 Create Account
