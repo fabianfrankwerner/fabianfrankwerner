@@ -1,5 +1,26 @@
-import { Button } from "@/components/ui/button";
+"use client";
 
-export default function Page() {
-return <Button variant="outline">Hello, World!</Button>;
+import { Authenticated, Unauthenticated } from "convex/react";
+import { SignInButton, SignUpButton, UserButton, useUser } from "@clerk/nextjs";
+import { useQuery } from "convex/react";
+import { api } from "../../convex/_generated/api";
+
+export default function Home() {
+  return (
+    <>
+      <Authenticated>
+        <UserButton />
+        <Content />
+      </Authenticated>
+      <Unauthenticated>
+        <SignInButton />
+        <SignUpButton />
+      </Unauthenticated>
+    </>
+  );
+}
+
+function Content() {
+  const { user } = useUser();
+  return <div>Good morning {user?.fullName}!</div>;
 }
