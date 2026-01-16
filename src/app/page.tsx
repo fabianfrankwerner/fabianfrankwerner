@@ -1,7 +1,7 @@
 "use client";
 
 import { Authenticated, Unauthenticated } from "convex/react";
-import { UserButton, useUser } from "@clerk/nextjs";
+import { UserButton } from "@clerk/nextjs";
 import LandingPage from "@/components/landing-page";
 
 export default function Home() {
@@ -9,16 +9,11 @@ export default function Home() {
     <>
       <Authenticated>
         <UserButton />
-        <Content />
+        <p>Hello, World!</p>
       </Authenticated>
       <Unauthenticated>
         <LandingPage />
       </Unauthenticated>
     </>
   );
-}
-
-function Content() {
-  const { user } = useUser();
-  return <div>Good morning {user?.fullName}!</div>;
 }
