@@ -1,7 +1,8 @@
 "use client";
 
 import { Authenticated, Unauthenticated } from "convex/react";
-import { SignInButton, SignUpButton, UserButton, useUser } from "@clerk/nextjs";
+import { UserButton, useUser } from "@clerk/nextjs";
+import LandingPage from "@/components/landing-page";
 
 export default function Home() {
   return (
@@ -11,8 +12,7 @@ export default function Home() {
         <Content />
       </Authenticated>
       <Unauthenticated>
-        <SignInButton />
-        <SignUpButton />
+        <LandingPage />
       </Unauthenticated>
     </>
   );
