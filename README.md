@@ -1,9 +1,9 @@
 # Phase 1: Foundation & The "Realtime" Core
 
-- [ ] Install and initialize Convex (`npm install convex`).
-- [ ] Install and configure Clerk (`@clerk/nextjs`).
-- [ ] Integration: Configure `auth.config.ts` in Convex to verify Clerk JWTs (securing your backend).
-- [ ] Create a `ConvexProviderWithClerk` wrapper in your root layout to sync auth state.
+- [x] Install and initialize Convex (`npm install convex`).
+- [x] Install and configure Clerk (`@clerk/nextjs`).
+- [x] Integration: Configure `auth.config.ts` in Convex to verify Clerk JWTs (securing your backend).
+- [x] Create a `ConvexProviderWithClerk` wrapper in your root layout to sync auth state.
 - [ ] Define the initial `schema.ts` in Convex (Users, Posts tables).
 - [ ] Create a "User Sync" webhook: When a user signs up in Clerk, trigger a Convex http-action to store them in your `users` table.
 
