@@ -127,6 +127,15 @@ export function SignupForm({
             />
           </Field>
           <Field>
+            {/* Clerk's CAPTCHA widget for bot protection */}
+            <div
+              id="clerk-captcha"
+              data-cl-theme="auto"
+              data-cl-size="flexible"
+              data-cl-language="auto"
+            />
+          </Field>
+          <Field>
             <Button type="submit" disabled={isLoading || !isLoaded}>
               {isLoading ? "Creating account..." : "Create Account"}
             </Button>
