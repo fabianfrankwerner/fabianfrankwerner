@@ -1,6 +1,6 @@
 "use client";
 
-import { Authenticated, Unauthenticated } from "convex/react";
+import { Authenticated, AuthLoading, Unauthenticated } from "convex/react";
 import { UserButton } from "@clerk/nextjs";
 import LandingPage from "@/components/landing-page";
 
@@ -15,6 +15,11 @@ export default function Home() {
           </div>
         </div>
       </Authenticated>
+      <AuthLoading>
+        <div className="flex flex-col gap-4 p-4">
+          <div className="text-xs">Loading...</div>
+        </div>
+      </AuthLoading>
       <Unauthenticated>
         <LandingPage />
       </Unauthenticated>
