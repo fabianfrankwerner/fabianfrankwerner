@@ -36,6 +36,7 @@
     "vaul": "^1.1.2"
   },
   "devDependencies": {
+    "@convex-dev/eslint-plugin": "^1.1.1",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
