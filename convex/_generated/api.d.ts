@@ -8,12 +8,16 @@
  * @module
  */
 
+import type * as auth_clerkWebhook from "../auth/clerkWebhook.js";
 import type * as auth_connectSocial from "../auth/connectSocial.js";
+import type * as auth_whoami from "../auth/whoami.js";
 import type * as content_drafts from "../content/drafts.js";
+import type * as http from "../http.js";
 import type * as lib_auth from "../lib/auth.js";
 import type * as scheduler_deliveryAttempts from "../scheduler/deliveryAttempts.js";
 import type * as scheduler_repostRules from "../scheduler/repostRules.js";
 import type * as scheduler_scheduledPosts from "../scheduler/scheduledPosts.js";
+import type * as users from "../users.js";
 
 import type {
   ApiFromModules,
@@ -22,12 +26,16 @@ import type {
 } from "convex/server";
 
 declare const fullApi: ApiFromModules<{
+  "auth/clerkWebhook": typeof auth_clerkWebhook;
   "auth/connectSocial": typeof auth_connectSocial;
+  "auth/whoami": typeof auth_whoami;
   "content/drafts": typeof content_drafts;
+  http: typeof http;
   "lib/auth": typeof lib_auth;
   "scheduler/deliveryAttempts": typeof scheduler_deliveryAttempts;
   "scheduler/repostRules": typeof scheduler_repostRules;
   "scheduler/scheduledPosts": typeof scheduler_scheduledPosts;
+  users: typeof users;
 }>;
 
 /**
