@@ -1,7 +1,8 @@
 "use client";
 
-import { Authenticated, AuthLoading, Unauthenticated } from "convex/react";
 import { UserButton } from "@clerk/nextjs";
+import { Authenticated, AuthLoading, Unauthenticated } from "convex/react";
+
 import LandingPage from "@/components/landing-page";
 
 export default function Home() {

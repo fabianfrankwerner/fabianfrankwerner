@@ -1,13 +1,13 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { useSignIn } from "@clerk/nextjs";
 import type { OAuthStrategy } from "@clerk/types";
 import { GalleryVerticalEnd } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
-import { cn } from "@/lib/utils";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import {
   Field,
@@ -17,7 +17,7 @@ import {
   FieldSeparator,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { cn } from "@/lib/utils";
 
 export function LoginForm({
   className,
@@ -51,6 +51,7 @@ export function LoginForm({
       } else {
         setError("Something went wrong. Please try again.");
       }
+      // eslint-disable-next-line
     } catch (err: any) {
       setError(err.errors?.[0]?.message || "Invalid email or password");
     } finally {
@@ -67,6 +68,7 @@ export function LoginForm({
         redirectUrl: "/sso-callback",
         redirectUrlComplete: "/",
       });
+      // eslint-disable-next-line
     } catch (err: any) {
       setError(err.errors?.[0]?.message || "OAuth authentication failed");
     }

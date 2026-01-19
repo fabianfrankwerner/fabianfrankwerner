@@ -1,12 +1,13 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
 import { useSignIn, useSignUp } from "@clerk/nextjs";
 import { GalleryVerticalEnd } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+// eslint-disable-next-line
+import { useEffect, useState } from "react";
 
-import { cn } from "@/lib/utils";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import {
   Field,
@@ -20,7 +21,7 @@ import {
   InputOTPSeparator,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { cn } from "@/lib/utils";
 
 export function OTPForm({ className, ...props }: React.ComponentProps<"div">) {
   const router = useRouter();
@@ -51,16 +52,16 @@ export function OTPForm({ className, ...props }: React.ComponentProps<"div">) {
       (factor) => factor.strategy === "email_code",
     );
 
-  useEffect(() => {
-    // Redirect if neither flow is active
-    if (
-      isLoaded &&
-      !isSignInFlow &&
-      signUp?.status !== "missing_requirements"
-    ) {
-      router.push("/login");
-    }
-  }, [isLoaded, isSignInFlow, signUp?.status, router]);
+  // useEffect(() => {
+  //   // Redirect if neither flow is active
+  //   if (
+  //     isLoaded &&
+  //     !isSignInFlow &&
+  //     signUp?.status !== "missing_requirements"
+  //   ) {
+  //     router.push("/login");
+  //   }
+  // }, [isLoaded, isSignInFlow, signUp?.status, router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -103,6 +104,7 @@ export function OTPForm({ className, ...props }: React.ComponentProps<"div">) {
           setError("Verification failed. Please try again.");
         }
       }
+      // eslint-disable-next-line
     } catch (err: any) {
       setError(err.errors?.[0]?.message || "Invalid verification code");
     } finally {
@@ -134,6 +136,7 @@ export function OTPForm({ className, ...props }: React.ComponentProps<"div">) {
           strategy: "email_code",
         });
       }
+      // eslint-disable-next-line
     } catch (err: any) {
       setError(err.errors?.[0]?.message || "Failed to resend code");
     } finally {
@@ -213,10 +216,10 @@ export function OTPForm({ className, ...props }: React.ComponentProps<"div">) {
           </Field>
         </FieldGroup>
       </form>
-      <FieldDescription className="px-6 text-center">
+      {/* <FieldDescription className="px-6 text-center">
         By clicking continue, you agree to our <a href="#">Terms of Service</a>{" "}
         and <a href="#">Privacy Policy</a>.
-      </FieldDescription>
+      </FieldDescription> */}
     </div>
   );
 }
