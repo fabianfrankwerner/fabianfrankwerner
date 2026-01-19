@@ -4,17 +4,14 @@ import { NextResponse } from "next/server";
 const isPublicRoute = createRouteMatcher(["/"]);
 
 export default clerkMiddleware(async (auth, req) => {
-  const { isAuthenticated } = await auth();
-
-  if (isPublicRoute(req)) {
-    return NextResponse.next();
-  }
-
-  if (!isAuthenticated) {
-    return NextResponse.redirect(new URL("/", req.url));
-  }
-
-  return NextResponse.next();
+  // const { isAuthenticated } = await auth();
+  // if (isPublicRoute(req)) {
+  //   return NextResponse.next();
+  // }
+  // if (!isAuthenticated) {
+  //   return NextResponse.redirect(new URL("/", req.url));
+  // }
+  // return NextResponse.next();
 });
 
 export const config = {
