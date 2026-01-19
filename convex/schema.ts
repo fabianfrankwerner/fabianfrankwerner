@@ -9,16 +9,8 @@ import { v } from "convex/values";
 
 export default defineSchema({
   users: defineTable({
-    /** Clerk user id (subject). */
-    externalId: v.string(),
-    /** Optional denormalized profile fields for convenience. */
-    name: v.string(),
-    // email: v.optional(v.string()),
-    // displayName: v.optional(v.string()),
-    // imageUrl: v.optional(v.string()),
-    // createdAt: v.number(),
-    // updatedAt: v.number(),
-  }).index("byExternalId", ["externalId"]),
+    clerkUserId: v.string(),
+  }).index("byClerkUserId", ["clerkUserId"]),
 
   /**
    * A "connection" to an external social provider (OAuth or API key based).

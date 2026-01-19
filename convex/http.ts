@@ -15,7 +15,7 @@ http.route({
       return new Response("Error occured", { status: 400 });
     }
     switch (event.type) {
-      case "user.created": // intentional fallthrough
+      case "user.created":
       case "user.updated":
         await ctx.runMutation(internal.users.upsertFromClerk, {
           data: event.data,
@@ -28,7 +28,7 @@ http.route({
         break;
       }
       default:
-        console.log("Ignored Clerk webhook event", event.type);
+        console.log(`Ignored webhook event: ${event.type}`);
     }
 
     return new Response(null, { status: 200 });
@@ -46,7 +46,7 @@ async function validateRequest(req: Request): Promise<WebhookEvent | null> {
   try {
     return wh.verify(payloadString, svixHeaders) as unknown as WebhookEvent;
   } catch (error) {
-    console.error("Error verifying webhook event", error);
+    console.error(`Error verifying webhook event: ${error}`);
     return null;
   }
 }

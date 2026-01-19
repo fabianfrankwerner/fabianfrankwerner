@@ -6,7 +6,7 @@ import LandingPage from "@/components/landing-page";
 import { api } from "../../convex/_generated/api";
 
 export default function Home() {
-  const user = useQuery(api.users.current, {});
+  const user = useQuery(api.users.current);
 
   return (
     <>
