@@ -20,7 +20,7 @@ export async function ensureUserForIdentity(
   // you run `npx convex dev` (which regenerates types/index names).
   const existing = await ctx.db
     .query("users")
-    .filter((q) => q.eq(q.field("clerkUserId"), identity.subject))
+    .withIndex("by_clerkUserId", (q) => q.eq("clerkUserId", identity.subject))
     .unique();
 
   if (existing) return existing;

@@ -4,8 +4,18 @@
 - [x] Install and configure Clerk (`@clerk/nextjs`).
 - [x] Integration: Configure `auth.config.ts` in Convex to verify Clerk JWTs (securing your backend).
 - [x] Create a `ConvexProviderWithClerk` wrapper in your root layout to sync auth state.
-- [ ] Define the initial `schema.ts` in Convex (Users, Posts tables).
-- [ ] Create a "User Sync" webhook: When a user signs up in Clerk, trigger a Convex http-action to store them in your `users` table.
+- [x] Define the initial `schema.ts` in Convex (Users, Posts tables).
+- [x] Create a "User Sync" webhook: When a user signs up in Clerk, trigger a Convex http-action to store them in your `users` table.
+
+## Clerk → Convex user sync (dev)
+
+- Convex HTTP endpoint: `POST https://<your-convex-deployment>.convex.site/clerk/webhook`
+- Configure this URL in the Clerk Dashboard (Dev) as a webhook with events:
+  - `user.created`
+  - `user.updated`
+  - `user.deleted`
+- In Convex env, set `CLERK_WEBHOOK_SECRET` to the signing secret from the Clerk webhook.
+- `convex/http.ts` registers the route and `convex/auth/clerkWebhook.ts` verifies the Svix signature and upserts/deletes rows in the `users` table via `convex/users.ts`.
 
 # Phase 2: The "Zen" Editor (Convex Powered)
 
