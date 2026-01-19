@@ -10,16 +10,15 @@ import { v } from "convex/values";
 export default defineSchema({
   users: defineTable({
     /** Clerk user id (subject). */
-    clerkUserId: v.string(),
+    externalId: v.string(),
     /** Optional denormalized profile fields for convenience. */
-    email: v.optional(v.string()),
-    displayName: v.optional(v.string()),
-    imageUrl: v.optional(v.string()),
-    createdAt: v.number(),
-    updatedAt: v.number(),
-  })
-    .index("by_clerkUserId", ["clerkUserId"])
-    .index("by_createdAt", ["createdAt"]),
+    name: v.string(),
+    // email: v.optional(v.string()),
+    // displayName: v.optional(v.string()),
+    // imageUrl: v.optional(v.string()),
+    // createdAt: v.number(),
+    // updatedAt: v.number(),
+  }).index("byExternalId", ["externalId"]),
 
   /**
    * A "connection" to an external social provider (OAuth or API key based).

@@ -6,7 +6,7 @@ import LandingPage from "@/components/landing-page";
 import { api } from "../../convex/_generated/api";
 
 export default function Home() {
-  const whoami = useQuery(api.auth.whoami, {});
+  const user = useQuery(api.users.current, {});
 
   return (
     <>
@@ -20,7 +20,7 @@ export default function Home() {
           </div>
 
           <pre className="max-w-full overflow-x-auto rounded bg-muted p-3 text-xs">
-            {whoami ? JSON.stringify(whoami, null, 2) : "Loading whoami..."}
+            {user ? JSON.stringify(user, null, 2) : "Loading user..."}
           </pre>
         </div>
       </Authenticated>
