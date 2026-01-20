@@ -1,6 +1,6 @@
 "use client";
 
-import { useSignIn } from "@clerk/nextjs";
+import { useClerk, useSignIn } from "@clerk/nextjs";
 import type { OAuthStrategy } from "@clerk/types";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -31,6 +31,9 @@ export function SigninForm({
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
+  const { client } = useClerk();
+  const lastStrategy = client?.lastAuthenticationStrategy;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -78,6 +81,13 @@ export function SigninForm({
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
+      <style>{`
+              @keyframes pulse {
+                0%, 100% { border-color: var(--border); }
+                50% { border-color: var(--primary); }
+              }
+      `}</style>
+
       <form onSubmit={handleSubmit}>
         <FieldGroup>
           <div className="flex flex-col items-center gap-2 text-center">
@@ -147,6 +157,11 @@ export function SigninForm({
               type="button"
               onClick={() => handleOAuth("oauth_github")}
               disabled={isLoading || !isLoaded}
+              style={
+                lastStrategy === "oauth_github"
+                  ? { animation: "pulse 2s ease-in-out infinite" }
+                  : undefined
+              }
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -158,13 +173,23 @@ export function SigninForm({
                   fill="currentColor"
                 />
               </svg>
-              Sign In with GitHub
+              {lastStrategy === "oauth_github" ? (
+                <span className="text-primary">GitHub (Last Used)</span>
+              ) : (
+                "Sign In with GitHub"
+              )}
             </Button>
+
             <Button
               variant="outline"
               type="button"
               onClick={() => handleOAuth("oauth_google")}
               disabled={isLoading || !isLoaded}
+              style={
+                lastStrategy === "oauth_google"
+                  ? { animation: "pulse 2s ease-in-out infinite" }
+                  : undefined
+              }
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -176,7 +201,11 @@ export function SigninForm({
                   fill="currentColor"
                 />
               </svg>
-              Sign In with Google
+              {lastStrategy === "oauth_google" ? (
+                <span className="text-primary">Google (Last Used)</span>
+              ) : (
+                "Sign In with Google"
+              )}
             </Button>
           </Field>
         </FieldGroup>
