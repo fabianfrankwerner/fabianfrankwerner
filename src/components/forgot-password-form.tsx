@@ -3,7 +3,7 @@
 import { useSignIn } from "@clerk/nextjs";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { SimultanIcon } from "@/components/brand/simultan-icon";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
@@ -36,6 +36,13 @@ export function ForgotPasswordForm({
   const [code, setCode] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const formRef = useRef<HTMLFormElement>(null);
+
+  useEffect(() => {
+    if (step === "reset" && code.length === 6 && !isLoading) {
+      formRef.current?.requestSubmit();
+    }
+  }, [code, isLoading, step]);
 
   const handleRequestCode = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -88,6 +95,7 @@ export function ForgotPasswordForm({
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <form
         onSubmit={step === "email" ? handleRequestCode : handleResetPassword}
+        ref={formRef}
       >
         <FieldGroup>
           <div className="flex flex-col items-center gap-2 text-center">
@@ -147,6 +155,18 @@ export function ForgotPasswordForm({
           {step === "reset" && (
             <>
               <Field>
+                <FieldLabel htmlFor="new-password">New Password</FieldLabel>
+                <Input
+                  id="new-password"
+                  type="password"
+                  placeholder="Enter your new password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  disabled={isLoading}
+                />
+              </Field>
+              <Field>
                 <FieldLabel htmlFor="otp" className="sr-only">
                   Verification code
                 </FieldLabel>
@@ -171,18 +191,6 @@ export function ForgotPasswordForm({
                     <InputOTPSlot index={5} />
                   </InputOTPGroup>
                 </InputOTP>
-              </Field>
-              <Field>
-                <FieldLabel htmlFor="new-password">New Password</FieldLabel>
-                <Input
-                  id="new-password"
-                  type="password"
-                  placeholder="Enter your new password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                  disabled={isLoading}
-                />
               </Field>
               <Field>
                 <Button type="submit" disabled={isLoading || code.length !== 6}>

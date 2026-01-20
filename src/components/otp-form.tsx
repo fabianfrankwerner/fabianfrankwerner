@@ -3,7 +3,7 @@
 import { useSignIn, useSignUp } from "@clerk/nextjs";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { SimultanIcon } from "@/components/brand/simultan-icon";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
@@ -39,6 +39,7 @@ export function OTPForm({ className, ...props }: React.ComponentProps<"div">) {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isResending, setIsResending] = useState(false);
+  const formRef = useRef<HTMLFormElement>(null);
 
   const isLoaded = signInLoaded && signUpLoaded;
   const isSignInFlow =
@@ -60,6 +61,12 @@ export function OTPForm({ className, ...props }: React.ComponentProps<"div">) {
       router.replace("/");
     }
   }, [isLoaded, isSignInFlow, signUp?.status, router]);
+
+  useEffect(() => {
+    if (code.length === 6 && !isLoading) {
+      formRef.current?.requestSubmit();
+    }
+  }, [code, isLoading]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -140,7 +147,7 @@ export function OTPForm({ className, ...props }: React.ComponentProps<"div">) {
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} ref={formRef}>
         <FieldGroup>
           <div className="flex flex-col items-center gap-2 text-center">
             <Link
