@@ -57,7 +57,7 @@ export function OTPForm({ className, ...props }: React.ComponentProps<"div">) {
       !isSignInFlow &&
       signUp?.status !== "missing_requirements"
     ) {
-      router.push("/signin");
+      router.replace("/");
     }
   }, [isLoaded, isSignInFlow, signUp?.status, router]);
 
