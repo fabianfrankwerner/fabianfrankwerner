@@ -129,12 +129,12 @@ export function SigninForm({
           <Field>
             <div className="flex items-center justify-between">
               <FieldLabel htmlFor="password">Password</FieldLabel>
-              <a
-                href="#"
+              <Link
+                href="/forgot-password"
                 className="text-xs underline-offset-4 hover:underline"
               >
                 Forgot your password?
-              </a>
+              </Link>
             </div>
             <Input
               id="password"
