@@ -185,7 +185,9 @@ export function SigninForm({
                 ></path>
               </svg>
               {lastStrategy === "oauth_github" ? (
-                <span className="text-primary">GitHub (Last Used)</span>
+                <span className="text-primary">
+                  GitHub&nbsp;&nbsp;(Last Used)
+                </span>
               ) : (
                 "Sign In with GitHub"
               )}
@@ -226,7 +228,9 @@ export function SigninForm({
                 ></path>
               </svg>
               {lastStrategy === "oauth_google" ? (
-                <span className="text-primary">Google (Last Used)</span>
+                <span className="text-primary">
+                  Google&nbsp;&nbsp;(Last Used)
+                </span>
               ) : (
                 "Sign In with Google"
               )}
