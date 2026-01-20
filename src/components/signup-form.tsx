@@ -129,9 +129,9 @@ export function SignupForm({
             />
           </Field>
           <Field>
-            {/* Clerk's CAPTCHA widget for bot protection. */}
             <div
               id="clerk-captcha"
+              className="empty:hidden"
               data-cl-theme="auto"
               data-cl-size="flexible"
               data-cl-language="auto"
