@@ -7,6 +7,7 @@
 - [x] Define the initial `schema.ts` in Convex (Users, Posts tables).
 - [x] Create a "User Sync" webhook: When a user signs up in Clerk, trigger a Convex http-action to store them in your `users` table.
 - [ ] Properly brand (auth) pages and only make bot protection `div` visible on submit.
+- [ ] Implement forgot password functionality
 
 # Phase 2: The "Zen" Editor (Convex Powered)
 

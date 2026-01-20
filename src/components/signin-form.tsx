@@ -88,11 +88,11 @@ export function SigninForm({
               </div>
               <span className="sr-only">Home</span>
             </Link>
-            <h1 className="text-xl font-bold">Welcome to Acme Inc.</h1>
+            <h1 className="text-xl font-bold">Welcome back!</h1>
             <FieldDescription>
               Don&apos;t have an account?{" "}
               <Link href="/signup" className="underline">
-                Sign up
+                Sign Up
               </Link>
             </FieldDescription>
           </div>
@@ -107,7 +107,7 @@ export function SigninForm({
             <Input
               id="email"
               type="email"
-              placeholder="m@example.com"
+              placeholder="Enter your email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -128,10 +128,10 @@ export function SigninForm({
           </Field>
           <Field>
             <Button type="submit" disabled={isLoading || !isLoaded}>
-              {isLoading ? "Signing in..." : "Login"}
+              {isLoading ? "Signing In..." : "Sign In"}
             </Button>
           </Field>
-          <FieldSeparator>Or</FieldSeparator>
+          <FieldSeparator>or</FieldSeparator>
           <Field className="grid gap-4 sm:grid-cols-2">
             <Button
               variant="outline"
@@ -149,7 +149,7 @@ export function SigninForm({
                   fill="currentColor"
                 />
               </svg>
-              Continue with GitHub
+              Sign In with GitHub
             </Button>
             <Button
               variant="outline"
@@ -167,15 +167,15 @@ export function SigninForm({
                   fill="currentColor"
                 />
               </svg>
-              Continue with Google
+              Sign In with Google
             </Button>
           </Field>
         </FieldGroup>
       </form>
-      <FieldDescription className="px-6 text-center">
+      {/* <FieldDescription className="px-6 text-center">
         By clicking continue, you agree to our <a href="#">Terms of Service</a>{" "}
         and <a href="#">Privacy Policy</a>.
-      </FieldDescription>
+      </FieldDescription> */}
     </div>
   );
 }
