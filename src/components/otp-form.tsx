@@ -39,6 +39,8 @@ export function OTPForm({ className, ...props }: React.ComponentProps<"div">) {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isResending, setIsResending] = useState(false);
+  const [resendCooldown, setResendCooldown] = useState(60);
+  const [isCountingDown, setIsCountingDown] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
 
   const isLoaded = signInLoaded && signUpLoaded;
@@ -67,6 +69,19 @@ export function OTPForm({ className, ...props }: React.ComponentProps<"div">) {
       formRef.current?.requestSubmit();
     }
   }, [code, isLoading]);
+
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+    if (isCountingDown && resendCooldown > 0) {
+      interval = setInterval(() => {
+        setResendCooldown((prev) => prev - 1);
+      }, 1000);
+    } else if (resendCooldown === 0) {
+      setIsCountingDown(false);
+      setResendCooldown(60);
+    }
+    return () => clearInterval(interval);
+  }, [isCountingDown, resendCooldown]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -115,7 +130,7 @@ export function OTPForm({ className, ...props }: React.ComponentProps<"div">) {
   };
 
   const handleResend = async () => {
-    if (!isLoaded) return;
+    if (!isLoaded || isCountingDown) return;
 
     setIsResending(true);
     setError("");
@@ -137,6 +152,7 @@ export function OTPForm({ className, ...props }: React.ComponentProps<"div">) {
           strategy: "email_code",
         });
       }
+      setIsCountingDown(true);
       // eslint-disable-next-line
     } catch (err: any) {
       setError(err.errors?.[0]?.message || "Failed to resend code.");
@@ -200,10 +216,14 @@ export function OTPForm({ className, ...props }: React.ComponentProps<"div">) {
               <button
                 type="button"
                 onClick={handleResend}
-                disabled={isResending || !isLoaded}
+                disabled={isResending || !isLoaded || isCountingDown}
                 className="underline disabled:opacity-50"
               >
-                {isResending ? "Resending..." : "Resend"}
+                {isResending
+                  ? "Resending..."
+                  : isCountingDown
+                    ? `Resend (${resendCooldown}s)`
+                    : "Resend"}
               </button>
             </FieldDescription>
           </Field>
