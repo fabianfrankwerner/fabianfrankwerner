@@ -55,7 +55,7 @@ export function SignupForm({
       }
       // eslint-disable-next-line
     } catch (err: any) {
-      setError(err.errors?.[0]?.message || "Failed to create account");
+      setError(err.errors?.[0]?.message || "Failed to create account.");
     } finally {
       setIsLoading(false);
     }
@@ -72,7 +72,7 @@ export function SignupForm({
       });
       // eslint-disable-next-line
     } catch (err: any) {
-      setError(err.errors?.[0]?.message || "OAuth authentication failed");
+      setError(err.errors?.[0]?.message || "OAuth authentication failed.");
     }
   };
 

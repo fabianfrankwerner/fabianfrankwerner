@@ -2,11 +2,11 @@
 
 import { useSignIn } from "@clerk/nextjs";
 import type { OAuthStrategy } from "@clerk/types";
-import { GalleryVerticalEnd } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
+import { SimultanIcon } from "@/components/brand/simultan-icon";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import {
@@ -53,7 +53,7 @@ export function SigninForm({
       }
       // eslint-disable-next-line
     } catch (err: any) {
-      setError(err.errors?.[0]?.message || "Invalid email or password");
+      setError(err.errors?.[0]?.message || "Invalid email or password.");
     } finally {
       setIsLoading(false);
     }
@@ -70,7 +70,7 @@ export function SigninForm({
       });
       // eslint-disable-next-line
     } catch (err: any) {
-      setError(err.errors?.[0]?.message || "OAuth authentication failed");
+      setError(err.errors?.[0]?.message || "OAuth authentication failed.");
     }
   };
 
@@ -84,9 +84,9 @@ export function SigninForm({
               className="flex flex-col items-center gap-2 font-medium"
             >
               <div className="flex size-8 items-center justify-center rounded-md">
-                <GalleryVerticalEnd className="size-6" />
+                <SimultanIcon className="size-6" />
               </div>
-              <span className="sr-only">Acme Inc.</span>
+              <span className="sr-only">Home</span>
             </Link>
             <h1 className="text-xl font-bold">Welcome to Acme Inc.</h1>
             <FieldDescription>
