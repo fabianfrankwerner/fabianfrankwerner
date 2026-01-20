@@ -1,12 +1,12 @@
 "use client";
 
 import { useSignIn, useSignUp } from "@clerk/nextjs";
-import { GalleryVerticalEnd } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 // eslint-disable-next-line
 import { useEffect, useState } from "react";
 
+import { SimultanIcon } from "@/components/brand/simultan-icon";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import {
@@ -45,7 +45,6 @@ export function OTPForm({ className, ...props }: React.ComponentProps<"div">) {
     signIn?.status === "needs_second_factor" ||
     signIn?.status === "needs_first_factor";
 
-  // Check if sign-in needs email code verification
   const needsEmailCode =
     signIn?.status === "needs_first_factor" &&
     signIn.supportedFirstFactors?.some(
@@ -53,13 +52,12 @@ export function OTPForm({ className, ...props }: React.ComponentProps<"div">) {
     );
 
   // useEffect(() => {
-  //   // Redirect if neither flow is active
   //   if (
   //     isLoaded &&
   //     !isSignInFlow &&
   //     signUp?.status !== "missing_requirements"
   //   ) {
-  //     router.push("/login");
+  //     router.push("/signin");
   //   }
   // }, [isLoaded, isSignInFlow, signUp?.status, router]);
 
@@ -74,13 +72,11 @@ export function OTPForm({ className, ...props }: React.ComponentProps<"div">) {
       if (isSignInFlow && signIn) {
         let result;
         if (needsEmailCode) {
-          // Sign-in flow: verify email code (first factor)
           result = await signIn.attemptFirstFactor({
             strategy: "email_code",
             code,
           });
         } else {
-          // Sign-in flow: verify second factor (TOTP)
           result = await signIn.attemptSecondFactor({
             strategy: "totp",
             code,
@@ -91,22 +87,21 @@ export function OTPForm({ className, ...props }: React.ComponentProps<"div">) {
           await setSignInActive({ session: result.createdSessionId });
           router.push("/");
         } else {
-          setError("Verification failed. Please try again.");
+          setError("Something went wrong. Please try again!");
         }
       } else if (signUp) {
-        // Sign-up flow: verify email address
         const result = await signUp.attemptEmailAddressVerification({ code });
 
         if (result.status === "complete") {
           await setSignUpActive({ session: result.createdSessionId });
           router.push("/");
         } else {
-          setError("Verification failed. Please try again.");
+          setError("Something went wrong. Please try again!");
         }
       }
       // eslint-disable-next-line
     } catch (err: any) {
-      setError(err.errors?.[0]?.message || "Invalid verification code");
+      setError(err.errors?.[0]?.message || "Failed to verify code.");
     } finally {
       setIsLoading(false);
     }
@@ -120,7 +115,6 @@ export function OTPForm({ className, ...props }: React.ComponentProps<"div">) {
 
     try {
       if (isSignInFlow && signIn) {
-        // For sign-in, we need to get the email address ID from the supported first factors
         const supportedFirstFactors = signIn.supportedFirstFactors;
         const emailFactor = supportedFirstFactors?.find(
           (factor) => factor.strategy === "email_code",
@@ -138,7 +132,7 @@ export function OTPForm({ className, ...props }: React.ComponentProps<"div">) {
       }
       // eslint-disable-next-line
     } catch (err: any) {
-      setError(err.errors?.[0]?.message || "Failed to resend code");
+      setError(err.errors?.[0]?.message || "Failed to resend code.");
     } finally {
       setIsResending(false);
     }
@@ -154,13 +148,13 @@ export function OTPForm({ className, ...props }: React.ComponentProps<"div">) {
               className="flex flex-col items-center gap-2 font-medium"
             >
               <div className="flex size-8 items-center justify-center rounded-md">
-                <GalleryVerticalEnd className="size-6" />
+                <SimultanIcon className="size-6" />
               </div>
-              <span className="sr-only">Acme Inc.</span>
+              <span className="sr-only">Home</span>
             </Link>
             <h1 className="text-xl font-bold">Enter verification code</h1>
             <FieldDescription>
-              We sent a 6-digit code to your email address
+              We sent a 6-digit code to your email address.
             </FieldDescription>
           </div>
           {error && (

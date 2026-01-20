@@ -2,7 +2,6 @@
 
 import { useSignUp } from "@clerk/nextjs";
 import type { OAuthStrategy } from "@clerk/types";
-import { GalleryVerticalEnd } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -93,7 +92,7 @@ export function SignupForm({
             <h1 className="text-xl font-bold">Welcome!</h1>
             <FieldDescription>
               Have an account?{" "}
-              <Link href="/login" className="underline">
+              <Link href="/signin" className="underline">
                 Sign In
               </Link>
             </FieldDescription>
