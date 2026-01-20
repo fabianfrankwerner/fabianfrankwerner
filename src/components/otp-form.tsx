@@ -20,6 +20,7 @@ import {
   InputOTPSeparator,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
+import { Spinner } from "@/components/ui/spinner";
 import { cn } from "@/lib/utils";
 
 export function OTPForm({ className, ...props }: React.ComponentProps<"div">) {
@@ -50,15 +51,15 @@ export function OTPForm({ className, ...props }: React.ComponentProps<"div">) {
       (factor) => factor.strategy === "email_code",
     );
 
-  useEffect(() => {
-    if (
-      isLoaded &&
-      !isSignInFlow &&
-      signUp?.status !== "missing_requirements"
-    ) {
-      router.push("/signin");
-    }
-  }, [isLoaded, isSignInFlow, signUp?.status, router]);
+  // useEffect(() => {
+  //   if (
+  //     isLoaded &&
+  //     !isSignInFlow &&
+  //     signUp?.status !== "missing_requirements"
+  //   ) {
+  //     router.push("/signin");
+  //   }
+  // }, [isLoaded, isSignInFlow, signUp?.status, router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -204,7 +205,14 @@ export function OTPForm({ className, ...props }: React.ComponentProps<"div">) {
               type="submit"
               disabled={isLoading || !isLoaded || code.length !== 6}
             >
-              {isLoading ? "Verifying..." : "Verify"}
+              {isLoading ? (
+                <>
+                  <Spinner className="size-3" />
+                  Verifying...
+                </>
+              ) : (
+                "Verify"
+              )}
             </Button>
           </Field>
         </FieldGroup>

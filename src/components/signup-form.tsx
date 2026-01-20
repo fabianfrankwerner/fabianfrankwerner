@@ -19,6 +19,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 
+import { Spinner } from "./ui/spinner";
+
 export function SignupForm({
   className,
   ...props
@@ -136,7 +138,14 @@ export function SignupForm({
               data-cl-language="auto"
             />
             <Button type="submit" disabled={isLoading || !isLoaded}>
-              {isLoading ? "Signing Up..." : "Sign Up"}
+              {isLoading ? (
+                <>
+                  <Spinner className="size-3" />
+                  Signin Up...
+                </>
+              ) : (
+                "Sign Up"
+              )}
             </Button>
           </Field>
           <FieldSeparator>or</FieldSeparator>
