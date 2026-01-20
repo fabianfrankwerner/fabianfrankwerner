@@ -3,9 +3,9 @@ import { NextResponse } from "next/server";
 
 const isPublicRoute = createRouteMatcher([
   "/",
-  "/login",
-  "/signup",
   "/otp",
+  "/signup",
+  "/signin",
   "/sso-callback",
 ]);
 
@@ -17,7 +17,7 @@ export default clerkMiddleware(async (auth, req) => {
   }
 
   if (!isAuthenticated) {
-    return NextResponse.redirect(new URL("/login", req.url));
+    return NextResponse.redirect(new URL("/signin", req.url));
   }
 
   return NextResponse.next();
