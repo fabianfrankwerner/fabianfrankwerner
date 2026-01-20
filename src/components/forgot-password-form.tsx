@@ -74,7 +74,7 @@ export function ForgotPasswordForm({
         await setActive({ session: result.createdSessionId });
         router.push("/");
       } else {
-        setError("Verification failed. Please try again.");
+        setError("Something went wrong. Please try again!");
       }
       // eslint-disable-next-line
     } catch (err: any) {
@@ -86,47 +86,36 @@ export function ForgotPasswordForm({
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
-      {/* We toggle the form handler based on the step
-       */}
       <form
         onSubmit={step === "email" ? handleRequestCode : handleResetPassword}
       >
         <FieldGroup>
-          {/* Header Section */}
           <div className="flex flex-col items-center gap-2 text-center">
             <Link
               href="/"
               className="flex flex-col items-center gap-2 font-medium"
             >
               <div className="flex size-8 items-center justify-center rounded-md">
-                <SimultanIcon className="size-6 text-primary" />
+                <SimultanIcon className="size-6" />
               </div>
               <span className="sr-only">Home</span>
             </Link>
 
             <h1 className="text-xl font-bold">
-              {step === "email" ? "Reset Password" : "Enter new password"}
+              {step === "email" ? "Reset Password" : "Enter Password"}
             </h1>
-
             <FieldDescription>
               {step === "email"
                 ? "Enter your email to receive a reset code."
                 : `We sent a 6-digit code to ${email}`}
             </FieldDescription>
           </div>
-
-          {/* Error Alert */}
           {error && (
             <Alert variant="destructive">
               <AlertTitle>Error</AlertTitle>
               <AlertDescription>{error}</AlertDescription>
             </Alert>
           )}
-
-          {/* -------------------------
-             STEP 1: EMAIL INPUT 
-             -------------------------
-          */}
           {step === "email" && (
             <>
               <Field>
@@ -145,24 +134,18 @@ export function ForgotPasswordForm({
                 <Button type="submit" disabled={isLoading}>
                   {isLoading ? (
                     <>
-                      <Spinner className="mr-2 size-3 animate-spin" />
+                      <Spinner className="size-3" />
                       Sending...
                     </>
                   ) : (
-                    "Send Reset Code"
+                    "Send"
                   )}
                 </Button>
               </Field>
             </>
           )}
-
-          {/* -------------------------
-             STEP 2: CODE + PASSWORD 
-             -------------------------
-          */}
           {step === "reset" && (
             <>
-              {/* OTP Input - Styled exactly like OTPForm */}
               <Field>
                 <FieldLabel htmlFor="otp" className="sr-only">
                   Verification code
@@ -173,7 +156,7 @@ export function ForgotPasswordForm({
                   value={code}
                   onChange={setCode}
                   required
-                  containerClassName="justify-center gap-4" // Center the OTP
+                  containerClassName="justify-center gap-4"
                   disabled={isLoading}
                 >
                   <InputOTPGroup className="gap-2.5 *:data-[slot=input-otp-slot]:h-16 *:data-[slot=input-otp-slot]:w-12 *:data-[slot=input-otp-slot]:rounded-md *:data-[slot=input-otp-slot]:border *:data-[slot=input-otp-slot]:text-xl">
@@ -189,44 +172,38 @@ export function ForgotPasswordForm({
                   </InputOTPGroup>
                 </InputOTP>
               </Field>
-
-              {/* New Password Input */}
               <Field>
                 <FieldLabel htmlFor="new-password">New Password</FieldLabel>
                 <Input
                   id="new-password"
                   type="password"
-                  placeholder="Enter new password"
+                  placeholder="Enter your new password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
                   disabled={isLoading}
                 />
               </Field>
-
               <Field>
                 <Button type="submit" disabled={isLoading || code.length !== 6}>
                   {isLoading ? (
                     <>
-                      <Spinner className="mr-2 size-3 animate-spin" />
+                      <Spinner className="size-3" />
                       Resetting...
                     </>
                   ) : (
-                    "Reset Password"
+                    "Reset"
                   )}
                 </Button>
               </Field>
             </>
           )}
-
-          {/* Footer Link */}
-          <div className="text-center text-sm">
-            <Link href="/login" className="underline underline-offset-4">
-              Back to Sign In
-            </Link>
-          </div>
         </FieldGroup>
       </form>
+      {/* <FieldDescription className="px-6 text-center">
+        By clicking continue, you agree to our <a href="#">Terms of Service</a>{" "}
+        and <a href="#">Privacy Policy</a>.
+      </FieldDescription> */}
     </div>
   );
 }
