@@ -49,11 +49,11 @@ export function SigninForm({
       } else if (result.status === "needs_second_factor") {
         router.push("/otp");
       } else {
-        setError("Something went wrong. Please try again.");
+        setError("Something went wrong. Please try again!");
       }
       // eslint-disable-next-line
     } catch (err: any) {
-      setError(err.errors?.[0]?.message || "Invalid email or password.");
+      setError(err.errors?.[0]?.message || "Failed to sign in account.");
     } finally {
       setIsLoading(false);
     }

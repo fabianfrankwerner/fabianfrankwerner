@@ -7,6 +7,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
+import { SimultanIcon } from "@/components/brand/simultan-icon";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import {
@@ -47,7 +48,6 @@ export function SignupForm({
         await setActive({ session: result.createdSessionId });
         router.push("/");
       } else {
-        // Prepare email verification
         await signUp.prepareEmailAddressVerification({
           strategy: "email_code",
         });
@@ -55,7 +55,7 @@ export function SignupForm({
       }
       // eslint-disable-next-line
     } catch (err: any) {
-      setError(err.errors?.[0]?.message || "Failed to create account.");
+      setError(err.errors?.[0]?.message || "Failed to sign up account.");
     } finally {
       setIsLoading(false);
     }
@@ -86,15 +86,15 @@ export function SignupForm({
               className="flex flex-col items-center gap-2 font-medium"
             >
               <div className="flex size-8 items-center justify-center rounded-md">
-                <GalleryVerticalEnd className="size-6" />
+                <SimultanIcon className="size-6" />
               </div>
-              <span className="sr-only">Acme Inc.</span>
+              <span className="sr-only">Home</span>
             </Link>
-            <h1 className="text-xl font-bold">Welcome to Acme Inc.</h1>
+            <h1 className="text-xl font-bold">Welcome!</h1>
             <FieldDescription>
-              Already have an account?{" "}
+              Have an account?{" "}
               <Link href="/login" className="underline">
-                Sign in
+                Sign In
               </Link>
             </FieldDescription>
           </div>
@@ -109,7 +109,7 @@ export function SignupForm({
             <Input
               id="email"
               type="email"
-              placeholder="m@example.com"
+              placeholder="Enter your email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -121,7 +121,7 @@ export function SignupForm({
             <Input
               id="password"
               type="password"
-              placeholder="Create a password"
+              placeholder="Enter your password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
@@ -139,10 +139,10 @@ export function SignupForm({
           </Field>
           <Field>
             <Button type="submit" disabled={isLoading || !isLoaded}>
-              {isLoading ? "Creating account..." : "Create Account"}
+              {isLoading ? "Signing Up..." : "Sign Up"}
             </Button>
           </Field>
-          <FieldSeparator>Or</FieldSeparator>
+          <FieldSeparator>or</FieldSeparator>
           <Field className="grid gap-4 sm:grid-cols-2">
             <Button
               variant="outline"
@@ -160,7 +160,7 @@ export function SignupForm({
                   fill="currentColor"
                 />
               </svg>
-              Continue with GitHub
+              Sign Up with GitHub
             </Button>
             <Button
               variant="outline"
@@ -178,15 +178,15 @@ export function SignupForm({
                   fill="currentColor"
                 />
               </svg>
-              Continue with Google
+              Sign Up with Google
             </Button>
           </Field>
         </FieldGroup>
       </form>
-      <FieldDescription className="px-6 text-center">
+      {/* <FieldDescription className="px-6 text-center">
         By clicking continue, you agree to our <a href="#">Terms of Service</a>{" "}
         and <a href="#">Privacy Policy</a>.
-      </FieldDescription>
+      </FieldDescription> */}
     </div>
   );
 }
