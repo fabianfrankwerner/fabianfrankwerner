@@ -1,5 +1,13 @@
 import { AuthenticateWithRedirectCallback } from "@clerk/nextjs";
 
+import { Spinner } from "@/components/ui/spinner";
+
 export default function SSOCallbackPage() {
-  return <AuthenticateWithRedirectCallback redirectUrlComplete="/" />;
+  return (
+    <div className="flex min-h-svh items-center justify-center bg-background">
+      <Spinner className="size-5" />
+
+      <AuthenticateWithRedirectCallback redirectUrlComplete="/" />
+    </div>
+  );
 }

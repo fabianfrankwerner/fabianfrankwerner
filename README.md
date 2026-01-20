@@ -9,6 +9,7 @@
 - [ ] Properly brand (auth) pages and only make bot protection `div` visible on submit.
 - [ ] Implement forgot password functionality
 - [ ] Display same OAuth icons as Clerk
+- [ ] https://clerk.com/docs/guides/development/custom-flows/authentication/last-authentication-strategy
 
 # Phase 2: The "Zen" Editor (Convex Powered)
 
