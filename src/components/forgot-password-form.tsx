@@ -1,142 +1,231 @@
 "use client";
-import { useAuth, useClerk, useSignIn } from "@clerk/nextjs";
-import type { NextPage } from "next";
+
+import { useSignIn } from "@clerk/nextjs";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
+
+import { SimultanIcon } from "@/components/brand/simultan-icon";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
+import {
+  Field,
+  FieldDescription,
+  FieldGroup,
+  FieldLabel,
+} from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSeparator,
+  InputOTPSlot,
+} from "@/components/ui/input-otp";
+import { Spinner } from "@/components/ui/spinner";
+import { cn } from "@/lib/utils";
 
 export function ForgotPasswordForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
+  const router = useRouter();
+  const { isLoaded, signIn, setActive } = useSignIn();
+  const [step, setStep] = useState<"email" | "reset">("email");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [code, setCode] = useState("");
-  const [successfulCreation, setSuccessfulCreation] = useState(false);
-  const [secondFactor, setSecondFactor] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const router = useRouter();
-  const clerk = useClerk();
-  const { isSignedIn } = useAuth();
-  const { isLoaded, signIn, setActive } = useSignIn();
-
-  useEffect(() => {
-    if (isSignedIn) {
-      router.push("/");
-    }
-  }, [isSignedIn, router]);
-
-  if (!isLoaded) {
-    return null;
-  }
-
-  // Send the password reset code to the user's email
-  async function create(e: React.FormEvent) {
+  const handleRequestCode = async (e: React.FormEvent) => {
     e.preventDefault();
-    await signIn
-      ?.create({
+    if (!isLoaded) return;
+    setIsLoading(true);
+    setError("");
+
+    try {
+      await signIn.create({
         strategy: "reset_password_email_code",
         identifier: email,
-      })
-      .then((_) => {
-        setSuccessfulCreation(true);
-        setError("");
-      })
-
-      .catch((err) => {
-        setError(
-          err.errors?.[0]?.longMessage || "Failed to send password reset code.",
-        );
       });
-  }
+      setStep("reset");
+      // eslint-disable-next-line
+    } catch (err: any) {
+      setError(err.errors?.[0]?.message || "Failed to send reset code.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-  // Reset the user's password.
-  // Upon successful reset, the user will be
-  // signed in and redirected to the home page
-  async function reset(e: React.FormEvent) {
+  const handleResetPassword = async (e: React.FormEvent) => {
     e.preventDefault();
-    await signIn
-      ?.attemptFirstFactor({
+    if (!isLoaded) return;
+    setIsLoading(true);
+    setError("");
+
+    try {
+      const result = await signIn.attemptFirstFactor({
         strategy: "reset_password_email_code",
         code,
         password,
-      })
-      .then((result) => {
-        // Check if 2FA is required
-        if (result.status === "needs_second_factor") {
-          setSecondFactor(true);
-          setError("");
-        } else if (result.status === "complete") {
-          // Set the active session to
-          // the newly created session (user is now signed in)
-          setActive({
-            session: result.createdSessionId,
-            navigate: async ({ session }) => {
-              if (session?.currentTask) {
-                // Check for tasks and navigate to custom UI to help users resolve them
-                // See https://clerk.com/docs/guides/development/custom-flows/overview#session-tasks
-                console.log(session?.currentTask);
-                return;
-              }
-
-              router.push("/");
-            },
-          });
-          setError("");
-        } else {
-          console.log(result);
-        }
-      })
-      .catch((err) => {
-        setError(err.errors?.[0]?.longMessage || "Failed to reset password.");
       });
-  }
+
+      if (result.status === "complete") {
+        await setActive({ session: result.createdSessionId });
+        router.push("/");
+      } else {
+        setError("Verification failed. Please try again.");
+      }
+      // eslint-disable-next-line
+    } catch (err: any) {
+      setError(err.errors?.[0]?.message || "Failed to reset password.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
-    <div>
-      <h1>Forgot Password?</h1>
-      <form onSubmit={!successfulCreation ? create : reset}>
-        {!successfulCreation && (
-          <>
-            <label htmlFor="email">Provide your email address</label>
-            <input
-              type="email"
-              placeholder="e.g john@doe.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
+    <div className={cn("flex flex-col gap-6", className)} {...props}>
+      {/* We toggle the form handler based on the step
+       */}
+      <form
+        onSubmit={step === "email" ? handleRequestCode : handleResetPassword}
+      >
+        <FieldGroup>
+          {/* Header Section */}
+          <div className="flex flex-col items-center gap-2 text-center">
+            <Link
+              href="/"
+              className="flex flex-col items-center gap-2 font-medium"
+            >
+              <div className="flex size-8 items-center justify-center rounded-md">
+                <SimultanIcon className="size-6 text-primary" />
+              </div>
+              <span className="sr-only">Home</span>
+            </Link>
 
-            <button>Send password reset code</button>
-            {error && <p>{error}</p>}
-          </>
-        )}
+            <h1 className="text-xl font-bold">
+              {step === "email" ? "Reset Password" : "Enter new password"}
+            </h1>
 
-        {successfulCreation && (
-          <>
-            <label htmlFor="password">Enter your new password</label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
+            <FieldDescription>
+              {step === "email"
+                ? "Enter your email to receive a reset code."
+                : `We sent a 6-digit code to ${email}`}
+            </FieldDescription>
+          </div>
 
-            <label htmlFor="code">
-              Enter the password reset code that was sent to your email
-            </label>
-            <input
-              type="text"
-              value={code}
-              onChange={(e) => setCode(e.target.value)}
-            />
+          {/* Error Alert */}
+          {error && (
+            <Alert variant="destructive">
+              <AlertTitle>Error</AlertTitle>
+              <AlertDescription>{error}</AlertDescription>
+            </Alert>
+          )}
 
-            <button>Reset</button>
-            {error && <p>{error}</p>}
-          </>
-        )}
+          {/* -------------------------
+             STEP 1: EMAIL INPUT 
+             -------------------------
+          */}
+          {step === "email" && (
+            <>
+              <Field>
+                <FieldLabel htmlFor="email">Email</FieldLabel>
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="Enter your email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  disabled={isLoading}
+                />
+              </Field>
+              <Field>
+                <Button type="submit" disabled={isLoading}>
+                  {isLoading ? (
+                    <>
+                      <Spinner className="mr-2 size-3 animate-spin" />
+                      Sending...
+                    </>
+                  ) : (
+                    "Send Reset Code"
+                  )}
+                </Button>
+              </Field>
+            </>
+          )}
 
-        {secondFactor && (
-          <p>2FA is required, but this UI does not handle that</p>
-        )}
+          {/* -------------------------
+             STEP 2: CODE + PASSWORD 
+             -------------------------
+          */}
+          {step === "reset" && (
+            <>
+              {/* OTP Input - Styled exactly like OTPForm */}
+              <Field>
+                <FieldLabel htmlFor="otp" className="sr-only">
+                  Verification code
+                </FieldLabel>
+                <InputOTP
+                  maxLength={6}
+                  id="otp"
+                  value={code}
+                  onChange={setCode}
+                  required
+                  containerClassName="justify-center gap-4" // Center the OTP
+                  disabled={isLoading}
+                >
+                  <InputOTPGroup className="gap-2.5 *:data-[slot=input-otp-slot]:h-16 *:data-[slot=input-otp-slot]:w-12 *:data-[slot=input-otp-slot]:rounded-md *:data-[slot=input-otp-slot]:border *:data-[slot=input-otp-slot]:text-xl">
+                    <InputOTPSlot index={0} />
+                    <InputOTPSlot index={1} />
+                    <InputOTPSlot index={2} />
+                  </InputOTPGroup>
+                  <InputOTPSeparator />
+                  <InputOTPGroup className="gap-2.5 *:data-[slot=input-otp-slot]:h-16 *:data-[slot=input-otp-slot]:w-12 *:data-[slot=input-otp-slot]:rounded-md *:data-[slot=input-otp-slot]:border *:data-[slot=input-otp-slot]:text-xl">
+                    <InputOTPSlot index={3} />
+                    <InputOTPSlot index={4} />
+                    <InputOTPSlot index={5} />
+                  </InputOTPGroup>
+                </InputOTP>
+              </Field>
+
+              {/* New Password Input */}
+              <Field>
+                <FieldLabel htmlFor="new-password">New Password</FieldLabel>
+                <Input
+                  id="new-password"
+                  type="password"
+                  placeholder="Enter new password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  disabled={isLoading}
+                />
+              </Field>
+
+              <Field>
+                <Button type="submit" disabled={isLoading || code.length !== 6}>
+                  {isLoading ? (
+                    <>
+                      <Spinner className="mr-2 size-3 animate-spin" />
+                      Resetting...
+                    </>
+                  ) : (
+                    "Reset Password"
+                  )}
+                </Button>
+              </Field>
+            </>
+          )}
+
+          {/* Footer Link */}
+          <div className="text-center text-sm">
+            <Link href="/login" className="underline underline-offset-4">
+              Back to Sign In
+            </Link>
+          </div>
+        </FieldGroup>
       </form>
     </div>
   );
