@@ -8,6 +8,17 @@
 - [x] Create a "User Sync" webhook: When a user signs up in Clerk, trigger a Convex http-action to store them in your `users` table.
 - [ ] Implement forgot password functionality
 - [ ] Only allow signup / signin to be directly hitable
+      using this useEffect stuff: useEffect(() => {
+      if (
+      isLoaded &&
+      !isSignInFlow &&
+      signUp?.status !== "missing_requirements"
+      ) {
+      router.push("/signin");
+      }
+      }, [isLoaded, isSignInFlow, signUp?.status, router]);
+- [ ] Properly deploy
+- [ ] make the login redirect be instant without flickering
 
 # Phase 2: The "Zen" Editor (Convex Powered)
 

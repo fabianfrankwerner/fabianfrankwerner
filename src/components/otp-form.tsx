@@ -51,15 +51,15 @@ export function OTPForm({ className, ...props }: React.ComponentProps<"div">) {
       (factor) => factor.strategy === "email_code",
     );
 
-  // useEffect(() => {
-  //   if (
-  //     isLoaded &&
-  //     !isSignInFlow &&
-  //     signUp?.status !== "missing_requirements"
-  //   ) {
-  //     router.push("/signin");
-  //   }
-  // }, [isLoaded, isSignInFlow, signUp?.status, router]);
+  useEffect(() => {
+    if (
+      isLoaded &&
+      !isSignInFlow &&
+      signUp?.status !== "missing_requirements"
+    ) {
+      router.push("/signin");
+    }
+  }, [isLoaded, isSignInFlow, signUp?.status, router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
