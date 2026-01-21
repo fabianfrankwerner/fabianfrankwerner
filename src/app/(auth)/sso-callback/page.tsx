@@ -12,15 +12,22 @@ function SSOCallback() {
   const searchParams = useSearchParams();
   const { isAuthenticated, isLoading } = useConvexAuth();
 
-  useEffect(() => {
-    if (isLoading) {
-      return;
-    }
+  const shouldRedirect =
+    !isLoading && (isAuthenticated || searchParams.toString() === "");
 
-    if (isAuthenticated || searchParams.toString() === "") {
+  useEffect(() => {
+    if (shouldRedirect) {
       router.replace("/");
     }
-  }, [isLoading, isAuthenticated, router, searchParams]);
+  }, [shouldRedirect, router]);
+
+  if (shouldRedirect || isLoading) {
+    return (
+      <div className="flex min-h-svh items-center justify-center bg-background">
+        <Spinner className="size-5" />
+      </div>
+    );
+  }
 
   return (
     <div className="flex min-h-svh items-center justify-center bg-background">
