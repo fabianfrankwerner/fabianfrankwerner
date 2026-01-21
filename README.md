@@ -6,6 +6,9 @@
 - [x] Create a `ConvexProviderWithClerk` wrapper in your root layout to sync auth state.
 - [x] Define the initial `schema.ts` in Convex (Users, Posts tables).
 - [x] Create a "User Sync" webhook: When a user signs up in Clerk, trigger a Convex http-action to store them in your `users` table.
+- [ ] auth flicker
+- [ ] context7 mcp
+- [ ] not found page
 
 # Phase 2: The "Zen" Editor (Convex Powered)
 
