@@ -66,7 +66,10 @@ export function OTPForm({ className, ...props }: React.ComponentProps<"div">) {
 
   useEffect(() => {
     if (code.length === 6 && !isLoading) {
-      formRef.current?.requestSubmit();
+      const timer = setTimeout(() => {
+        formRef.current?.requestSubmit();
+      }, 100);
+      return () => clearTimeout(timer);
     }
   }, [code, isLoading]);
 

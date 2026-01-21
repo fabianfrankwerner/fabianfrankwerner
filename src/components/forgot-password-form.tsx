@@ -36,13 +36,32 @@ export function ForgotPasswordForm({
   const [code, setCode] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const [isResending, setIsResending] = useState(false);
+  const [resendCooldown, setResendCooldown] = useState(60);
+  const [isCountingDown, setIsCountingDown] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
-    if (step === "reset" && code.length === 6 && !isLoading) {
-      formRef.current?.requestSubmit();
+    if (step === "reset" && code.length === 6 && password && !isLoading) {
+      const timer = setTimeout(() => {
+        formRef.current?.requestSubmit();
+      }, 100);
+      return () => clearTimeout(timer);
     }
-  }, [code, isLoading, step]);
+  }, [code, password, step, isLoading]);
+
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+    if (isCountingDown && resendCooldown > 0) {
+      interval = setInterval(() => {
+        setResendCooldown((prev) => prev - 1);
+      }, 1000);
+    } else if (resendCooldown === 0) {
+      setIsCountingDown(false);
+      setResendCooldown(60);
+    }
+    return () => clearInterval(interval);
+  }, [isCountingDown, resendCooldown]);
 
   const handleRequestCode = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -61,6 +80,25 @@ export function ForgotPasswordForm({
       setError(err.errors?.[0]?.message || "Failed to send reset code.");
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleResend = async () => {
+    if (!isLoaded || isCountingDown) return;
+    setIsResending(true);
+    setError("");
+
+    try {
+      await signIn.create({
+        strategy: "reset_password_email_code",
+        identifier: email,
+      });
+      setIsCountingDown(true);
+      // eslint-disable-next-line
+    } catch (err: any) {
+      setError(err.errors?.[0]?.message || "Failed to resend code.");
+    } finally {
+      setIsResending(false);
     }
   };
 
@@ -115,7 +153,7 @@ export function ForgotPasswordForm({
             <FieldDescription>
               {step === "email"
                 ? "Enter your email to receive a reset code."
-                : `We sent a 6-digit code to ${email}`}
+                : `Sent a 6-digit code to ${email}`}
             </FieldDescription>
           </div>
           {error && (
@@ -191,9 +229,27 @@ export function ForgotPasswordForm({
                     <InputOTPSlot index={5} />
                   </InputOTPGroup>
                 </InputOTP>
+                <FieldDescription className="text-center">
+                  Didn&apos;t receive the code?{" "}
+                  <button
+                    type="button"
+                    onClick={handleResend}
+                    disabled={isResending || !isLoaded || isCountingDown}
+                    className="underline disabled:opacity-50"
+                  >
+                    {isResending
+                      ? "Resending..."
+                      : isCountingDown
+                        ? `Resend (${resendCooldown}s)`
+                        : "Resend"}
+                  </button>
+                </FieldDescription>
               </Field>
               <Field>
-                <Button type="submit" disabled={isLoading || code.length !== 6}>
+                <Button
+                  type="submit"
+                  disabled={isLoading || code.length !== 6 || !password}
+                >
                   {isLoading ? (
                     <>
                       <Spinner className="size-3" />
