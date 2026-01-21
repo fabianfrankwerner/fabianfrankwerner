@@ -73,7 +73,6 @@ export function SigninForm({
       await signIn.authenticateWithRedirect({
         strategy,
         redirectUrl: "/sso-callback",
-        redirectUrlComplete: "/",
       });
       // eslint-disable-next-line
     } catch (err: any) {

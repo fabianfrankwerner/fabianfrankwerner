@@ -25,14 +25,20 @@ function SSOCallback() {
   return (
     <div className="flex min-h-svh items-center justify-center bg-background">
       <Spinner className="size-5" />
-      <AuthenticateWithRedirectCallback redirectUrlComplete="/" />
+      <AuthenticateWithRedirectCallback />
     </div>
   );
 }
 
 export default function SSOCallbackPage() {
   return (
-    <Suspense>
+    <Suspense
+      fallback={
+        <div className="flex min-h-svh items-center justify-center bg-background">
+          <Spinner className="size-5" />
+        </div>
+      }
+    >
       <SSOCallback />
     </Suspense>
   );
