@@ -1,6 +1,7 @@
 "use client";
 
 import { useSignIn } from "@clerk/nextjs";
+import { Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
@@ -40,6 +41,7 @@ export function ForgotPasswordForm({
   const [resendCooldown, setResendCooldown] = useState(60);
   const [isCountingDown, setIsCountingDown] = useState(false);
   const [isVerified, setIsVerified] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
@@ -196,15 +198,34 @@ export function ForgotPasswordForm({
             <>
               <Field>
                 <FieldLabel htmlFor="new-password">New Password</FieldLabel>
-                <Input
-                  id="new-password"
-                  type="password"
-                  placeholder="Enter your new password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                  disabled={isLoading}
-                />
+                <div className="relative">
+                  <Input
+                    id="new-password"
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Enter your new password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                    disabled={isLoading}
+                  />
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="icon"
+                    className="absolute top-1/2 right-0 h-8 w-8 -translate-y-1/2"
+                    onClick={() => setShowPassword(!showPassword)}
+                    disabled={isLoading}
+                  >
+                    {showPassword ? (
+                      <EyeOff className="size-4" />
+                    ) : (
+                      <Eye className="size-4" />
+                    )}
+                    <span className="sr-only">
+                      {showPassword ? "Hide password" : "Show password"}
+                    </span>
+                  </Button>
+                </div>
               </Field>
               <Field>
                 <FieldLabel htmlFor="otp" className="sr-only">
