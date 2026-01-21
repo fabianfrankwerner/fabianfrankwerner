@@ -96,7 +96,11 @@ export function OTPForm({ className, ...props }: React.ComponentProps<"div">) {
   }
 
   if (!isSignInFlow && signUp?.status !== "missing_requirements") {
-    return null;
+    return (
+      <div className="flex min-h-svh items-center justify-center bg-background">
+        <Spinner className="size-5" />
+      </div>
+    );
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
