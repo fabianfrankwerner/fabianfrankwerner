@@ -87,6 +87,18 @@ export function OTPForm({ className, ...props }: React.ComponentProps<"div">) {
     return () => clearInterval(interval);
   }, [isCountingDown, resendCooldown]);
 
+  if (!isLoaded) {
+    return (
+      <div className="flex min-h-svh items-center justify-center bg-background">
+        <Spinner className="size-5" />
+      </div>
+    );
+  }
+
+  if (!isSignInFlow && signUp?.status !== "missing_requirements") {
+    return null;
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!isLoaded || code.length !== 6) return;
