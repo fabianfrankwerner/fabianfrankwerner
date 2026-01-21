@@ -39,6 +39,7 @@ export function ForgotPasswordForm({
   const [isResending, setIsResending] = useState(false);
   const [resendCooldown, setResendCooldown] = useState(60);
   const [isCountingDown, setIsCountingDown] = useState(false);
+  const [isVerified, setIsVerified] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
@@ -117,6 +118,7 @@ export function ForgotPasswordForm({
 
       if (result.status === "complete") {
         await setActive({ session: result.createdSessionId });
+        setIsVerified(true);
         router.push("/");
       } else {
         setError("Something went wrong. Please try again!");
@@ -248,13 +250,17 @@ export function ForgotPasswordForm({
               <Field>
                 <Button
                   type="submit"
-                  disabled={isLoading || code.length !== 6 || !password}
+                  disabled={
+                    isLoading || code.length !== 6 || !password || isVerified
+                  }
                 >
                   {isLoading ? (
                     <>
                       <Spinner className="size-3" />
                       Resetting...
                     </>
+                  ) : isVerified ? (
+                    "Verified"
                   ) : (
                     "Reset"
                   )}

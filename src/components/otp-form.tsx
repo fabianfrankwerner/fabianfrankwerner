@@ -41,6 +41,7 @@ export function OTPForm({ className, ...props }: React.ComponentProps<"div">) {
   const [isResending, setIsResending] = useState(false);
   const [resendCooldown, setResendCooldown] = useState(60);
   const [isCountingDown, setIsCountingDown] = useState(false);
+  const [isVerified, setIsVerified] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
 
   const isLoaded = signInLoaded && signUpLoaded;
@@ -110,6 +111,7 @@ export function OTPForm({ className, ...props }: React.ComponentProps<"div">) {
 
         if (result.status === "complete") {
           await setSignInActive({ session: result.createdSessionId });
+          setIsVerified(true);
           router.push("/");
         } else {
           setError("Something went wrong. Please try again!");
@@ -119,6 +121,7 @@ export function OTPForm({ className, ...props }: React.ComponentProps<"div">) {
 
         if (result.status === "complete") {
           await setSignUpActive({ session: result.createdSessionId });
+          setIsVerified(true);
           router.push("/");
         } else {
           setError("Something went wrong. Please try again!");
@@ -233,13 +236,17 @@ export function OTPForm({ className, ...props }: React.ComponentProps<"div">) {
           <Field>
             <Button
               type="submit"
-              disabled={isLoading || !isLoaded || code.length !== 6}
+              disabled={
+                isLoading || !isLoaded || code.length !== 6 || isVerified
+              }
             >
               {isLoading ? (
                 <>
                   <Spinner className="size-3" />
                   Verifying...
                 </>
+              ) : isVerified ? (
+                "Verified"
               ) : (
                 "Verify"
               )}
