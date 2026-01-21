@@ -22,8 +22,9 @@
 /build
 
 # misc
-.DS_Store
 *.pem
+GEMINI.md
+.DS_Store
 
 # debug
 npm-debug.log*
