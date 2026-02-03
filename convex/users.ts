@@ -1,7 +1,12 @@
 import { UserJSON } from "@clerk/backend";
 import { v, Validator } from "convex/values";
 
-import { internalMutation, query, QueryCtx } from "./_generated/server";
+import {
+  internalMutation,
+  internalQuery,
+  query,
+  QueryCtx,
+} from "./_generated/server";
 
 export const current = query({
   args: {},
@@ -50,6 +55,13 @@ export async function getCurrentUser(ctx: QueryCtx) {
   }
   return await userByClerkUserId(ctx, identity.subject);
 }
+
+export const getByClerkUserId = internalQuery({
+  args: { clerkUserId: v.string() },
+  handler: async (ctx, { clerkUserId }) => {
+    return await userByClerkUserId(ctx, clerkUserId);
+  },
+});
 
 async function userByClerkUserId(ctx: QueryCtx, clerkUserId: string) {
   return await ctx.db
