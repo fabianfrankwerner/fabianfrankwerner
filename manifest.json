@@ -2,7 +2,7 @@
   "name": "modern-favicon-exporter",
   "id": "1600983754723624591",
   "api": "1.0.0",
-  "main": "code.js",
+  "main": "dist/code.js",
   "capabilities": [],
   "enableProposedApi": false,
   "documentAccess": "dynamic-page",
