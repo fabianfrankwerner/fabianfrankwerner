@@ -1,37 +1,38 @@
-// This plugin will open a window to prompt the user to enter a number, and
-// it will then create that many rectangles on the screen.
+figma.showUI(__html__, { width: 400, height: 300 });
 
-// This file holds the main code for plugins. Code in this file has access to
-// the *figma document* via the figma global object.
-// You can access browser APIs in the <script> tag inside "ui.html" which has a
-// full browser environment (See https://www.figma.com/plugin-docs/how-plugins-run).
+figma.ui.onmessage = async (msg) => {
+  if (msg.type === 'generate-favicons') {
+    const selection = figma.currentPage.selection;
 
-// This shows the HTML page in "ui.html".
-figma.showUI(__html__);
-
-// Calls to "parent.postMessage" from within the HTML page will trigger this
-// callback. The callback will be passed the "pluginMessage" property of the
-// posted message.
-figma.ui.onmessage =  (msg: {type: string, count: number}) => {
-  // One way of distinguishing between different types of messages sent from
-  // your HTML page is to use an object with a "type" property like this.
-  if (msg.type === 'create-shapes') {
-    // This plugin creates rectangles on the screen.
-    const numberOfRectangles = msg.count;
-
-    const nodes: SceneNode[] = [];
-    for (let i = 0; i < numberOfRectangles; i++) {
-      const rect = figma.createRectangle();
-      rect.x = i * 150;
-      rect.fills = [{ type: 'SOLID', color: { r: 1, g: 0.5, b: 0 } }];
-      figma.currentPage.appendChild(rect);
-      nodes.push(rect);
+    if (selection.length !== 1) {
+      figma.notify("Please select exactly one vector node (Frame, Component, or Vector).");
+      return;
     }
-    figma.currentPage.selection = nodes;
-    figma.viewport.scrollAndZoomIntoView(nodes);
-  }
 
-  // Make sure to close the plugin when you're done. Otherwise the plugin will
-  // keep running, which shows the cancel button at the bottom of the screen.
-  figma.closePlugin();
+    const node = selection[0];
+
+    // Ensure it's something we can export
+    if (!('exportAsync' in node)) {
+      figma.notify("Selection is not exportable.");
+      return;
+    }
+
+    try {
+      // 1. Export as SVG (the source of truth)
+      const svgBytes = await node.exportAsync({ format: 'SVG' });
+      // Convert Uint8Array to String for passing to UI
+      const svgString = String.fromCharCode.apply(null, Array.from(svgBytes));
+
+      // 2. Send data to the UI to handle image generation and zipping
+      figma.ui.postMessage({
+        type: 'processing-start',
+        svgString: svgString,
+        name: node.name
+      });
+
+    } catch (error) {
+      console.error(error);
+      figma.notify("Error exporting selection.");
+    }
+  }
 };
