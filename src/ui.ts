@@ -189,7 +189,7 @@ async function runExport() {
     zip.file('icon-512.png', await renderPNG(state.selection.svg, 512, 512));
 
     const manifest = {
-        name: state.settings.websiteName || 'App',
+        name: state.settings.websiteName || 'Stella',
         icons: [
             { src: "/icon-192.png", type: "image/png", sizes: "192x192" },
             { src: "/icon-512.png", type: "image/png", sizes: "512x512" }

@@ -131,14 +131,36 @@ body {
   text-overflow: ellipsis;
   font-weight: 400;
   flex-grow: 1;
-  max-width: 60px;
+  max-width: 135px; /* Increased to allow more characters */
 }
 
-.app-wrapper {
+/* 3-column Preview Layout */
+.preview-row {
+    display: flex;
+    align-items: flex-start;
     width: 100%;
+}
+
+.preview-col-browser {
+    flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
+    min-width: 0;
+}
+
+.preview-col-toggle {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    padding-top: 12px; /* Center with mockups */
+}
+
+.preview-col-app {
+    width: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 }
 
 .app-mockup {
@@ -146,7 +168,7 @@ body {
   height: 48px;
   display: flex;
   align-items: center;
-  justify-content: flex-start; /* Left align icon */
+  justify-content: flex-start;
 }
 
 .app-icon-container {
@@ -345,7 +367,7 @@ button#copyBtn {
   background: transparent;
   border: none;
   font-size: 10px;
-  color: var(--figma-color-bg-brand);
+  color: var(--figma-color-bg-brand); /* Same blue as export button */
   cursor: pointer;
   padding: 0;
   font-weight: 500;
