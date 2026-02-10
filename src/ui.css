@@ -1,34 +1,5 @@
-:root {
-  --figma-color-bg: #ffffff;
-  --figma-color-bg-brand: #0d99ff;
-  --figma-color-bg-brand-hover: #007be5;
-  --figma-color-bg-brand-pressed: #005fb3;
-  --figma-color-bg-secondary: #f0f0f0;
-  --figma-color-bg-disabled: #d9d9d9;
-  --figma-color-text: #000000;
-  --figma-color-text-secondary: #808080;
-  --figma-color-text-onbrand: #ffffff;
-  --figma-color-text-disabled: #b3b3b3;
-  --figma-color-border: #e6e6e6;
-  --figma-color-icon: #000000;
-  --figma-color-icon-secondary: #808080;
-}
-
-body.figma-dark {
-  --figma-color-bg: #2c2c2c;
-  --figma-color-bg-brand: #0d99ff;
-  --figma-color-bg-secondary: #444444;
-  --figma-color-bg-disabled: #555555;
-  --figma-color-text: #ffffff;
-  --figma-color-text-secondary: #b3b3b3;
-  --figma-color-text-onbrand: #ffffff;
-  --figma-color-text-disabled: #7f7f7f;
-  --figma-color-border: #444444;
-  --figma-color-icon: #ffffff;
-}
-
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   padding: 16px;
   color: var(--figma-color-text);
   background-color: var(--figma-color-bg);
@@ -162,6 +133,58 @@ button.secondary:hover {
   font-size: 14px;
 }
 
+/* Toggle Switch Component */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 32px;
+  height: 18px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--figma-color-bg-disabled);
+  transition: .2s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 14px;
+  width: 14px;
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  transition: .2s;
+}
+
+input:checked + .slider {
+  background-color: var(--figma-color-bg-brand);
+}
+
+input:checked + .slider:before {
+  transform: translateX(14px);
+}
+
+.slider.round {
+  border-radius: 18px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
 /* Preview Area */
 .preview-container {
   background: var(--figma-color-bg-secondary);
@@ -187,7 +210,7 @@ button.secondary:hover {
 }
 
 .mockup-browser-tab {
-  background: #e0e0e0;
+  background: var(--figma-color-bg-secondary);
   border-radius: 4px 4px 0 0;
   padding: 6px 10px;
   display: flex;
@@ -200,14 +223,14 @@ button.secondary:hover {
 .mockup-favicon {
   width: 16px;
   height: 16px;
-  background-color: #fff; /* Placeholder */
+  background-color: var(--figma-color-bg); /* Placeholder */
   border-radius: 2px;
 }
 
 .mockup-title {
   height: 8px;
   width: 60px;
-  background: #bbb;
+  background: var(--figma-color-border);
   border-radius: 2px;
 }
 
@@ -222,7 +245,7 @@ button.secondary:hover {
   width: 48px;
   height: 48px;
   border-radius: 10px;
-  background: #ccc;
+  background: var(--figma-color-bg-secondary);
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
