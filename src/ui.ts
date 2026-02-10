@@ -1,5 +1,6 @@
 import JSZip from 'jszip';
 import './ui.css';
+import placeholder from './placeholder.png';
 
 interface AppState {
     selection: { name: string, svg: string } | null;
@@ -34,25 +35,31 @@ const appIconImage = document.getElementById('appIconImage') as HTMLImageElement
 const tabTitle = document.getElementById('tabTitle') as HTMLSpanElement;
 const mockupBrowser = document.getElementById('mockupBrowser') as HTMLDivElement;
 
-const codeArea = document.getElementById('codeOutput') as HTMLDivElement;
 const htmlCode = document.getElementById('htmlCode') as HTMLPreElement;
 const copyBtn = document.getElementById('copyBtn') as HTMLButtonElement;
+
+// Set default fallback
+faviconImage.src = placeholder;
+appIconImage.src = placeholder;
 
 // --- Listeners ---
 
 siteNameInput.oninput = () => {
     state.settings.websiteName = siteNameInput.value;
     tabTitle.innerText = state.settings.websiteName || 'New Tab';
+    updateCodeSnippet();
 };
 
 themeColorInput.onchange = () => {
     state.settings.themeColor = themeColorInput.value;
     updatePreview();
+    updateCodeSnippet();
 };
 
 bgColorInput.onchange = () => {
     state.settings.bgColor = bgColorInput.value;
     updatePreview();
+    updateCodeSnippet();
 };
 
 toggleThemeBtn.onclick = () => {
@@ -68,8 +75,9 @@ copyBtn.onclick = () => {
     el.select();
     document.execCommand('copy');
     document.body.removeChild(el);
+    const originalText = copyBtn.innerText;
     copyBtn.innerText = 'Copied';
-    setTimeout(() => copyBtn.innerText = 'Copy HTML', 2000);
+    setTimeout(() => copyBtn.innerText = originalText, 2000);
 };
 
 exportBtn.onclick = async () => {
@@ -97,40 +105,45 @@ window.onmessage = (event) => {
             state.selection = null;
             exportBtn.disabled = true;
             statusText.innerText = 'Select a frame';
-            document.getElementById('previewArea')?.classList.remove('visible');
+            faviconImage.src = placeholder;
+            appIconImage.src = placeholder;
         } else {
             state.selection = { name, svg: svgString };
             exportBtn.disabled = false;
             statusText.innerText = 'Ready to export';
-            document.getElementById('previewArea')?.classList.add('visible');
             updatePreview();
         }
+        updateCodeSnippet();
     }
 };
 
 // --- Logic ---
 
 async function updatePreview() {
-    if (!state.selection) return;
-
     mockupBrowser.classList.toggle('dark', state.previewDarkMode);
     toggleThemeBtn.classList.toggle('active', state.previewDarkMode);
     
-    // Preview the theme color in the browser chrome
-    // Only apply if NOT dark mode, or decide logic. 
-    // Usually theme color applies in dark mode too on mobile, but for this preview:
-    // If Dark Mode is active, override with dark gray.
     if (state.previewDarkMode) {
-        mockupBrowser.style.backgroundColor = ''; // Use CSS class color
+        mockupBrowser.style.backgroundColor = '';
     } else {
         mockupBrowser.style.backgroundColor = state.settings.themeColor;
     }
 
-    const smallUrl = await svgToPngDataUrl(state.selection.svg, 32, 32);
-    faviconImage.src = smallUrl;
+    if (state.selection) {
+        const smallUrl = await svgToPngDataUrl(state.selection.svg, 32, 32);
+        faviconImage.src = smallUrl;
 
-    const largeUrl = await svgToPngDataUrl(state.selection.svg, 180, 180, 20, state.settings.bgColor);
-    appIconImage.src = largeUrl;
+        const largeUrl = await svgToPngDataUrl(state.selection.svg, 180, 180, 20, state.settings.bgColor);
+        appIconImage.src = largeUrl;
+    }
+}
+
+function updateCodeSnippet() {
+    let code = `<link rel="icon" href="/favicon.ico" sizes="any">\n`;
+    code += `<link rel="icon" href="/icon.svg" type="image/svg+xml">\n`;
+    code += `<link rel="apple-touch-icon" href="/apple-touch-icon.png">\n`;
+    code += `<link rel="manifest" href="/manifest.webmanifest">`;
+    htmlCode.innerText = code;
 }
 
 async function runExport() {
@@ -138,19 +151,14 @@ async function runExport() {
 
     const zip = new JSZip();
     
-    // Ico
     const png32 = await renderPNG(state.selection.svg, 32, 32);
     const ico = createIcoFromPng(await png32.arrayBuffer());
     zip.file('favicon.ico', ico);
-    
-    // SVG
     zip.file('icon.svg', state.selection.svg);
 
-    // Apple
     const apple = await renderPNG(state.selection.svg, 180, 180, 20, state.settings.bgColor);
     zip.file('apple-touch-icon.png', apple);
 
-    // PWA
     zip.file('icon-192.png', await renderPNG(state.selection.svg, 192, 192));
     zip.file('icon-512.png', await renderPNG(state.selection.svg, 512, 512));
 
@@ -171,14 +179,6 @@ async function runExport() {
     link.href = URL.createObjectURL(content);
     link.download = 'favicon-bundle.zip';
     link.click();
-
-    // Show Code
-    let code = `<link rel="icon" href="/favicon.ico" sizes="any">\n`;
-    code += `<link rel="icon" href="/icon.svg" type="image/svg+xml">\n`;
-    code += `<link rel="apple-touch-icon" href="/apple-touch-icon.png">\n`;
-    code += `<link rel="manifest" href="/manifest.webmanifest">`;
-    htmlCode.innerText = code;
-    codeArea.classList.remove('hidden');
 }
 
 // Helpers
@@ -246,6 +246,8 @@ function initTheme() {
              state.previewDarkMode = true;
         }
     }
+    updatePreview();
 }
 
 initTheme();
+updateCodeSnippet();

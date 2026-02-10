@@ -16,7 +16,7 @@
 body {
   font-family: "Inter", system-ui, sans-serif;
   margin: 0;
-  padding: 12px; /* Reduced from 24px */
+  padding: 12px;
   background: var(--figma-color-bg);
   color: var(--figma-color-text);
   font-size: 11px;
@@ -29,7 +29,7 @@ body {
 #app {
   display: flex;
   flex-direction: column;
-  gap: 16px; /* Reduced from 32px */
+  gap: 16px;
 }
 
 /* Typography & Labels */
@@ -37,26 +37,20 @@ body {
   font-size: 9px;
   font-weight: 500;
   color: var(--figma-color-text-secondary);
-  margin-top: 6px; /* Reduced */
+  margin-top: 6px;
   text-align: center;
   letter-spacing: 0.01em;
 }
 
 /* Preview Section */
 .preview-area {
-  opacity: 0.4;
-  transition: opacity 0.2s ease;
-  padding: 8px 0; /* Add slight vertical breathing room */
-}
-
-.preview-area.visible {
-  opacity: 1;
+  padding: 8px 0;
 }
 
 .preview-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 12px; /* Reduced */
+  gap: 12px;
   align-items: flex-end;
 }
 
@@ -80,8 +74,7 @@ body {
   transition: background 0.2s ease;
   overflow: hidden;
   position: relative;
-  border: 1px solid rgba(0,0,0,0.05); /* Subtle native border */
-  border-bottom: none;
+  border: 1px solid rgba(0,0,0,0.05); /* Full border added */
 }
 
 .browser-tab {
@@ -96,7 +89,6 @@ body {
   box-sizing: border-box;
   transition: background 0.2s, color 0.2s;
   color: #333;
-  box-shadow: 0 -1px 2px rgba(0,0,0,0.05);
 }
 
 .browser-mockup.dark .browser-tab {
@@ -129,14 +121,13 @@ body {
 }
 
 .app-icon-container {
-  width: 44px; /* Slightly reduced */
+  width: 44px;
   height: 44px;
   border-radius: 10px;
   overflow: hidden;
   background: #FFF;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
   transition: background 0.2s;
-  border: 1px solid rgba(0,0,0,0.05);
+  border: 1px solid rgba(0,0,0,0.05); /* Applied same border */
 }
 
 .icon-large {
@@ -148,35 +139,33 @@ body {
 .settings-area {
   display: flex;
   flex-direction: column;
-  gap: 12px; /* Reduced */
+  gap: 12px;
 }
 
-/* Native Input Style */
 input[type="text"] {
   width: 100%;
-  height: 28px; /* Native height */
-  border: 1px solid transparent; /* Prepare for hover state */
+  height: 28px;
+  border: 1px solid transparent;
   background: transparent;
   color: var(--figma-color-text);
-  padding: 0 8px; /* Native padding */
+  padding: 0 8px;
   font-size: 11px;
   outline: none;
   border-radius: 2px;
   box-sizing: border-box;
-  margin: 0 -8px; /* Negative margin to align text with labels */
+  margin: 0 -8px;
   width: calc(100% + 16px);
 }
 
 input[type="text"]:hover {
-  border-color: var(--figma-color-bg-secondary); /* Figma hover style */
+  border-color: var(--figma-color-bg-secondary);
 }
 
 input[type="text"]:focus {
-  border-color: var(--figma-color-bg-brand); /* Figma focus style */
+  border-color: var(--figma-color-bg-brand);
   background: #fff;
 }
 
-/* Settings Row */
 .settings-row {
     display: flex;
     align-items: center;
@@ -192,13 +181,12 @@ input[type="text"]:focus {
   display: flex;
   align-items: center;
   gap: 6px;
-  position: relative; /* For tooltip */
+  position: relative;
 }
 
 .color-field label {
   font-size: 11px;
   color: var(--figma-color-text);
-  cursor: help;
   display: flex;
   align-items: center;
   gap: 4px;
@@ -208,29 +196,8 @@ input[type="text"]:focus {
   font-size: 9px;
   color: var(--figma-color-text-secondary);
   opacity: 0.7;
-  cursor: help;
 }
 
-/* Instant Tooltip */
-.color-field:hover::after {
-    content: attr(data-tooltip);
-    position: absolute;
-    bottom: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    background: #222;
-    color: white;
-    padding: 4px 8px;
-    border-radius: 2px;
-    font-size: 9px;
-    white-space: nowrap;
-    z-index: 100;
-    pointer-events: none;
-    margin-bottom: 6px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-}
-
-/* Color Picker */
 .color-swatch {
     width: 16px;
     height: 16px;
@@ -244,7 +211,7 @@ input[type="text"]:focus {
 input[type="color"] {
   -webkit-appearance: none;
   border: none;
-  width: 200%; /* Make it larger than container to hide browser UI */
+  width: 200%;
   height: 200%;
   position: absolute;
   top: -50%;
@@ -254,14 +221,13 @@ input[type="color"] {
   background: none;
 }
 
-/* Theme Toggle Button */
 .theme-toggle-btn {
   background: var(--figma-color-bg-secondary);
   border: 1px solid transparent;
   color: var(--figma-color-text);
   cursor: pointer;
   padding: 4px 8px;
-  border-radius: 3px; /* Slightly more rounded */
+  border-radius: 3px;
   font-size: 10px;
   display: flex;
   align-items: center;
@@ -286,15 +252,13 @@ input[type="color"] {
 }
 
 
-/* Footer & Buttons */
 .footer {
   margin-top: auto;
 }
 
-/* Primary Button */
 button#exportBtn {
   width: 100%;
-  height: 32px; /* Standard button height */
+  height: 32px;
   background: var(--figma-color-bg-brand);
   color: var(--figma-color-text-onbrand);
   border: 1px solid transparent;
@@ -309,7 +273,7 @@ button#exportBtn {
 }
 
 button#exportBtn:disabled {
-  background: var(--figma-color-bg-secondary); /* Use secondary for disabled state bg */
+  background: var(--figma-color-bg-secondary);
   color: var(--figma-color-text-disabled);
   cursor: default;
 }
@@ -327,10 +291,9 @@ button#exportBtn:active:not(:disabled) {
   margin-top: 8px;
   font-size: 10px;
   color: var(--figma-color-text-secondary);
-  height: 12px; /* Reserve height */
+  height: 12px;
 }
 
-/* Code Area */
 .code-area {
   border-top: 1px solid var(--figma-color-border);
   padding-top: 12px;

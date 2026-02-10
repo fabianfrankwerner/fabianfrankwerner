@@ -21,6 +21,10 @@ module.exports = (env, argv) => ({
         test: /\.css$/i,
         use: ["style-loader", "css-loader"],
       },
+      {
+        test: /\.(png|jpg|gif|webp|svg)$/i,
+        type: 'asset/inline',
+      },
     ],
   },
   resolve: {
@@ -29,13 +33,13 @@ module.exports = (env, argv) => ({
   output: {
     filename: '[name].js',
     path: path.resolve(__dirname, 'dist'),
-    clean: true, // Clean dist folder before build
+    clean: true,
   },
   plugins: [
     new HtmlWebpackPlugin({
       template: './src/ui.html',
       filename: 'ui.html',
-      chunks: ['ui'], // Only include ui.js in ui.html
+      chunks: ['ui'],
       inject: 'body',
     }),
     new HTMLInlineScriptPlugin({
