@@ -189,7 +189,7 @@ input:checked + .slider:before {
 .preview-container {
   background: var(--figma-color-bg-secondary);
   border-radius: 8px;
-  padding: 16px;
+  padding: 12px;
   margin-top: 16px;
   display: none; /* Hidden by default */
 }
@@ -198,65 +198,149 @@ input:checked + .slider:before {
   display: block;
 }
 
-.preview-item {
-  margin-bottom: 16px;
+.preview-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
 }
 
-.preview-label {
-  font-size: 11px;
-  color: var(--figma-color-text-secondary);
-  margin-bottom: 4px;
-  display: block;
+.preview-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.mockup-browser-container {
+  background: #dee1e6;
+  border-radius: 6px 6px 0 0;
+  padding: 8px 8px 0 8px;
+  display: flex;
+  align-items: flex-end;
+  height: 48px; /* Increased height to match app icon area roughly */
+  transition: background 0.3s ease;
 }
 
 .mockup-browser-tab {
-  background: var(--figma-color-bg-secondary);
-  border-radius: 4px 4px 0 0;
-  padding: 6px 10px;
+  background: white;
+  border-radius: 8px 8px 0 0;
+  padding: 0 8px;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
+  height: 28px;
   width: 100%;
   box-sizing: border-box;
+  position: relative;
+  transition: background 0.3s ease;
+}
+
+/* Dark Mode Preview Styles */
+.mockup-browser-container.dark {
+  background: #202124;
+}
+
+.mockup-browser-tab.dark {
+  background: #323639;
+}
+
+.mockup-browser-tab.dark .mockup-title-text {
+  color: #e8eaed;
+}
+
+.mockup-browser-tab.dark .mockup-close-x::before,
+.mockup-browser-tab.dark .mockup-close-x::after {
+  background: #e8eaed;
 }
 
 .mockup-favicon {
   width: 16px;
   height: 16px;
-  background-color: var(--figma-color-bg); /* Placeholder */
-  border-radius: 2px;
+  flex-shrink: 0;
 }
 
-.mockup-title {
-  height: 8px;
-  width: 60px;
-  background: var(--figma-color-border);
-  border-radius: 2px;
+.mockup-title-text {
+  font-size: 10px;
+  color: #3c4043;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex-grow: 1;
 }
+
+.mockup-close-x {
+  width: 8px;
+  height: 8px;
+  position: relative;
+  opacity: 0.7;
+}
+
+.mockup-close-x::before, .mockup-close-x::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 8px;
+  height: 1px;
+  background: #3c4043;
+}
+
+.mockup-close-x::before { transform: translate(-50%, -50%) rotate(45deg); }
+.mockup-close-x::after { transform: translate(-50%, -50%) rotate(-45deg); }
 
 .mockup-home-screen {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
+  padding: 0; /* Remove padding to fit better side-by-side */
+  height: 48px; /* Match height alignment */
+  justify-content: flex-end; /* Align bottom like browser tab content */
 }
 
 .mockup-app-icon {
-  width: 48px;
-  height: 48px;
+  width: 42px; /* Slightly smaller to fit */
+  height: 42px;
   border-radius: 10px;
-  background: var(--figma-color-bg-secondary);
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  background: white;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
 }
 
 .mockup-app-name {
+  font-size: 11px;
+  color: var(--figma-color-text);
+  font-weight: 400;
+}
+
+/* Code Section */
+.code-wrapper {
+  background: var(--figma-color-bg-secondary);
+  border-radius: 6px;
+  padding: 12px;
+  position: relative;
+  border: 1px solid var(--figma-color-border);
+}
+
+pre {
+  margin: 0;
+  font-family: 'Roboto Mono', monospace;
   font-size: 10px;
   color: var(--figma-color-text);
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-break: break-all;
+  line-height: 1.4;
+}
+
+button.small {
+  padding: 4px 8px;
+  font-size: 11px;
+  width: auto;
+  margin-top: 8px;
 }
 
 .status {
   margin-top: 12px;
-  font-size: 12px;
+  font-size: 11px;
   color: var(--figma-color-text-secondary);
   text-align: center;
 }

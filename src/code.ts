@@ -1,4 +1,4 @@
-figma.showUI(__html__, { width: 400, height: 600, themeColors: true });
+figma.showUI(__html__, { width: 400, height: 400, themeColors: true });
 
 figma.ui.onmessage = async (msg) => {
   if (msg.type === 'request-selection') {

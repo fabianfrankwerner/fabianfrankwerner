@@ -11,6 +11,7 @@ interface AppState {
         themeColor: string;
         bgColor: string;
     };
+    previewDarkMode: boolean;
 }
 
 const state: AppState = {
@@ -21,7 +22,8 @@ const state: AppState = {
         websiteName: 'My Website',
         themeColor: '#ffffff',
         bgColor: '#ffffff'
-    }
+    },
+    previewDarkMode: false
 };
 
 // --- Elements ---
@@ -44,6 +46,17 @@ const previewContainer = document.getElementById('previewContainer') as HTMLDivE
 const previewFavicon = document.getElementById('previewFavicon') as HTMLImageElement;
 const previewAppIcon = document.getElementById('previewAppIcon') as HTMLImageElement;
 const previewAppName = document.getElementById('previewAppName') as HTMLSpanElement;
+const previewTabTitle = document.getElementById('previewTabTitle') as HTMLSpanElement;
+const mockupBrowserContainer = document.getElementById('mockupBrowserContainer') as HTMLDivElement;
+const mockupBrowserTab = document.getElementById('mockupBrowserTab') as HTMLDivElement;
+
+const previewThemeToggleContainer = document.getElementById('previewThemeToggleContainer') as HTMLDivElement;
+const previewThemeToggle = document.getElementById('previewThemeToggle') as HTMLInputElement;
+
+// HTML Code Section
+const htmlCodeSection = document.getElementById('htmlCodeSection') as HTMLDivElement;
+const htmlCodeDisplay = document.getElementById('htmlCodeDisplay') as HTMLPreElement;
+const copyHtmlBtn = document.getElementById('copyHtmlBtn') as HTMLButtonElement;
 
 
 // --- Event Listeners ---
@@ -56,8 +69,14 @@ proModeToggle.onchange = () => {
         updatePreview();
     } else {
         proFields.classList.add('hidden');
+        htmlCodeSection.classList.add('hidden');
         generateBtn.innerText = "Export Favicon.ico";
     }
+};
+
+previewThemeToggle.onchange = () => {
+    state.previewDarkMode = previewThemeToggle.checked;
+    updatePreview();
 };
 
 refreshBtn.onclick = () => {
@@ -71,6 +90,7 @@ selectDarkModeBtn.onclick = () => {
 websiteNameInput.oninput = (e: Event) => {
     state.settings.websiteName = (e.target as HTMLInputElement).value;
     previewAppName.innerText = state.settings.websiteName || 'App';
+    if (previewTabTitle) previewTabTitle.innerText = state.settings.websiteName || 'New Tab';
 };
 
 themeColorInput.onchange = (e: Event) => {
@@ -82,6 +102,20 @@ bgColorInput.onchange = (e: Event) => {
     updatePreview(); 
 };
 
+copyHtmlBtn.onclick = () => {
+    const text = htmlCodeDisplay.innerText;
+    const textArea = document.createElement("textarea");
+    textArea.value = text;
+    document.body.appendChild(textArea);
+    textArea.select();
+    document.execCommand("copy");
+    document.body.removeChild(textArea);
+    
+    const originalText = copyHtmlBtn.innerText;
+    copyHtmlBtn.innerText = "Copied!";
+    setTimeout(() => copyHtmlBtn.innerText = originalText, 2000);
+};
+
 generateBtn.onclick = async () => {
     if (!state.lightSelection) return;
 
@@ -89,7 +123,7 @@ generateBtn.onclick = async () => {
     generateBtn.disabled = true;
 
     try {
-        await generateZip();
+        await generateExport();
         statusDiv.innerText = "Done! Download started.";
     } catch (e) {
         console.error(e);
@@ -115,11 +149,10 @@ window.onmessage = async (event: MessageEvent) => {
             // Default to light/main
             state.lightSelection = { name, svg: svgString };
             selectionNameFn.innerText = name;
-            
-            // Generate preview immediately
-            updatePreview();
         }
         
+        // Always update preview to reflect potential changes
+        updatePreview();
         validateState();
     }
 };
@@ -138,12 +171,32 @@ function validateState() {
 
 async function updatePreview() {
     if (!state.lightSelection) return;
+
+    // Show/Hide Dark Mode Toggle based on availability
+    if (state.darkSelection) {
+        previewThemeToggleContainer.style.display = 'flex';
+    } else {
+        previewThemeToggleContainer.style.display = 'none';
+        state.previewDarkMode = false; // Reset if no dark selection
+        previewThemeToggle.checked = false;
+    }
+
+    // Determine which SVG to show in the browser tab
+    let browserFaviconSvg = state.lightSelection.svg;
+    if (state.previewDarkMode && state.darkSelection) {
+        browserFaviconSvg = state.darkSelection.svg;
+        mockupBrowserContainer.classList.add('dark');
+        mockupBrowserTab.classList.add('dark');
+    } else {
+        mockupBrowserContainer.classList.remove('dark');
+        mockupBrowserTab.classList.remove('dark');
+    }
     
     // Create a data URL for the preview
-    const smallUrl = await svgToPngDataUrl(state.lightSelection.svg, 32, 32);
+    const smallUrl = await svgToPngDataUrl(browserFaviconSvg, 32, 32);
     previewFavicon.src = smallUrl;
 
-    // 180x180 for App Icon
+    // 180x180 for App Icon (Always uses light/main selection + bg color)
     const bg = state.isPro ? state.settings.bgColor : null;
     const largeUrl = await svgToPngDataUrl(state.lightSelection.svg, 180, 180, 20, bg);
     previewAppIcon.src = largeUrl;
@@ -236,24 +289,24 @@ function createIcoFromPng(pngBuffer: ArrayBuffer) {
 
 // --- Generator ---
 
-async function generateZip() {
+async function generateExport() {
     if (!state.lightSelection) return;
 
-    const zip = new JSZip();
-
-    // 1. Always generate favicon.ico (32x32)
+    // 1. Generate the .ico logic
     const png32Blob = await renderPNG(state.lightSelection.svg, 32, 32);
     const png32Buffer = await png32Blob.arrayBuffer();
-    zip.file("favicon.ico", createIcoFromPng(png32Buffer));
+    const icoBuffer = createIcoFromPng(png32Buffer);
 
-    // Casual Mode: Stop here
+    // Casual Mode: Download .ico directly
     if (!state.isPro) {
-        const content = await zip.generateAsync({ type: "blob" });
-        triggerDownload(content, "favicon.zip");
+        const icoBlob = new Blob([icoBuffer], { type: 'image/x-icon' });
+        triggerDownload(icoBlob, "favicon.ico");
         return;
     }
 
-    // Pro Mode: Full Suite
+    // Pro Mode: Full Suite ZIP
+    const zip = new JSZip();
+    zip.file("favicon.ico", icoBuffer);
     zip.file("icon.svg", state.lightSelection.svg);
 
     if (state.darkSelection) {
@@ -284,6 +337,18 @@ async function generateZip() {
 
     const content = await zip.generateAsync({ type: "blob" });
     triggerDownload(content, "favicon-pro.zip");
+
+    // Show HTML Code
+    let htmlSnippet = `<link rel="icon" href="/favicon.ico" sizes="any">\n`;
+    htmlSnippet += `<link rel="icon" href="/icon.svg" type="image/svg+xml">\n`;
+    if (state.darkSelection) {
+        htmlSnippet += `<link rel="icon" href="/icon-dark.svg" type="image/svg+xml" media="(prefers-color-scheme: dark)">\n`;
+    }
+    htmlSnippet += `<link rel="apple-touch-icon" href="/apple-touch-icon.png">\n`;
+    htmlSnippet += `<link rel="manifest" href="/manifest.webmanifest">`;
+    
+    htmlCodeDisplay.innerText = htmlSnippet;
+    htmlCodeSection.classList.remove('hidden');
 }
 
 function triggerDownload(blob: Blob, filename: string) {

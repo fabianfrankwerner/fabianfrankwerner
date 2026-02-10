@@ -6,8 +6,6 @@
     <title>Favicon Exporter</title>
 </head>
 <body>
-    <h2>Favicon Exporter</h2>
-
     <!-- Mode Toggle -->
     <div class="toggle-wrapper">
         <span class="toggle-label">Pro Mode</span>
@@ -64,21 +62,37 @@
 
             <!-- Preview Section -->
             <div class="preview-container" id="previewContainer">
-                <p class="section-title">Preview</p>
-                
-                <div class="preview-item">
-                    <span class="preview-label">Browser Tab</span>
-                    <div class="mockup-browser-tab">
-                        <img id="previewFavicon" class="mockup-favicon" src="">
-                        <div class="mockup-title"></div>
+                <div class="row" style="margin-bottom: 12px;">
+                    <p class="section-title" style="margin-bottom: 0;">Preview</p>
+                    
+                    <!-- Preview Theme Toggle -->
+                    <div id="previewThemeToggleContainer" class="toggle-wrapper" style="margin: 0; padding: 0; border: none; display: none;">
+                        <span style="font-size: 10px; color: var(--figma-color-text-secondary); margin-right: 8px;">Dark Preview</span>
+                        <label class="switch" style="transform: scale(0.8);">
+                            <input type="checkbox" id="previewThemeToggle">
+                            <span class="slider round"></span>
+                        </label>
                     </div>
                 </div>
+                
+                <div class="preview-row">
+                    <div class="preview-item">
+                        <span class="preview-label">Browser Tab</span>
+                        <div class="mockup-browser-container" id="mockupBrowserContainer">
+                            <div class="mockup-browser-tab" id="mockupBrowserTab">
+                                <img id="previewFavicon" class="mockup-favicon" src="">
+                                <span id="previewTabTitle" class="mockup-title-text">New Tab</span>
+                                <div class="mockup-close-x"></div>
+                            </div>
+                        </div>
+                    </div>
 
-                <div class="preview-item">
-                    <span class="preview-label">Home Screen</span>
-                    <div class="mockup-home-screen">
-                        <img id="previewAppIcon" class="mockup-app-icon" src="">
-                        <span id="previewAppName" class="mockup-app-name">App</span>
+                    <div class="preview-item">
+                        <span class="preview-label">Home Screen</span>
+                        <div class="mockup-home-screen">
+                            <img id="previewAppIcon" class="mockup-app-icon" src="">
+                            <span id="previewAppName" class="mockup-app-name">App</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -87,6 +101,15 @@
         <div style="margin-top: 24px;">
             <button id="generateBtn" disabled>Export Favicon</button>
             <div id="status" class="status">Select a frame to begin.</div>
+        </div>
+
+        <!-- HTML Code Section -->
+        <div id="htmlCodeSection" class="hidden" style="margin-top: 24px;">
+            <p class="section-title">Installation Code</p>
+            <div class="code-wrapper">
+                <pre id="htmlCodeDisplay"></pre>
+                <button id="copyHtmlBtn" class="secondary small">Copy HTML</button>
+            </div>
         </div>
     </div>
 </body>
