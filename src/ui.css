@@ -1,4 +1,5 @@
 :root {
+  /* Light Mode Defaults */
   --figma-color-bg: #ffffff;
   --figma-color-bg-secondary: #f0f0f0;
   --figma-color-bg-tertiary: #e5e5e5;
@@ -11,6 +12,26 @@
   --figma-color-text-secondary: #8c8c8c;
   --figma-color-text-onbrand: #ffffff;
   --figma-color-text-disabled: #b3b3b3;
+  
+  --preview-border-color: rgba(0,0,0,0.05);
+}
+
+/* Dark Mode Overrides */
+html.figma-dark {
+  --figma-color-bg: #2C2C2C;
+  --figma-color-bg-secondary: #444444;
+  --figma-color-bg-tertiary: #555555;
+  --figma-color-bg-brand: #0C8CE9;
+  --figma-color-bg-brand-hover: #0A75C2;
+  --figma-color-bg-brand-pressed: #085E9B;
+  --figma-color-bg-disabled: #757575;
+  --figma-color-border: #444444;
+  --figma-color-text: #FFFFFF;
+  --figma-color-text-secondary: #B3B3B3;
+  --figma-color-text-onbrand: #FFFFFF;
+  --figma-color-text-disabled: #757575;
+
+  --preview-border-color: rgba(255,255,255,0.1);
 }
 
 body {
@@ -44,21 +65,21 @@ body {
 
 /* Preview Section */
 .preview-area {
-  padding: 8px 0;
+  padding: 8px 0 0 0;
 }
 
 .preview-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  align-items: flex-end;
+  display: flex;
+  align-items: center; /* Center items vertically */
+  gap: 8px;
+  justify-content: space-between;
 }
 
 .preview-card {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%;
+  flex: 1;
 }
 
 /* Mockups */
@@ -74,7 +95,7 @@ body {
   transition: background 0.2s ease;
   overflow: hidden;
   position: relative;
-  border: 1px solid rgba(0,0,0,0.05); /* Full border added */
+  border: 1px solid var(--preview-border-color);
 }
 
 .browser-tab {
@@ -102,6 +123,11 @@ body {
   flex-shrink: 0;
 }
 
+/* Placeholder logic for favicon */
+.icon-small.is-placeholder {
+    opacity: 0.6;
+}
+
 #tabTitle {
   font-size: 9px;
   white-space: nowrap;
@@ -109,7 +135,7 @@ body {
   text-overflow: ellipsis;
   font-weight: 400;
   flex-grow: 1;
-  max-width: 80px;
+  max-width: 60px;
 }
 
 .app-mockup {
@@ -125,27 +151,40 @@ body {
   height: 44px;
   border-radius: 10px;
   overflow: hidden;
-  background: #FFF;
+  background: #E0E0E0; /* Default bg */
   transition: background 0.2s;
-  border: 1px solid rgba(0,0,0,0.05); /* Applied same border */
+  border: 1px solid var(--preview-border-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .icon-large {
   width: 100%;
   height: 100%;
+  object-fit: cover;
+}
+
+/* Placeholder specific styles */
+.icon-large.is-placeholder {
+    width: 80%;
+    height: 80%;
+    object-fit: contain;
+    opacity: 0.6;
 }
 
 /* Inputs */
 .settings-area {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 16px; /* Spacing between input and color row */
+  margin-top: 4px;
 }
 
 input[type="text"] {
   width: 100%;
   height: 28px;
-  border: 1px solid transparent;
+  border: 1px solid var(--preview-border-color); /* Same border as preview */
   background: transparent;
   color: var(--figma-color-text);
   padding: 0 8px;
@@ -163,7 +202,7 @@ input[type="text"]:hover {
 
 input[type="text"]:focus {
   border-color: var(--figma-color-bg-brand);
-  background: #fff;
+  background: var(--figma-color-bg); /* Ensure visible bg on focus */
 }
 
 .settings-row {
@@ -181,7 +220,6 @@ input[type="text"]:focus {
   display: flex;
   align-items: center;
   gap: 6px;
-  position: relative;
 }
 
 .color-field label {
@@ -190,12 +228,6 @@ input[type="text"]:focus {
   display: flex;
   align-items: center;
   gap: 4px;
-}
-
-.info-icon {
-  font-size: 9px;
-  color: var(--figma-color-text-secondary);
-  opacity: 0.7;
 }
 
 .color-swatch {
@@ -222,32 +254,33 @@ input[type="color"] {
 }
 
 .theme-toggle-btn {
-  background: var(--figma-color-bg-secondary);
+  background: transparent;
   border: 1px solid transparent;
-  color: var(--figma-color-text);
+  color: var(--figma-color-text-secondary);
   cursor: pointer;
-  padding: 4px 8px;
-  border-radius: 3px;
-  font-size: 10px;
+  padding: 6px;
+  border-radius: 4px;
   display: flex;
   align-items: center;
-  gap: 4px;
+  justify-content: center;
   transition: all 0.1s;
   height: 24px;
+  width: 24px;
+  margin-bottom: 14px; /* Align visually with mockups, compensating for labels */
 }
 
 .theme-toggle-btn:hover {
-  background: var(--figma-color-bg-tertiary);
+  background: var(--figma-color-bg-secondary);
+  color: var(--figma-color-text);
 }
 
 .theme-toggle-btn.active {
-    background: #333;
-    color: #fff;
+    color: var(--figma-color-text);
 }
 
 .theme-toggle-btn svg {
-    width: 10px;
-    height: 10px;
+    width: 12px;
+    height: 12px;
     fill: currentColor;
 }
 

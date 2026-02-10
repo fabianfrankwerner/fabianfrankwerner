@@ -18,6 +18,12 @@
                     </div>
                     <span class="label">Web</span>
                 </div>
+                
+                <!-- Toggle Moved Here -->
+                <button id="togglePreviewTheme" class="theme-toggle-btn icon-only" title="Toggle Light/Dark Preview">
+                    <svg viewBox="0 0 16 16"><path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm0 14A6 6 0 0 1 8 2v12z"/></svg>
+                </button>
+
                 <div class="preview-card">
                     <div class="app-mockup">
                         <div class="app-icon-container">
@@ -41,20 +47,15 @@
                         <div class="color-swatch">
                             <input type="color" id="themeColor" value="#e0e0e0">
                         </div>
-                        <label>Theme <span class="info-icon">?</span></label>
+                        <label>Theme</label>
                     </div>
                     <div class="color-field">
                         <div class="color-swatch">
                             <input type="color" id="bgColor" value="#e0e0e0">
                         </div>
-                        <label>Background <span class="info-icon">?</span></label>
+                        <label>Background</label>
                     </div>
                 </div>
-                
-                <button id="togglePreviewTheme" class="theme-toggle-btn" title="Toggle Light/Dark Preview">
-                    <svg viewBox="0 0 16 16"><path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm0 14A6 6 0 0 1 8 2v12z"/></svg>
-                    <span>Mode</span>
-                </button>
             </div>
         </div>
 
@@ -64,7 +65,7 @@
             <div id="status" class="status-text">Select a frame</div>
         </div>
 
-        <!-- Code Section (Always Visible) -->
+        <!-- Code Section -->
         <div id="codeOutput" class="code-area">
             <div class="code-header">
                 <span>Code</span>

@@ -32,6 +32,7 @@ const toggleThemeBtn = document.getElementById('togglePreviewTheme') as HTMLButt
 
 const faviconImage = document.getElementById('faviconImage') as HTMLImageElement;
 const appIconImage = document.getElementById('appIconImage') as HTMLImageElement;
+const appIconContainer = document.querySelector('.app-icon-container') as HTMLDivElement;
 const tabTitle = document.getElementById('tabTitle') as HTMLSpanElement;
 const mockupBrowser = document.getElementById('mockupBrowser') as HTMLDivElement;
 
@@ -39,8 +40,7 @@ const htmlCode = document.getElementById('htmlCode') as HTMLPreElement;
 const copyBtn = document.getElementById('copyBtn') as HTMLButtonElement;
 
 // Set default fallback
-faviconImage.src = placeholder;
-appIconImage.src = placeholder;
+setPlaceholder();
 
 // --- Listeners ---
 
@@ -105,12 +105,13 @@ window.onmessage = (event) => {
             state.selection = null;
             exportBtn.disabled = true;
             statusText.innerText = 'Select a frame';
-            faviconImage.src = placeholder;
-            appIconImage.src = placeholder;
+            setPlaceholder();
         } else {
             state.selection = { name, svg: svgString };
             exportBtn.disabled = false;
             statusText.innerText = 'Ready to export';
+            faviconImage.classList.remove('is-placeholder');
+            appIconImage.classList.remove('is-placeholder');
             updatePreview();
         }
         updateCodeSnippet();
@@ -118,6 +119,15 @@ window.onmessage = (event) => {
 };
 
 // --- Logic ---
+
+function setPlaceholder() {
+    faviconImage.src = placeholder;
+    appIconImage.src = placeholder;
+    faviconImage.classList.add('is-placeholder');
+    appIconImage.classList.add('is-placeholder');
+    // Ensure container matches default
+    appIconContainer.style.backgroundColor = state.settings.bgColor;
+}
 
 async function updatePreview() {
     mockupBrowser.classList.toggle('dark', state.previewDarkMode);
@@ -128,11 +138,22 @@ async function updatePreview() {
     } else {
         mockupBrowser.style.backgroundColor = state.settings.themeColor;
     }
+    
+    // Also update app icon container background logic
+    appIconContainer.style.backgroundColor = state.settings.bgColor;
 
     if (state.selection) {
         const smallUrl = await svgToPngDataUrl(state.selection.svg, 32, 32);
         faviconImage.src = smallUrl;
 
+        // For the app icon, if user selected a transparent SVG, we want to bake the color.
+        // But for the preview element, we might just set the container background 
+        // and show the SVG transparently? 
+        // Actually, the previous logic rendered it to PNG with background.
+        // Let's stick to rendering the PNG with background for the src, 
+        // so the 'src' contains the color.
+        // But if we do that, the .app-icon-container background is redundant/hidden.
+        
         const largeUrl = await svgToPngDataUrl(state.selection.svg, 180, 180, 20, state.settings.bgColor);
         appIconImage.src = largeUrl;
     }
