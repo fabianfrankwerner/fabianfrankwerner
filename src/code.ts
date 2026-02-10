@@ -21,7 +21,7 @@ figma.ui.onmessage = async (msg) => {
       // 1. Export as SVG (the source of truth)
       const svgBytes = await node.exportAsync({ format: 'SVG' });
       // Convert Uint8Array to String for passing to UI
-      const svgString = String.fromCharCode.apply(null, Array.from(svgBytes));
+      const svgString = new TextDecoder().decode(svgBytes);
 
       // 2. Send data to the UI
       figma.ui.postMessage({

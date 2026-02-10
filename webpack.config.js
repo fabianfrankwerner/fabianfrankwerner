@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HTMLInlineScriptPlugin = require('html-inline-script-webpack-plugin');
 
 module.exports = (env, argv) => ({
   mode: argv.mode === 'production' ? 'production' : 'development',
@@ -36,6 +37,9 @@ module.exports = (env, argv) => ({
       filename: 'ui.html',
       chunks: ['ui'], // Only include ui.js in ui.html
       inject: 'body',
+    }),
+    new HTMLInlineScriptPlugin({
+      scriptMatchPattern: [/ui\.js$/]
     }),
   ],
 });
