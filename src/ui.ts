@@ -47,6 +47,7 @@ siteNameInput.oninput = () => {
 
 themeColorInput.onchange = () => {
     state.settings.themeColor = themeColorInput.value;
+    updatePreview();
 };
 
 bgColorInput.onchange = () => {
@@ -114,6 +115,11 @@ async function updatePreview() {
 
     mockupBrowser.classList.toggle('dark', state.previewDarkMode);
     
+    // Preview the theme color in the browser chrome
+    // We only apply the custom color if it's NOT the default #ffffff (unless in dark mode)
+    // Actually, for a better "Theme" preview, let's always apply it to the mockup background.
+    mockupBrowser.style.backgroundColor = state.settings.themeColor;
+
     const smallUrl = await svgToPngDataUrl(state.selection.svg, 32, 32);
     faviconImage.src = smallUrl;
 
