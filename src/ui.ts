@@ -6,7 +6,6 @@ interface AppState {
     selection: { name: string, svg: string } | null;
     settings: {
         websiteName: string;
-        themeColor: string;
         bgColor: string;
     };
     previewDarkMode: boolean;
@@ -16,7 +15,6 @@ const state: AppState = {
     selection: null,
     settings: {
         websiteName: '',
-        themeColor: '#e0e0e0',
         bgColor: '#e0e0e0'
     },
     previewDarkMode: false
@@ -26,7 +24,6 @@ const state: AppState = {
 const exportBtn = document.getElementById('exportBtn') as HTMLButtonElement;
 const statusText = document.getElementById('status') as HTMLDivElement;
 const siteNameInput = document.getElementById('siteName') as HTMLInputElement;
-const themeColorInput = document.getElementById('themeColor') as HTMLInputElement;
 const bgColorInput = document.getElementById('bgColor') as HTMLInputElement;
 const toggleThemeBtn = document.getElementById('togglePreviewTheme') as HTMLButtonElement;
 
@@ -39,7 +36,7 @@ const mockupBrowser = document.getElementById('mockupBrowser') as HTMLDivElement
 const htmlCode = document.getElementById('htmlCode') as HTMLPreElement;
 const copyBtn = document.getElementById('copyBtn') as HTMLButtonElement;
 
-// Set default fallback
+// Set default fallback initially
 setPlaceholder();
 
 // --- Listeners ---
@@ -47,12 +44,6 @@ setPlaceholder();
 siteNameInput.oninput = () => {
     state.settings.websiteName = siteNameInput.value;
     tabTitle.innerText = state.settings.websiteName || 'New Tab';
-    updateCodeSnippet();
-};
-
-themeColorInput.onchange = () => {
-    state.settings.themeColor = themeColorInput.value;
-    updatePreview();
     updateCodeSnippet();
 };
 
@@ -101,17 +92,34 @@ window.onmessage = (event) => {
     const msg = event.data.pluginMessage;
     if (msg.type === 'selection-response') {
         const { svgString, name } = msg;
+        
         if (!svgString) {
-            state.selection = null;
-            exportBtn.disabled = true;
-            statusText.innerText = 'Select a frame';
-            setPlaceholder();
+            // Deselected or invalid selection
+            // Logic: keep showing the last selection if it exists.
+            // If we have no selection yet (state.selection is null), we keep showing placeholder.
+            if (!state.selection) {
+                exportBtn.disabled = true;
+                statusText.innerText = 'Select a frame';
+                setPlaceholder();
+            } else {
+                // We have a previous selection, retain it visually.
+                // But typically we should probably disable export if current selection is invalid?
+                // Request says: "even if the user deselects something in figma keep showing the last selection until a new one is made"
+                // It implies we should keep the state active.
+                // So we do NOTHING here regarding state clearing.
+                // We might just update status text?
+                statusText.innerText = 'Select a frame (showing previous)';
+            }
         } else {
+            // Valid new selection
             state.selection = { name, svg: svgString };
             exportBtn.disabled = false;
             statusText.innerText = 'Ready to export';
+            
+            // Remove placeholder styling
             faviconImage.classList.remove('is-placeholder');
             appIconImage.classList.remove('is-placeholder');
+            
             updatePreview();
         }
         updateCodeSnippet();
@@ -127,6 +135,8 @@ function setPlaceholder() {
     appIconImage.classList.add('is-placeholder');
     // Ensure container matches default
     appIconContainer.style.backgroundColor = state.settings.bgColor;
+    // Browser mock also defaults
+    mockupBrowser.style.backgroundColor = state.settings.bgColor;
 }
 
 async function updatePreview() {
@@ -136,24 +146,17 @@ async function updatePreview() {
     if (state.previewDarkMode) {
         mockupBrowser.style.backgroundColor = '';
     } else {
-        mockupBrowser.style.backgroundColor = state.settings.themeColor;
+        // Use the single background color for theme as well
+        mockupBrowser.style.backgroundColor = state.settings.bgColor;
     }
     
-    // Also update app icon container background logic
+    // App icon container uses the same background
     appIconContainer.style.backgroundColor = state.settings.bgColor;
 
     if (state.selection) {
         const smallUrl = await svgToPngDataUrl(state.selection.svg, 32, 32);
         faviconImage.src = smallUrl;
 
-        // For the app icon, if user selected a transparent SVG, we want to bake the color.
-        // But for the preview element, we might just set the container background 
-        // and show the SVG transparently? 
-        // Actually, the previous logic rendered it to PNG with background.
-        // Let's stick to rendering the PNG with background for the src, 
-        // so the 'src' contains the color.
-        // But if we do that, the .app-icon-container background is redundant/hidden.
-        
         const largeUrl = await svgToPngDataUrl(state.selection.svg, 180, 180, 20, state.settings.bgColor);
         appIconImage.src = largeUrl;
     }
@@ -177,6 +180,7 @@ async function runExport() {
     zip.file('favicon.ico', ico);
     zip.file('icon.svg', state.selection.svg);
 
+    // Use state.settings.bgColor for everything
     const apple = await renderPNG(state.selection.svg, 180, 180, 20, state.settings.bgColor);
     zip.file('apple-touch-icon.png', apple);
 
@@ -189,7 +193,7 @@ async function runExport() {
             { src: "/icon-192.png", type: "image/png", sizes: "192x192" },
             { src: "/icon-512.png", type: "image/png", sizes: "512x512" }
         ],
-        theme_color: state.settings.themeColor,
+        theme_color: state.settings.bgColor, // Use bgColor as theme color
         background_color: state.settings.bgColor,
         display: 'standalone'
     };
