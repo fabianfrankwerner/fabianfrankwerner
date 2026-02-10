@@ -19,10 +19,13 @@
                     <span class="label">Web</span>
                 </div>
                 
-                <!-- Toggle Moved Here -->
-                <button id="togglePreviewTheme" class="theme-toggle-btn icon-only" title="Toggle Light/Dark Preview">
-                    <svg viewBox="0 0 16 16"><path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm0 14A6 6 0 0 1 8 2v12z"/></svg>
-                </button>
+                <div class="toggle-container">
+                    <div class="connector-line"></div>
+                    <button id="togglePreviewTheme" class="theme-toggle-btn icon-only" title="Toggle Light/Dark Preview">
+                        <svg viewBox="0 0 16 16"><path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm0 14A6 6 0 0 1 8 2v12z"/></svg>
+                    </button>
+                    <div class="connector-line"></div>
+                </div>
 
                 <div class="preview-card">
                     <div class="app-mockup">
@@ -37,11 +40,8 @@
 
         <!-- Inputs -->
         <div class="settings-area">
-            <div class="input-group">
-                <input type="text" id="siteName" placeholder="Website Name" autocomplete="off">
-            </div>
-            
             <div class="settings-row">
+                <input type="text" id="siteName" placeholder="Website Name" autocomplete="off">
                 <div class="color-group">
                     <div class="color-field">
                         <div class="color-swatch">

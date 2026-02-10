@@ -70,8 +70,8 @@ body {
 
 .preview-grid {
   display: flex;
-  align-items: center; /* Center items vertically */
-  gap: 8px;
+  align-items: center;
+  gap: 0;
   justify-content: space-between;
 }
 
@@ -123,7 +123,6 @@ body {
   flex-shrink: 0;
 }
 
-/* Placeholder logic for favicon */
 .icon-small.is-placeholder {
     opacity: 0.6;
 }
@@ -151,7 +150,7 @@ body {
   height: 44px;
   border-radius: 10px;
   overflow: hidden;
-  background: #E0E0E0; /* Default bg */
+  background: #E0E0E0;
   transition: background 0.2s;
   border: 1px solid var(--preview-border-color);
   display: flex;
@@ -165,7 +164,6 @@ body {
   object-fit: cover;
 }
 
-/* Placeholder specific styles */
 .icon-large.is-placeholder {
     width: 80%;
     height: 80%;
@@ -173,18 +171,40 @@ body {
     opacity: 0.6;
 }
 
+/* Connector Lines */
+.toggle-container {
+    display: flex;
+    align-items: center;
+    flex: 0.5;
+    justify-content: center;
+    margin-bottom: 14px; /* Align with mockups centers */
+}
+
+.connector-line {
+    height: 1px;
+    background: var(--preview-border-color);
+    flex: 1;
+}
+
 /* Inputs */
 .settings-area {
   display: flex;
   flex-direction: column;
-  gap: 16px; /* Spacing between input and color row */
+  gap: 12px;
   margin-top: 4px;
 }
 
+.settings-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
 input[type="text"] {
-  width: 100%;
+  flex: 1;
   height: 28px;
-  border: 1px solid var(--preview-border-color); /* Same border as preview */
+  border: 1px solid var(--preview-border-color);
   background: transparent;
   color: var(--figma-color-text);
   padding: 0 8px;
@@ -192,28 +212,21 @@ input[type="text"] {
   outline: none;
   border-radius: 2px;
   box-sizing: border-box;
-  margin: 0 -8px;
-  width: calc(100% + 16px);
 }
 
 input[type="text"]:hover {
-  border-color: var(--figma-color-bg-secondary);
+  border-color: var(--figma-color-bg-tertiary);
 }
 
 input[type="text"]:focus {
   border-color: var(--figma-color-bg-brand);
-  background: var(--figma-color-bg); /* Ensure visible bg on focus */
-}
-
-.settings-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  background: var(--figma-color-bg);
 }
 
 .color-group {
     display: flex;
-    gap: 16px;
+    gap: 12px;
+    flex-shrink: 0;
 }
 
 .color-field {
@@ -223,8 +236,8 @@ input[type="text"]:focus {
 }
 
 .color-field label {
-  font-size: 11px;
-  color: var(--figma-color-text);
+  font-size: 10px;
+  color: var(--figma-color-text-secondary);
   display: flex;
   align-items: center;
   gap: 4px;
@@ -266,7 +279,7 @@ input[type="color"] {
   transition: all 0.1s;
   height: 24px;
   width: 24px;
-  margin-bottom: 14px; /* Align visually with mockups, compensating for labels */
+  flex-shrink: 0;
 }
 
 .theme-toggle-btn:hover {
