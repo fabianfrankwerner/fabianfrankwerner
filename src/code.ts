@@ -20,8 +20,13 @@ figma.ui.onmessage = async (msg) => {
     try {
       // 1. Export as SVG (the source of truth)
       const svgBytes = await node.exportAsync({ format: 'SVG' });
+      
       // Convert Uint8Array to String for passing to UI
-      const svgString = new TextDecoder().decode(svgBytes);
+      // Use a more compatible method than TextDecoder which might not be available in all environments
+      let svgString = "";
+      for (let i = 0; i < svgBytes.length; i++) {
+        svgString += String.fromCharCode(svgBytes[i]);
+      }
 
       // 2. Send data to the UI
       figma.ui.postMessage({
@@ -35,7 +40,7 @@ figma.ui.onmessage = async (msg) => {
 
     } catch (error) {
       console.error(error);
-      figma.notify("Error exporting selection.");
+      figma.notify(`Error exporting selection: ${error instanceof Error ? error.message : String(error)}`);
     }
   }
 };
