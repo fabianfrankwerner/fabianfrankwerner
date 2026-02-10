@@ -15,8 +15,8 @@ const state: AppState = {
     selection: null,
     settings: {
         websiteName: '',
-        themeColor: '#ffffff',
-        bgColor: '#ffffff'
+        themeColor: '#e0e0e0',
+        bgColor: '#e0e0e0'
     },
     previewDarkMode: false
 };
@@ -69,7 +69,7 @@ copyBtn.onclick = () => {
     document.execCommand('copy');
     document.body.removeChild(el);
     copyBtn.innerText = 'Copied';
-    setTimeout(() => copyBtn.innerText = 'Copy', 2000);
+    setTimeout(() => copyBtn.innerText = 'Copy HTML', 2000);
 };
 
 exportBtn.onclick = async () => {
@@ -101,7 +101,7 @@ window.onmessage = (event) => {
         } else {
             state.selection = { name, svg: svgString };
             exportBtn.disabled = false;
-            statusText.innerText = 'Ready';
+            statusText.innerText = 'Ready to export';
             document.getElementById('previewArea')?.classList.add('visible');
             updatePreview();
         }
@@ -114,11 +114,17 @@ async function updatePreview() {
     if (!state.selection) return;
 
     mockupBrowser.classList.toggle('dark', state.previewDarkMode);
+    toggleThemeBtn.classList.toggle('active', state.previewDarkMode);
     
     // Preview the theme color in the browser chrome
-    // We only apply the custom color if it's NOT the default #ffffff (unless in dark mode)
-    // Actually, for a better "Theme" preview, let's always apply it to the mockup background.
-    mockupBrowser.style.backgroundColor = state.settings.themeColor;
+    // Only apply if NOT dark mode, or decide logic. 
+    // Usually theme color applies in dark mode too on mobile, but for this preview:
+    // If Dark Mode is active, override with dark gray.
+    if (state.previewDarkMode) {
+        mockupBrowser.style.backgroundColor = ''; // Use CSS class color
+    } else {
+        mockupBrowser.style.backgroundColor = state.settings.themeColor;
+    }
 
     const smallUrl = await svgToPngDataUrl(state.selection.svg, 32, 32);
     faviconImage.src = smallUrl;

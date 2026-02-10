@@ -1,4 +1,4 @@
-figma.showUI(__html__, { width: 320, height: 500, themeColors: true });
+figma.showUI(__html__, { width: 300, height: 375, themeColors: true });
 
 async function handleSelection() {
   const selection = figma.currentPage.selection;

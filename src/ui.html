@@ -35,24 +35,26 @@
                 <input type="text" id="siteName" placeholder="Website Name" autocomplete="off">
             </div>
             
-            <div class="color-row">
-                <div class="color-field">
-                    <div class="color-swatch">
-                        <input type="color" id="themeColor" value="#ffffff">
+            <div class="settings-row">
+                <div class="color-group">
+                    <div class="color-field" data-tooltip="Color of browser chrome (mobile address bar)">
+                        <div class="color-swatch">
+                            <input type="color" id="themeColor" value="#e0e0e0">
+                        </div>
+                        <label>Theme <span class="info-icon">?</span></label>
                     </div>
-                    <label title="The color of the browser address bar (mobile) and task switcher.">Theme <span class="info-icon">?</span></label>
-                </div>
-                <div class="color-field">
-                    <div class="color-swatch">
-                        <input type="color" id="bgColor" value="#ffffff">
+                    <div class="color-field" data-tooltip="Background for Apple Touch Icon & Manifest">
+                        <div class="color-swatch">
+                            <input type="color" id="bgColor" value="#e0e0e0">
+                        </div>
+                        <label>Background <span class="info-icon">?</span></label>
                     </div>
-                    <label title="The background color for the Apple Touch Icon and manifest.">Background <span class="info-icon">?</span></label>
                 </div>
-                <div class="theme-toggle">
-                   <button id="togglePreviewTheme" class="icon-button" title="Toggle Preview Theme">
-                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 10C8.20914 10 10 8.20914 10 6C10 3.79086 8.20914 2 6 2C3.79086 2 2 3.79086 2 6C2 8.20914 3.79086 10 6 10Z" stroke="currentColor" stroke-width="1.2"/></svg>
-                   </button>
-                </div>
+                
+                <button id="togglePreviewTheme" class="theme-toggle-btn" title="Toggle Light/Dark Preview">
+                    <svg viewBox="0 0 16 16"><path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm0 14A6 6 0 0 1 8 2v12z"/></svg>
+                    <span>Mode</span>
+                </button>
             </div>
         </div>
 
@@ -65,8 +67,8 @@
         <!-- Hidden Code Section -->
         <div id="codeOutput" class="code-area hidden">
             <div class="code-header">
-                <span>Installation Code</span>
-                <button id="copyBtn">Copy</button>
+                <span>Code</span>
+                <button id="copyBtn">Copy HTML</button>
             </div>
             <pre id="htmlCode"></pre>
         </div>
