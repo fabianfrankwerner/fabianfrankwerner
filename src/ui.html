@@ -3,99 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Favicon Exporter</title>
 </head>
 <body>
-    <!-- Main Content -->
-    <div id="mainContent">
-        
-        <!-- Preview Section (Now at the top) -->
-        <div class="preview-container" id="previewContainer">
-            <div class="row" style="margin-bottom: 12px;">
-                <p class="section-title" style="margin-bottom: 0;">Preview</p>
-                
-                <!-- Preview Theme Toggle -->
-                <div id="previewThemeToggleContainer" class="toggle-wrapper" style="margin: 0; padding: 0; border: none; display: flex;">
-                    <span style="font-size: 10px; color: var(--figma-color-text-secondary); margin-right: 8px;">Dark Preview</span>
-                    <label class="switch" style="transform: scale(0.8);">
-                        <input type="checkbox" id="previewThemeToggle">
-                        <span class="slider round"></span>
-                    </label>
+    <div id="app">
+        <!-- Visual Feedback -->
+        <div class="preview-area" id="previewArea">
+            <div class="preview-grid">
+                <div class="preview-card" id="browserPreview">
+                    <div class="browser-mockup" id="mockupBrowser">
+                        <div class="browser-tab">
+                            <img id="faviconImage" class="icon-small" src="">
+                            <span id="tabTitle">New Tab</span>
+                        </div>
+                    </div>
+                    <span class="label">Browser</span>
                 </div>
+                <div class="preview-card">
+                    <div class="app-mockup">
+                        <div class="app-icon-container">
+                            <img id="appIconImage" class="icon-large" src="">
+                        </div>
+                    </div>
+                    <span class="label">PWA</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Inputs -->
+        <div class="settings-area">
+            <div class="input-group">
+                <input type="text" id="siteName" placeholder="Website Name" autocomplete="off">
             </div>
             
-            <div class="preview-row">
-                <div class="preview-item">
-                    <span class="preview-label">Browser Tab</span>
-                    <div class="mockup-browser-container" id="mockupBrowserContainer">
-                        <div class="mockup-browser-tab" id="mockupBrowserTab">
-                            <img id="previewFavicon" class="mockup-favicon" src="">
-                            <span id="previewTabTitle" class="mockup-title-text">New Tab</span>
-                            <div class="mockup-close-x"></div>
-                        </div>
-                    </div>
+            <div class="color-row">
+                <div class="color-field">
+                    <input type="color" id="themeColor" value="#ffffff">
+                    <label>Theme</label>
                 </div>
-
-                <div class="preview-item">
-                    <span class="preview-label">Home Screen</span>
-                    <div class="mockup-home-screen">
-                        <img id="previewAppIcon" class="mockup-app-icon" src="">
-                        <span id="previewAppName" class="mockup-app-name">App</span>
-                    </div>
+                <div class="color-field">
+                    <input type="color" id="bgColor" value="#ffffff">
+                    <label>Background</label>
+                </div>
+                <div class="theme-toggle">
+                   <button id="togglePreviewTheme" class="icon-button" title="Toggle Preview Theme">
+                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 10C8.20914 10 10 8.20914 10 6C10 3.79086 8.20914 2 6 2C3.79086 2 2 3.79086 2 6C2 8.20914 3.79086 10 6 10Z" stroke="currentColor" stroke-width="1.2"/></svg>
+                   </button>
                 </div>
             </div>
         </div>
 
-        <!-- Settings Fields -->
-        <div id="proFields" style="margin-top: 24px;">
-            <div class="section">
-                <p class="section-title">Settings</p>
-                <div class="control-group">
-                    <div class="input-wrapper">
-                        <label for="websiteName">Website Name</label>
-                        <input type="text" id="websiteName" placeholder="My Awesome Site">
-                    </div>
-                    
-                    <div class="row">
-                        <div class="input-wrapper">
-                            <label>Theme Color</label>
-                            <div class="color-picker-row">
-                                <input type="color" id="themeColor" value="#ffffff">
-                                <span style="font-size: 11px; color: var(--figma-color-text-secondary)">Browser Theme</span>
-                            </div>
-                        </div>
-                        <div class="input-wrapper">
-                            <label>Background</label>
-                            <div class="color-picker-row">
-                                <input type="color" id="bgColor" value="#ffffff">
-                                <span style="font-size: 11px; color: var(--figma-color-text-secondary)">Apple/PWA</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="input-wrapper">
-                        <label>Dark Mode Icon</label>
-                        <div class="row">
-                            <span id="darkModeSelectionName" style="font-size: 11px; color: var(--figma-color-text-secondary);">Same as Light</span>
-                            <button id="selectDarkModeBtn" class="secondary" style="width: auto; padding: 4px 8px; font-size: 11px;">Select Current</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <!-- Action -->
+        <div class="footer">
+            <button id="exportBtn" disabled>Export Bundle</button>
+            <div id="status" class="status-text">Select a frame</div>
         </div>
 
-        <div style="margin-top: 24px;">
-            <button id="generateBtn" disabled>Export Favicon Bundle</button>
-            <div id="status" class="status">Select a frame to begin.</div>
-        </div>
-
-        <!-- HTML Code Section -->
-        <div id="htmlCodeSection" class="hidden" style="margin-top: 24px;">
-            <p class="section-title">Installation Code</p>
-            <div class="code-wrapper">
-                <pre id="htmlCodeDisplay"></pre>
-                <button id="copyHtmlBtn" class="secondary small">Copy HTML</button>
+        <!-- Hidden Code Section -->
+        <div id="codeOutput" class="code-area hidden">
+            <div class="code-header">
+                <span>Installation Code</span>
+                <button id="copyBtn">Copy</button>
             </div>
+            <pre id="htmlCode"></pre>
         </div>
     </div>
 </body>
