@@ -3,7 +3,6 @@ import './ui.css';
 
 // --- State ---
 interface AppState {
-    isPro: boolean;
     lightSelection: { name: string, svg: string } | null;
     darkSelection: { name: string, svg: string } | null;
     settings: {
@@ -15,7 +14,6 @@ interface AppState {
 }
 
 const state: AppState = {
-    isPro: false,
     lightSelection: null,
     darkSelection: null,
     settings: {
@@ -29,11 +27,7 @@ const state: AppState = {
 // --- Elements ---
 const generateBtn = document.getElementById('generateBtn') as HTMLButtonElement;
 const statusDiv = document.getElementById('status') as HTMLDivElement;
-const proModeToggle = document.getElementById('proModeToggle') as HTMLInputElement;
-const proFields = document.getElementById('proFields') as HTMLDivElement;
-const selectionNameFn = document.getElementById('selectionName') as HTMLSpanElement;
 const darkModeSelectionName = document.getElementById('darkModeSelectionName') as HTMLSpanElement;
-const refreshBtn = document.getElementById('refreshSelection') as HTMLButtonElement;
 const selectDarkModeBtn = document.getElementById('selectDarkModeBtn') as HTMLButtonElement;
 
 // Inputs
@@ -61,26 +55,9 @@ const copyHtmlBtn = document.getElementById('copyHtmlBtn') as HTMLButtonElement;
 
 // --- Event Listeners ---
 
-proModeToggle.onchange = () => {
-    state.isPro = proModeToggle.checked;
-    if (state.isPro) {
-        proFields.classList.remove('hidden');
-        generateBtn.innerText = "Export Pro Bundle";
-        updatePreview();
-    } else {
-        proFields.classList.add('hidden');
-        htmlCodeSection.classList.add('hidden');
-        generateBtn.innerText = "Export Favicon.ico";
-    }
-};
-
 previewThemeToggle.onchange = () => {
     state.previewDarkMode = previewThemeToggle.checked;
     updatePreview();
-};
-
-refreshBtn.onclick = () => {
-    parent.postMessage({ pluginMessage: { type: 'request-selection', for: 'light' } }, '*');
 };
 
 selectDarkModeBtn.onclick = () => {
@@ -142,13 +119,24 @@ window.onmessage = async (event: MessageEvent) => {
     if (msg.type === 'selection-response') {
         const { svgString, name, forMode } = msg;
 
+        // Handle case where selection was cleared/invalid
+        if (svgString === null && forMode === 'light') {
+            state.lightSelection = null;
+            validateState();
+            return;
+        }
+
         if (forMode === 'dark') {
-            state.darkSelection = { name, svg: svgString };
-            darkModeSelectionName.innerText = name;
+            if (svgString) {
+                state.darkSelection = { name, svg: svgString };
+                darkModeSelectionName.innerText = name;
+            } else {
+               // Optional: Handle if user tries to select nothing for dark mode?
+               // For now, assume if they clicked the button, they expect a selection.
+            }
         } else {
             // Default to light/main
             state.lightSelection = { name, svg: svgString };
-            selectionNameFn.innerText = name;
         }
         
         // Always update preview to reflect potential changes
@@ -163,28 +151,31 @@ function validateState() {
     if (state.lightSelection) {
         generateBtn.disabled = false;
         statusDiv.innerText = "Ready to export.";
+        // Ensure preview is visible if selection exists
+        previewContainer.classList.add('visible');
     } else {
         generateBtn.disabled = true;
         statusDiv.innerText = "Select a frame to begin.";
+        // Optionally hide preview or show placeholder state
     }
 }
 
 async function updatePreview() {
     if (!state.lightSelection) return;
 
-    // Show/Hide Dark Mode Toggle based on availability
-    if (state.darkSelection) {
-        previewThemeToggleContainer.style.display = 'flex';
-    } else {
-        previewThemeToggleContainer.style.display = 'none';
-        state.previewDarkMode = false; // Reset if no dark selection
-        previewThemeToggle.checked = false;
-    }
-
+    // Logic: 
+    // If Dark Mode Icon is set, we can toggle between Light Icon (Light Mode) and Dark Icon (Dark Mode).
+    // If NO Dark Mode Icon is set, we can still toggle the Browser Theme (Light/Dark), but the icon remains the Light Icon.
+    
     // Determine which SVG to show in the browser tab
     let browserFaviconSvg = state.lightSelection.svg;
+    
+    // If preview is in dark mode AND we have a specific dark selection, use it.
     if (state.previewDarkMode && state.darkSelection) {
         browserFaviconSvg = state.darkSelection.svg;
+    }
+
+    if (state.previewDarkMode) {
         mockupBrowserContainer.classList.add('dark');
         mockupBrowserTab.classList.add('dark');
     } else {
@@ -197,13 +188,8 @@ async function updatePreview() {
     previewFavicon.src = smallUrl;
 
     // 180x180 for App Icon (Always uses light/main selection + bg color)
-    const bg = state.isPro ? state.settings.bgColor : null;
-    const largeUrl = await svgToPngDataUrl(state.lightSelection.svg, 180, 180, 20, bg);
+    const largeUrl = await svgToPngDataUrl(state.lightSelection.svg, 180, 180, 20, state.settings.bgColor);
     previewAppIcon.src = largeUrl;
-
-    if (state.isPro) {
-        previewContainer.classList.add('visible');
-    }
 }
 
 async function svgToPngDataUrl(svgString: string, width: number, height: number, padding = 0, bgColor: string | null = null): Promise<string> {
@@ -297,14 +283,7 @@ async function generateExport() {
     const png32Buffer = await png32Blob.arrayBuffer();
     const icoBuffer = createIcoFromPng(png32Buffer);
 
-    // Casual Mode: Download .ico directly
-    if (!state.isPro) {
-        const icoBlob = new Blob([icoBuffer], { type: 'image/x-icon' });
-        triggerDownload(icoBlob, "favicon.ico");
-        return;
-    }
-
-    // Pro Mode: Full Suite ZIP
+    // Full Suite ZIP
     const zip = new JSZip();
     zip.file("favicon.ico", icoBuffer);
     zip.file("icon.svg", state.lightSelection.svg);
@@ -336,7 +315,7 @@ async function generateExport() {
     zip.file("manifest.webmanifest", JSON.stringify(manifest, null, 2));
 
     const content = await zip.generateAsync({ type: "blob" });
-    triggerDownload(content, "favicon-pro.zip");
+    triggerDownload(content, "favicon-bundle.zip");
 
     // Show HTML Code
     let htmlSnippet = `<link rel="icon" href="/favicon.ico" sizes="any">\n`;
@@ -358,5 +337,23 @@ function triggerDownload(blob: Blob, filename: string) {
     link.click();
 }
 
-// Initial fetch
-parent.postMessage({ pluginMessage: { type: 'request-selection', for: 'light' } }, '*');
+// Check for current theme to set initial preview state
+function initTheme() {
+    // Basic detection based on body class or computed style if Figma injects it.
+    // Figma usually injects 'figma-dark' or similar classes, or we can check a CSS variable.
+    // Let's check the background color of the body.
+    const bodyBg = getComputedStyle(document.body).backgroundColor;
+    // Simple heuristic: if it's dark, we assume dark mode.
+    // rgb(30, 30, 30) etc.
+    const rgb = bodyBg.match(/\d+/g);
+    if (rgb) {
+        const brightness = (parseInt(rgb[0]) * 299 + parseInt(rgb[1]) * 587 + parseInt(rgb[2]) * 114) / 1000;
+        if (brightness < 128) {
+             state.previewDarkMode = true;
+             previewThemeToggle.checked = true;
+        }
+    }
+}
+
+initTheme();
+// Note: Selection is auto-fetched by the plugin code sending an event on startup.

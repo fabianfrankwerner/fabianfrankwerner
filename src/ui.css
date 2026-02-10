@@ -190,8 +190,7 @@ input:checked + .slider:before {
   background: var(--figma-color-bg-secondary);
   border-radius: 8px;
   padding: 12px;
-  margin-top: 16px;
-  display: none; /* Hidden by default */
+  display: none; /* Still hidden until selection is made */
 }
 
 .preview-container.visible {
@@ -216,7 +215,7 @@ input:checked + .slider:before {
   padding: 8px 8px 0 8px;
   display: flex;
   align-items: flex-end;
-  height: 48px; /* Increased height to match app icon area roughly */
+  height: 48px; 
   transition: background 0.3s ease;
 }
 
@@ -292,13 +291,13 @@ input:checked + .slider:before {
   flex-direction: column;
   align-items: center;
   gap: 6px;
-  padding: 0; /* Remove padding to fit better side-by-side */
-  height: 48px; /* Match height alignment */
-  justify-content: flex-end; /* Align bottom like browser tab content */
+  padding: 0;
+  height: 48px;
+  justify-content: flex-end;
 }
 
 .mockup-app-icon {
-  width: 42px; /* Slightly smaller to fit */
+  width: 42px;
   height: 42px;
   border-radius: 10px;
   background: white;
