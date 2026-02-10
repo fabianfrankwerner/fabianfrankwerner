@@ -1,0 +1,243 @@
+:root {
+  --figma-color-bg: #ffffff;
+  --figma-color-bg-brand: #0d99ff;
+  --figma-color-bg-brand-hover: #007be5;
+  --figma-color-bg-brand-pressed: #005fb3;
+  --figma-color-bg-secondary: #f0f0f0;
+  --figma-color-bg-disabled: #d9d9d9;
+  --figma-color-text: #000000;
+  --figma-color-text-secondary: #808080;
+  --figma-color-text-onbrand: #ffffff;
+  --figma-color-text-disabled: #b3b3b3;
+  --figma-color-border: #e6e6e6;
+  --figma-color-icon: #000000;
+  --figma-color-icon-secondary: #808080;
+}
+
+body.figma-dark {
+  --figma-color-bg: #2c2c2c;
+  --figma-color-bg-brand: #0d99ff;
+  --figma-color-bg-secondary: #444444;
+  --figma-color-bg-disabled: #555555;
+  --figma-color-text: #ffffff;
+  --figma-color-text-secondary: #b3b3b3;
+  --figma-color-text-onbrand: #ffffff;
+  --figma-color-text-disabled: #7f7f7f;
+  --figma-color-border: #444444;
+  --figma-color-icon: #ffffff;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  padding: 16px;
+  color: var(--figma-color-text);
+  background-color: var(--figma-color-bg);
+  margin: 0;
+  box-sizing: border-box;
+}
+
+h2 {
+  font-size: 16px;
+  margin: 0 0 16px 0;
+  font-weight: 600;
+}
+
+.section {
+  margin-bottom: 24px;
+}
+
+.section-title {
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--figma-color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.control-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.input-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--figma-color-text);
+}
+
+input[type="text"] {
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid var(--figma-color-border);
+  background: var(--figma-color-bg);
+  color: var(--figma-color-text);
+  font-size: 12px;
+  outline: none;
+}
+
+input[type="text"]:focus {
+  border-color: var(--figma-color-bg-brand);
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.color-picker-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+input[type="color"] {
+  border: none;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  background: none;
+  cursor: pointer;
+}
+
+/* Button */
+button {
+  background: var(--figma-color-bg-brand);
+  color: var(--figma-color-text-onbrand);
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  width: 100%;
+  transition: background 0.2s;
+}
+
+button:hover {
+  background: var(--figma-color-bg-brand-hover);
+}
+
+button:active {
+  background: var(--figma-color-bg-brand-pressed);
+}
+
+button:disabled {
+  background: var(--figma-color-bg-disabled);
+  color: var(--figma-color-text-disabled);
+  cursor: not-allowed;
+}
+
+button.secondary {
+  background: transparent;
+  border: 1px solid var(--figma-color-border);
+  color: var(--figma-color-text);
+}
+
+button.secondary:hover {
+  background: var(--figma-color-bg-secondary);
+}
+
+/* Toggle Switch */
+.toggle-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--figma-color-border);
+}
+
+.toggle-label {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+/* Preview Area */
+.preview-container {
+  background: var(--figma-color-bg-secondary);
+  border-radius: 8px;
+  padding: 16px;
+  margin-top: 16px;
+  display: none; /* Hidden by default */
+}
+
+.preview-container.visible {
+  display: block;
+}
+
+.preview-item {
+  margin-bottom: 16px;
+}
+
+.preview-label {
+  font-size: 11px;
+  color: var(--figma-color-text-secondary);
+  margin-bottom: 4px;
+  display: block;
+}
+
+.mockup-browser-tab {
+  background: #e0e0e0;
+  border-radius: 4px 4px 0 0;
+  padding: 6px 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.mockup-favicon {
+  width: 16px;
+  height: 16px;
+  background-color: #fff; /* Placeholder */
+  border-radius: 2px;
+}
+
+.mockup-title {
+  height: 8px;
+  width: 60px;
+  background: #bbb;
+  border-radius: 2px;
+}
+
+.mockup-home-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.mockup-app-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  background: #ccc;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.mockup-app-name {
+  font-size: 10px;
+  color: var(--figma-color-text);
+}
+
+.status {
+  margin-top: 12px;
+  font-size: 12px;
+  color: var(--figma-color-text-secondary);
+  text-align: center;
+}
+
+.hidden {
+  display: none !important;
+}

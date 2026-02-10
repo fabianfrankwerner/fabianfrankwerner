@@ -1,7 +1,7 @@
-figma.showUI(__html__, { width: 400, height: 300, themeColors: true });
+figma.showUI(__html__, { width: 400, height: 600, themeColors: true });
 
 figma.ui.onmessage = async (msg) => {
-  if (msg.type === 'generate-favicons') {
+  if (msg.type === 'request-selection') {
     const selection = figma.currentPage.selection;
 
     if (selection.length !== 1) {
@@ -23,12 +23,15 @@ figma.ui.onmessage = async (msg) => {
       // Convert Uint8Array to String for passing to UI
       const svgString = String.fromCharCode.apply(null, Array.from(svgBytes));
 
-      // 2. Send data to the UI to handle image generation and zipping
+      // 2. Send data to the UI
       figma.ui.postMessage({
-        type: 'processing-start',
+        type: 'selection-response',
         svgString: svgString,
-        name: node.name
+        name: node.name,
+        forMode: msg.for // 'light' or 'dark'
       });
+      
+      figma.notify(`Loaded selection: ${node.name}`);
 
     } catch (error) {
       console.error(error);

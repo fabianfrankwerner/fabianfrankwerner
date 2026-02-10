@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Favicon Exporter</title>
+</head>
+<body>
+    <h2>Favicon Exporter</h2>
+
+    <!-- Mode Toggle -->
+    <div class="toggle-wrapper">
+        <span class="toggle-label">Pro Mode</span>
+        <label class="switch">
+            <input type="checkbox" id="proModeToggle">
+            <span class="slider round"></span>
+        </label>
+    </div>
+
+    <!-- Main Content -->
+    <div id="mainContent">
+        <p class="section-title">Selection</p>
+        <div class="row">
+            <span id="selectionName">No selection</span>
+            <button id="refreshSelection" class="secondary" style="width: auto; padding: 4px 8px; font-size: 11px;">Refetch</button>
+        </div>
+
+        <!-- Pro Fields -->
+        <div id="proFields" class="hidden">
+            <div class="section">
+                <p class="section-title">Settings</p>
+                <div class="control-group">
+                    <div class="input-wrapper">
+                        <label for="websiteName">Website Name</label>
+                        <input type="text" id="websiteName" placeholder="My Awesome Site">
+                    </div>
+                    
+                    <div class="row">
+                        <div class="input-wrapper">
+                            <label>Theme Color</label>
+                            <div class="color-picker-row">
+                                <input type="color" id="themeColor" value="#ffffff">
+                                <span style="font-size: 11px; color: var(--figma-color-text-secondary)">Browser Theme</span>
+                            </div>
+                        </div>
+                        <div class="input-wrapper">
+                            <label>Background</label>
+                            <div class="color-picker-row">
+                                <input type="color" id="bgColor" value="#ffffff">
+                                <span style="font-size: 11px; color: var(--figma-color-text-secondary)">Apple/PWA</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="input-wrapper">
+                        <label>Dark Mode Icon</label>
+                        <div class="row">
+                            <span id="darkModeSelectionName" style="font-size: 11px; color: var(--figma-color-text-secondary);">Same as Light</span>
+                            <button id="selectDarkModeBtn" class="secondary" style="width: auto; padding: 4px 8px; font-size: 11px;">Select Current</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Preview Section -->
+            <div class="preview-container" id="previewContainer">
+                <p class="section-title">Preview</p>
+                
+                <div class="preview-item">
+                    <span class="preview-label">Browser Tab</span>
+                    <div class="mockup-browser-tab">
+                        <img id="previewFavicon" class="mockup-favicon" src="">
+                        <div class="mockup-title"></div>
+                    </div>
+                </div>
+
+                <div class="preview-item">
+                    <span class="preview-label">Home Screen</span>
+                    <div class="mockup-home-screen">
+                        <img id="previewAppIcon" class="mockup-app-icon" src="">
+                        <span id="previewAppName" class="mockup-app-name">App</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="margin-top: 24px;">
+            <button id="generateBtn" disabled>Export Favicon</button>
+            <div id="status" class="status">Select a frame to begin.</div>
+        </div>
+    </div>
+</body>
+</html>
