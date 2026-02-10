@@ -43,7 +43,7 @@ setPlaceholder();
 
 siteNameInput.oninput = () => {
     state.settings.websiteName = siteNameInput.value;
-    tabTitle.innerText = state.settings.websiteName || 'New Tab';
+    tabTitle.innerText = state.settings.websiteName || 'Stella';
     updateCodeSnippet();
 };
 
@@ -144,7 +144,8 @@ async function updatePreview() {
     toggleThemeBtn.classList.toggle('active', state.previewDarkMode);
     
     if (state.previewDarkMode) {
-        mockupBrowser.style.backgroundColor = '';
+        // mockupBrowser.style.backgroundColor = ''; // Don't reset to default
+        mockupBrowser.style.backgroundColor = state.settings.bgColor;
     } else {
         // Use the single background color for theme as well
         mockupBrowser.style.backgroundColor = state.settings.bgColor;

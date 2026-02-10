@@ -6,48 +6,52 @@
 </head>
 <body>
     <div id="app">
-        <!-- Visual Feedback -->
-        <div class="preview-area" id="previewArea">
-            <div class="preview-grid">
-                <div class="preview-card" id="browserPreview">
-                    <div class="browser-mockup" id="mockupBrowser">
-                        <div class="browser-tab">
-                            <img id="faviconImage" class="icon-small" src="">
-                            <span id="tabTitle">New Tab</span>
+        <!-- Inputs -->
+        <div class="settings-area">
+            <div class="aligned-row">
+                <div class="aligned-left">
+                    <input type="text" id="siteName" placeholder="Title" autocomplete="off">
+                </div>
+                <div class="aligned-right">
+                    <div class="color-group">
+                        <div class="color-field">
+                            <div class="color-swatch">
+                                <input type="color" id="bgColor" value="#e0e0e0">
+                            </div>
+                            <label>Background</label>
                         </div>
                     </div>
-                    <span class="label">Web</span>
-                </div>
-                
-                <div class="toggle-container">
-                    <div class="connector-line"></div>
-                    <button id="togglePreviewTheme" class="theme-toggle-btn icon-only" title="Toggle Light/Dark Preview">
-                        <svg viewBox="0 0 16 16"><path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm0 14A6 6 0 0 1 8 2v12z"/></svg>
-                    </button>
-                    <div class="connector-line"></div>
-                </div>
-
-                <div class="preview-card">
-                    <div class="app-mockup">
-                        <div class="app-icon-container">
-                            <img id="appIconImage" class="icon-large" src="">
-                        </div>
-                    </div>
-                    <span class="label">App</span>
                 </div>
             </div>
         </div>
 
-        <!-- Inputs -->
-        <div class="settings-area">
-            <div class="settings-row">
-                <input type="text" id="siteName" placeholder="Website Name" autocomplete="off">
-                <div class="color-group">
-                    <div class="color-field">
-                        <div class="color-swatch">
-                            <input type="color" id="bgColor" value="#e0e0e0">
+        <!-- Visual Feedback -->
+        <div class="preview-area">
+            <div class="aligned-row">
+                <!-- Left: Browser + Toggle -->
+                <div class="aligned-left">
+                    <div class="browser-wrapper">
+                        <div class="browser-mockup" id="mockupBrowser">
+                            <div class="browser-tab">
+                                <img id="faviconImage" class="icon-small" src="">
+                                <span id="tabTitle">Stella</span>
+                            </div>
                         </div>
-                        <label>Background</label>
+                    </div>
+                    <!-- Toggle Button -->
+                    <button id="togglePreviewTheme" class="theme-toggle-btn icon-only" title="Toggle Light/Dark Preview">
+                        <svg viewBox="0 0 16 16"><path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm0 14A6 6 0 0 1 8 2v12z"/></svg>
+                    </button>
+                </div>
+                
+                <!-- Right: App Icon -->
+                <div class="aligned-right">
+                    <div class="app-wrapper">
+                        <div class="app-mockup">
+                            <div class="app-icon-container">
+                                <img id="appIconImage" class="icon-large" src="">
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -63,7 +67,7 @@
         <div id="codeOutput" class="code-area">
             <div class="code-header">
                 <span>Code</span>
-                <button id="copyBtn">Copy HTML</button>
+                <button id="copyBtn">Copy</button>
             </div>
             <pre id="htmlCode"></pre>
         </div>
