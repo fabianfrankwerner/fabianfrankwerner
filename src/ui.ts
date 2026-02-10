@@ -145,8 +145,8 @@ async function runExport() {
     const manifest = {
         name: state.settings.websiteName || 'App',
         icons: [
-            { src: '/icon-192.png', type: 'image/png', sizes: '192x192' },
-            { src: '/icon-512.png', type: 'image/png', sizes: '512x512' }
+            { src: "/icon-192.png", type: "image/png", sizes: "192x192" },
+            { src: "/icon-512.png", type: "image/png", sizes: "512x512" }
         ],
         theme_color: state.settings.themeColor,
         background_color: state.settings.bgColor,
@@ -169,7 +169,7 @@ async function runExport() {
     codeArea.classList.remove('hidden');
 }
 
-// Re-use existing helper functions (svgToPngDataUrl, renderPNG, createIcoFromPng)
+// Helpers
 async function svgToPngDataUrl(svgString: string, width: number, height: number, padding = 0, bgColor: string | null = null): Promise<string> {
     return new Promise((resolve, reject) => {
         const img = new Image();
@@ -223,3 +223,17 @@ function createIcoFromPng(pngBuffer: ArrayBuffer) {
     ico.set(header, 0); ico.set(entry, 6); ico.set(new Uint8Array(pngBuffer), 22);
     return ico;
 }
+
+// --- Theme Initialization ---
+function initTheme() {
+    const bodyBg = getComputedStyle(document.body).backgroundColor;
+    const rgb = bodyBg.match(/\d+/g);
+    if (rgb) {
+        const brightness = (parseInt(rgb[0]) * 299 + parseInt(rgb[1]) * 587 + parseInt(rgb[2]) * 114) / 1000;
+        if (brightness < 128) {
+             state.previewDarkMode = true;
+        }
+    }
+}
+
+initTheme();
