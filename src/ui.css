@@ -3,7 +3,7 @@ body {
   margin: 0;
   padding: 12px;
   background: var(--figma-color-bg);
-  font-size: 12px;
+  font-size: 9px;
   -webkit-font-smoothing: antialiased;
   cursor: default;
   user-select: none;
@@ -230,7 +230,6 @@ input[type="text"] {
   height: 24px;
   background: transparent;
   padding: 0 12px;
-  font-size: 12px;
   outline: none;
   border-radius: 6px;
   box-sizing: border-box;
@@ -342,7 +341,6 @@ input[type="color"]:focus-visible {
   padding: 0 6px;
   background: transparent;
   border-radius: 6px;
-  font-size: 9px;
   cursor: pointer;
   display: flex;
   align-items: center;
