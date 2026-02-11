@@ -1,35 +1,3 @@
-:root {
-  /* Light Mode Defaults */
-  --figma-color-bg: #ffffff;
-  --figma-color-bg-secondary: #f0f0f0;
-  --figma-color-bg-tertiary: #e5e5e5;
-  --figma-color-bg-brand: #18A0FB;
-  --figma-color-bg-brand-hover: #0588df;
-  --figma-color-bg-brand-pressed: #0076cf;
-  --figma-color-bg-disabled: #d8d8d8;
-  --figma-color-border: #e6e6e6;
-  --figma-color-text: #333333;
-  --figma-color-text-secondary: #8c8c8c;
-  --figma-color-text-onbrand: #ffffff;
-  --figma-color-text-disabled: #b3b3b3;
-}
-
-/* Dark Mode Overrides */
-html.figma-dark {
-  --figma-color-bg: #2C2C2C;
-  --figma-color-bg-secondary: #444444;
-  --figma-color-bg-tertiary: #555555;
-  --figma-color-bg-brand: #0C8CE9;
-  --figma-color-bg-brand-hover: #0A75C2;
-  --figma-color-bg-brand-pressed: #085E9B;
-  --figma-color-bg-disabled: #757575;
-  --figma-color-border: #444444;
-  --figma-color-text: #FFFFFF;
-  --figma-color-text-secondary: #B3B3B3;
-  --figma-color-text-onbrand: #FFFFFF;
-  --figma-color-text-disabled: #757575;
-}
-
 body {
   font-family: "Geist", sans-serif;
   margin: 0;
