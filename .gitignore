@@ -1,6 +1,2 @@
-*.log
-*.log.*
-node_modules
-
-out/
 dist/
+node_modules/

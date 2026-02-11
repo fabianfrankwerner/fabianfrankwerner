@@ -5,6 +5,7 @@
   "main": "code.js",
   "scripts": {
     "build": "webpack",
+    "format": "npx prettier . --write",
     "lint": "eslint --ext .ts,.tsx --ignore-pattern node_modules .",
     "lint:fix": "eslint --ext .ts,.tsx --ignore-pattern node_modules --fix .",
     "watch": "npm run build -- --watch"
@@ -19,6 +20,7 @@
     "@typescript-eslint/parser": "^6.12.0",
     "eslint": "^8.54.0",
     "html-inline-script-webpack-plugin": "^3.2.1",
+    "prettier": "3.8.1",
     "ts-loader": "^9.5.4",
     "typescript": "^5.3.3",
     "webpack": "^5.105.0",
