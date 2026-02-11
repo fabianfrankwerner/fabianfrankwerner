@@ -40,6 +40,9 @@ const mockupBrowser = document.getElementById(
   "mockupBrowser",
 ) as HTMLDivElement;
 
+let previewTimeout: number | undefined;
+let lastRenderId = 0;
+
 setPlaceholder();
 
 siteNameInput.oninput = () => {
@@ -81,17 +84,14 @@ window.onmessage = (event) => {
   const msg = event.data.pluginMessage;
   if (msg.type === "selection-response") {
     const { svgString, name } = msg;
-    if (!svgString) {
-      if (!state.selection) {
-        exportBtn.disabled = true;
-        setPlaceholder();
-      }
-    } else {
+
+    if (svgString) {
       state.selection = { name, svg: svgString };
       exportBtn.disabled = false;
       faviconImage.classList.remove("is-placeholder");
       appIconImage.classList.remove("is-placeholder");
-      updatePreview();
+
+      updatePreview(true);
     }
   }
 };
@@ -105,43 +105,68 @@ function setPlaceholder() {
   mockupBrowser.style.backgroundColor = state.settings.bgColor;
 }
 
-async function updatePreview() {
-  mockupBrowser.classList.toggle("dark", state.previewDarkMode);
-  toggleThemeBtn.classList.toggle("active", state.previewDarkMode);
-  mockupBrowser.style.backgroundColor = state.settings.bgColor;
-  appIconContainer.style.backgroundColor = state.settings.bgColor;
+async function updatePreview(immediate = false) {
+  if (previewTimeout) {
+    window.clearTimeout(previewTimeout);
+    previewTimeout = undefined;
+  }
 
-  if (state.selection) {
-    const smallUrl = await svgToPngDataUrl(state.selection.svg, 32, 32);
-    faviconImage.src = smallUrl;
-    const largeUrl = await svgToPngDataUrl(
-      state.selection.svg,
-      180,
-      180,
-      20,
-      state.settings.bgColor,
-    );
-    appIconImage.src = largeUrl;
+  const renderId = ++lastRenderId;
+
+  const render = async () => {
+    if (!state.selection || renderId !== lastRenderId) return;
+
+    mockupBrowser.classList.toggle("dark", state.previewDarkMode);
+    toggleThemeBtn.classList.toggle("active", state.previewDarkMode);
+    mockupBrowser.style.backgroundColor = state.settings.bgColor;
+    appIconContainer.style.backgroundColor = state.settings.bgColor;
+
+    try {
+      const img = await svgToImage(state.selection.svg);
+
+      if (renderId !== lastRenderId) return;
+
+      const [smallUrl, largeUrl] = [
+        renderToDataUrl(img, 32, 32),
+        renderToDataUrl(img, 180, 180, 20, state.settings.bgColor),
+      ];
+
+      if (renderId !== lastRenderId) return;
+
+      faviconImage.src = smallUrl;
+      appIconImage.src = largeUrl;
+    } catch (e) {
+      console.error("Preview render failed:", e);
+    }
+  };
+
+  if (immediate) {
+    render();
+  } else {
+    previewTimeout = window.setTimeout(render, 50);
   }
 }
 
 async function runExport() {
   if (!state.selection) return;
   const zip = new JSZip();
-  const png32 = await renderPNG(state.selection.svg, 32, 32);
+
+  const img = await svgToImage(state.selection.svg);
+
+  const [png32, apple, png192, png512] = await Promise.all([
+    renderToBlob(img, 32, 32),
+    renderToBlob(img, 180, 180, 20, state.settings.bgColor),
+    renderToBlob(img, 192, 192),
+    renderToBlob(img, 512, 512),
+  ]);
+
   const ico = createIcoFromPng(await png32.arrayBuffer());
   zip.file("favicon.ico", ico);
   zip.file("icon.svg", state.selection.svg);
-  const apple = await renderPNG(
-    state.selection.svg,
-    180,
-    180,
-    20,
-    state.settings.bgColor,
-  );
   zip.file("apple-touch-icon.png", apple);
-  zip.file("icon-192.png", await renderPNG(state.selection.svg, 192, 192));
-  zip.file("icon-512.png", await renderPNG(state.selection.svg, 512, 512));
+  zip.file("icon-192.png", png192);
+  zip.file("icon-512.png", png512);
+
   const manifest = {
     name: state.settings.websiteName || "Stella",
     icons: [
@@ -160,66 +185,73 @@ async function runExport() {
   link.click();
 }
 
-async function svgToPngDataUrl(
-  svgString: string,
-  width: number,
-  height: number,
-  padding = 0,
-  bgColor: string | null = null,
-): Promise<string> {
+async function svgToImage(svgString: string): Promise<HTMLImageElement> {
   return new Promise((resolve, reject) => {
     const img = new Image();
     const svgBlob = new Blob([svgString], { type: "image/svg+xml" });
     const url = URL.createObjectURL(svgBlob);
+
     img.onload = () => {
-      const canvas = document.createElement("canvas");
-      canvas.width = width;
-      canvas.height = height;
-      const ctx = canvas.getContext("2d");
-      if (!ctx) return reject();
-      if (bgColor) {
-        ctx.fillStyle = bgColor;
-        ctx.fillRect(0, 0, width, height);
-      }
-      const drawSize = width - padding * 2;
-      ctx.drawImage(img, padding, padding, drawSize, drawSize);
       URL.revokeObjectURL(url);
-      resolve(canvas.toDataURL("image/png"));
+      resolve(img);
     };
+
+    img.onerror = () => {
+      URL.revokeObjectURL(url);
+      reject(new Error("Could not load SVG image"));
+    };
+
     img.src = url;
   });
 }
 
-async function renderPNG(
-  svgString: string,
+function drawToCanvas(
+  img: HTMLImageElement,
+  width: number,
+  height: number,
+  padding = 0,
+  bgColor: string | null = null,
+): HTMLCanvasElement {
+  const canvas = document.createElement("canvas");
+  canvas.width = width;
+  canvas.height = height;
+  const ctx = canvas.getContext("2d");
+  if (!ctx) throw new Error("Could not get canvas context");
+
+  if (bgColor) {
+    ctx.fillStyle = bgColor;
+    ctx.fillRect(0, 0, width, height);
+  }
+
+  const drawSize = width - padding * 2;
+  ctx.drawImage(img, padding, padding, drawSize, drawSize);
+  return canvas;
+}
+
+function renderToDataUrl(
+  img: HTMLImageElement,
+  width: number,
+  height: number,
+  padding = 0,
+  bgColor: string | null = null,
+): string {
+  const canvas = drawToCanvas(img, width, height, padding, bgColor);
+  return canvas.toDataURL("image/png");
+}
+
+async function renderToBlob(
+  img: HTMLImageElement,
   width: number,
   height: number,
   padding = 0,
   bgColor: string | null = null,
 ): Promise<Blob> {
+  const canvas = drawToCanvas(img, width, height, padding, bgColor);
   return new Promise((resolve, reject) => {
-    const img = new Image();
-    const svgBlob = new Blob([svgString], { type: "image/svg+xml" });
-    const url = URL.createObjectURL(svgBlob);
-    img.onload = () => {
-      const canvas = document.createElement("canvas");
-      canvas.width = width;
-      canvas.height = height;
-      const ctx = canvas.getContext("2d");
-      if (!ctx) return reject();
-      if (bgColor) {
-        ctx.fillStyle = bgColor;
-        ctx.fillRect(0, 0, width, height);
-      }
-      const drawSize = width - padding * 2;
-      ctx.drawImage(img, padding, padding, drawSize, drawSize);
-      canvas.toBlob((blob) => {
-        URL.revokeObjectURL(url);
-        if (blob) resolve(blob);
-        else reject();
-      }, "image/png");
-    };
-    img.src = url;
+    canvas.toBlob((blob) => {
+      if (blob) resolve(blob);
+      else reject(new Error("Canvas toBlob failed"));
+    }, "image/png");
   });
 }
 

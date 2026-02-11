@@ -4,27 +4,18 @@ async function handleSelection() {
   const selection = figma.currentPage.selection;
 
   if (selection.length !== 1) {
-    figma.ui.postMessage({
-      type: "selection-response",
-      svgString: null,
-      name: null,
-    });
     return;
   }
 
   const node = selection[0];
 
-  if (!("exportAsync" in node)) {
-    figma.ui.postMessage({
-      type: "selection-response",
-      svgString: null,
-      name: null,
-    });
-    return;
-  }
-
   try {
+    if (!("exportAsync" in node)) {
+      return;
+    }
+
     const svgBytes = await node.exportAsync({ format: "SVG" });
+
     let svgString = "";
     for (let i = 0; i < svgBytes.length; i++) {
       svgString += String.fromCharCode(svgBytes[i]);
@@ -36,7 +27,7 @@ async function handleSelection() {
       name: node.name,
     });
   } catch (error) {
-    console.error(error);
+    // Ignore errors to keep the last valid state.
   }
 }
 
