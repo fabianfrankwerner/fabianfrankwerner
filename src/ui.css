@@ -23,6 +23,7 @@ button,
 .color-field {
   font-family: inherit;
   font-size: inherit;
+  color: inherit
 }
 
 #app {
@@ -171,9 +172,7 @@ button,
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  font-weight: 400;
   flex-grow: 1;
-  max-width: 135px;
 }
 
 .app-mockup {
@@ -184,6 +183,7 @@ button,
   justify-content: flex-start;
 }
 
+/* FIX: same background situation as for the browser preview */
 .app-icon-container {
   width: 48px;
   height: 48px;
@@ -228,9 +228,7 @@ button,
 input[type="text"] {
   flex: 1;
   height: 24px;
-  border: 1px solid var(--figma-color-border);
   background: transparent;
-  color: var(--figma-color-text);
   padding: 0 12px;
   font-size: 12px;
   outline: none;
@@ -240,13 +238,31 @@ input[type="text"] {
   max-width: 192px;
 }
 
+.figma-light input[type="text"],
+.figma-light .color-swatch,
+.figma-light .theme-toggle-btn,
+.figma-light .export-btn {
+  border: 1px solid #202020;
+}
+
+.figma-dark input[type="text"],
+.figma-dark .color-swatch,
+.figma-dark .theme-toggle-btn,
+.figma-dark .export-btn {
+  border: 1px solid #e0e0e0;
+}
+
 input[type="text"]:focus-visible {
-  outline: 1px solid var(--figma-color-bg-brand);
+  outline: 1px solid #808080;
 }
 
 input[type="text"]:hover,
 input[type="text"]:focus {
   background: var(--figma-color-bg-secondary);
+}
+
+::placeholder {
+  color: #808080
 }
 
 .color-group {
@@ -265,7 +281,6 @@ input[type="text"]:focus {
   width: 22px;
   height: 22px;
   border-radius: 6px;
-  border: 1px solid var(--figma-color-border);
   overflow: hidden;
   position: relative;
   flex-shrink: 0;
@@ -285,10 +300,13 @@ input[type="color"] {
   background: none;
 }
 
+/* FIX: make this visible on the color box */
+input[type="color"]:focus-visible {
+  outline: 1px solid #808080;
+}
+
 .theme-toggle-btn {
   background: transparent;
-  border: 1px solid var(--figma-color-border);
-  color: var(--figma-color-text-secondary);
   cursor: pointer;
   padding: 6px;
   border-radius: 6px;
@@ -304,14 +322,14 @@ input[type="color"] {
 .theme-toggle-btn:hover,
 .theme-toggle-btn.active {
   background: var(--figma-color-bg-secondary);
-  color: var(--figma-color-text);
 }
 
 .theme-toggle-btn:focus-visible {
-  outline: 1px solid var(--figma-color-bg-brand);
+  outline: 1px solid #808080;
   z-index: 1;
 }
 
+/* FIX: depending on theme, set correct default color */
 .theme-toggle-btn svg {
   width: 12px;
   height: 12px;
@@ -322,12 +340,9 @@ input[type="color"] {
   height: 24px;
   width: 48px;
   padding: 0 6px;
-  background: var(--figma-color-bg-brand);
-  color: var(--figma-color-text-onbrand);
-  border: none;
+  background: transparent;
   border-radius: 6px;
-  font-weight: 500;
-  font-size: 10px;
+  font-size: 9px;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -337,21 +352,27 @@ input[type="color"] {
 }
 
 .export-btn:disabled {
+  background: transparent;
+  color: #808080;
+}
+
+.export-btn:disabled:hover {
   background: var(--figma-color-bg-secondary);
-  color: var(--figma-color-text-disabled);
-  cursor: default;
+  cursor: not-allowed;
 }
 
-.export-btn:hover:not(:disabled) {
-  background: var(--figma-color-bg-brand-hover);
+.figma-light .export-btn:hover:not(:disabled) {
+  background-color: #202020;
+  color: #e0e0e0;
 }
 
-.export-btn:active:not(:disabled) {
-  background: var(--figma-color-bg-brand-pressed);
+.figma-dark .export-btn:hover:not(:disabled) {
+  background-color: #e0e0e0;
+  color: #202020;
 }
 
 .export-btn:focus-visible {
-  outline: 1px solid var(--figma-color-bg-brand);
+  outline: 1px solid #808080;
 }
 
 @media (prefers-reduced-motion: reduce) {
