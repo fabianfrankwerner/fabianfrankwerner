@@ -33,7 +33,7 @@ html.figma-dark {
 body {
   font-family: "Geist", sans-serif;
   margin: 0;
-  padding: 8px;
+  padding: 12px;
   background: var(--figma-color-bg);
   color: var(--figma-color-text);
   font-size: 11px;
@@ -43,10 +43,20 @@ body {
   user-select: none;
 }
 
+input[type="text"],
+input[type="color"],
+button,
+.color-field,
+.color-field label,
+.code-header,
+.code-header span {
+  font-family: "Geist", sans-serif;
+}
+
 #app {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px;
 }
 
 /* Layout System */
@@ -89,7 +99,6 @@ body {
     flex: 1;
     display: flex;
     align-items: center;
-    gap: 8px;
     min-width: 0;
 }
 
@@ -115,10 +124,9 @@ body {
   height: 48px;
   background: #E0E0E0;
   border-radius: 4px;
-  /* border: 1px solid var(--figma-color-border); */
   display: flex;
   align-items: flex-end;
-  padding: 0 8px;
+  padding: 0 12px;
   box-sizing: border-box;
   transition: background 0.2s ease;
   overflow: hidden;
@@ -126,23 +134,22 @@ body {
 }
 
 .browser-tab {
-  background: #FFF;
+  background: #FFFFFF;
   height: 28px;
   width: 100%;
   border-radius: 4px 4px 0 0;
   display: flex;
   align-items: center;
-  padding: 0 8px;
+  padding: 0 12px;
   gap: 6px;
   box-sizing: border-box;
   transition: background 0.2s, color 0.2s;
-  color: #333;
-  /* border: 1px solid var(--figma-color-border); */
+  color: var(--figma-color-text);
 }
 
 .browser-mockup.dark .browser-tab {
-  background: #2C2C2C;
-  color: #EEE;
+  background: var(--figma-color-bg);
+  color: #E0E0E0;
 }
 
 .icon-small {
@@ -199,7 +206,6 @@ body {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  margin-top: 4px;
 }
 
 /* Settings row: left column must not grow (flex:1), so the "gap" is between columns, not inside .aligned-left */
@@ -223,13 +229,18 @@ input[type="text"] {
   border: 1px solid var(--figma-color-border);
   background: transparent;
   color: var(--figma-color-text);
-  padding: 0 8px;
-  font-size: 11px;
+  padding: 0 12px;
+  font-size: 12px;
   outline: none;
   border-radius: 4px;
   box-sizing: border-box;
-  min-width: 188px;
-  max-width: 188px;
+  min-width: 192px;
+  max-width: 192px;
+}
+
+input[type="text"]:focus-visible {
+  outline: 1px solid var(--figma-color-bg-brand);
+  outline-offset: 1px;
 }
 
 input[type="text"]:hover {
@@ -253,14 +264,6 @@ input[type="text"]:focus {
   gap: 6px;
 }
 
-.color-field label {
-  font-size: 10px;
-  color: var(--figma-color-text-secondary);
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
 .color-swatch {
     width: 22px;
     height: 22px;
@@ -270,6 +273,11 @@ input[type="text"]:focus {
     position: relative;
     flex-shrink: 0;
 }
+
+/* #bgColor:focus-visible {
+  outline: 1px solid var(--figma-color-bg-brand);
+  outline-offset: 1px;
+} */
 
 input[type="color"] {
   -webkit-appearance: none;
@@ -306,17 +314,19 @@ input[type="color"] {
 }
 
 .theme-toggle-btn.active {
-    color: var(--figma-color-text);
+  color: var(--figma-color-text);
+}
+
+.theme-toggle-btn:focus-visible {
+  outline: 1px solid var(--figma-color-bg-brand);
+  outline-offset: 1px;
+  z-index: 1;
 }
 
 .theme-toggle-btn svg {
     width: 12px;
     height: 12px;
-    fill: currentColor;
-}
-
-.footer {
-  margin-top: auto;
+    fill: var(--picker-color, #E0E0E0);
 }
 
 button#exportBtn.export-btn,
@@ -352,60 +362,22 @@ button#exportBtn:active:not(:disabled) {
   background: var(--figma-color-bg-brand-pressed);
 }
 
-.status-text {
-  text-align: center;
-  margin-top: 8px;
-  font-size: 10px;
-  color: var(--figma-color-text-secondary);
-  height: 12px;
-}
-
-.code-area {
-  border-top: 1px solid var(--figma-color-border);
-  padding-top: 12px;
-  margin-top: 0;
-}
-
-.code-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 8px;
-}
-
-.code-header span {
-  font-size: 11px;
-  font-weight: 500;
-  color: var(--figma-color-text);
-}
-
-button#copyBtn {
-  background: transparent;
-  border: none;
-  font-size: 10px;
-  color: var(--figma-color-bg-brand); /* Same blue as export button */
-  cursor: pointer;
-  padding: 0;
-  font-weight: 500;
-}
-
-button#copyBtn:hover {
-    text-decoration: underline;
-}
-
-pre {
-  background: var(--figma-color-bg-secondary);
-  padding: 8px;
-  font-family: 'Geist Mono', monospace;
-  font-size: 10px;
-  white-space: pre;
-  overflow-x: auto;
-  margin: 0;
-  border-radius: 2px;
-  border: none;
-  color: var(--figma-color-text-secondary);
+button#exportBtn:focus-visible {
+  outline: 1px solid var(--figma-color-bg-brand);
+  outline-offset: 1px;
 }
 
 .hidden {
   display: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .browser-mockup,
+  .browser-tab,
+  .app-icon-container,
+  .theme-toggle-btn,
+  button#exportBtn.export-btn,
+  button.export-btn#exportBtn {
+    transition: none;
+  }
 }

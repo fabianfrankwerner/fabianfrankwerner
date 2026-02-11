@@ -47,8 +47,13 @@ siteNameInput.oninput = () => {
     updateCodeSnippet();
 };
 
+function syncPickerColorToCss() {
+    document.documentElement.style.setProperty('--picker-color', state.settings.bgColor);
+}
+
 bgColorInput.onchange = () => {
     state.settings.bgColor = bgColorInput.value;
+    syncPickerColorToCss();
     updatePreview();
     updateCodeSnippet();
 };
@@ -276,4 +281,5 @@ function initTheme() {
 }
 
 initTheme();
+syncPickerColorToCss();
 updateCodeSnippet();

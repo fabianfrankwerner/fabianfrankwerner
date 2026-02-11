@@ -6,29 +6,26 @@
 </head>
 <body>
     <div id="app">
-        <!-- Inputs -->
         <div class="settings-area">
             <div class="aligned-row">
                 <div class="aligned-left">
-                    <input type="text" id="siteName" placeholder="Title" autocomplete="off">
+                    <input type="text" id="siteName" placeholder="Title" autocomplete="off" aria-label="Website title">
                 </div>
                 <div class="aligned-right">
                     <div class="color-group">
                         <div class="color-field">
                             <div class="color-swatch">
-                                <input type="color" id="bgColor" value="#e0e0e0">
+                                <input type="color" id="bgColor" value="#e0e0e0" aria-label="Theme color">
                             </div>
                         </div>
                     </div>
-                    <button id="exportBtn" class="export-btn" disabled>Export</button>
+                    <button id="exportBtn" class="export-btn" type="button" disabled aria-label="Export favicon bundle">Export</button>
                 </div>
             </div>
         </div>
 
-        <!-- Visual Feedback -->
         <div class="preview-area">
             <div class="aligned-row">
-                <!-- Browser mockup + connector line -->
                 <div class="preview-col preview-col-browser">
                     <div class="browser-wrapper">
                         <div class="browser-mockup" id="mockupBrowser">
@@ -40,7 +37,7 @@
                     </div>
                     <div class="connector-line" aria-hidden="true"></div>
                 </div>
-                <button id="togglePreviewTheme" class="theme-toggle-btn icon-only" title="Toggle Light/Dark Preview">
+                <button id="togglePreviewTheme" class="theme-toggle-btn icon-only" type="button" aria-label="Toggle light or dark preview">
                     <svg viewBox="0 0 16 16"><path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm0 14A6 6 0 0 1 8 2v12z"/></svg>
                 </button>
                 <div class="preview-col preview-col-app">
@@ -53,20 +50,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-
-        <!-- Action -->
-        <div class="footer">
-            <div id="status" class="status-text">Select a frame</div>
-        </div>
-
-        <!-- Code Section -->
-        <div id="codeOutput" class="code-area">
-            <div class="code-header">
-                <span>Code</span>
-                <button id="copyBtn">Copy</button>
-            </div>
-            <pre id="htmlCode"></pre>
         </div>
     </div>
 </body>
