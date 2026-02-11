@@ -3,11 +3,18 @@ body {
   margin: 0;
   padding: 12px;
   background: var(--figma-color-bg);
-  color: var(--figma-color-text);
   font-size: 12px;
   -webkit-font-smoothing: antialiased;
   cursor: default;
   user-select: none;
+}
+
+.figma-light body {
+  color: #202020;
+}
+
+.figma-dark body {
+  color: #e0e0e0;
 }
 
 input[type="text"],
@@ -54,8 +61,15 @@ button,
   transform: translateY(-50%);
   width: 12px;
   height: 1px;
-  background: var(--figma-color-border);
   pointer-events: none;
+}
+
+.figma-light .connector-line {
+  background: #202020;
+}
+
+.figma-dark .connector-line {
+  background: #e0e0e0;
 }
 
 .aligned-left {
@@ -83,7 +97,7 @@ button,
 .browser-mockup {
   width: 100%;
   height: 48px;
-  background: #e0e0e0;
+  /* background: #e0e0e0; */
   border-radius: 6px;
   display: flex;
   align-items: flex-end;
@@ -94,8 +108,15 @@ button,
   position: relative;
 }
 
+.figma-light .browser-mockup {
+  background: #202020;
+} 
+
+.figma-dark .browser-mockup  {
+  background: #e0e0e0;
+} 
+
 .browser-tab {
-  background: #ffffff;
   height: 28px;
   width: 100%;
   border-radius: 6px 6px 0 0;
@@ -110,10 +131,15 @@ button,
   color: var(--figma-color-text);
 }
 
-.browser-mockup.dark .browser-tab {
-  background: var(--figma-color-bg);
+.figma-light .browser-tab {
+  background: #e0e0e0;
+  color: #202020;
+} 
+
+.figma-dark .browser-tab  {
+  background: #202020;
   color: #e0e0e0;
-}
+} 
 
 .favicon-container {
   width: 16px;
@@ -128,6 +154,15 @@ button,
   width: 16px;
   height: 16px;
   display: block;
+}
+
+.close-icon {
+  /* margin-left: 4px; */
+  width: 12px;
+  height: 12px;
+  display: block;
+  flex-shrink: 0;
+  fill: var(#e0e0e0);
 }
 
 #tabTitle {
