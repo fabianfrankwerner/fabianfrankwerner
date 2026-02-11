@@ -116,19 +116,20 @@ button,
   background: #e0e0e0;
 } 
 
+/* FIX: Alignment */
 .browser-tab {
-  height: 28px;
+  height: 36px;
   width: 100%;
   border-radius: 6px 6px 0 0;
   display: flex;
-  align-items: center;
+  align-items: start;
+  /* justify-content: flex-start; */
   padding: 6px;
   gap: 0;
   box-sizing: border-box;
   transition:
     background 0.2s,
     color 0.2s;
-  color: var(--figma-color-text);
 }
 
 .figma-light .browser-tab {
@@ -156,13 +157,12 @@ button,
   display: block;
 }
 
+/* FIX: Should be 8px in height and width with 12px margin top and bottom */
 .close-icon {
-  /* margin-left: 4px; */
   width: 12px;
   height: 12px;
   display: block;
   flex-shrink: 0;
-  fill: var(#e0e0e0);
 }
 
 #tabTitle {
