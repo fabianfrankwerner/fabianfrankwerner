@@ -4,8 +4,7 @@ body {
   padding: 12px;
   background: var(--figma-color-bg);
   color: var(--figma-color-text);
-  font-size: 11px;
-  letter-spacing: 0.005em;
+  font-size: 12px;
   -webkit-font-smoothing: antialiased;
   cursor: default;
   user-select: none;
@@ -15,7 +14,8 @@ input[type="text"],
 input[type="color"],
 button,
 .color-field {
-  font-family: "Geist", sans-serif;
+  font-family: inherit;
+  font-size: inherit;
 }
 
 #app {
@@ -194,7 +194,6 @@ input[type="text"] {
 
 input[type="text"]:focus-visible {
   outline: 1px solid var(--figma-color-bg-brand);
-  outline-offset: 1px;
 }
 
 input[type="text"]:hover, input[type="text"]:focus {
@@ -259,7 +258,7 @@ input[type="color"] {
 
 .theme-toggle-btn:focus-visible {
   outline: 1px solid var(--figma-color-bg-brand);
-  outline-offset: 1px;
+  z-index: 1;
 }
 
 .theme-toggle-btn svg {
@@ -302,7 +301,6 @@ input[type="color"] {
 
 .export-btn:focus-visible {
   outline: 1px solid var(--figma-color-bg-brand);
-  outline-offset: 1px;
 }
 
 @media (prefers-reduced-motion: reduce) {
