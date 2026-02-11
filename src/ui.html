@@ -1,56 +1,84 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
     <div id="app">
-        <div class="settings-area">
-            <div class="aligned-row">
-                <div class="aligned-left">
-                    <input type="text" id="siteName" placeholder="Title" autocomplete="off" aria-label="Website title">
+      <div class="settings-area">
+        <div class="aligned-row">
+          <div class="aligned-left">
+            <input
+              type="text"
+              id="siteName"
+              placeholder="Title"
+              autocomplete="off"
+              aria-label="Website title"
+            />
+          </div>
+          <div class="aligned-right">
+            <div class="color-group">
+              <div class="color-field">
+                <div class="color-swatch">
+                  <input
+                    type="color"
+                    id="bgColor"
+                    value="#e0e0e0"
+                    aria-label="Theme color"
+                  />
                 </div>
-                <div class="aligned-right">
-                    <div class="color-group">
-                        <div class="color-field">
-                            <div class="color-swatch">
-                                <input type="color" id="bgColor" value="#e0e0e0" aria-label="Theme color">
-                            </div>
-                        </div>
-                    </div>
-                    <button id="exportBtn" class="export-btn" type="button" disabled aria-label="Export favicon bundle">Export</button>
-                </div>
+              </div>
             </div>
+            <button
+              id="exportBtn"
+              class="export-btn"
+              type="button"
+              disabled
+              aria-label="Export favicon bundle"
+            >
+              Export
+            </button>
+          </div>
         </div>
+      </div>
 
-        <div class="preview-area">
-            <div class="aligned-row">
-                <div class="preview-col preview-col-browser">
-                    <div class="browser-wrapper">
-                        <div class="browser-mockup" id="mockupBrowser">
-                            <div class="browser-tab">
-                                <img id="faviconImage" class="icon-small" src="">
-                                <span id="tabTitle">Stella</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="connector-line" aria-hidden="true"></div>
+      <div class="preview-area">
+        <div class="aligned-row">
+          <div class="preview-col preview-col-browser">
+            <div class="browser-wrapper">
+              <div class="browser-mockup" id="mockupBrowser">
+                <div class="browser-tab">
+                  <img id="faviconImage" class="icon-small" src="" />
+                  <span id="tabTitle">Stella</span>
                 </div>
-                <button id="togglePreviewTheme" class="theme-toggle-btn icon-only" type="button" aria-label="Toggle light or dark preview">
-                    <svg viewBox="0 0 16 16"><path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm0 14A6 6 0 0 1 8 2v12z"/></svg>
-                </button>
-                <div class="preview-col preview-col-app">
-                    <div class="app-wrapper">
-                        <div class="app-mockup">
-                            <div class="app-icon-container">
-                                <img id="appIconImage" class="icon-large" src="">
-                            </div>
-                        </div>
-                    </div>
-                </div>
+              </div>
             </div>
+            <div class="connector-line" aria-hidden="true"></div>
+          </div>
+          <button
+            id="togglePreviewTheme"
+            class="theme-toggle-btn icon-only"
+            type="button"
+            aria-label="Toggle light or dark preview"
+          >
+            <svg viewBox="0 0 16 16">
+              <path
+                d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm0 14A6 6 0 0 1 8 2v12z"
+              />
+            </svg>
+          </button>
+          <div class="preview-col preview-col-app">
+            <div class="app-wrapper">
+              <div class="app-mockup">
+                <div class="app-icon-container">
+                  <img id="appIconImage" class="icon-large" src="" />
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
-</body>
+  </body>
 </html>
