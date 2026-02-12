@@ -1,7 +1,7 @@
 {
-  "name": "modern-favicon-exporter",
+  "name": "Stellar Favicon Exporter",
   "version": "1.0.0",
-  "description": "Your Figma Plugin",
+  "description": "Generate favicon.ico, apple-touch-icon.png, and manifest.webmanifest files in a single export.",
   "main": "code.js",
   "scripts": {
     "build": "webpack",
@@ -10,8 +10,8 @@
     "lint:fix": "eslint --ext .ts,.tsx --ignore-pattern node_modules --fix .",
     "watch": "npm run build -- --watch"
   },
-  "author": "",
-  "license": "",
+  "author": "Fabian Frank Werner",
+  "license": "UNLICENSED",
   "devDependencies": {
     "@figma/eslint-plugin-figma-plugins": "*",
     "@figma/plugin-typings": "*",
