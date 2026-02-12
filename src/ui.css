@@ -320,7 +320,8 @@ input[type="color"] {
   flex-shrink: 0;
   border: 1px solid var(--picker-color, #808080);
   transition:
-    border 1s ease-in-out,
+    border-color 1s ease-in-out,
+    background-color 1s ease-in-out;
 }
 
 .theme-toggle-btn:hover,
