@@ -423,16 +423,22 @@ input[type="color"] {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .connector-line,
   .browser-mockup,
   .browser-tab,
+  .icon-small,
+  .icon-large,
+  .browser-tab .tab-close-icon,
   .app-icon-container,
+  input[type="text"],
+  .color-swatch,
   .theme-toggle-btn,
-  .export-btn,
-  .browser-tab .tab-close-icon {
-    transition: none;
+  .theme-toggle-btn svg,
+  .export-btn {
+    transition: none !important;
   }
 
   .browser-tab .tab-close-icon.is-party {
-    animation: none;
+    animation: none !important;
   }
 }
