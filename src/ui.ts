@@ -149,9 +149,12 @@ async function updatePreview(immediate = false) {
 
       if (renderId !== lastRenderId) return;
 
+      // For the preview, keep the app icon background driven by CSS
+      // (`--picker-color`) so it can transition smoothly. The large
+      // preview image itself is rendered with a transparent background.
       const [smallUrl, largeUrl] = [
         renderToDataUrl(img, 32, 32),
-        renderToDataUrl(img, 180, 180, 20, state.settings.bgColor),
+        renderToDataUrl(img, 180, 180, 20, null),
       ];
 
       if (renderId !== lastRenderId) return;
