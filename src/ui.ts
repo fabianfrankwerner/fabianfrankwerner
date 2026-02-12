@@ -138,10 +138,10 @@ async function updatePreview(immediate = false) {
   const renderId = ++lastRenderId;
 
   const render = async () => {
-    if (!state.selection || renderId !== lastRenderId) return;
-
     mockupBrowser.classList.toggle("dark", state.previewDarkMode);
     toggleThemeBtn.classList.toggle("active", state.previewDarkMode);
+
+    if (!state.selection || renderId !== lastRenderId) return;
 
     try {
       const img = await svgToImage(state.selection.svg);
@@ -307,17 +307,24 @@ function createIcoFromPng(pngBuffer: ArrayBuffer) {
 }
 
 function initTheme() {
-  const bodyBg = getComputedStyle(document.body).backgroundColor;
-  const rgb = bodyBg.match(/\d+/g);
-  if (rgb) {
-    const brightness =
-      (parseInt(rgb[0]) * 299 +
-        parseInt(rgb[1]) * 587 +
-        parseInt(rgb[2]) * 114) /
-      1000;
-    if (brightness < 128) {
-      state.previewDarkMode = true;
+  const root = document.documentElement;
+  if (root.classList.contains("figma-dark")) {
+    state.previewDarkMode = true;
+  } else if (root.classList.contains("figma-light")) {
+    state.previewDarkMode = false;
+  } else {
+    const bodyBg = getComputedStyle(document.body).backgroundColor;
+    const rgb = bodyBg.match(/\d+/g);
+    if (rgb && rgb.length >= 3) {
+      const brightness =
+        (parseInt(rgb[0]) * 299 +
+          parseInt(rgb[1]) * 587 +
+          parseInt(rgb[2]) * 114) /
+        1000;
+      if (brightness < 128) {
+        state.previewDarkMode = true;
+      }
     }
   }
-  updatePreview();
+  updatePreview(true);
 }

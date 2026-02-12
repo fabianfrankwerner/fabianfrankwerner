@@ -120,14 +120,14 @@ button,
     color 1s ease-in-out;
 }
 
-.figma-light .browser-tab {
-  background: #e0e0e0;
-  color: #202020;
-}
-
-.figma-dark .browser-tab {
+#mockupBrowser.dark .browser-tab {
   background: #202020;
   color: #e0e0e0;
+}
+
+#mockupBrowser:not(.dark) .browser-tab {
+  background: #e0e0e0;
+  color: #202020;
 }
 
 .favicon-container {
@@ -166,8 +166,12 @@ button,
   background: transparent;
 }
 
-.browser-tab .tab-close-icon:hover {
-  background: var(--figma-color-bg-secondary);
+#mockupBrowser.dark .tab-close-icon:hover {
+  background: #383838;
+}
+
+#mockupBrowser:not(.dark) .tab-close-icon:hover {
+  background: #f5f5f5;
 }
 
 @keyframes tab-close-spin {
@@ -323,22 +327,29 @@ input[type="color"] {
     background-color 1s ease-in-out;
 }
 
-.theme-toggle-btn:hover,
 .theme-toggle-btn.active {
-  background: var(--figma-color-bg-secondary);
+  background: #202020;
+}
+
+.theme-toggle-btn:not(.active) {
+  background: #e0e0e0;
+}
+
+.theme-toggle-btn.active svg {
+  fill: #e0e0e0;
+}
+
+.theme-toggle-btn:not(.active) svg {
+  fill: #202020;
+}
+
+.theme-toggle-btn:hover {
+  filter: brightness(0.9);
 }
 
 .theme-toggle-btn svg {
   width: 12px;
   height: 12px;
-}
-
-.figma-light .theme-toggle-btn svg {
-  fill: #202020;
-}
-
-.figma-dark .theme-toggle-btn svg {
-  fill: #e0e0e0;
 }
 
 .export-btn {
