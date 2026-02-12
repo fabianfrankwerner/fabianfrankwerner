@@ -175,15 +175,10 @@ button,
   box-sizing: border-box;
   cursor: pointer;
   background: transparent;
-  transition: background 0.25s ease-in-out;
 }
 
-.figma-light .browser-tab .tab-close-icon:hover {
-  background: rgba(32, 32, 32, 0.1);
-}
-
-.figma-dark .browser-tab .tab-close-icon:hover {
-  background: rgba(224, 224, 224, 0.1);
+.browser-tab .tab-close-icon:hover {
+  background: var(--figma-color-bg-secondary);
 }
 
 @keyframes tab-close-spin {
@@ -333,8 +328,6 @@ input[type="color"] {
   display: flex;
   align-items: center;
   justify-content: center;
-  /* FIX: move once it's refactored to the border and the line */
-  /* transition: all 1s ease-in-out; */
   height: 24px;
   width: 24px;
   flex-shrink: 0;
@@ -345,16 +338,17 @@ input[type="color"] {
   background: var(--figma-color-bg-secondary);
 }
 
-.theme-toggle-btn:focus-visible {
-  outline: 1px solid #808080;
-  z-index: 1;
-}
-
-/* FIX: depending on theme, set correct default color */
 .theme-toggle-btn svg {
   width: 12px;
   height: 12px;
-  fill: var(--picker-color, #e0e0e0);
+}
+
+.figma-light .theme-toggle-btn svg {
+  fill: #202020;
+}
+
+.figma-dark .theme-toggle-btn svg {
+  fill: #e0e0e0;
 }
 
 .export-btn {
