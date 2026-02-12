@@ -1,6 +1,6 @@
 import JSZip from "jszip";
 import "./ui.css";
-import placeholder from "./placeholder.png";
+import placeholder from "./stellar.png";
 
 interface AppState {
   selection: { name: string; svg: string } | null;
@@ -67,7 +67,7 @@ requestAnimationFrame(() => {
 
 siteNameInput.oninput = () => {
   state.settings.websiteName = siteNameInput.value;
-  tabTitle.innerText = state.settings.websiteName || "Stella";
+  tabTitle.innerText = state.settings.websiteName || "Stellar";
 };
 
 function syncPickerColorToCss() {
@@ -153,7 +153,7 @@ async function updatePreview(immediate = false) {
       faviconImage.src = smallUrl;
       appIconImage.src = largeUrl;
     } catch (e) {
-      console.error("Preview render failed:", e);
+      console.error(e);
     }
   };
 
@@ -189,10 +189,10 @@ async function runExport() {
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="manifest" href="/manifest.webmanifest">
 `;
-  zip.file("favicon-links.txt", snippet);
+  zip.file("links.txt", snippet);
 
   const manifest = {
-    name: state.settings.websiteName || "Stella",
+    name: state.settings.websiteName || "Stellar",
     icons: [
       { src: "/icon-192.png", type: "image/png", sizes: "192x192" },
       { src: "/icon-512.png", type: "image/png", sizes: "512x512" },
@@ -205,7 +205,7 @@ async function runExport() {
   const content = await zip.generateAsync({ type: "blob" });
   const link = document.createElement("a");
   link.href = URL.createObjectURL(content);
-  link.download = "favicon-bundle.zip";
+  link.download = "favicon.zip";
   link.click();
 }
 
@@ -222,7 +222,7 @@ async function svgToImage(svgString: string): Promise<HTMLImageElement> {
 
     img.onerror = () => {
       URL.revokeObjectURL(url);
-      reject(new Error("Could not load SVG image"));
+      reject(new Error("Could not load SVG image."));
     };
 
     img.src = url;
@@ -240,7 +240,7 @@ function drawToCanvas(
   canvas.width = width;
   canvas.height = height;
   const ctx = canvas.getContext("2d");
-  if (!ctx) throw new Error("Could not get canvas context");
+  if (!ctx) throw new Error("Could not get canvas context.");
 
   if (bgColor) {
     ctx.fillStyle = bgColor;
@@ -274,7 +274,7 @@ async function renderToBlob(
   return new Promise((resolve, reject) => {
     canvas.toBlob((blob) => {
       if (blob) resolve(blob);
-      else reject(new Error("Canvas toBlob failed"));
+      else reject(new Error("Canvas to Blob failed."));
     }, "image/png");
   });
 }

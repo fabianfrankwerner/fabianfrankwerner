@@ -26,8 +26,8 @@ async function handleSelection() {
       svgString: svgString,
       name: node.name,
     });
-  } catch (error) {
-    // Ignore errors to keep the last valid state.
+  } catch (e) {
+    console.error(e)
   }
 }
 
