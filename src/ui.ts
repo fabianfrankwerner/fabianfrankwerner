@@ -11,11 +11,27 @@ interface AppState {
   previewDarkMode: boolean;
 }
 
+function getDefaultBgColor(): string {
+  const root = document.documentElement;
+  if (root.classList.contains("figma-light")) return "#202020";
+  if (root.classList.contains("figma-dark")) return "#e0e0e0";
+
+  const bodyBg = getComputedStyle(document.body).backgroundColor;
+  const rgb = bodyBg.match(/\d+/g);
+  if (rgb && rgb.length >= 3) {
+    const brightness =
+      (parseInt(rgb[0]) * 299 + parseInt(rgb[1]) * 587 + parseInt(rgb[2]) * 114) /
+      1000;
+    return brightness < 128 ? "#e0e0e0" : "#202020";
+  }
+  return "#808080";
+}
+
 const state: AppState = {
   selection: null,
   settings: {
     websiteName: "",
-    bgColor: "#e0e0e0",
+    bgColor: "",
   },
   previewDarkMode: false,
 };
@@ -43,7 +59,18 @@ const mockupBrowser = document.getElementById(
 let previewTimeout: number | undefined;
 let lastRenderId = 0;
 
-setPlaceholder();
+function initThemeAwareDefaults() {
+  const defaultBgColor = getDefaultBgColor();
+  state.settings.bgColor = defaultBgColor;
+  bgColorInput.value = defaultBgColor;
+  syncPickerColorToCss();
+  setPlaceholder();
+}
+
+requestAnimationFrame(() => {
+  initThemeAwareDefaults();
+  initTheme();
+});
 
 siteNameInput.oninput = () => {
   state.settings.websiteName = siteNameInput.value;
@@ -296,6 +323,3 @@ function initTheme() {
   }
   updatePreview();
 }
-
-initTheme();
-syncPickerColorToCss();
