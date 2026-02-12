@@ -128,8 +128,6 @@ function setPlaceholder() {
   appIconImage.src = placeholder;
   faviconImage.classList.add("is-placeholder");
   appIconImage.classList.add("is-placeholder");
-  appIconContainer.style.backgroundColor = state.settings.bgColor;
-  mockupBrowser.style.backgroundColor = state.settings.bgColor;
 }
 
 async function updatePreview(immediate = false) {
@@ -145,8 +143,6 @@ async function updatePreview(immediate = false) {
 
     mockupBrowser.classList.toggle("dark", state.previewDarkMode);
     toggleThemeBtn.classList.toggle("active", state.previewDarkMode);
-    mockupBrowser.style.backgroundColor = state.settings.bgColor;
-    appIconContainer.style.backgroundColor = state.settings.bgColor;
 
     try {
       const img = await svgToImage(state.selection.svg);

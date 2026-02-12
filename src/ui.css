@@ -63,14 +63,11 @@ button,
   width: 12px;
   height: 1px;
   pointer-events: none;
+  transition: background 1s ease-in-out;
 }
 
-.figma-light .connector-line {
-  background: #202020;
-}
-
-.figma-dark .connector-line {
-  background: #e0e0e0;
+.connector-line {
+  background: var(--picker-color, #808080);
 }
 
 .aligned-left {
@@ -98,7 +95,7 @@ button,
 .browser-mockup {
   width: 100%;
   height: 48px;
-  /* background: #e0e0e0; */
+  background: var(--picker-color, #808080);
   border-radius: 6px;
   display: flex;
   align-items: flex-end;
@@ -107,14 +104,6 @@ button,
   transition: background 1s ease-in-out;
   overflow: hidden;
   position: relative;
-}
-
-.figma-light .browser-mockup {
-  background: #202020;
-} 
-
-.figma-dark .browser-mockup  {
-  background: #e0e0e0;
 } 
 
 /* FIX: Alignment */
@@ -208,7 +197,7 @@ button,
   height: 48px;
   border-radius: 6px;
   overflow: hidden;
-  background: #e0e0e0;
+  background: var(--picker-color, #808080);
   transition: background 1s ease-in-out;
   display: flex;
   align-items: center;
@@ -258,14 +247,12 @@ input[type="text"] {
 
 .figma-light input[type="text"],
 .figma-light .color-swatch,
-.figma-light .theme-toggle-btn,
 .figma-light .export-btn {
   border: 1px solid #202020;
 }
 
 .figma-dark input[type="text"],
 .figma-dark .color-swatch,
-.figma-dark .theme-toggle-btn,
 .figma-dark .export-btn {
   border: 1px solid #e0e0e0;
 }
@@ -331,6 +318,9 @@ input[type="color"] {
   height: 24px;
   width: 24px;
   flex-shrink: 0;
+  border: 1px solid var(--picker-color, #808080);
+  transition:
+    border 1s ease-in-out,
 }
 
 .theme-toggle-btn:hover,
