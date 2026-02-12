@@ -300,8 +300,11 @@ function createIcoFromPng(pngBuffer: ArrayBuffer) {
 
 function initTheme() {
   const targetDarkMode = isDarkMode();
+  
   state.previewDarkMode = targetDarkMode;
   updatePreview();
+  faviconImage.classList.add("loaded");
+  appIconImage.classList.add("loaded");
 
   window
     .matchMedia("(prefers-color-scheme: dark)")
