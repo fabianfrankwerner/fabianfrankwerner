@@ -300,11 +300,15 @@ function createIcoFromPng(pngBuffer: ArrayBuffer) {
 
 function initTheme() {
   const targetDarkMode = isDarkMode();
-  
-  state.previewDarkMode = targetDarkMode;
-  updatePreview();
-  faviconImage.classList.add("loaded");
-  appIconImage.classList.add("loaded");
+
+  setTimeout(() => {
+    state.previewDarkMode = targetDarkMode;
+    updatePreview();
+
+    faviconImage.classList.add("loaded");
+    appIconImage.classList.add("loaded");
+    toggleThemeBtn.classList.add("loaded");
+  }, 100);
 
   window
     .matchMedia("(prefers-color-scheme: dark)")

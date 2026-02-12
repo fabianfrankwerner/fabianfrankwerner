@@ -329,7 +329,7 @@ input[type="color"] {
 }
 
 .theme-toggle-btn {
-  background: transparent;
+  background: #808080;
   cursor: pointer;
   padding: 6px;
   border-radius: 6px;
@@ -345,11 +345,11 @@ input[type="color"] {
     background-color 1s ease-in-out;
 }
 
-.theme-toggle-btn.active {
+.theme-toggle-btn.loaded.active {
   background-color: #202020;
 }
 
-.theme-toggle-btn:not(.active) {
+.theme-toggle-btn.loaded:not(.active) {
   background-color: #e0e0e0;
 }
 
@@ -372,7 +372,14 @@ input[type="color"] {
 .theme-toggle-btn svg {
   width: 12px;
   height: 12px;
-  transition: fill 1s ease-in-out;
+  opacity: 0;
+  transition:
+    fill 1s ease-in-out,
+    opacity 1s ease-in-out;
+}
+
+.theme-toggle-btn.loaded svg {
+  opacity: 1;
 }
 
 .export-btn {
