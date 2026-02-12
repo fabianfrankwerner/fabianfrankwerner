@@ -154,6 +154,7 @@ button,
   overflow: hidden;
   text-overflow: ellipsis;
   flex-grow: 1;
+  max-width: 112px;
 }
 
 .browser-tab .tab-close-icon {
