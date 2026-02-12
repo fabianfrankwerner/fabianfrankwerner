@@ -23,7 +23,7 @@ button,
 .color-field {
   font-family: inherit;
   font-size: inherit;
-  color: inherit
+  color: inherit;
 }
 
 #app {
@@ -104,7 +104,7 @@ button,
   transition: background 1s ease-in-out;
   overflow: hidden;
   position: relative;
-} 
+}
 
 /* FIX: Alignment */
 .browser-tab {
@@ -119,18 +119,18 @@ button,
   box-sizing: border-box;
   transition:
     background 1s ease-in-out,
-    color 1s ease-in-out
+    color 1s ease-in-out;
 }
 
 .figma-light .browser-tab {
   background: #e0e0e0;
   color: #202020;
-} 
+}
 
-.figma-dark .browser-tab  {
+.figma-dark .browser-tab {
   background: #202020;
   color: #e0e0e0;
-} 
+}
 
 .favicon-container {
   width: 16px;
@@ -268,7 +268,7 @@ input[type="text"]:focus {
 }
 
 ::placeholder {
-  color: #808080
+  color: #808080;
 }
 
 .color-group {

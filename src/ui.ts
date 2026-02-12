@@ -20,7 +20,9 @@ function getDefaultBgColor(): string {
   const rgb = bodyBg.match(/\d+/g);
   if (rgb && rgb.length >= 3) {
     const brightness =
-      (parseInt(rgb[0]) * 299 + parseInt(rgb[1]) * 587 + parseInt(rgb[2]) * 114) /
+      (parseInt(rgb[0]) * 299 +
+        parseInt(rgb[1]) * 587 +
+        parseInt(rgb[2]) * 114) /
       1000;
     return brightness < 128 ? "#e0e0e0" : "#202020";
   }
@@ -48,9 +50,6 @@ const faviconImage = document.getElementById(
 const appIconImage = document.getElementById(
   "appIconImage",
 ) as HTMLImageElement;
-const appIconContainer = document.querySelector(
-  ".app-icon-container",
-) as HTMLDivElement;
 const tabTitle = document.getElementById("tabTitle") as HTMLSpanElement;
 const mockupBrowser = document.getElementById(
   "mockupBrowser",
