@@ -11,22 +11,16 @@ interface AppState {
   previewDarkMode: boolean;
 }
 
-function getDefaultBgColor(): string {
-  const root = document.documentElement;
-  if (root.classList.contains("figma-light")) return "#202020";
-  if (root.classList.contains("figma-dark")) return "#e0e0e0";
+function isDarkMode(): boolean {
+  return (
+    document.documentElement.classList.contains("figma-dark") ||
+    window.matchMedia("(prefers-color-scheme: dark)").matches
+  );
+}
 
-  const bodyBg = getComputedStyle(document.body).backgroundColor;
-  const rgb = bodyBg.match(/\d+/g);
-  if (rgb && rgb.length >= 3) {
-    const brightness =
-      (parseInt(rgb[0]) * 299 +
-        parseInt(rgb[1]) * 587 +
-        parseInt(rgb[2]) * 114) /
-      1000;
-    return brightness < 128 ? "#e0e0e0" : "#202020";
-  }
-  return "#808080";
+function getDefaultBgColor(): string {
+  if (isDarkMode()) return "#e0e0e0";
+  return "#202020";
 }
 
 const state: AppState = {
@@ -35,7 +29,7 @@ const state: AppState = {
     websiteName: "",
     bgColor: "",
   },
-  previewDarkMode: false,
+  previewDarkMode: isDarkMode(),
 };
 
 const exportBtn = document.getElementById("exportBtn") as HTMLButtonElement;
@@ -139,6 +133,7 @@ async function updatePreview(immediate = false) {
 
   const render = async () => {
     mockupBrowser.classList.toggle("dark", state.previewDarkMode);
+    mockupBrowser.classList.toggle("light", !state.previewDarkMode);
     toggleThemeBtn.classList.toggle("active", state.previewDarkMode);
 
     if (!state.selection || renderId !== lastRenderId) return;
@@ -304,24 +299,14 @@ function createIcoFromPng(pngBuffer: ArrayBuffer) {
 }
 
 function initTheme() {
-  const root = document.documentElement;
-  if (root.classList.contains("figma-dark")) {
-    state.previewDarkMode = true;
-  } else if (root.classList.contains("figma-light")) {
-    state.previewDarkMode = false;
-  } else {
-    const bodyBg = getComputedStyle(document.body).backgroundColor;
-    const rgb = bodyBg.match(/\d+/g);
-    if (rgb && rgb.length >= 3) {
-      const brightness =
-        (parseInt(rgb[0]) * 299 +
-          parseInt(rgb[1]) * 587 +
-          parseInt(rgb[2]) * 114) /
-        1000;
-      if (brightness < 128) {
-        state.previewDarkMode = true;
-      }
-    }
-  }
-  updatePreview(true);
+  const targetDarkMode = isDarkMode();
+  state.previewDarkMode = targetDarkMode;
+  updatePreview();
+
+  window
+    .matchMedia("(prefers-color-scheme: dark)")
+    .addEventListener("change", (e) => {
+      state.previewDarkMode = e.matches;
+      updatePreview();
+    });
 }

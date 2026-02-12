@@ -112,6 +112,8 @@ button,
   padding: 6px;
   gap: 0;
   box-sizing: border-box;
+  background: #808080;
+  color: #808080;
   transition:
     background 1s ease-in-out,
     color 1s ease-in-out;
@@ -122,7 +124,7 @@ button,
   color: #e0e0e0;
 }
 
-#mockupBrowser:not(.dark) .browser-tab {
+#mockupBrowser.light .browser-tab {
   background: #e0e0e0;
   color: #202020;
 }
@@ -168,7 +170,7 @@ button,
   background: #383838;
 }
 
-#mockupBrowser:not(.dark) .tab-close-icon:hover {
+#mockupBrowser.light .tab-close-icon:hover {
   background: #f5f5f5;
 }
 
