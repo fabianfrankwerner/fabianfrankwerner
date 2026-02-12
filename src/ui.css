@@ -106,14 +106,12 @@ button,
   position: relative;
 }
 
-/* FIX: Alignment */
 .browser-tab {
   height: 36px;
   width: 100%;
   border-radius: 6px 6px 0 0;
   display: flex;
   align-items: start;
-  /* justify-content: flex-start; */
   padding: 6px;
   gap: 0;
   box-sizing: border-box;
