@@ -148,6 +148,7 @@ button,
 }
 
 #tabTitle {
+  margin-top: 2px;
   margin-left: 6px;
   font-size: 9px;
   white-space: nowrap;
