@@ -275,7 +275,9 @@ input[type="text"] {
   border: 1px solid #e0e0e0;
 }
 
-input[type="text"]:focus-visible {
+input[type="text"]:focus-visible,
+.color-swatch:focus-visible,
+.color-swatch:has(input[type="color"]:focus-visible) {
   outline: 1px solid #808080;
 }
 
@@ -323,11 +325,6 @@ input[type="color"] {
   background: none;
 }
 
-/* FIX: make this visible on the color box */
-input[type="color"]:focus-visible {
-  outline: 1px solid #808080;
-}
-
 .theme-toggle-btn {
   background: transparent;
   cursor: pointer;
@@ -337,7 +334,7 @@ input[type="color"]:focus-visible {
   align-items: center;
   justify-content: center;
   /* FIX: move once it's refactored to the border and the line */
-  transition: all 1s ease-in-out;
+  /* transition: all 1s ease-in-out; */
   height: 24px;
   width: 24px;
   flex-shrink: 0;
