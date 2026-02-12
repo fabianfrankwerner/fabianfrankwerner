@@ -63,11 +63,8 @@ button,
   width: 12px;
   height: 1px;
   pointer-events: none;
-  transition: background 1s ease-in-out;
-}
-
-.connector-line {
   background: var(--picker-color, #808080);
+  transition: background 1s ease-in-out;
 }
 
 .aligned-left {
@@ -164,6 +161,7 @@ button,
   box-sizing: border-box;
   cursor: pointer;
   background: transparent;
+  transition: background 1s ease-in-out;
 }
 
 #mockupBrowser.dark .tab-close-icon:hover {
@@ -246,6 +244,7 @@ input[type="text"] {
   box-sizing: border-box;
   min-width: 192px;
   max-width: 192px;
+  transition: background 1s ease-in-out;
 }
 
 .figma-light input[type="text"],
@@ -294,6 +293,11 @@ input[type="text"]:focus {
   overflow: hidden;
   position: relative;
   flex-shrink: 0;
+  transition: border-color 1s ease-in-out;
+}
+
+.color-swatch:hover {
+  border-color: var(--figma-color-bg);
 }
 
 input[type="color"] {
@@ -328,11 +332,11 @@ input[type="color"] {
 }
 
 .theme-toggle-btn.active {
-  background: #202020;
+  background-color: #202020;
 }
 
 .theme-toggle-btn:not(.active) {
-  background: #e0e0e0;
+  background-color: #e0e0e0;
 }
 
 .theme-toggle-btn.active svg {
@@ -354,28 +358,32 @@ input[type="color"] {
 .theme-toggle-btn svg {
   width: 12px;
   height: 12px;
+  transition: fill 1s ease-in-out;
 }
 
 .export-btn {
   height: 24px;
   width: 48px;
   padding: 0 6px;
-  background: transparent;
+  background-color: transparent;
   border-radius: 6px;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  transition:
+    background-color 1s ease-in-out,
+    color 1s ease-in-out;
 }
 
 .export-btn:disabled {
-  background: transparent;
+  background-color: transparent;
   color: #808080;
 }
 
 .export-btn:disabled:hover {
-  background: var(--figma-color-bg-secondary);
+  background-color: var(--figma-color-bg-secondary);
   cursor: not-allowed;
 }
 
