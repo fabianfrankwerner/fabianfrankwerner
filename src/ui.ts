@@ -301,8 +301,10 @@ function createIcoFromPng(pngBuffer: ArrayBuffer) {
 function initTheme() {
   const targetDarkMode = isDarkMode();
 
+  state.previewDarkMode = targetDarkMode;
+  toggleThemeBtn.classList.toggle("active", targetDarkMode);
+
   setTimeout(() => {
-    state.previewDarkMode = targetDarkMode;
     updatePreview();
 
     faviconImage.classList.add("loaded");
