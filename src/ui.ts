@@ -192,7 +192,7 @@ async function runExport() {
   zip.file("links.txt", snippet);
 
   const manifest = {
-    name: state.settings.websiteName || "Stellar",
+    name: state.settings.websiteName,
     icons: [
       { src: "/icon-192.png", type: "image/png", sizes: "192x192" },
       { src: "/icon-512.png", type: "image/png", sizes: "512x512" },
