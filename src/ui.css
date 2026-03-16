@@ -1,0 +1,444 @@
+body {
+  font-family: "Geist", sans-serif;
+  margin: 0;
+  padding: 12px;
+  background: var(--figma-color-bg);
+  font-size: 9px;
+  -webkit-font-smoothing: antialiased;
+  cursor: default;
+  user-select: none;
+}
+
+.figma-light body {
+  color: #202020;
+}
+
+.figma-dark body {
+  color: #e0e0e0;
+}
+
+input[type="text"],
+input[type="color"],
+button,
+.color-field {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.aligned-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+}
+
+.preview-col {
+  display: flex;
+  align-items: center;
+}
+
+.preview-col-browser {
+  flex: 1;
+  min-width: 0;
+  position: relative;
+}
+
+.preview-col-app {
+  flex-shrink: 0;
+}
+
+.connector-line {
+  position: absolute;
+  left: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 12px;
+  height: 1px;
+  pointer-events: none;
+  background: var(--picker-color, #808080);
+  transition: background 1s ease-in-out;
+}
+
+.aligned-left {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.aligned-right {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.browser-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.browser-mockup {
+  width: 100%;
+  height: 48px;
+  background: var(--picker-color, #808080);
+  border-radius: 6px;
+  display: flex;
+  align-items: flex-end;
+  padding: 0 12px;
+  box-sizing: border-box;
+  transition: background 1s ease-in-out;
+  overflow: hidden;
+  position: relative;
+}
+
+.browser-tab {
+  height: 36px;
+  width: 100%;
+  border-radius: 6px 6px 0 0;
+  display: flex;
+  align-items: start;
+  padding: 6px;
+  gap: 0;
+  box-sizing: border-box;
+  background: #808080;
+  color: #808080;
+  transition:
+    background 1s ease-in-out,
+    color 1s ease-in-out;
+}
+
+#mockupBrowser.dark .browser-tab {
+  background: #202020;
+  color: #e0e0e0;
+}
+
+#mockupBrowser.light .browser-tab {
+  background: #e0e0e0;
+  color: #202020;
+}
+
+.favicon-container {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-small {
+  width: 16px;
+  height: 16px;
+  display: block;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.icon-small.loaded {
+  opacity: 1;
+}
+
+#tabTitle {
+  margin-top: 2px;
+  margin-left: 6px;
+  font-size: 9px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex-grow: 1;
+  max-width: 112px;
+}
+
+.browser-tab .tab-close-icon {
+  flex-shrink: 0;
+  margin-left: 6px;
+  border-radius: 50%;
+  padding: 2px;
+  box-sizing: border-box;
+  cursor: pointer;
+  background: transparent;
+  transition: background 1s ease-in-out;
+}
+
+#mockupBrowser.dark .tab-close-icon:hover {
+  background: #383838;
+}
+
+#mockupBrowser.light .tab-close-icon:hover {
+  background: #f5f5f5;
+}
+
+@keyframes tab-close-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.browser-tab .tab-close-icon.is-party {
+  animation: tab-close-spin 0.5s ease-in-out;
+}
+
+.app-mockup {
+  width: 100%;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.app-icon-container {
+  width: 48px;
+  height: 48px;
+  border-radius: 6px;
+  overflow: hidden;
+  background-color: var(--picker-color, #808080);
+  transition: background-color 1s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-large {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.icon-large.loaded {
+  opacity: 1;
+}
+
+.icon-large.is-placeholder,
+.icon-small.is-placeholder {
+  width: 80%;
+  height: 80%;
+  object-fit: contain;
+}
+
+.settings-area {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.settings-area .aligned-row {
+  justify-content: flex-start;
+  gap: 0;
+}
+
+.settings-area .aligned-row .aligned-left {
+  flex: 0 1 auto;
+  margin-right: 12px;
+}
+
+input[type="text"] {
+  flex: 1;
+  height: 24px;
+  background: transparent;
+  padding: 0 12px;
+  outline: none;
+  border-radius: 6px;
+  box-sizing: border-box;
+  min-width: 192px;
+  max-width: 192px;
+  transition: background 1s ease-in-out;
+}
+
+.figma-light input[type="text"],
+.figma-light .color-swatch,
+.figma-light .export-btn {
+  border: 1px solid #202020;
+}
+
+.figma-dark input[type="text"],
+.figma-dark .color-swatch,
+.figma-dark .export-btn {
+  border: 1px solid #e0e0e0;
+}
+
+input[type="text"]:focus-visible,
+.color-swatch:focus-visible,
+.color-swatch:has(input[type="color"]:focus-visible) {
+  outline: 1px solid #808080;
+}
+
+input[type="text"]:hover,
+input[type="text"]:focus {
+  background: var(--figma-color-bg-secondary);
+}
+
+::placeholder {
+  color: #808080;
+}
+
+.color-group {
+  display: flex;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.color-field {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.color-swatch {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  overflow: hidden;
+  position: relative;
+  flex-shrink: 0;
+  transition: border-color 1s ease-in-out;
+}
+
+.color-swatch:hover {
+  border-color: var(--figma-color-bg);
+}
+
+input[type="color"] {
+  -webkit-appearance: none;
+  appearance: none;
+  border: none;
+  width: 200%;
+  height: 200%;
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  padding: 0;
+  cursor: pointer;
+  background: none;
+}
+
+.theme-toggle-btn {
+  background: #808080;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 24px;
+  width: 24px;
+  flex-shrink: 0;
+  border: 1px solid var(--picker-color, #808080);
+  transition:
+    border-color 1s ease-in-out,
+    background-color 1s ease-in-out;
+}
+
+.theme-toggle-btn.loaded.active {
+  background-color: #202020;
+}
+
+.theme-toggle-btn.loaded:not(.active) {
+  background-color: #e0e0e0;
+}
+
+.theme-toggle-btn.active svg {
+  fill: #e0e0e0;
+}
+
+.theme-toggle-btn:not(.active) svg {
+  fill: #202020;
+}
+
+.theme-toggle-btn.active:hover {
+  background: #383838;
+}
+
+.theme-toggle-btn:not(.active):hover {
+  background: #f5f5f5;
+}
+
+.theme-toggle-btn svg {
+  width: 12px;
+  height: 12px;
+  opacity: 0;
+  transition:
+    fill 1s ease-in-out,
+    opacity 1s ease-in-out;
+}
+
+.theme-toggle-btn.loaded svg {
+  opacity: 1;
+}
+
+.export-btn {
+  height: 24px;
+  width: 48px;
+  padding: 0 6px;
+  background-color: transparent;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition:
+    background-color 1s ease-in-out,
+    color 1s ease-in-out;
+}
+
+.export-btn:disabled {
+  background-color: transparent;
+  color: #808080;
+}
+
+.export-btn:disabled:hover {
+  background-color: var(--figma-color-bg-secondary);
+  cursor: not-allowed;
+}
+
+.figma-light .export-btn:hover:not(:disabled) {
+  background-color: #202020;
+  color: #e0e0e0;
+}
+
+.figma-dark .export-btn:hover:not(:disabled) {
+  background-color: #e0e0e0;
+  color: #202020;
+}
+
+.export-btn:focus-visible {
+  outline: 1px solid #808080;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .connector-line,
+  .browser-mockup,
+  .browser-tab,
+  .icon-small,
+  .icon-large,
+  .browser-tab .tab-close-icon,
+  .app-icon-container,
+  input[type="text"],
+  .color-swatch,
+  .theme-toggle-btn,
+  .theme-toggle-btn svg,
+  .export-btn {
+    transition: none !important;
+  }
+
+  .browser-tab .tab-close-icon.is-party {
+    animation: none !important;
+  }
+}
