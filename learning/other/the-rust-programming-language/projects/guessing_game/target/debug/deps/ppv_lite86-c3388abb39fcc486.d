@@ -1,0 +1,8 @@
+/Users/fabianfrankwerner/Documents/GitHub/fabianfrankwerner/learning/other/the-rust-programming-language/projects/guessing_game/target/debug/deps/ppv_lite86-c3388abb39fcc486.d: /Users/fabianfrankwerner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ppv-lite86-0.2.21/src/lib.rs /Users/fabianfrankwerner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ppv-lite86-0.2.21/src/soft.rs /Users/fabianfrankwerner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ppv-lite86-0.2.21/src/types.rs /Users/fabianfrankwerner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ppv-lite86-0.2.21/src/generic.rs
+
+/Users/fabianfrankwerner/Documents/GitHub/fabianfrankwerner/learning/other/the-rust-programming-language/projects/guessing_game/target/debug/deps/libppv_lite86-c3388abb39fcc486.rmeta: /Users/fabianfrankwerner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ppv-lite86-0.2.21/src/lib.rs /Users/fabianfrankwerner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ppv-lite86-0.2.21/src/soft.rs /Users/fabianfrankwerner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ppv-lite86-0.2.21/src/types.rs /Users/fabianfrankwerner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ppv-lite86-0.2.21/src/generic.rs
+
+/Users/fabianfrankwerner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ppv-lite86-0.2.21/src/lib.rs:
+/Users/fabianfrankwerner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ppv-lite86-0.2.21/src/soft.rs:
+/Users/fabianfrankwerner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ppv-lite86-0.2.21/src/types.rs:
+/Users/fabianfrankwerner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ppv-lite86-0.2.21/src/generic.rs:
