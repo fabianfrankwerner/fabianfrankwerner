@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-04T09:07:44.994Z",
+  "updatedAt": "2026-06-04T09:13:24.468Z",
   "createdAt": "2026-06-04T00:43:53.769Z",
   "id": "VKFyePTGyoGGp4i5",
   "name": "n8n",
@@ -80,7 +80,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const localWorkflows = $('Remove n8n Duplicates').all().map(item => item.json);\nconst githubFiles = $('Remove GitHub Duplicates').all().map(item => item.json);\n\nconst actions = [];\n\n// Pure JS implementation of Git SHA-1 hashing to bypass n8n sandbox restrictions\nfunction getGitSha(content) {\n  const blobString = `blob ${Buffer.byteLength(content, 'utf8')}\\0${content}`;\n  const buffer = Buffer.from(blobString, 'utf8');\n  const words = new Uint32Array(Math.ceil((buffer.length + 8) / 4));\n  \n  for (let i = 0; i < buffer.length; i++) words[i >> 2] |= buffer[i] << (24 - (i % 4) * 8);\n  words[buffer.length >> 2] |= 0x80 << (24 - (buffer.length % 4) * 8);\n  words[words.length - 1] = buffer.length * 8;\n\n  let H0 = 0x67452301, H1 = 0xEFCDAB89, H2 = 0x98BADCFE, H3 = 0x10325476, H4 = 0xC3D2E1F0;\n  \n  for (let i = 0; i < words.length; i += 16) {\n    const W = new Uint32Array(80);\n    for (let t = 0; t < 16; t++) W[t] = words[i + t];\n    for (let t = 16; t < 80; t++) {\n      const num = W[t - 3] ^ W[t - 8] ^ W[t - 14] ^ W[t - 16];\n      W[t] = (num << 1) | (num >>> 31);\n    }\n    let a = H0, b = H1, c = H2, d = H3, e = H4;\n    for (let t = 0; t < 80; t++) {\n      let f, k;\n      if (t < 20) { f = (b & c) | (~b & d); k = 0x5A827999; }\n      else if (t < 40) { f = b ^ c ^ d; k = 0x6ED9EBA1; }\n      else if (t < 60) { f = (b & c) | (b & d) | (c & d); k = 0x8F1BBCDC; }\n      else { f = b ^ c ^ d; k = 0xCA62C1D6; }\n      const temp = ((a << 5) | (a >>> 27)) + f + e + k + W[t];\n      e = d; d = c; c = (b << 30) | (b >>> 2); b = a; a = temp;\n    }\n    H0 += a; H1 += b; H2 += c; H3 += d; H4 += e;\n  }\n  return [H0, H1, H2, H3, H4].map(h => ('00000000' + h.toString(16)).slice(-8)).join('');\n}\n\nlocalWorkflows.forEach(workflow => {\n  const filename = `${workflow.name}.json`.toLowerCase();\n  const githubFile = githubFiles.find(f => f.name === filename);\n  const fileContent = JSON.stringify(workflow, null, 2);\n\n  if (!githubFile) {\n    actions.push({\n      action: 'create',\n      filename: filename,\n      content: fileContent\n    });\n  } else {\n    const localSHA = getGitSha(fileContent);\n    \n    if (localSHA !== githubFile.sha) {\n      actions.push({\n        action: 'update',\n        filename: filename,\n        content: fileContent,\n        sha: githubFile.sha\n      });\n    }\n  }\n});\n\ngithubFiles.forEach(file => {\n  const existsLocally = localWorkflows.some(w => `${w.name}.json`.toLowerCase() === file.name);\n  \n  if (!existsLocally) {\n    actions.push({\n      action: 'delete',\n      filename: file.name,\n      sha: file.sha\n    });\n  }\n});\n\nreturn actions.map(action => ({ json: action }));"
+        "jsCode": "const localWorkflows = $('Remove n8n Duplicates').all().map(item => item.json);\nconst githubFiles = $('Remove GitHub Duplicates').all().map(item => item.json);\n\nconst actions = [];\n\nlocalWorkflows.forEach(workflow => {\n  const filename = `${workflow.name}.json`.toLowerCase();\n  const githubFile = githubFiles.find(f => f.name === filename);\n  const fileContent = JSON.stringify(workflow, null, 2);\n\n  if (!githubFile) {\n    actions.push({\n      action: 'create',\n      filename: filename,\n      content: fileContent\n    });\n  } else {\n    actions.push({\n      action: 'update',\n      filename: filename,\n      content: fileContent,\n      sha: githubFile.sha\n    });\n  }\n});\n\ngithubFiles.forEach(file => {\n  const existsLocally = localWorkflows.some(w => `${w.name}.json`.toLowerCase() === file.name);\n  \n  if (!existsLocally) {\n    actions.push({\n      action: 'delete',\n      filename: file.name,\n      sha: file.sha\n    });\n  }\n});\n\nreturn actions.map(action => ({ json: action }));"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -423,8 +423,8 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "fcf42d6d-1263-4dae-960e-d0e93046ec77",
-  "activeVersionId": "0be3883a-cb01-4fc5-ad63-3bba63bb458d",
+  "versionId": "be57bc5a-a249-4575-addd-2878ebe15627",
+  "activeVersionId": "be57bc5a-a249-4575-addd-2878ebe15627",
   "triggerCount": 1,
   "shared": [
     {
@@ -436,9 +436,9 @@
     }
   ],
   "activeVersion": {
-    "updatedAt": "2026-06-04T08:54:28.000Z",
-    "createdAt": "2026-06-04T08:51:08.231Z",
-    "versionId": "0be3883a-cb01-4fc5-ad63-3bba63bb458d",
+    "updatedAt": "2026-06-04T09:13:28.000Z",
+    "createdAt": "2026-06-04T09:13:24.470Z",
+    "versionId": "be57bc5a-a249-4575-addd-2878ebe15627",
     "workflowId": "VKFyePTGyoGGp4i5",
     "nodes": [
       {
@@ -847,7 +847,7 @@
     },
     "nodeGroups": [],
     "authors": "Fabian Frank Werner",
-    "name": "Version 0be3883a",
+    "name": "Version be57bc5a",
     "description": "",
     "autosaved": true
   },
