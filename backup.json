@@ -1,9 +1,9 @@
 {
-  "updatedAt": "2026-06-04T00:39:51.037Z",
-  "createdAt": "2026-06-03T13:11:14.654Z",
-  "id": "bn9souUnZeJklUjM",
+  "updatedAt": "2026-06-04T08:51:08.229Z",
+  "createdAt": "2026-06-04T00:43:53.769Z",
+  "id": "VKFyePTGyoGGp4i5",
   "name": "Backup",
-  "active": true,
+  "active": false,
   "isArchived": false,
   "nodes": [
     {
@@ -18,10 +18,30 @@
       "typeVersion": 1.3,
       "position": [
         0,
-        32
+        80
       ],
-      "id": "c8334779-fc05-4c25-bf5e-7b390d236184",
+      "id": "72fae9b7-64ad-470e-8cbf-11e742458552",
       "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "filters": {},
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-base.n8n",
+      "typeVersion": 1,
+      "position": [
+        672,
+        80
+      ],
+      "id": "261df6b5-9c6b-43d8-9f84-c1ad92f19a30",
+      "name": "Get many workflows",
+      "credentials": {
+        "n8nApi": {
+          "id": "qd4xz95d6bS3XDr4",
+          "name": "n8n Credential"
+        }
+      }
     },
     {
       "parameters": {
@@ -46,11 +66,11 @@
       "typeVersion": 1.1,
       "position": [
         224,
-        -112
+        80
       ],
-      "id": "3d3c74b8-ec0c-4071-8b8e-219a03ee148f",
+      "id": "66c806dc-6fe6-4950-8ace-5ba8dd76767d",
       "name": "List files",
-      "webhookId": "e35e8046-8b08-478c-a20d-05c473e53c3f",
+      "webhookId": "05481f35-d079-4a50-b34c-b92e414dea54",
       "credentials": {
         "githubApi": {
           "id": "InkXiVSEqKPunvCy",
@@ -60,54 +80,105 @@
     },
     {
       "parameters": {
-        "filters": {},
-        "requestOptions": {}
+        "jsCode": "const localWorkflows = $('Remove n8n Duplicates').all().map(item => item.json);\nconst githubFiles = $('Remove GitHub Duplicates').all().map(item => item.json);\n\nconst actions = [];\n\nlocalWorkflows.forEach(workflow => {\n  const filename = `${workflow.name}.json`.toLowerCase();\n  const githubFile = githubFiles.find(f => f.name === filename);\n  const fileContent = JSON.stringify(workflow, null, 2);\n\n  if (!githubFile) {\n    actions.push({\n      action: 'create',\n      filename: filename,\n      content: fileContent\n    });\n  } else {\n    actions.push({\n      action: 'update',\n      filename: filename,\n      content: fileContent,\n      sha: githubFile.sha\n    });\n  }\n});\n\ngithubFiles.forEach(file => {\n  const existsLocally = localWorkflows.some(w => `${w.name}.json`.toLowerCase() === file.name);\n  \n  if (!existsLocally) {\n    actions.push({\n      action: 'delete',\n      filename: file.name,\n      sha: file.sha\n    });\n  }\n});\n\nreturn actions.map(action => ({ json: action }));"
       },
-      "type": "n8n-nodes-base.n8n",
-      "typeVersion": 1,
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
       "position": [
-        224,
-        128
+        1120,
+        80
       ],
-      "id": "f0691c68-ca59-4817-aba6-925015be8086",
-      "name": "Get many workflows",
-      "credentials": {
-        "n8nApi": {
-          "id": "qd4xz95d6bS3XDr4",
-          "name": "n8n Credential"
-        }
-      }
+      "id": "49304c8e-cac1-429c-bd3f-fe3bc919b1ce",
+      "name": "Code in JavaScript"
     },
     {
       "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.action }}",
+                    "rightValue": "create",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "16948913-418d-40ad-8d31-95884f7ab0e3"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "8c54d927-a817-4fc9-97b5-eaa85ca97e95",
+                    "leftValue": "={{ $json.action }}",
+                    "rightValue": "update",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "7f69836a-e8be-4cd3-9fa6-73b9c1227112",
+                    "leftValue": "={{ $json.action }}",
+                    "rightValue": "delete",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
         "options": {}
       },
-      "type": "n8n-nodes-base.splitInBatches",
-      "typeVersion": 3,
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
       "position": [
-        448,
-        208
+        1344,
+        64
       ],
-      "id": "20d9a2e3-d83c-445d-8f8c-7487a441598e",
-      "name": "Loop Over Items"
-    },
-    {
-      "parameters": {
-        "options": {}
-      },
-      "type": "n8n-nodes-base.splitInBatches",
-      "typeVersion": 3,
-      "position": [
-        672,
-        -80
-      ],
-      "id": "5660a737-863d-4d05-835f-0183cad8bbf2",
-      "name": "Loop Over Items1"
+      "id": "9b6b8a11-5e9e-4109-a25d-843190d7986e",
+      "name": "Switch"
     },
     {
       "parameters": {
         "resource": "file",
-        "operation": "delete",
         "owner": {
           "__rl": true,
           "value": "fabianfrankwerner",
@@ -122,18 +193,19 @@
           "cachedResultName": "n8n",
           "cachedResultUrl": "https://github.com/fabianfrankwerner/n8n"
         },
-        "filePath": "={{ $json.name }}",
-        "commitMessage": "=Delete {{ $json.name.toLowerCase() }}"
+        "filePath": "={{ $json.filename }}",
+        "fileContent": "={{ $json.content }}",
+        "commitMessage": "=Created {{ $json.filename }}"
       },
       "type": "n8n-nodes-base.github",
       "typeVersion": 1.1,
       "position": [
-        896,
-        -80
+        1568,
+        -112
       ],
-      "id": "a1f9ad7f-4670-4ffa-ba84-73eb833c2b7d",
-      "name": "Delete a file",
-      "webhookId": "67f7cfe4-afa7-473e-9abb-95886cf8b21b",
+      "id": "9cd1ed34-cf5f-4ff3-9f9d-90af82c45ffa",
+      "name": "Create a file",
+      "webhookId": "0ca6317e-ab91-4e18-bf76-57b49b641d7a",
       "credentials": {
         "githubApi": {
           "id": "InkXiVSEqKPunvCy",
@@ -159,30 +231,30 @@
           "cachedResultName": "n8n",
           "cachedResultUrl": "https://github.com/fabianfrankwerner/n8n"
         },
-        "filePath": "={{ $json.name.toLowerCase() }}.json",
-        "fileContent": "={{ JSON.stringify($json) }}",
-        "commitMessage": "=Edit {{ $json.name.toLowerCase() }}.json"
+        "filePath": "={{ $json.filename }}",
+        "fileContent": "={{ $json.content }}",
+        "commitMessage": "=Updated {{ $json.filename }}"
       },
       "type": "n8n-nodes-base.github",
       "typeVersion": 1.1,
       "position": [
-        672,
-        160
+        1568,
+        80
       ],
-      "id": "3dfa1310-0516-4be1-bd67-3655a141b246",
+      "id": "73a2e9a4-eded-4a16-8886-76ab20d09f67",
       "name": "Edit a file",
-      "webhookId": "a14063e9-620b-4301-80bc-9ec8bb7b77c2",
+      "webhookId": "64564249-00df-4e00-a6e9-3377591da6ca",
       "credentials": {
         "githubApi": {
           "id": "InkXiVSEqKPunvCy",
           "name": "GitHub Credential"
         }
-      },
-      "onError": "continueErrorOutput"
+      }
     },
     {
       "parameters": {
         "resource": "file",
+        "operation": "delete",
         "owner": {
           "__rl": true,
           "value": "fabianfrankwerner",
@@ -197,19 +269,18 @@
           "cachedResultName": "n8n",
           "cachedResultUrl": "https://github.com/fabianfrankwerner/n8n"
         },
-        "filePath": "={{ $node[\"Loop Over Items\"].json.name.toLowerCase() }}.json",
-        "fileContent": "={{ JSON.stringify($node[\"Loop Over Items\"].json) }}",
-        "commitMessage": "=Create {{ $node[\"Loop Over Items\"].json.name.toLowerCase() }}.json"
+        "filePath": "={{ $json.filename }}",
+        "commitMessage": "=Deleted {{ $json.filename }}"
       },
       "type": "n8n-nodes-base.github",
       "typeVersion": 1.1,
       "position": [
-        896,
-        256
+        1568,
+        272
       ],
-      "id": "3f910291-a018-4b03-8aca-0816cffd52c6",
-      "name": "Create a file",
-      "webhookId": "ba3808d0-2d43-4e19-ab00-ddc6989d3ef4",
+      "id": "2741f54e-0f94-4408-bdf4-29e0996be824",
+      "name": "Delete a file",
+      "webhookId": "ed72c22e-52fa-4f07-806f-d19548af5dc5",
       "credentials": {
         "githubApi": {
           "id": "InkXiVSEqKPunvCy",
@@ -219,25 +290,31 @@
     },
     {
       "parameters": {
-        "mergeByFields": {
-          "values": [
-            {
-              "field1": "={{ $node[\"List files\"].json.name.toLowerCase() }}",
-              "field2": "={{ $node[\"Get many workflows\"].json.name.toLowerCase() }}.json"
-            }
-          ]
-        },
-        "resolve": "preferInput1",
         "options": {}
       },
-      "type": "n8n-nodes-base.compareDatasets",
-      "typeVersion": 2.3,
+      "type": "n8n-nodes-base.removeDuplicates",
+      "typeVersion": 2,
       "position": [
         448,
-        -112
+        80
       ],
-      "id": "9b62a944-f1f8-4936-be91-1480470900d4",
-      "name": "Compare Datasets"
+      "id": "8082dc66-9ca9-4e4b-960a-06852a07c309",
+      "name": "Remove GitHub Duplicates"
+    },
+    {
+      "parameters": {
+        "compare": "selectedFields",
+        "fieldsToCompare": "id",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.removeDuplicates",
+      "typeVersion": 2,
+      "position": [
+        896,
+        80
+      ],
+      "id": "ff5d975b-24fd-43e1-896e-9c5f82a8b5cd",
+      "name": "Remove n8n Duplicates"
     }
   ],
   "connections": {
@@ -248,9 +325,15 @@
             "node": "List files",
             "type": "main",
             "index": 0
-          },
+          }
+        ]
+      ]
+    },
+    "Get many workflows": {
+      "main": [
+        [
           {
-            "node": "Get many workflows",
+            "node": "Remove n8n Duplicates",
             "type": "main",
             "index": 0
           }
@@ -261,44 +344,40 @@
       "main": [
         [
           {
-            "node": "Compare Datasets",
+            "node": "Remove GitHub Duplicates",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Get many workflows": {
+    "Code in JavaScript": {
       "main": [
         [
           {
-            "node": "Loop Over Items",
+            "node": "Switch",
             "type": "main",
             "index": 0
-          },
-          {
-            "node": "Compare Datasets",
-            "type": "main",
-            "index": 1
           }
         ]
       ]
     },
-    "Loop Over Items": {
+    "Switch": {
       "main": [
-        [],
+        [
+          {
+            "node": "Create a file",
+            "type": "main",
+            "index": 0
+          }
+        ],
         [
           {
             "node": "Edit a file",
             "type": "main",
             "index": 0
           }
-        ]
-      ]
-    },
-    "Loop Over Items1": {
-      "main": [
-        [],
+        ],
         [
           {
             "node": "Delete a file",
@@ -308,51 +387,22 @@
         ]
       ]
     },
-    "Delete a file": {
+    "Remove GitHub Duplicates": {
       "main": [
         [
           {
-            "node": "Loop Over Items1",
+            "node": "Get many workflows",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Edit a file": {
+    "Remove n8n Duplicates": {
       "main": [
         [
           {
-            "node": "Loop Over Items",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Create a file",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Create a file": {
-      "main": [
-        [
-          {
-            "node": "Loop Over Items",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Compare Datasets": {
-      "main": [
-        [
-          {
-            "node": "Loop Over Items1",
+            "node": "Code in JavaScript",
             "type": "main",
             "index": 0
           }
@@ -364,392 +414,23 @@
     "executionOrder": "v1",
     "binaryMode": "separate"
   },
-  "staticData": {
-    "node:Schedule Trigger": {
-      "recurrenceRules": []
-    }
-  },
+  "staticData": null,
   "meta": {
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "622bdbe8-449a-454e-9a7c-3177655b050b",
-  "activeVersionId": "a06b197b-fee6-438e-953a-53734c51f415",
-  "triggerCount": 1,
+  "versionId": "0be3883a-cb01-4fc5-ad63-3bba63bb458d",
+  "activeVersionId": null,
+  "triggerCount": 0,
   "shared": [
     {
-      "updatedAt": "2026-06-03T13:11:14.658Z",
-      "createdAt": "2026-06-03T13:11:14.658Z",
+      "updatedAt": "2026-06-04T00:43:53.771Z",
+      "createdAt": "2026-06-04T00:43:53.771Z",
       "role": "workflow:owner",
-      "workflowId": "bn9souUnZeJklUjM",
+      "workflowId": "VKFyePTGyoGGp4i5",
       "projectId": "iQw1PUgSHwcZ7pvN"
     }
   ],
-  "activeVersion": {
-    "updatedAt": "2026-06-04T00:21:55.000Z",
-    "createdAt": "2026-06-04T00:20:14.504Z",
-    "versionId": "a06b197b-fee6-438e-953a-53734c51f415",
-    "workflowId": "bn9souUnZeJklUjM",
-    "nodes": [
-      {
-        "parameters": {
-          "rule": {
-            "interval": [
-              {}
-            ]
-          }
-        },
-        "type": "n8n-nodes-base.scheduleTrigger",
-        "typeVersion": 1.3,
-        "position": [
-          0,
-          32
-        ],
-        "id": "c8334779-fc05-4c25-bf5e-7b390d236184",
-        "name": "Schedule Trigger"
-      },
-      {
-        "parameters": {
-          "resource": "file",
-          "operation": "list",
-          "owner": {
-            "__rl": true,
-            "value": "fabianfrankwerner",
-            "mode": "list",
-            "cachedResultName": "fabianfrankwerner",
-            "cachedResultUrl": "https://github.com/fabianfrankwerner"
-          },
-          "repository": {
-            "__rl": true,
-            "value": "n8n",
-            "mode": "list",
-            "cachedResultName": "n8n",
-            "cachedResultUrl": "https://github.com/fabianfrankwerner/n8n"
-          }
-        },
-        "type": "n8n-nodes-base.github",
-        "typeVersion": 1.1,
-        "position": [
-          224,
-          -112
-        ],
-        "id": "3d3c74b8-ec0c-4071-8b8e-219a03ee148f",
-        "name": "List files",
-        "webhookId": "e35e8046-8b08-478c-a20d-05c473e53c3f",
-        "credentials": {
-          "githubApi": {
-            "id": "InkXiVSEqKPunvCy",
-            "name": "GitHub Credential"
-          }
-        }
-      },
-      {
-        "parameters": {
-          "filters": {},
-          "requestOptions": {}
-        },
-        "type": "n8n-nodes-base.n8n",
-        "typeVersion": 1,
-        "position": [
-          224,
-          128
-        ],
-        "id": "f0691c68-ca59-4817-aba6-925015be8086",
-        "name": "Get many workflows",
-        "credentials": {
-          "n8nApi": {
-            "id": "qd4xz95d6bS3XDr4",
-            "name": "n8n Credential"
-          }
-        }
-      },
-      {
-        "parameters": {
-          "options": {}
-        },
-        "type": "n8n-nodes-base.splitInBatches",
-        "typeVersion": 3,
-        "position": [
-          448,
-          208
-        ],
-        "id": "20d9a2e3-d83c-445d-8f8c-7487a441598e",
-        "name": "Loop Over Items"
-      },
-      {
-        "parameters": {
-          "options": {}
-        },
-        "type": "n8n-nodes-base.splitInBatches",
-        "typeVersion": 3,
-        "position": [
-          672,
-          -80
-        ],
-        "id": "5660a737-863d-4d05-835f-0183cad8bbf2",
-        "name": "Loop Over Items1"
-      },
-      {
-        "parameters": {
-          "resource": "file",
-          "operation": "delete",
-          "owner": {
-            "__rl": true,
-            "value": "fabianfrankwerner",
-            "mode": "list",
-            "cachedResultName": "fabianfrankwerner",
-            "cachedResultUrl": "https://github.com/fabianfrankwerner"
-          },
-          "repository": {
-            "__rl": true,
-            "value": "n8n",
-            "mode": "list",
-            "cachedResultName": "n8n",
-            "cachedResultUrl": "https://github.com/fabianfrankwerner/n8n"
-          },
-          "filePath": "={{ $json.name }}",
-          "commitMessage": "Delete"
-        },
-        "type": "n8n-nodes-base.github",
-        "typeVersion": 1.1,
-        "position": [
-          896,
-          -80
-        ],
-        "id": "a1f9ad7f-4670-4ffa-ba84-73eb833c2b7d",
-        "name": "Delete a file",
-        "webhookId": "67f7cfe4-afa7-473e-9abb-95886cf8b21b",
-        "credentials": {
-          "githubApi": {
-            "id": "InkXiVSEqKPunvCy",
-            "name": "GitHub Credential"
-          }
-        }
-      },
-      {
-        "parameters": {
-          "resource": "file",
-          "operation": "edit",
-          "owner": {
-            "__rl": true,
-            "value": "fabianfrankwerner",
-            "mode": "list",
-            "cachedResultName": "fabianfrankwerner",
-            "cachedResultUrl": "https://github.com/fabianfrankwerner"
-          },
-          "repository": {
-            "__rl": true,
-            "value": "n8n",
-            "mode": "list",
-            "cachedResultName": "n8n",
-            "cachedResultUrl": "https://github.com/fabianfrankwerner/n8n"
-          },
-          "filePath": "={{ $json.name }}.json",
-          "fileContent": "={{ JSON.stringify($json) }}",
-          "commitMessage": "Edit"
-        },
-        "type": "n8n-nodes-base.github",
-        "typeVersion": 1.1,
-        "position": [
-          672,
-          160
-        ],
-        "id": "3dfa1310-0516-4be1-bd67-3655a141b246",
-        "name": "Edit a file",
-        "webhookId": "a14063e9-620b-4301-80bc-9ec8bb7b77c2",
-        "credentials": {
-          "githubApi": {
-            "id": "InkXiVSEqKPunvCy",
-            "name": "GitHub Credential"
-          }
-        },
-        "onError": "continueErrorOutput"
-      },
-      {
-        "parameters": {
-          "resource": "file",
-          "owner": {
-            "__rl": true,
-            "value": "fabianfrankwerner",
-            "mode": "list",
-            "cachedResultName": "fabianfrankwerner",
-            "cachedResultUrl": "https://github.com/fabianfrankwerner"
-          },
-          "repository": {
-            "__rl": true,
-            "value": "n8n",
-            "mode": "list",
-            "cachedResultName": "n8n",
-            "cachedResultUrl": "https://github.com/fabianfrankwerner/n8n"
-          },
-          "filePath": "={{ $node[\"Loop Over Items\"].json.name }}.json",
-          "fileContent": "={{ JSON.stringify($node[\"Loop Over Items\"].json) }}",
-          "commitMessage": "Create"
-        },
-        "type": "n8n-nodes-base.github",
-        "typeVersion": 1.1,
-        "position": [
-          896,
-          256
-        ],
-        "id": "3f910291-a018-4b03-8aca-0816cffd52c6",
-        "name": "Create a file",
-        "webhookId": "ba3808d0-2d43-4e19-ab00-ddc6989d3ef4",
-        "credentials": {
-          "githubApi": {
-            "id": "InkXiVSEqKPunvCy",
-            "name": "GitHub Credential"
-          }
-        }
-      },
-      {
-        "parameters": {
-          "mergeByFields": {
-            "values": [
-              {
-                "field1": "={{ $node[\"List files\"].json.name }}",
-                "field2": "={{ $node[\"Get many workflows\"].json.name }}.json"
-              }
-            ]
-          },
-          "resolve": "preferInput1",
-          "options": {}
-        },
-        "type": "n8n-nodes-base.compareDatasets",
-        "typeVersion": 2.3,
-        "position": [
-          448,
-          -112
-        ],
-        "id": "9b62a944-f1f8-4936-be91-1480470900d4",
-        "name": "Compare Datasets"
-      }
-    ],
-    "connections": {
-      "Schedule Trigger": {
-        "main": [
-          [
-            {
-              "node": "List files",
-              "type": "main",
-              "index": 0
-            },
-            {
-              "node": "Get many workflows",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "List files": {
-        "main": [
-          [
-            {
-              "node": "Compare Datasets",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Get many workflows": {
-        "main": [
-          [
-            {
-              "node": "Loop Over Items",
-              "type": "main",
-              "index": 0
-            },
-            {
-              "node": "Compare Datasets",
-              "type": "main",
-              "index": 1
-            }
-          ]
-        ]
-      },
-      "Loop Over Items": {
-        "main": [
-          [],
-          [
-            {
-              "node": "Edit a file",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Loop Over Items1": {
-        "main": [
-          [],
-          [
-            {
-              "node": "Delete a file",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Delete a file": {
-        "main": [
-          [
-            {
-              "node": "Loop Over Items1",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Edit a file": {
-        "main": [
-          [
-            {
-              "node": "Loop Over Items",
-              "type": "main",
-              "index": 0
-            }
-          ],
-          [
-            {
-              "node": "Create a file",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Create a file": {
-        "main": [
-          [
-            {
-              "node": "Loop Over Items",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Compare Datasets": {
-        "main": [
-          [
-            {
-              "node": "Loop Over Items1",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      }
-    },
-    "nodeGroups": [],
-    "authors": "Fabian Frank Werner",
-    "name": "Version a06b197b",
-    "description": "",
-    "autosaved": true
-  },
+  "activeVersion": null,
   "tags": []
 }
