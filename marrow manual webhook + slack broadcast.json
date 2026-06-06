@@ -1,0 +1,979 @@
+{
+  "updatedAt": "2026-06-06T11:51:12.236Z",
+  "createdAt": "2026-06-06T10:07:33.171Z",
+  "id": "j639QhgOFdaQrh2I",
+  "name": "Marrow Manual Webhook + Slack Broadcast",
+  "active": true,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "update_i",
+        "responseMode": "responseNode",
+        "options": {
+          "allowedOrigins": "*",
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Access-Control-Allow-Origin",
+                "value": "*"
+              },
+              {
+                "name": "Access-Control-Allow-Methods",
+                "value": "POST, OPTIONS"
+              },
+              {
+                "name": "Access-Control-Allow-Headers",
+                "value": "Content-Type"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        208,
+        -80
+      ],
+      "id": "b7885651-fca0-4f2d-bb10-9478b89ab244",
+      "name": "Webhook",
+      "webhookId": "bb16fd84-d951-4ffb-9241-b6df5c9334b2",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\n// Changed content[0].text to content.parts[0].text\nconst raw = items[0].json.content.parts[0].text;\n\n// Clean any code block markdown wrappers (like ```json)\nconst cleanRaw = raw.replace(/^```json\\s*/i, '').replace(/```\\s*$/, '').trim();\nconst parsed = JSON.parse(cleanRaw);\n\nreturn [{\n  json: {\n    thoughts: parsed.thoughts || [\"Execution completed successfully\"],\n    notionUpdate: parsed.notionUpdate || null,\n    slackMessages: parsed.slackMessages || [],\n    cartoon_script: parsed.cartoon_script || \"\"\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        672,
+        -80
+      ],
+      "id": "739363ca-a80b-4824-8207-9905dfc75b21",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "respondWith": "allIncomingItems",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        864,
+        -176
+      ],
+      "id": "ba6b86d9-6f94-410f-8012-d8fd6564c9d8",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "resource": "image",
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-image-2-2026-04-21",
+          "mode": "list",
+          "cachedResultName": "GPT-IMAGE-2-2026-04-21"
+        },
+        "prompt": "={{ $json.cartoon_script }}\n\nTurn this Cartoon script into a cartoon",
+        "options": {
+          "quality": "medium",
+          "size": "1024x1024"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2.3,
+      "position": [
+        864,
+        32
+      ],
+      "id": "943adf75-2e96-444e-8c05-8ce19fef7fcd",
+      "name": "Generate an image",
+      "credentials": {
+        "openAiApi": {
+          "id": "V5RljguDIQNg9K0X",
+          "name": "Kilian OpenAI"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "options": {
+          "channelId": "=C0B8VBD7WNL",
+          "initialComment": "={{ $('Code in JavaScript').item.json.slackMessages[0].text }}"
+        }
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.4,
+      "position": [
+        1088,
+        32
+      ],
+      "id": "754ace5e-49a7-41c1-b124-6c228fc5a66c",
+      "name": "Upload a file",
+      "webhookId": "691765f1-f519-440a-89d9-652d9953ea13",
+      "credentials": {
+        "slackApi": {
+          "id": "kYNcSfO40XLHQzmS",
+          "name": "Updatify"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-3.5-flash",
+          "mode": "list",
+          "cachedResultName": "models/gemini-3.5-flash"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=You are an expert AI product communication agent running in the Marrow context layer.\n\nSynthesize this product update:\n\"{{ $json.body.prompt || \"System update\" }}\"\n\nTasks:\n1. Update the Notion wiki page (simulate this by generating a title and page link).\n2. Draft a developer-focused Slack announcement for #eng-announcements.\n3. Draft a sales-focused Slack announcement for #sales-announcements.\n\nReturn ONLY a raw JSON object matching the following structure. Do NOT include markdown blocks, do NOT write backticks (```json), do NOT add explanatory text. Return strictly the raw JSON string:\n{\n  \"thoughts\": [\n    \"Received update prompt: {{ $json.body.prompt || 'manual' }}\",\n    \"Analyzing code changes and document impacts...\",\n    \"Simulating Notion wiki page update...\",\n    \"Drafting developer and sales release alerts...\"\n  ],\n  \"notionUpdate\": {\n    \"title\": \"Release Reference: {{ $json.body.prompt || 'System Update' }}\",\n    \"url\": \"https://notion.so/marrow-release-wiki\"\n  },\n  \"slackMessages\": [\n    {\n      \"channel\": \"#eng-announcements\",\n      \"text\": \"Write a developer-focused, technical message summarizing the update here.\"\n    },\n    {\n      \"channel\": \"#sales-announcements\",\n      \"text\": \"Write a customer-focused, value-driven message highlighting user benefits here.\"\n    }\n  ],\n  \"cartoon_script\": \"Panel 1: [scene] - [dialogue]. Panel 2: [scene] - [dialogue]\"\n}"
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1.2,
+      "position": [
+        384,
+        -80
+      ],
+      "id": "b4f2af52-49a6-44c7-8829-e153ecedda41",
+      "name": "Message Gemini",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "EjyaveMgWaGKdXsO",
+          "name": "Alessandro Gemini"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "http://localhost:8080/api/executions",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {}
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {}
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        896,
+        320
+      ],
+      "id": "3215d117-9315-4947-8dab-3c61e02bc473",
+      "name": "Marrow Image Callback"
+    },
+    {
+      "parameters": {
+        "url": "http://localhost:8080/api/execution",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {}
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {}
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        1120,
+        448
+      ],
+      "id": "049db981-6818-4133-bf53-a6a80d9d2159",
+      "name": "Marrow Slack Callback"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "local",
+        "responseMode": "responseNode",
+        "options": {
+          "allowedOrigins": "*",
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Access-Control-Allow-Origin",
+                "value": "*"
+              },
+              {
+                "name": "Access-Control-Allow-Methods",
+                "value": "POST, OPTIONS"
+              },
+              {
+                "name": "Access-Control-Allow-Headers",
+                "value": "Content-Type"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        16,
+        336
+      ],
+      "id": "994975ea-28c0-4345-b809-5774e96ecefb",
+      "name": "Webhook1",
+      "webhookId": "bb16fd84-d951-4ffb-9241-b6df5c9334b2"
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\nconst raw = items[0].json.content.parts[0].text;\nconst cleanRaw = raw.replace(/^```json\\s*/i, '').replace(/```\\s*$/, '').trim();\nconst parsed = JSON.parse(cleanRaw);\n\nreturn [{\n  json: {\n    thoughts: parsed.thoughts || [\"Execution completed successfully\"],\n    notionUpdate: parsed.notionUpdate || null,\n    slackMessages: parsed.slackMessages || [],\n    cartoon_script: parsed.cartoon_script || \"\"\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        480,
+        336
+      ],
+      "id": "8ab46813-004c-4618-8f91-204324c844f6",
+      "name": "Code in JavaScript1"
+    },
+    {
+      "parameters": {
+        "respondWith": "allIncomingItems",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        672,
+        240
+      ],
+      "id": "450da876-0793-4e78-90f4-9ebd95269856",
+      "name": "Respond to Webhook1"
+    },
+    {
+      "parameters": {
+        "resource": "image",
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-image-2-2026-04-21",
+          "mode": "list",
+          "cachedResultName": "GPT-IMAGE-2-2026-04-21"
+        },
+        "prompt": "={{ $json.cartoon_script }}\n\nTurn this Cartoon script into a cartoon",
+        "options": {
+          "quality": "medium",
+          "size": "1024x1024"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2.3,
+      "position": [
+        672,
+        448
+      ],
+      "id": "c4a61e86-ac3b-41ea-8a20-0f6ab7787fa5",
+      "name": "Generate an image1",
+      "credentials": {
+        "openAiApi": {
+          "id": "V5RljguDIQNg9K0X",
+          "name": "Kilian OpenAI"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "options": {
+          "channelId": "=C0B8VBD7WNL",
+          "initialComment": "={{ $('Code in JavaScript1').item.json.slackMessages[0].text }}"
+        }
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.4,
+      "position": [
+        896,
+        448
+      ],
+      "id": "0dc774aa-0e97-463a-a704-bccda7a4ca40",
+      "name": "Upload a file1",
+      "webhookId": "691765f1-f519-440a-89d9-652d9953ea13",
+      "credentials": {
+        "slackApi": {
+          "id": "kYNcSfO40XLHQzmS",
+          "name": "Updatify"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-3.5-flash",
+          "mode": "list",
+          "cachedResultName": "models/gemini-3.5-flash"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=You are an expert AI product communication agent running in the Marrow context layer.\n\nSynthesize this product update:\n\"{{ $json.body.prompt || \"System update\" }}\"\n\nTasks:\n1. Update the Notion wiki page (simulate this by generating a title and page link).\n2. Draft a developer-focused Slack announcement for #eng-announcements.\n3. Draft a sales-focused Slack announcement for #sales-announcements.\n\nReturn ONLY a raw JSON object matching the following structure. Do NOT include markdown blocks, do NOT write backticks (```json), do NOT add explanatory text. Return strictly the raw JSON string:\n{\n  \"thoughts\": [\n    \"Received update prompt: {{ $json.body.prompt || 'manual' }}\",\n    \"Analyzing code changes and document impacts...\",\n    \"Simulating Notion wiki page update...\",\n    \"Drafting developer and sales release alerts...\"\n  ],\n  \"notionUpdate\": {\n    \"title\": \"Release Reference: {{ $json.body.prompt || 'System Update' }}\",\n    \"url\": \"https://notion.so/marrow-release-wiki\"\n  },\n  \"slackMessages\": [\n    {\n      \"channel\": \"#eng-announcements\",\n      \"text\": \"Write a developer-focused, technical message summarizing the update here.\"\n    },\n    {\n      \"channel\": \"#sales-announcements\",\n      \"text\": \"Write a customer-focused, value-driven message highlighting user benefits here.\"\n    }\n  ],\n  \"cartoon_script\": \"Panel 1: [scene] - [dialogue]. Panel 2: [scene] - [dialogue]\"\n}"
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1.2,
+      "position": [
+        192,
+        336
+      ],
+      "id": "8b7ef45c-35f4-4ba4-911d-c890df2c0af1",
+      "name": "Message Gemini1",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "EjyaveMgWaGKdXsO",
+          "name": "Alessandro Gemini"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Message Gemini",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Generate an image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate an image": {
+      "main": [
+        [
+          {
+            "node": "Upload a file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message Gemini": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook1": {
+      "main": [
+        [
+          {
+            "node": "Message Gemini1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript1": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Generate an image1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate an image1": {
+      "main": [
+        [
+          {
+            "node": "Upload a file1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Marrow Image Callback",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload a file1": {
+      "main": [
+        [
+          {
+            "node": "Marrow Slack Callback",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message Gemini1": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "ca30689c-76d0-4ff3-9819-b7e8227e8fac",
+  "activeVersionId": "ca30689c-76d0-4ff3-9819-b7e8227e8fac",
+  "triggerCount": 1,
+  "shared": [
+    {
+      "updatedAt": "2026-06-06T10:07:33.173Z",
+      "createdAt": "2026-06-06T10:07:33.173Z",
+      "role": "workflow:owner",
+      "workflowId": "j639QhgOFdaQrh2I",
+      "projectId": "Zc8dmidxbsnI1P5e"
+    }
+  ],
+  "activeVersion": {
+    "updatedAt": "2026-06-06T11:51:18.000Z",
+    "createdAt": "2026-06-06T11:51:12.238Z",
+    "versionId": "ca30689c-76d0-4ff3-9819-b7e8227e8fac",
+    "workflowId": "j639QhgOFdaQrh2I",
+    "nodes": [
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "update_i",
+          "responseMode": "responseNode",
+          "options": {
+            "allowedOrigins": "*",
+            "responseHeaders": {
+              "entries": [
+                {
+                  "name": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "name": "Access-Control-Allow-Methods",
+                  "value": "POST, OPTIONS"
+                },
+                {
+                  "name": "Access-Control-Allow-Headers",
+                  "value": "Content-Type"
+                }
+              ]
+            }
+          }
+        },
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2.1,
+        "position": [
+          208,
+          -80
+        ],
+        "id": "b7885651-fca0-4f2d-bb10-9478b89ab244",
+        "name": "Webhook",
+        "webhookId": "bb16fd84-d951-4ffb-9241-b6df5c9334b2",
+        "disabled": true
+      },
+      {
+        "parameters": {
+          "jsCode": "const items = $input.all();\n// Changed content[0].text to content.parts[0].text\nconst raw = items[0].json.content.parts[0].text;\n\n// Clean any code block markdown wrappers (like ```json)\nconst cleanRaw = raw.replace(/^```json\\s*/i, '').replace(/```\\s*$/, '').trim();\nconst parsed = JSON.parse(cleanRaw);\n\nreturn [{\n  json: {\n    thoughts: parsed.thoughts || [\"Execution completed successfully\"],\n    notionUpdate: parsed.notionUpdate || null,\n    slackMessages: parsed.slackMessages || [],\n    cartoon_script: parsed.cartoon_script || \"\"\n  }\n}];"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          672,
+          -80
+        ],
+        "id": "739363ca-a80b-4824-8207-9905dfc75b21",
+        "name": "Code in JavaScript"
+      },
+      {
+        "parameters": {
+          "respondWith": "allIncomingItems",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.respondToWebhook",
+        "typeVersion": 1.1,
+        "position": [
+          864,
+          -176
+        ],
+        "id": "ba6b86d9-6f94-410f-8012-d8fd6564c9d8",
+        "name": "Respond to Webhook"
+      },
+      {
+        "parameters": {
+          "resource": "image",
+          "modelId": {
+            "__rl": true,
+            "value": "gpt-image-2-2026-04-21",
+            "mode": "list",
+            "cachedResultName": "GPT-IMAGE-2-2026-04-21"
+          },
+          "prompt": "={{ $json.cartoon_script }}\n\nTurn this Cartoon script into a cartoon",
+          "options": {
+            "quality": "medium",
+            "size": "1024x1024"
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.openAi",
+        "typeVersion": 2.3,
+        "position": [
+          864,
+          32
+        ],
+        "id": "943adf75-2e96-444e-8c05-8ce19fef7fcd",
+        "name": "Generate an image",
+        "credentials": {
+          "openAiApi": {
+            "id": "V5RljguDIQNg9K0X",
+            "name": "Kilian OpenAI"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "file",
+          "options": {
+            "channelId": "=C0B8VBD7WNL",
+            "initialComment": "={{ $('Code in JavaScript').item.json.slackMessages[0].text }}"
+          }
+        },
+        "type": "n8n-nodes-base.slack",
+        "typeVersion": 2.4,
+        "position": [
+          1088,
+          32
+        ],
+        "id": "754ace5e-49a7-41c1-b124-6c228fc5a66c",
+        "name": "Upload a file",
+        "webhookId": "691765f1-f519-440a-89d9-652d9953ea13",
+        "credentials": {
+          "slackApi": {
+            "id": "kYNcSfO40XLHQzmS",
+            "name": "Updatify"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "modelId": {
+            "__rl": true,
+            "value": "models/gemini-3.5-flash",
+            "mode": "list",
+            "cachedResultName": "models/gemini-3.5-flash"
+          },
+          "messages": {
+            "values": [
+              {
+                "content": "=You are an expert AI product communication agent running in the Marrow context layer.\n\nSynthesize this product update:\n\"{{ $json.body.prompt || \"System update\" }}\"\n\nTasks:\n1. Update the Notion wiki page (simulate this by generating a title and page link).\n2. Draft a developer-focused Slack announcement for #eng-announcements.\n3. Draft a sales-focused Slack announcement for #sales-announcements.\n\nReturn ONLY a raw JSON object matching the following structure. Do NOT include markdown blocks, do NOT write backticks (```json), do NOT add explanatory text. Return strictly the raw JSON string:\n{\n  \"thoughts\": [\n    \"Received update prompt: {{ $json.body.prompt || 'manual' }}\",\n    \"Analyzing code changes and document impacts...\",\n    \"Simulating Notion wiki page update...\",\n    \"Drafting developer and sales release alerts...\"\n  ],\n  \"notionUpdate\": {\n    \"title\": \"Release Reference: {{ $json.body.prompt || 'System Update' }}\",\n    \"url\": \"https://notion.so/marrow-release-wiki\"\n  },\n  \"slackMessages\": [\n    {\n      \"channel\": \"#eng-announcements\",\n      \"text\": \"Write a developer-focused, technical message summarizing the update here.\"\n    },\n    {\n      \"channel\": \"#sales-announcements\",\n      \"text\": \"Write a customer-focused, value-driven message highlighting user benefits here.\"\n    }\n  ],\n  \"cartoon_script\": \"Panel 1: [scene] - [dialogue]. Panel 2: [scene] - [dialogue]\"\n}"
+              }
+            ]
+          },
+          "builtInTools": {},
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.googleGemini",
+        "typeVersion": 1.2,
+        "position": [
+          384,
+          -80
+        ],
+        "id": "b4f2af52-49a6-44c7-8829-e153ecedda41",
+        "name": "Message Gemini",
+        "credentials": {
+          "googlePalmApi": {
+            "id": "EjyaveMgWaGKdXsO",
+            "name": "Alessandro Gemini"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "url": "http://localhost:8080/api/executions",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {}
+            ]
+          },
+          "sendBody": true,
+          "bodyParameters": {
+            "parameters": [
+              {}
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.1,
+        "position": [
+          896,
+          320
+        ],
+        "id": "3215d117-9315-4947-8dab-3c61e02bc473",
+        "name": "Marrow Image Callback"
+      },
+      {
+        "parameters": {
+          "url": "http://localhost:8080/api/execution",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {}
+            ]
+          },
+          "sendBody": true,
+          "bodyParameters": {
+            "parameters": [
+              {}
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.1,
+        "position": [
+          1120,
+          448
+        ],
+        "id": "049db981-6818-4133-bf53-a6a80d9d2159",
+        "name": "Marrow Slack Callback"
+      },
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "local",
+          "responseMode": "responseNode",
+          "options": {
+            "allowedOrigins": "*",
+            "responseHeaders": {
+              "entries": [
+                {
+                  "name": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "name": "Access-Control-Allow-Methods",
+                  "value": "POST, OPTIONS"
+                },
+                {
+                  "name": "Access-Control-Allow-Headers",
+                  "value": "Content-Type"
+                }
+              ]
+            }
+          }
+        },
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2.1,
+        "position": [
+          16,
+          336
+        ],
+        "id": "994975ea-28c0-4345-b809-5774e96ecefb",
+        "name": "Webhook1",
+        "webhookId": "bb16fd84-d951-4ffb-9241-b6df5c9334b2"
+      },
+      {
+        "parameters": {
+          "jsCode": "const items = $input.all();\nconst raw = items[0].json.content.parts[0].text;\nconst cleanRaw = raw.replace(/^```json\\s*/i, '').replace(/```\\s*$/, '').trim();\nconst parsed = JSON.parse(cleanRaw);\n\nreturn [{\n  json: {\n    thoughts: parsed.thoughts || [\"Execution completed successfully\"],\n    notionUpdate: parsed.notionUpdate || null,\n    slackMessages: parsed.slackMessages || [],\n    cartoon_script: parsed.cartoon_script || \"\"\n  }\n}];"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          480,
+          336
+        ],
+        "id": "8ab46813-004c-4618-8f91-204324c844f6",
+        "name": "Code in JavaScript1"
+      },
+      {
+        "parameters": {
+          "respondWith": "allIncomingItems",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.respondToWebhook",
+        "typeVersion": 1.1,
+        "position": [
+          672,
+          240
+        ],
+        "id": "450da876-0793-4e78-90f4-9ebd95269856",
+        "name": "Respond to Webhook1"
+      },
+      {
+        "parameters": {
+          "resource": "image",
+          "modelId": {
+            "__rl": true,
+            "value": "gpt-image-2-2026-04-21",
+            "mode": "list",
+            "cachedResultName": "GPT-IMAGE-2-2026-04-21"
+          },
+          "prompt": "={{ $json.cartoon_script }}\n\nTurn this Cartoon script into a cartoon",
+          "options": {
+            "quality": "medium",
+            "size": "1024x1024"
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.openAi",
+        "typeVersion": 2.3,
+        "position": [
+          672,
+          448
+        ],
+        "id": "c4a61e86-ac3b-41ea-8a20-0f6ab7787fa5",
+        "name": "Generate an image1",
+        "credentials": {
+          "openAiApi": {
+            "id": "V5RljguDIQNg9K0X",
+            "name": "Kilian OpenAI"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "file",
+          "options": {
+            "channelId": "=C0B8VBD7WNL",
+            "initialComment": "={{ $('Code in JavaScript1').item.json.slackMessages[0].text }}"
+          }
+        },
+        "type": "n8n-nodes-base.slack",
+        "typeVersion": 2.4,
+        "position": [
+          896,
+          448
+        ],
+        "id": "0dc774aa-0e97-463a-a704-bccda7a4ca40",
+        "name": "Upload a file1",
+        "webhookId": "691765f1-f519-440a-89d9-652d9953ea13",
+        "credentials": {
+          "slackApi": {
+            "id": "kYNcSfO40XLHQzmS",
+            "name": "Updatify"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "modelId": {
+            "__rl": true,
+            "value": "models/gemini-3.5-flash",
+            "mode": "list",
+            "cachedResultName": "models/gemini-3.5-flash"
+          },
+          "messages": {
+            "values": [
+              {
+                "content": "=You are an expert AI product communication agent running in the Marrow context layer.\n\nSynthesize this product update:\n\"{{ $json.body.prompt || \"System update\" }}\"\n\nTasks:\n1. Update the Notion wiki page (simulate this by generating a title and page link).\n2. Draft a developer-focused Slack announcement for #eng-announcements.\n3. Draft a sales-focused Slack announcement for #sales-announcements.\n\nReturn ONLY a raw JSON object matching the following structure. Do NOT include markdown blocks, do NOT write backticks (```json), do NOT add explanatory text. Return strictly the raw JSON string:\n{\n  \"thoughts\": [\n    \"Received update prompt: {{ $json.body.prompt || 'manual' }}\",\n    \"Analyzing code changes and document impacts...\",\n    \"Simulating Notion wiki page update...\",\n    \"Drafting developer and sales release alerts...\"\n  ],\n  \"notionUpdate\": {\n    \"title\": \"Release Reference: {{ $json.body.prompt || 'System Update' }}\",\n    \"url\": \"https://notion.so/marrow-release-wiki\"\n  },\n  \"slackMessages\": [\n    {\n      \"channel\": \"#eng-announcements\",\n      \"text\": \"Write a developer-focused, technical message summarizing the update here.\"\n    },\n    {\n      \"channel\": \"#sales-announcements\",\n      \"text\": \"Write a customer-focused, value-driven message highlighting user benefits here.\"\n    }\n  ],\n  \"cartoon_script\": \"Panel 1: [scene] - [dialogue]. Panel 2: [scene] - [dialogue]\"\n}"
+              }
+            ]
+          },
+          "builtInTools": {},
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.googleGemini",
+        "typeVersion": 1.2,
+        "position": [
+          192,
+          336
+        ],
+        "id": "8b7ef45c-35f4-4ba4-911d-c890df2c0af1",
+        "name": "Message Gemini1",
+        "credentials": {
+          "googlePalmApi": {
+            "id": "EjyaveMgWaGKdXsO",
+            "name": "Alessandro Gemini"
+          }
+        }
+      }
+    ],
+    "connections": {
+      "Webhook": {
+        "main": [
+          [
+            {
+              "node": "Message Gemini",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Code in JavaScript": {
+        "main": [
+          [
+            {
+              "node": "Respond to Webhook",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Generate an image",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Generate an image": {
+        "main": [
+          [
+            {
+              "node": "Upload a file",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Message Gemini": {
+        "main": [
+          [
+            {
+              "node": "Code in JavaScript",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Webhook1": {
+        "main": [
+          [
+            {
+              "node": "Message Gemini1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Code in JavaScript1": {
+        "main": [
+          [
+            {
+              "node": "Respond to Webhook1",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Generate an image1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Generate an image1": {
+        "main": [
+          [
+            {
+              "node": "Upload a file1",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Marrow Image Callback",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Upload a file1": {
+        "main": [
+          [
+            {
+              "node": "Marrow Slack Callback",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Message Gemini1": {
+        "main": [
+          [
+            {
+              "node": "Code in JavaScript1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "nodeGroups": [],
+    "authors": "Alessandro Scalese",
+    "name": "Version ca30689c",
+    "description": "",
+    "autosaved": true
+  },
+  "tags": []
+}
