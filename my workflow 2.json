@@ -1,0 +1,435 @@
+{
+  "updatedAt": "2026-06-06T10:18:44.243Z",
+  "createdAt": "2026-06-06T10:11:16.036Z",
+  "id": "wBqwZUZJRHUdnocp",
+  "name": "My workflow 2",
+  "active": true,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "claude-sonnet-4-6",
+          "mode": "list",
+          "cachedResultName": "claude-sonnet-4-6"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "You are a product communication expert. Generate role-specific communication drafts from this product update.\n\nTitle: New bulk CSV export feature\nWhat was built: Users can now export up to 10.000 rows as CSV with one click\nWhat changes: The old export button moved to the top right menu\nAudience: All Teams\n\nReturn ONLY this JSON, nothing else, no backticks, no explanation:\n{\n  \"sales_text\": \"2-3 sentences focused on customer value and competitive advantage\",\n  \"cs_text\": \"2-3 sentences focused on helping existing customers succeed with this change\",\n  \"cartoon_script\": \"Panel 1: [scene] - [dialogue]. Panel 2: [scene] - [dialogue]. Panel 3: [scene] - [dialogue]. Panel 4: [scene] - [dialogue].,...\",\n  \"slack_message\": \"Short Slack message under 100 words with emojis\"\n}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.anthropic",
+      "typeVersion": 1,
+      "position": [
+        416,
+        0
+      ],
+      "id": "dfdfdb86-8e5e-4fd0-95d7-7561749adf4c",
+      "name": "Message a model",
+      "credentials": {
+        "anthropicApi": {
+          "id": "6hqt3lBtzQqitGw0",
+          "name": "Anthropic account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\nconst raw = items[0].json.content[0].text;\nconst parsed = JSON.parse(raw);\n\nreturn [{\n  json: {\n    sales_text: parsed.sales_text,\n    cs_text: parsed.cs_text,\n    cartoon_script: parsed.cartoon_script,\n    slack_message: parsed.slack_message\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        768,
+        0
+      ],
+      "id": "14ee1b48-c78a-446c-b0b2-2d4ede7a4439",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "resource": "image",
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-image-2-2026-04-21",
+          "mode": "list",
+          "cachedResultName": "GPT-IMAGE-2-2026-04-21"
+        },
+        "prompt": "={{ $json.cartoon_script }}\n\nTurn this Cartoon script into a cartoon",
+        "options": {
+          "quality": "medium",
+          "size": "1536x1024"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2.3,
+      "position": [
+        976,
+        0
+      ],
+      "id": "a1864f50-0dff-4c5a-90d5-ed4157d6b149",
+      "name": "Generate an image",
+      "credentials": {
+        "openAiApi": {
+          "id": "xdW3rNK5lGcsXHNR",
+          "name": "OpenAI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "options": {
+          "channelId": "=C0B8CTYRVKK",
+          "initialComment": "={{ $('Code in JavaScript').item.json.slack_message }}"
+        }
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.4,
+      "position": [
+        1184,
+        0
+      ],
+      "id": "2afdfa4e-a08c-41c1-a5d9-519314d94fc5",
+      "name": "Upload a file",
+      "webhookId": "691765f1-f519-440a-89d9-652d9953ea13",
+      "credentials": {
+        "slackApi": {
+          "id": "SNyynojsAi90syi2",
+          "name": "Slack account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "update",
+        "options": {
+          "allowedOrigins": "*",
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Access-Control-Allow-Origin",
+                "value": "*"
+              },
+              {
+                "name": "Access-Control-Allow-Methods",
+                "value": "POST, OPTIONS"
+              },
+              {
+                "name": "Access-Control-Allow-Headers",
+                "value": "Content-Type"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        -192
+      ],
+      "id": "77ae7263-ab2f-42b9-9d84-4ba87d548b29",
+      "name": "Webhook",
+      "webhookId": "bb16fd84-d951-4ffb-9241-b6df5c9334b2"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        208,
+        0
+      ],
+      "id": "506b0ae8-581a-4933-b83c-448ecaf63e0a",
+      "name": "When clicking ‘Execute workflow’"
+    }
+  ],
+  "connections": {
+    "Message a model": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Generate an image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate an image": {
+      "main": [
+        [
+          {
+            "node": "Upload a file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        []
+      ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "1c953f56-b3fc-49ea-afb3-3f346d15245c",
+  "activeVersionId": "1c953f56-b3fc-49ea-afb3-3f346d15245c",
+  "triggerCount": 1,
+  "shared": [
+    {
+      "updatedAt": "2026-06-06T10:11:16.040Z",
+      "createdAt": "2026-06-06T10:11:16.040Z",
+      "role": "workflow:owner",
+      "workflowId": "wBqwZUZJRHUdnocp",
+      "projectId": "sCDlOSulrnWVh2bJ"
+    }
+  ],
+  "activeVersion": {
+    "updatedAt": "2026-06-06T10:22:39.000Z",
+    "createdAt": "2026-06-06T10:18:44.244Z",
+    "versionId": "1c953f56-b3fc-49ea-afb3-3f346d15245c",
+    "workflowId": "wBqwZUZJRHUdnocp",
+    "nodes": [
+      {
+        "parameters": {
+          "modelId": {
+            "__rl": true,
+            "value": "claude-sonnet-4-6",
+            "mode": "list",
+            "cachedResultName": "claude-sonnet-4-6"
+          },
+          "messages": {
+            "values": [
+              {
+                "content": "You are a product communication expert. Generate role-specific communication drafts from this product update.\n\nTitle: New bulk CSV export feature\nWhat was built: Users can now export up to 10.000 rows as CSV with one click\nWhat changes: The old export button moved to the top right menu\nAudience: All Teams\n\nReturn ONLY this JSON, nothing else, no backticks, no explanation:\n{\n  \"sales_text\": \"2-3 sentences focused on customer value and competitive advantage\",\n  \"cs_text\": \"2-3 sentences focused on helping existing customers succeed with this change\",\n  \"cartoon_script\": \"Panel 1: [scene] - [dialogue]. Panel 2: [scene] - [dialogue]. Panel 3: [scene] - [dialogue]. Panel 4: [scene] - [dialogue].,...\",\n  \"slack_message\": \"Short Slack message under 100 words with emojis\"\n}"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.anthropic",
+        "typeVersion": 1,
+        "position": [
+          416,
+          0
+        ],
+        "id": "dfdfdb86-8e5e-4fd0-95d7-7561749adf4c",
+        "name": "Message a model",
+        "credentials": {
+          "anthropicApi": {
+            "id": "6hqt3lBtzQqitGw0",
+            "name": "Anthropic account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "const items = $input.all();\nconst raw = items[0].json.content[0].text;\nconst parsed = JSON.parse(raw);\n\nreturn [{\n  json: {\n    sales_text: parsed.sales_text,\n    cs_text: parsed.cs_text,\n    cartoon_script: parsed.cartoon_script,\n    slack_message: parsed.slack_message\n  }\n}];"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          768,
+          0
+        ],
+        "id": "14ee1b48-c78a-446c-b0b2-2d4ede7a4439",
+        "name": "Code in JavaScript"
+      },
+      {
+        "parameters": {
+          "resource": "image",
+          "modelId": {
+            "__rl": true,
+            "value": "gpt-image-2-2026-04-21",
+            "mode": "list",
+            "cachedResultName": "GPT-IMAGE-2-2026-04-21"
+          },
+          "prompt": "={{ $json.cartoon_script }}\n\nTurn this Cartoon script into a cartoon",
+          "options": {
+            "quality": "medium",
+            "size": "1536x1024"
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.openAi",
+        "typeVersion": 2.3,
+        "position": [
+          976,
+          0
+        ],
+        "id": "a1864f50-0dff-4c5a-90d5-ed4157d6b149",
+        "name": "Generate an image",
+        "credentials": {
+          "openAiApi": {
+            "id": "xdW3rNK5lGcsXHNR",
+            "name": "OpenAI account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "file",
+          "options": {
+            "channelId": "=C0B8CTYRVKK",
+            "initialComment": "={{ $('Code in JavaScript').item.json.slack_message }}"
+          }
+        },
+        "type": "n8n-nodes-base.slack",
+        "typeVersion": 2.4,
+        "position": [
+          1184,
+          0
+        ],
+        "id": "2afdfa4e-a08c-41c1-a5d9-519314d94fc5",
+        "name": "Upload a file",
+        "webhookId": "691765f1-f519-440a-89d9-652d9953ea13",
+        "credentials": {
+          "slackApi": {
+            "id": "SNyynojsAi90syi2",
+            "name": "Slack account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "update",
+          "options": {
+            "allowedOrigins": "*",
+            "responseHeaders": {
+              "entries": [
+                {
+                  "name": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "name": "Access-Control-Allow-Methods",
+                  "value": "POST, OPTIONS"
+                },
+                {
+                  "name": "Access-Control-Allow-Headers",
+                  "value": "Content-Type"
+                }
+              ]
+            }
+          }
+        },
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2.1,
+        "position": [
+          0,
+          -192
+        ],
+        "id": "77ae7263-ab2f-42b9-9d84-4ba87d548b29",
+        "name": "Webhook",
+        "webhookId": "bb16fd84-d951-4ffb-9241-b6df5c9334b2"
+      },
+      {
+        "parameters": {},
+        "type": "n8n-nodes-base.manualTrigger",
+        "typeVersion": 1,
+        "position": [
+          208,
+          0
+        ],
+        "id": "506b0ae8-581a-4933-b83c-448ecaf63e0a",
+        "name": "When clicking ‘Execute workflow’"
+      }
+    ],
+    "connections": {
+      "Message a model": {
+        "main": [
+          [
+            {
+              "node": "Code in JavaScript",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Code in JavaScript": {
+        "main": [
+          [
+            {
+              "node": "Generate an image",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Generate an image": {
+        "main": [
+          [
+            {
+              "node": "Upload a file",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Webhook": {
+        "main": [
+          []
+        ]
+      },
+      "When clicking ‘Execute workflow’": {
+        "main": [
+          [
+            {
+              "node": "Message a model",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "nodeGroups": [],
+    "authors": "Younus Mühlenweg",
+    "name": "baseline",
+    "description": "",
+    "autosaved": true
+  },
+  "tags": []
+}
