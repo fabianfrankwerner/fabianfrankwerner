@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-06T10:18:44.243Z",
+  "updatedAt": "2026-06-07T16:22:14.032Z",
   "createdAt": "2026-06-06T10:11:16.036Z",
   "id": "wBqwZUZJRHUdnocp",
   "name": "My workflow 2",
@@ -17,7 +17,7 @@
         "messages": {
           "values": [
             {
-              "content": "You are a product communication expert. Generate role-specific communication drafts from this product update.\n\nTitle: New bulk CSV export feature\nWhat was built: Users can now export up to 10.000 rows as CSV with one click\nWhat changes: The old export button moved to the top right menu\nAudience: All Teams\n\nReturn ONLY this JSON, nothing else, no backticks, no explanation:\n{\n  \"sales_text\": \"2-3 sentences focused on customer value and competitive advantage\",\n  \"cs_text\": \"2-3 sentences focused on helping existing customers succeed with this change\",\n  \"cartoon_script\": \"Panel 1: [scene] - [dialogue]. Panel 2: [scene] - [dialogue]. Panel 3: [scene] - [dialogue]. Panel 4: [scene] - [dialogue].,...\",\n  \"slack_message\": \"Short Slack message under 100 words with emojis\"\n}"
+              "content": "=You are a product communication expert. Generate role-specific communication drafts from this product update.\n\nTitle: {{ $('Webhook').item.json.body.title }}\nWhat was built: {{ $('Webhook').item.json.body.what_was_built }}\nWhat users can now do: {{ $('Webhook').item.json.body.what_users_can_do }}\nWhat changes for existing users: {{ $('Webhook').item.json.body.what_changes }}\nPrimary audience: {{ $('Webhook').item.json.body.audience }}\nSubmitted by: {{ $('Webhook').item.json.body.submitted_by }}\n\nReturn ONLY this JSON, nothing else, no backticks, no explanation:\n{\n  \"sales_text\": \"2-3 sentences focused on customer value and competitive advantage\",\n  \"cs_text\": \"2-3 sentences focused on helping existing customers succeed with this change\",\n  \"cartoon_script\": \"Panel 1: [scene] - [dialogue]. Panel 2: [scene] - [dialogue]. Panel 3: [scene] - [dialogue]. Panel 4: [scene] - [dialogue].\",\n  \"slack_message\": \"Short Slack message under 100 words with emojis\"\n}"
             }
           ]
         },
@@ -109,6 +109,7 @@
       "parameters": {
         "httpMethod": "POST",
         "path": "update",
+        "responseMode": "responseNode",
         "options": {
           "allowedOrigins": "*",
           "responseHeaders": {
@@ -132,23 +133,27 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2.1,
       "position": [
-        0,
-        -192
+        80,
+        0
       ],
       "id": "77ae7263-ab2f-42b9-9d84-4ba87d548b29",
       "name": "Webhook",
       "webhookId": "bb16fd84-d951-4ffb-9241-b6df5c9334b2"
     },
     {
-      "parameters": {},
-      "type": "n8n-nodes-base.manualTrigger",
-      "typeVersion": 1,
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "{\n  \"success\": true,\n  \"message\": \"Update delivered to Slack\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
       "position": [
-        208,
+        240,
         0
       ],
-      "id": "506b0ae8-581a-4933-b83c-448ecaf63e0a",
-      "name": "When clicking ‘Execute workflow’"
+      "id": "343aef86-ee8d-4713-8f98-95de5b3b6e33",
+      "name": "Respond to Webhook"
     }
   ],
   "connections": {
@@ -187,10 +192,21 @@
     },
     "Webhook": {
       "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload a file": {
+      "main": [
         []
       ]
     },
-    "When clicking ‘Execute workflow’": {
+    "Respond to Webhook": {
       "main": [
         [
           {
@@ -211,8 +227,8 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "1c953f56-b3fc-49ea-afb3-3f346d15245c",
-  "activeVersionId": "1c953f56-b3fc-49ea-afb3-3f346d15245c",
+  "versionId": "40f7dd37-cf25-4bd8-8c8d-c8b646841e4c",
+  "activeVersionId": "41c1f4f1-9f74-4e64-97d2-42146d9a4878",
   "triggerCount": 1,
   "shared": [
     {
@@ -224,9 +240,9 @@
     }
   ],
   "activeVersion": {
-    "updatedAt": "2026-06-06T10:22:39.000Z",
-    "createdAt": "2026-06-06T10:18:44.244Z",
-    "versionId": "1c953f56-b3fc-49ea-afb3-3f346d15245c",
+    "updatedAt": "2026-06-07T16:21:10.000Z",
+    "createdAt": "2026-06-07T16:21:06.271Z",
+    "versionId": "41c1f4f1-9f74-4e64-97d2-42146d9a4878",
     "workflowId": "wBqwZUZJRHUdnocp",
     "nodes": [
       {
@@ -240,7 +256,7 @@
           "messages": {
             "values": [
               {
-                "content": "You are a product communication expert. Generate role-specific communication drafts from this product update.\n\nTitle: New bulk CSV export feature\nWhat was built: Users can now export up to 10.000 rows as CSV with one click\nWhat changes: The old export button moved to the top right menu\nAudience: All Teams\n\nReturn ONLY this JSON, nothing else, no backticks, no explanation:\n{\n  \"sales_text\": \"2-3 sentences focused on customer value and competitive advantage\",\n  \"cs_text\": \"2-3 sentences focused on helping existing customers succeed with this change\",\n  \"cartoon_script\": \"Panel 1: [scene] - [dialogue]. Panel 2: [scene] - [dialogue]. Panel 3: [scene] - [dialogue]. Panel 4: [scene] - [dialogue].,...\",\n  \"slack_message\": \"Short Slack message under 100 words with emojis\"\n}"
+                "content": "=You are a product communication expert. Generate role-specific communication drafts from this product update.\n\nTitle: {{ $('Webhook').item.json.body.title }}\nWhat was built: {{ $('Webhook').item.json.body.what_was_built }}\nWhat users can now do: {{ $('Webhook').item.json.body.what_users_can_do }}\nWhat changes for existing users: {{ $('Webhook').item.json.body.what_changes }}\nPrimary audience: {{ $('Webhook').item.json.body.audience }}\nSubmitted by: {{ $('Webhook').item.json.body.submitted_by }}\n\nReturn ONLY this JSON, nothing else, no backticks, no explanation:\n{\n  \"sales_text\": \"2-3 sentences focused on customer value and competitive advantage\",\n  \"cs_text\": \"2-3 sentences focused on helping existing customers succeed with this change\",\n  \"cartoon_script\": \"Panel 1: [scene] - [dialogue]. Panel 2: [scene] - [dialogue]. Panel 3: [scene] - [dialogue]. Panel 4: [scene] - [dialogue].\",\n  \"slack_message\": \"Short Slack message under 100 words with emojis\"\n}"
               }
             ]
           },
@@ -332,6 +348,7 @@
         "parameters": {
           "httpMethod": "POST",
           "path": "update",
+          "responseMode": "responseNode",
           "options": {
             "allowedOrigins": "*",
             "responseHeaders": {
@@ -355,23 +372,27 @@
         "type": "n8n-nodes-base.webhook",
         "typeVersion": 2.1,
         "position": [
-          0,
-          -192
+          80,
+          0
         ],
         "id": "77ae7263-ab2f-42b9-9d84-4ba87d548b29",
         "name": "Webhook",
         "webhookId": "bb16fd84-d951-4ffb-9241-b6df5c9334b2"
       },
       {
-        "parameters": {},
-        "type": "n8n-nodes-base.manualTrigger",
-        "typeVersion": 1,
+        "parameters": {
+          "respondWith": "json",
+          "responseBody": "{\n  \"success\": true,\n  \"message\": \"Update delivered to Slack\"\n}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.respondToWebhook",
+        "typeVersion": 1.5,
         "position": [
-          208,
-          0
+          224,
+          160
         ],
-        "id": "506b0ae8-581a-4933-b83c-448ecaf63e0a",
-        "name": "When clicking ‘Execute workflow’"
+        "id": "343aef86-ee8d-4713-8f98-95de5b3b6e33",
+        "name": "Respond to Webhook"
       }
     ],
     "connections": {
@@ -410,10 +431,21 @@
       },
       "Webhook": {
         "main": [
+          [
+            {
+              "node": "Respond to Webhook",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Upload a file": {
+        "main": [
           []
         ]
       },
-      "When clicking ‘Execute workflow’": {
+      "Respond to Webhook": {
         "main": [
           [
             {
@@ -427,7 +459,7 @@
     },
     "nodeGroups": [],
     "authors": "Younus Mühlenweg",
-    "name": "baseline",
+    "name": "Version 41c1f4f1",
     "description": "",
     "autosaved": true
   },
