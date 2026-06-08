@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-07T16:22:14.032Z",
+  "updatedAt": "2026-06-08T00:50:59.315Z",
   "createdAt": "2026-06-06T10:11:16.036Z",
   "id": "wBqwZUZJRHUdnocp",
   "name": "My workflow 2",
@@ -17,7 +17,7 @@
         "messages": {
           "values": [
             {
-              "content": "=You are a product communication expert. Generate role-specific communication drafts from this product update.\n\nTitle: {{ $('Webhook').item.json.body.title }}\nWhat was built: {{ $('Webhook').item.json.body.what_was_built }}\nWhat users can now do: {{ $('Webhook').item.json.body.what_users_can_do }}\nWhat changes for existing users: {{ $('Webhook').item.json.body.what_changes }}\nPrimary audience: {{ $('Webhook').item.json.body.audience }}\nSubmitted by: {{ $('Webhook').item.json.body.submitted_by }}\n\nReturn ONLY this JSON, nothing else, no backticks, no explanation:\n{\n  \"sales_text\": \"2-3 sentences focused on customer value and competitive advantage\",\n  \"cs_text\": \"2-3 sentences focused on helping existing customers succeed with this change\",\n  \"cartoon_script\": \"Panel 1: [scene] - [dialogue]. Panel 2: [scene] - [dialogue]. Panel 3: [scene] - [dialogue]. Panel 4: [scene] - [dialogue].\",\n  \"slack_message\": \"Short Slack message under 100 words with emojis\"\n}"
+              "content": "==You are a product communication expert. Generate role-specific Slack messages for each relevant team from this product update.\n\nTitle: {{ $('Webhook').item.json.body.title }}\nWhat was built: {{ $('Webhook').item.json.body.what_was_built }}\nWhat users can now do: {{ $('Webhook').item.json.body.what_users_can_do }}\nWhat changes for existing users: {{ $('Webhook').item.json.body.what_changes }}\nPrimary audience: {{ $('Webhook').item.json.body.audience }}\nSubmitted by: {{ $('Webhook').item.json.body.submitted_by }}\n\nGenerate a tailored Slack message for EACH of the following teams if they are in the Primary audience. If a team is not in the audience, set their message to null.\n\nMessage style per team:\n- Sales: focus on customer value, competitive advantage, and what to pitch. Use confident, energetic language.\n- Customer Success: focus on how to help customers adapt, what questions to expect, what changed. Use empathetic, practical language.\n- Support: focus on what broke or changed, what tickets to expect, how to respond. Use clear, direct, actionable language.\n- Engineering: focus on technical details, what was shipped, dependencies. Use precise, technical language.\n- Marketing: focus on positioning, messaging opportunities, what to highlight externally. Use creative, brand-aware language.\n- All Teams: a general company-wide message everyone can understand. Use simple, friendly language.\n\nReturn ONLY this JSON, nothing else, no backticks, no explanation:\n{\n  \"sales_message\": \"Slack message for Sales under 100 words with emojis, or null\",\n  \"cs_message\": \"Slack message for Customer Success under 100 words with emojis, or null\",\n  \"support_message\": \"Slack message for Support under 100 words with emojis, or null\",\n  \"engineering_message\": \"Slack message for Engineering under 100 words with emojis, or null\",\n  \"marketing_message\": \"Slack message for Marketing under 100 words with emojis, or null\",\n  \"general_message\": \"Slack message for All Teams under 100 words with emojis, or null\",\n  \"cartoon_script\": \"Panel 1: [scene] - [dialogue]. Panel 2: [scene] - [dialogue]. Panel 3: [scene] - [dialogue]. Panel 4: [scene] - [dialogue].\"\n}"
             }
           ]
         },
@@ -40,7 +40,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const items = $input.all();\nconst raw = items[0].json.content[0].text;\nconst parsed = JSON.parse(raw);\n\nreturn [{\n  json: {\n    sales_text: parsed.sales_text,\n    cs_text: parsed.cs_text,\n    cartoon_script: parsed.cartoon_script,\n    slack_message: parsed.slack_message\n  }\n}];"
+        "jsCode": "const items = $input.all();\nconst raw = items[0].json.content[0].text;\nconst parsed = JSON.parse(raw);\nconst audience = $('Webhook').item.json.body.audience;\n\nlet audienceArray = [];\nif (typeof audience === 'string') {\n  audienceArray = audience.split(',').map(a => a.trim());\n} else if (Array.isArray(audience)) {\n  audienceArray = audience;\n} else {\n  audienceArray = [\"All Teams\"];\n}\n\nconst channelMap = {\n  \"Sales\": { id: \"C0B8UFBGWTG\", message: parsed.sales_message },\n  \"Customer Success\": { id: \"C0B8YCGNVG9\", message: parsed.cs_message },\n  \"Support\": { id: \"C0B90620W3W\", message: parsed.support_message },\n  \"Engineering\": { id: \"C0B90631P8C\", message: parsed.engineering_message },\n  \"Marketing\": { id: \"C0B9QRUL8G0\", message: parsed.marketing_message },\n  \"All Teams\": { id: \"C0B8T60SQNR\", message: parsed.general_message }\n};\n\nconst channels = audienceArray\n  .map(a => channelMap[a])\n  .filter(c => c && c.message && c.message !== null);\n\nreturn [{\n  json: {\n    channels: channels,\n    cartoon_script: parsed.cartoon_script\n  }\n}];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -85,14 +85,14 @@
       "parameters": {
         "resource": "file",
         "options": {
-          "channelId": "=C0B8CTYRVKK",
-          "initialComment": "={{ $('Code in JavaScript').item.json.slack_message }}"
+          "channelId": "={{ $json.channelId }}",
+          "initialComment": "={{ $json.slack_message }}"
         }
       },
       "type": "n8n-nodes-base.slack",
       "typeVersion": 2.4,
       "position": [
-        1184,
+        1392,
         0
       ],
       "id": "2afdfa4e-a08c-41c1-a5d9-519314d94fc5",
@@ -154,6 +154,19 @@
       ],
       "id": "343aef86-ee8d-4713-8f98-95de5b3b6e33",
       "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "jsCode": "const channels = $('Code in JavaScript').item.json.channels;\nconst binaryData = $input.item.binary.data;\n\nreturn channels.map(channel => ({\n  json: {\n    channelId: channel.id,\n    slack_message: channel.message\n  },\n  binary: {\n    data: binaryData\n  }\n}));"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1184,
+        0
+      ],
+      "id": "b044d377-0a99-4a06-9931-784876cd4408",
+      "name": "Split Channels"
     }
   ],
   "connections": {
@@ -183,7 +196,7 @@
       "main": [
         [
           {
-            "node": "Upload a file",
+            "node": "Split Channels",
             "type": "main",
             "index": 0
           }
@@ -216,6 +229,17 @@
           }
         ]
       ]
+    },
+    "Split Channels": {
+      "main": [
+        [
+          {
+            "node": "Upload a file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "settings": {
@@ -227,8 +251,8 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "40f7dd37-cf25-4bd8-8c8d-c8b646841e4c",
-  "activeVersionId": "41c1f4f1-9f74-4e64-97d2-42146d9a4878",
+  "versionId": "f81b87fd-0796-4249-94ff-423ccd981761",
+  "activeVersionId": "f81b87fd-0796-4249-94ff-423ccd981761",
   "triggerCount": 1,
   "shared": [
     {
@@ -240,9 +264,9 @@
     }
   ],
   "activeVersion": {
-    "updatedAt": "2026-06-07T16:21:10.000Z",
-    "createdAt": "2026-06-07T16:21:06.271Z",
-    "versionId": "41c1f4f1-9f74-4e64-97d2-42146d9a4878",
+    "updatedAt": "2026-06-08T00:51:03.000Z",
+    "createdAt": "2026-06-08T00:50:59.316Z",
+    "versionId": "f81b87fd-0796-4249-94ff-423ccd981761",
     "workflowId": "wBqwZUZJRHUdnocp",
     "nodes": [
       {
@@ -256,7 +280,7 @@
           "messages": {
             "values": [
               {
-                "content": "=You are a product communication expert. Generate role-specific communication drafts from this product update.\n\nTitle: {{ $('Webhook').item.json.body.title }}\nWhat was built: {{ $('Webhook').item.json.body.what_was_built }}\nWhat users can now do: {{ $('Webhook').item.json.body.what_users_can_do }}\nWhat changes for existing users: {{ $('Webhook').item.json.body.what_changes }}\nPrimary audience: {{ $('Webhook').item.json.body.audience }}\nSubmitted by: {{ $('Webhook').item.json.body.submitted_by }}\n\nReturn ONLY this JSON, nothing else, no backticks, no explanation:\n{\n  \"sales_text\": \"2-3 sentences focused on customer value and competitive advantage\",\n  \"cs_text\": \"2-3 sentences focused on helping existing customers succeed with this change\",\n  \"cartoon_script\": \"Panel 1: [scene] - [dialogue]. Panel 2: [scene] - [dialogue]. Panel 3: [scene] - [dialogue]. Panel 4: [scene] - [dialogue].\",\n  \"slack_message\": \"Short Slack message under 100 words with emojis\"\n}"
+                "content": "==You are a product communication expert. Generate role-specific Slack messages for each relevant team from this product update.\n\nTitle: {{ $('Webhook').item.json.body.title }}\nWhat was built: {{ $('Webhook').item.json.body.what_was_built }}\nWhat users can now do: {{ $('Webhook').item.json.body.what_users_can_do }}\nWhat changes for existing users: {{ $('Webhook').item.json.body.what_changes }}\nPrimary audience: {{ $('Webhook').item.json.body.audience }}\nSubmitted by: {{ $('Webhook').item.json.body.submitted_by }}\n\nGenerate a tailored Slack message for EACH of the following teams if they are in the Primary audience. If a team is not in the audience, set their message to null.\n\nMessage style per team:\n- Sales: focus on customer value, competitive advantage, and what to pitch. Use confident, energetic language.\n- Customer Success: focus on how to help customers adapt, what questions to expect, what changed. Use empathetic, practical language.\n- Support: focus on what broke or changed, what tickets to expect, how to respond. Use clear, direct, actionable language.\n- Engineering: focus on technical details, what was shipped, dependencies. Use precise, technical language.\n- Marketing: focus on positioning, messaging opportunities, what to highlight externally. Use creative, brand-aware language.\n- All Teams: a general company-wide message everyone can understand. Use simple, friendly language.\n\nReturn ONLY this JSON, nothing else, no backticks, no explanation:\n{\n  \"sales_message\": \"Slack message for Sales under 100 words with emojis, or null\",\n  \"cs_message\": \"Slack message for Customer Success under 100 words with emojis, or null\",\n  \"support_message\": \"Slack message for Support under 100 words with emojis, or null\",\n  \"engineering_message\": \"Slack message for Engineering under 100 words with emojis, or null\",\n  \"marketing_message\": \"Slack message for Marketing under 100 words with emojis, or null\",\n  \"general_message\": \"Slack message for All Teams under 100 words with emojis, or null\",\n  \"cartoon_script\": \"Panel 1: [scene] - [dialogue]. Panel 2: [scene] - [dialogue]. Panel 3: [scene] - [dialogue]. Panel 4: [scene] - [dialogue].\"\n}"
               }
             ]
           },
@@ -279,7 +303,7 @@
       },
       {
         "parameters": {
-          "jsCode": "const items = $input.all();\nconst raw = items[0].json.content[0].text;\nconst parsed = JSON.parse(raw);\n\nreturn [{\n  json: {\n    sales_text: parsed.sales_text,\n    cs_text: parsed.cs_text,\n    cartoon_script: parsed.cartoon_script,\n    slack_message: parsed.slack_message\n  }\n}];"
+          "jsCode": "const items = $input.all();\nconst raw = items[0].json.content[0].text;\nconst parsed = JSON.parse(raw);\nconst audience = $('Webhook').item.json.body.audience;\n\nlet audienceArray = [];\nif (typeof audience === 'string') {\n  audienceArray = audience.split(',').map(a => a.trim());\n} else if (Array.isArray(audience)) {\n  audienceArray = audience;\n} else {\n  audienceArray = [\"All Teams\"];\n}\n\nconst channelMap = {\n  \"Sales\": { id: \"C0B8UFBGWTG\", message: parsed.sales_message },\n  \"Customer Success\": { id: \"C0B8YCGNVG9\", message: parsed.cs_message },\n  \"Support\": { id: \"C0B90620W3W\", message: parsed.support_message },\n  \"Engineering\": { id: \"C0B90631P8C\", message: parsed.engineering_message },\n  \"Marketing\": { id: \"C0B9QRUL8G0\", message: parsed.marketing_message },\n  \"All Teams\": { id: \"C0B8T60SQNR\", message: parsed.general_message }\n};\n\nconst channels = audienceArray\n  .map(a => channelMap[a])\n  .filter(c => c && c.message && c.message !== null);\n\nreturn [{\n  json: {\n    channels: channels,\n    cartoon_script: parsed.cartoon_script\n  }\n}];"
         },
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
@@ -324,14 +348,14 @@
         "parameters": {
           "resource": "file",
           "options": {
-            "channelId": "=C0B8CTYRVKK",
-            "initialComment": "={{ $('Code in JavaScript').item.json.slack_message }}"
+            "channelId": "={{ $json.channelId }}",
+            "initialComment": "={{ $json.slack_message }}"
           }
         },
         "type": "n8n-nodes-base.slack",
         "typeVersion": 2.4,
         "position": [
-          1184,
+          1392,
           0
         ],
         "id": "2afdfa4e-a08c-41c1-a5d9-519314d94fc5",
@@ -388,11 +412,24 @@
         "type": "n8n-nodes-base.respondToWebhook",
         "typeVersion": 1.5,
         "position": [
-          224,
-          160
+          240,
+          0
         ],
         "id": "343aef86-ee8d-4713-8f98-95de5b3b6e33",
         "name": "Respond to Webhook"
+      },
+      {
+        "parameters": {
+          "jsCode": "const channels = $('Code in JavaScript').item.json.channels;\nconst binaryData = $input.item.binary.data;\n\nreturn channels.map(channel => ({\n  json: {\n    channelId: channel.id,\n    slack_message: channel.message\n  },\n  binary: {\n    data: binaryData\n  }\n}));"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          1184,
+          0
+        ],
+        "id": "b044d377-0a99-4a06-9931-784876cd4408",
+        "name": "Split Channels"
       }
     ],
     "connections": {
@@ -422,7 +459,7 @@
         "main": [
           [
             {
-              "node": "Upload a file",
+              "node": "Split Channels",
               "type": "main",
               "index": 0
             }
@@ -455,11 +492,22 @@
             }
           ]
         ]
+      },
+      "Split Channels": {
+        "main": [
+          [
+            {
+              "node": "Upload a file",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
       }
     },
     "nodeGroups": [],
     "authors": "Younus Mühlenweg",
-    "name": "Version 41c1f4f1",
+    "name": "Version f81b87fd",
     "description": "",
     "autosaved": true
   },
