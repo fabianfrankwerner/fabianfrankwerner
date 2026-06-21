@@ -1,0 +1,978 @@
+{
+  "updatedAt": "2026-06-21T19:54:54.491Z",
+  "createdAt": "2026-06-18T14:46:46.683Z",
+  "id": "KCTqx1kWx5ulTaYj",
+  "name": "Transcript",
+  "active": true,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "public": true,
+        "authentication": "n8nUserAuth",
+        "initialMessages": "🔗",
+        "options": {
+          "responseMode": "responseNodes"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        0,
+        512
+      ],
+      "id": "a9ebb17d-27a6-4f95-aa20-d0aad1f5dfa2",
+      "name": "When chat message received",
+      "webhookId": "64011e52-b788-438d-b08b-c049fe871502"
+    },
+    {
+      "parameters": {
+        "operation": "getTranscript",
+        "videoUrl": "={{ $('URL').item.json.url }}",
+        "text": true,
+        "lang": "en"
+      },
+      "type": "n8n-nodes-supadata.supadata",
+      "typeVersion": 1,
+      "position": [
+        672,
+        448
+      ],
+      "id": "3da04a2a-06ac-45bd-8ac1-623a0d693101",
+      "name": "Get transcript",
+      "credentials": {
+        "supadataApi": {
+          "id": "NPSnLQLmX1QgSFl0",
+          "name": "Supadata Credential"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are an expert short-form video content strategist and data extraction engine.\n\nAnalyze the raw video transcript provided inside the triple quotes below:\n\"\"\"\n{{ $json.content }}\n\"\"\"\n\nExecute the following transformation tasks with absolute precision:\n1. Deconstruct the pacing, tone, and structural framework of the transcript.\n2. Abstract the specific details, names, tools, numbers, or niche-specific references. Reconstruct the full text into an adaptable viral template using double square brackets for your placeholders (e.g., [[ item description ]], [[ number ]]).\n3. Evaluate the marketing funnel attributes based on the text's core delivery angle.\n\nCRITICAL INSTRUCTIONS:\n- Correct the punctuation and grammar of the input transcript to ensure coherent sentence structure.\n- Maintain the exact syntactic flow, punctuation patterns, and hooks of the original transcript inside your template string.\n- Do not use markdown code blocks (```json) or conversational text wrappers. Your response must purely be the data matching the schema requirements.\n- The placeholder tags inside your template text string MUST use the [[ description ]] syntax to prevent processing errors.\n\nJSON Schema:\n{\n  \"template\": \"The full reconstructed transcript text with specific niche details replaced by fill-in-the-blank placeholders formatted exactly as [[ description of what to enter ]] inside the string.\",\n  \"stage\": \"Must be exactly one of: TOFU, MOFU, BOFU\",\n  \"cta\": \"Must be exactly one of: Follow, Freebie, Offer\",\n  \"type\": \"Must be exactly one of: Simple, Complex\",\n  \"perspective\": \"Must be exactly one of: Educational, Storytelling\"\n}",
+        "hasOutputParser": true,
+        "messages": {
+          "messageValues": []
+        },
+        "batching": {
+          "batchSize": 1
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.9,
+      "position": [
+        928,
+        272
+      ],
+      "id": "608674a4-ac46-4cf9-85b1-96ad18dfe5c1",
+      "name": "Basic LLM Chain",
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"template\": {\n      \"type\": \"string\",\n      \"description\": \"The full reconstructed transcript text with specific niche details replaced by fill-in-the-blank placeholders formatted exactly as [[ description of what to enter ]] inside the string.\"\n    },\n    \"stage\": {\n      \"type\": \"string\",\n      \"enum\": [\"TOFU\", \"MOFU\", \"BOFU\"],\n      \"description\": \"The marketing funnel stage of the script.\"\n    },\n    \"cta\": {\n      \"type\": \"string\",\n      \"enum\": [\"Follow\", \"Freebie\", \"Offer\"],\n      \"description\": \"The type of call to action used at the end of the script.\"\n    },\n    \"type\": {\n      \"type\": \"string\",\n      \"enum\": [\"Simple\", \"Complex\"],\n      \"description\": \"The structural complexity rating of the script.\"\n    },\n    \"perspective\": {\n      \"type\": \"string\",\n      \"enum\": [\"Educational\", \"Storytelling\"],\n      \"description\": \"The delivery style or narrative angle of the script.\"\n    }\n  },\n  \"required\": [\"template\", \"stage\", \"cta\", \"type\", \"perspective\"],\n  \"additionalProperties\": false\n}",
+        "autoFix": true
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        1024,
+        496
+      ],
+      "id": "96779f98-9ddb-4fe5-9d87-7cdb4ad66fb5",
+      "name": "Structured Output Parser",
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "databaseId": {
+          "__rl": true,
+          "value": "f8c748b0-967b-4f38-86ef-520d18e7c6f9",
+          "mode": "list",
+          "cachedResultName": "Templates",
+          "cachedResultUrl": "https://app.notion.com/p/f8c748b0967b4f3886ef520d18e7c6f9"
+        },
+        "title": "={{ $json.title }}",
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "URL|url",
+              "ignoreIfEmpty": true,
+              "urlValue": "={{ $json.url }}"
+            },
+            {
+              "key": "Stage|select",
+              "selectValue": "={{ $json.stage }}"
+            },
+            {
+              "key": "CTA|select",
+              "selectValue": "={{ $json.cta }}"
+            },
+            {
+              "key": "Type|select",
+              "selectValue": "={{ $json.type }}"
+            },
+            {
+              "key": "Perspective|select",
+              "selectValue": "={{ $json.perspective }}"
+            }
+          ]
+        },
+        "blockUi": {
+          "blockValues": []
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        1616,
+        128
+      ],
+      "id": "db6ac4e6-71fe-4a8f-ad95-09aed0a72484",
+      "name": "Create a database page",
+      "credentials": {
+        "notionApi": {
+          "id": "QK9upRuvlUOUaR5F",
+          "name": "Notion Credential"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "const rawInput = $input.first().json.chatInput;\n\nconst urlRegex = /(https?:\\/\\/[^\\s]+)/g;\nconst match = rawInput.match(urlRegex);\n\nif (!match) {\n    throw new Error(\"No valid URL detected.\");\n}\n\nlet cleanUrl = match[0];\n\ntry {\n    const urlObj = new URL(cleanUrl);\n    urlObj.search = \"\";\n    cleanUrl = urlObj.toString();\n    \n    if (cleanUrl.endsWith('/')) {\n        cleanUrl = cleanUrl.slice(0, -1);\n    }\n} catch (e) {\n    cleanUrl = cleanUrl.split('?')[0];\n    if (cleanUrl.endsWith('/')) {\n        cleanUrl = cleanUrl.slice(0, -1);\n    }\n}\n\nconst supportedPlatforms = ['instagram', 'tiktok', 'youtube'];\nconst isSupported = supportedPlatforms.some(platform => cleanUrl.toLowerCase().includes(platform));\n\nif (!isSupported) {\n    throw new Error(\"No supported platform URL detected.\");\n}\n\nreturn [{ json: { url: cleanUrl } }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        224,
+        512
+      ],
+      "id": "04537296-5044-4048-8c30-54463dbc0fea",
+      "name": "URL",
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "const llmOutput = $json.output;\n\nconst originalUrl = $('URL').first().json.url;\n\nlet templateText = llmOutput.template || \"\";\n\ntemplateText = templateText.replace(/\\[\\[\\s*(.*?)\\s*\\]\\]/g, \"{{ $1 }}\");\n\nconst sentenceEndRegex = /([.?!]+|\\.\\.\\.|\\…)\\s*/g;\n\nconst matches = templateText.match(sentenceEndRegex) || [];\nlet processedTemplate = templateText;\n\nif (matches.length > 1) {\n    processedTemplate = templateText.replace(sentenceEndRegex, (match, p1) => {\n        return p1 + \"\\n\\n\";\n    });\n}\n\nlet pageTitle = \"Template\";\nconst firstMatch = templateText.match(/([.?!]+|\\.\\.\\.|\\…)/g);\n\nif (firstMatch) {\n    const firstPunctuationIndex = templateText.indexOf(firstMatch[0]) + firstMatch[0].length;\n    pageTitle = templateText.substring(0, firstPunctuationIndex).trim();\n} else {\n    pageTitle = templateText.trim();\n}\n\npageTitle = pageTitle.replace(/\\r?\\n|\\r/g, \" \");\n\nreturn {\n    json: {\n        title: pageTitle,\n        template: processedTemplate.trim(),\n        url: originalUrl,\n        stage: llmOutput.stage,\n        cta: llmOutput.cta,\n        type: llmOutput.type,\n        perspective: llmOutput.perspective\n    }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1392,
+        192
+      ],
+      "id": "41d78d33-9efd-42b2-a1ed-8375eeeb1cde",
+      "name": "JSON",
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "model": "gemma4:26b",
+        "options": {
+          "think": false,
+          "format": "json"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
+      "typeVersion": 1,
+      "position": [
+        896,
+        496
+      ],
+      "id": "7c36bb1f-3310-47be-8507-e4a16ade2569",
+      "name": "Prompt",
+      "credentials": {
+        "ollamaApi": {
+          "id": "1yP4lHfqf438Ckq8",
+          "name": "Ollama Credential"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "gemma4:26b",
+        "options": {
+          "think": false,
+          "format": "json"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
+      "typeVersion": 1,
+      "position": [
+        1104,
+        704
+      ],
+      "id": "f9c34cb9-cd92-4984-97d8-994844d85ba6",
+      "name": "Auto-Fix Format",
+      "credentials": {
+        "ollamaApi": {
+          "id": "1yP4lHfqf438Ckq8",
+          "name": "Ollama Credential"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "message": "=⚠️ {{ $json.error.message || $json.error || 'An unknown error occurred.' }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chat",
+      "typeVersion": 1.3,
+      "position": [
+        2064,
+        464
+      ],
+      "id": "0daaff15-943b-4d29-a45b-0ef487e4f002",
+      "name": "Error",
+      "webhookId": "71d228f3-d938-4c4a-8ee5-2459f170b1e9"
+    },
+    {
+      "parameters": {
+        "message": "=✅ {{ $('JSON').item.json.title }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chat",
+      "typeVersion": 1.3,
+      "position": [
+        2064,
+        0
+      ],
+      "id": "5e7bdbff-c3db-4109-a52a-bc66f919be49",
+      "name": "Success",
+      "webhookId": "42b75983-43ed-4917-a419-299ba0f4a715"
+    },
+    {
+      "parameters": {
+        "message": "=🔄 {{ $json.url }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chat",
+      "typeVersion": 1.3,
+      "position": [
+        448,
+        448
+      ],
+      "id": "23db9c17-aa0c-4c7c-b11f-694c6cdd25f0",
+      "name": "Running",
+      "webhookId": "61063f78-698f-4c03-855e-03c8dd5ef1bc"
+    },
+    {
+      "parameters": {
+        "method": "PATCH",
+        "url": "={{ \"https://api.notion.com/v1/blocks/\" + $json.id + \"/children\" }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "notionApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Notion-Version",
+              "value": "2022-06-28"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ {\n  \"children\": [\n    {\n      \"object\": \"block\",\n      \"type\": \"code\",\n      \"code\": {\n        \"rich_text\": (() => {\n          const template = $('JSON').first().json.template || \"\";\n          \n          // Using RegExp constructor protects the double closing braces from crashing n8n\n          const regex = new RegExp('(\\\\{\\\\{[\\\\s\\\\S]*?\\\\}' + '})', 'g');\n          const parts = template.split(regex);\n          const richText = [];\n          \n          parts.forEach(part => {\n            if (!part) return;\n            \n            if (part.startsWith('{{') && part.endsWith('}' + '}')) {\n              richText.push({\n                \"type\": \"text\",\n                \"text\": { \"content\": part },\n                \"annotations\": { \"bold\": true }\n              });\n            } else {\n              const chunks = part.match(/[\\s\\S]{1,2000}/g) || [];\n              chunks.forEach(chunk => {\n                richText.push({\n                  \"type\": \"text\",\n                  \"text\": { \"content\": chunk }\n                });\n              });\n            }\n          });\n          \n          return richText;\n        })(),\n        \"language\": \"plain text\"\n      }\n    }\n  ]\n} }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        1840,
+        48
+      ],
+      "id": "e5e593db-8512-43e7-811b-7aa6e9342a90",
+      "name": "HTTP Request",
+      "credentials": {
+        "notionApi": {
+          "id": "QK9upRuvlUOUaR5F",
+          "name": "Notion Credential"
+        }
+      },
+      "onError": "continueErrorOutput"
+    }
+  ],
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "URL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get transcript": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ],
+      "main": [
+        [
+          {
+            "node": "Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain": {
+      "main": [
+        [
+          {
+            "node": "JSON",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "URL": {
+      "main": [
+        [
+          {
+            "node": "Running",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "JSON": {
+      "main": [
+        [
+          {
+            "node": "Create a database page",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a database page": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prompt": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Auto-Fix Format": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Structured Output Parser",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Running": {
+      "main": [
+        [
+          {
+            "node": "Get transcript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Success",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "7d4063cd-c415-4ae5-9874-b0bd805ab27f",
+  "activeVersionId": "7d4063cd-c415-4ae5-9874-b0bd805ab27f",
+  "triggerCount": 1,
+  "shared": [
+    {
+      "updatedAt": "2026-06-18T14:46:46.686Z",
+      "createdAt": "2026-06-18T14:46:46.686Z",
+      "role": "workflow:owner",
+      "workflowId": "KCTqx1kWx5ulTaYj",
+      "projectId": "iQw1PUgSHwcZ7pvN"
+    }
+  ],
+  "activeVersion": {
+    "updatedAt": "2026-06-21T19:55:27.000Z",
+    "createdAt": "2026-06-21T19:54:54.492Z",
+    "versionId": "7d4063cd-c415-4ae5-9874-b0bd805ab27f",
+    "workflowId": "KCTqx1kWx5ulTaYj",
+    "nodes": [
+      {
+        "parameters": {
+          "public": true,
+          "authentication": "n8nUserAuth",
+          "initialMessages": "🔗",
+          "options": {
+            "responseMode": "responseNodes"
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+        "typeVersion": 1.4,
+        "position": [
+          0,
+          512
+        ],
+        "id": "a9ebb17d-27a6-4f95-aa20-d0aad1f5dfa2",
+        "name": "When chat message received",
+        "webhookId": "64011e52-b788-438d-b08b-c049fe871502"
+      },
+      {
+        "parameters": {
+          "operation": "getTranscript",
+          "videoUrl": "={{ $('URL').item.json.url }}",
+          "text": true,
+          "lang": "en"
+        },
+        "type": "n8n-nodes-supadata.supadata",
+        "typeVersion": 1,
+        "position": [
+          672,
+          448
+        ],
+        "id": "3da04a2a-06ac-45bd-8ac1-623a0d693101",
+        "name": "Get transcript",
+        "credentials": {
+          "supadataApi": {
+            "id": "NPSnLQLmX1QgSFl0",
+            "name": "Supadata Credential"
+          }
+        },
+        "onError": "continueErrorOutput"
+      },
+      {
+        "parameters": {
+          "promptType": "define",
+          "text": "=You are an expert short-form video content strategist and data extraction engine.\n\nAnalyze the raw video transcript provided inside the triple quotes below:\n\"\"\"\n{{ $json.content }}\n\"\"\"\n\nExecute the following transformation tasks with absolute precision:\n1. Deconstruct the pacing, tone, and structural framework of the transcript.\n2. Abstract the specific details, names, tools, numbers, or niche-specific references. Reconstruct the full text into an adaptable viral template using double square brackets for your placeholders (e.g., [[ item description ]], [[ number ]]).\n3. Evaluate the marketing funnel attributes based on the text's core delivery angle.\n\nCRITICAL INSTRUCTIONS:\n- Correct the punctuation and grammar of the input transcript to ensure coherent sentence structure.\n- Maintain the exact syntactic flow, punctuation patterns, and hooks of the original transcript inside your template string.\n- Do not use markdown code blocks (```json) or conversational text wrappers. Your response must purely be the data matching the schema requirements.\n- The placeholder tags inside your template text string MUST use the [[ description ]] syntax to prevent processing errors.\n\nJSON Schema:\n{\n  \"template\": \"The full reconstructed transcript text with specific niche details replaced by fill-in-the-blank placeholders formatted exactly as [[ description of what to enter ]] inside the string.\",\n  \"stage\": \"Must be exactly one of: TOFU, MOFU, BOFU\",\n  \"cta\": \"Must be exactly one of: Follow, Freebie, Offer\",\n  \"type\": \"Must be exactly one of: Simple, Complex\",\n  \"perspective\": \"Must be exactly one of: Educational, Storytelling\"\n}",
+          "hasOutputParser": true,
+          "messages": {
+            "messageValues": []
+          },
+          "batching": {
+            "batchSize": 1
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.chainLlm",
+        "typeVersion": 1.9,
+        "position": [
+          928,
+          272
+        ],
+        "id": "608674a4-ac46-4cf9-85b1-96ad18dfe5c1",
+        "name": "Basic LLM Chain",
+        "onError": "continueErrorOutput"
+      },
+      {
+        "parameters": {
+          "schemaType": "manual",
+          "inputSchema": "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"template\": {\n      \"type\": \"string\",\n      \"description\": \"The full reconstructed transcript text with specific niche details replaced by fill-in-the-blank placeholders formatted exactly as [[ description of what to enter ]] inside the string.\"\n    },\n    \"stage\": {\n      \"type\": \"string\",\n      \"enum\": [\"TOFU\", \"MOFU\", \"BOFU\"],\n      \"description\": \"The marketing funnel stage of the script.\"\n    },\n    \"cta\": {\n      \"type\": \"string\",\n      \"enum\": [\"Follow\", \"Freebie\", \"Offer\"],\n      \"description\": \"The type of call to action used at the end of the script.\"\n    },\n    \"type\": {\n      \"type\": \"string\",\n      \"enum\": [\"Simple\", \"Complex\"],\n      \"description\": \"The structural complexity rating of the script.\"\n    },\n    \"perspective\": {\n      \"type\": \"string\",\n      \"enum\": [\"Educational\", \"Storytelling\"],\n      \"description\": \"The delivery style or narrative angle of the script.\"\n    }\n  },\n  \"required\": [\"template\", \"stage\", \"cta\", \"type\", \"perspective\"],\n  \"additionalProperties\": false\n}",
+          "autoFix": true
+        },
+        "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+        "typeVersion": 1.3,
+        "position": [
+          1024,
+          496
+        ],
+        "id": "96779f98-9ddb-4fe5-9d87-7cdb4ad66fb5",
+        "name": "Structured Output Parser",
+        "onError": "continueErrorOutput"
+      },
+      {
+        "parameters": {
+          "resource": "databasePage",
+          "databaseId": {
+            "__rl": true,
+            "value": "f8c748b0-967b-4f38-86ef-520d18e7c6f9",
+            "mode": "list",
+            "cachedResultName": "Templates",
+            "cachedResultUrl": "https://app.notion.com/p/f8c748b0967b4f3886ef520d18e7c6f9"
+          },
+          "title": "={{ $json.title }}",
+          "propertiesUi": {
+            "propertyValues": [
+              {
+                "key": "URL|url",
+                "ignoreIfEmpty": true,
+                "urlValue": "={{ $json.url }}"
+              },
+              {
+                "key": "Stage|select",
+                "selectValue": "={{ $json.stage }}"
+              },
+              {
+                "key": "CTA|select",
+                "selectValue": "={{ $json.cta }}"
+              },
+              {
+                "key": "Type|select",
+                "selectValue": "={{ $json.type }}"
+              },
+              {
+                "key": "Perspective|select",
+                "selectValue": "={{ $json.perspective }}"
+              }
+            ]
+          },
+          "blockUi": {
+            "blockValues": []
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.notion",
+        "typeVersion": 2.2,
+        "position": [
+          1616,
+          128
+        ],
+        "id": "db6ac4e6-71fe-4a8f-ad95-09aed0a72484",
+        "name": "Create a database page",
+        "credentials": {
+          "notionApi": {
+            "id": "QK9upRuvlUOUaR5F",
+            "name": "Notion Credential"
+          }
+        },
+        "onError": "continueErrorOutput"
+      },
+      {
+        "parameters": {
+          "jsCode": "const rawInput = $input.first().json.chatInput;\n\nconst urlRegex = /(https?:\\/\\/[^\\s]+)/g;\nconst match = rawInput.match(urlRegex);\n\nif (!match) {\n    throw new Error(\"No valid URL detected.\");\n}\n\nlet cleanUrl = match[0];\n\ntry {\n    const urlObj = new URL(cleanUrl);\n    urlObj.search = \"\";\n    cleanUrl = urlObj.toString();\n    \n    if (cleanUrl.endsWith('/')) {\n        cleanUrl = cleanUrl.slice(0, -1);\n    }\n} catch (e) {\n    cleanUrl = cleanUrl.split('?')[0];\n    if (cleanUrl.endsWith('/')) {\n        cleanUrl = cleanUrl.slice(0, -1);\n    }\n}\n\nconst supportedPlatforms = ['instagram', 'tiktok', 'youtube'];\nconst isSupported = supportedPlatforms.some(platform => cleanUrl.toLowerCase().includes(platform));\n\nif (!isSupported) {\n    throw new Error(\"No supported platform URL detected.\");\n}\n\nreturn [{ json: { url: cleanUrl } }];"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          224,
+          512
+        ],
+        "id": "04537296-5044-4048-8c30-54463dbc0fea",
+        "name": "URL",
+        "onError": "continueErrorOutput"
+      },
+      {
+        "parameters": {
+          "jsCode": "const llmOutput = $json.output;\n\nconst originalUrl = $('URL').first().json.url;\n\nlet templateText = llmOutput.template || \"\";\n\ntemplateText = templateText.replace(/\\[\\[\\s*(.*?)\\s*\\]\\]/g, \"{{ $1 }}\");\n\nconst sentenceEndRegex = /([.?!]+|\\.\\.\\.|\\…)\\s*/g;\n\nconst matches = templateText.match(sentenceEndRegex) || [];\nlet processedTemplate = templateText;\n\nif (matches.length > 1) {\n    processedTemplate = templateText.replace(sentenceEndRegex, (match, p1) => {\n        return p1 + \"\\n\\n\";\n    });\n}\n\nlet pageTitle = \"Template\";\nconst firstMatch = templateText.match(/([.?!]+|\\.\\.\\.|\\…)/g);\n\nif (firstMatch) {\n    const firstPunctuationIndex = templateText.indexOf(firstMatch[0]) + firstMatch[0].length;\n    pageTitle = templateText.substring(0, firstPunctuationIndex).trim();\n} else {\n    pageTitle = templateText.trim();\n}\n\npageTitle = pageTitle.replace(/\\r?\\n|\\r/g, \" \");\n\nreturn {\n    json: {\n        title: pageTitle,\n        template: processedTemplate.trim(),\n        url: originalUrl,\n        stage: llmOutput.stage,\n        cta: llmOutput.cta,\n        type: llmOutput.type,\n        perspective: llmOutput.perspective\n    }\n};"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          1392,
+          192
+        ],
+        "id": "41d78d33-9efd-42b2-a1ed-8375eeeb1cde",
+        "name": "JSON",
+        "onError": "continueErrorOutput"
+      },
+      {
+        "parameters": {
+          "model": "gemma4:26b",
+          "options": {
+            "think": false,
+            "format": "json"
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
+        "typeVersion": 1,
+        "position": [
+          896,
+          496
+        ],
+        "id": "7c36bb1f-3310-47be-8507-e4a16ade2569",
+        "name": "Prompt",
+        "credentials": {
+          "ollamaApi": {
+            "id": "1yP4lHfqf438Ckq8",
+            "name": "Ollama Credential"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "model": "gemma4:26b",
+          "options": {
+            "think": false,
+            "format": "json"
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
+        "typeVersion": 1,
+        "position": [
+          1104,
+          704
+        ],
+        "id": "f9c34cb9-cd92-4984-97d8-994844d85ba6",
+        "name": "Auto-Fix Format",
+        "credentials": {
+          "ollamaApi": {
+            "id": "1yP4lHfqf438Ckq8",
+            "name": "Ollama Credential"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "message": "=⚠️ {{ $json.error.message || $json.error || 'An unknown error occurred.' }}",
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.chat",
+        "typeVersion": 1.3,
+        "position": [
+          2064,
+          464
+        ],
+        "id": "0daaff15-943b-4d29-a45b-0ef487e4f002",
+        "name": "Error",
+        "webhookId": "71d228f3-d938-4c4a-8ee5-2459f170b1e9"
+      },
+      {
+        "parameters": {
+          "message": "=✅ {{ $('JSON').item.json.title }}",
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.chat",
+        "typeVersion": 1.3,
+        "position": [
+          2064,
+          0
+        ],
+        "id": "5e7bdbff-c3db-4109-a52a-bc66f919be49",
+        "name": "Success",
+        "webhookId": "42b75983-43ed-4917-a419-299ba0f4a715"
+      },
+      {
+        "parameters": {
+          "message": "=🔄 {{ $json.url }}",
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.chat",
+        "typeVersion": 1.3,
+        "position": [
+          448,
+          448
+        ],
+        "id": "23db9c17-aa0c-4c7c-b11f-694c6cdd25f0",
+        "name": "Running",
+        "webhookId": "61063f78-698f-4c03-855e-03c8dd5ef1bc"
+      },
+      {
+        "parameters": {
+          "method": "PATCH",
+          "url": "={{ \"https://api.notion.com/v1/blocks/\" + $json.id + \"/children\" }}",
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "notionApi",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Notion-Version",
+                "value": "2022-06-28"
+              }
+            ]
+          },
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ {\n  \"children\": [\n    {\n      \"object\": \"block\",\n      \"type\": \"code\",\n      \"code\": {\n        \"rich_text\": (() => {\n          const template = $('JSON').first().json.template || \"\";\n          \n          // Using RegExp constructor protects the double closing braces from crashing n8n\n          const regex = new RegExp('(\\\\{\\\\{[\\\\s\\\\S]*?\\\\}' + '})', 'g');\n          const parts = template.split(regex);\n          const richText = [];\n          \n          parts.forEach(part => {\n            if (!part) return;\n            \n            if (part.startsWith('{{') && part.endsWith('}' + '}')) {\n              richText.push({\n                \"type\": \"text\",\n                \"text\": { \"content\": part },\n                \"annotations\": { \"bold\": true }\n              });\n            } else {\n              const chunks = part.match(/[\\s\\S]{1,2000}/g) || [];\n              chunks.forEach(chunk => {\n                richText.push({\n                  \"type\": \"text\",\n                  \"text\": { \"content\": chunk }\n                });\n              });\n            }\n          });\n          \n          return richText;\n        })(),\n        \"language\": \"plain text\"\n      }\n    }\n  ]\n} }}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.4,
+        "position": [
+          1840,
+          48
+        ],
+        "id": "e5e593db-8512-43e7-811b-7aa6e9342a90",
+        "name": "HTTP Request",
+        "credentials": {
+          "notionApi": {
+            "id": "QK9upRuvlUOUaR5F",
+            "name": "Notion Credential"
+          }
+        },
+        "onError": "continueErrorOutput"
+      }
+    ],
+    "connections": {
+      "When chat message received": {
+        "main": [
+          [
+            {
+              "node": "URL",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get transcript": {
+        "main": [
+          [
+            {
+              "node": "Basic LLM Chain",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Error",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Structured Output Parser": {
+        "ai_outputParser": [
+          [
+            {
+              "node": "Basic LLM Chain",
+              "type": "ai_outputParser",
+              "index": 0
+            }
+          ]
+        ],
+        "main": [
+          [
+            {
+              "node": "Error",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Basic LLM Chain": {
+        "main": [
+          [
+            {
+              "node": "JSON",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Error",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "URL": {
+        "main": [
+          [
+            {
+              "node": "Running",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Error",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "JSON": {
+        "main": [
+          [
+            {
+              "node": "Create a database page",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Error",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create a database page": {
+        "main": [
+          [
+            {
+              "node": "HTTP Request",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Error",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Prompt": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "Basic LLM Chain",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Auto-Fix Format": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "Structured Output Parser",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Running": {
+        "main": [
+          [
+            {
+              "node": "Get transcript",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "HTTP Request": {
+        "main": [
+          [
+            {
+              "node": "Success",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Error",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "nodeGroups": [],
+    "authors": "Fabian Frank Werner",
+    "name": "Version 7d4063cd",
+    "description": "",
+    "autosaved": true
+  },
+  "tags": []
+}
