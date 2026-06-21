@@ -1,0 +1,855 @@
+{
+  "updatedAt": "2026-06-21T19:48:07.272Z",
+  "createdAt": "2026-06-04T00:43:53.769Z",
+  "id": "VKFyePTGyoGGp4i5",
+  "name": "Backup",
+  "active": true,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {}
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        0,
+        80
+      ],
+      "id": "72fae9b7-64ad-470e-8cbf-11e742458552",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "filters": {},
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-base.n8n",
+      "typeVersion": 1,
+      "position": [
+        672,
+        80
+      ],
+      "id": "261df6b5-9c6b-43d8-9f84-c1ad92f19a30",
+      "name": "Get many workflows",
+      "credentials": {
+        "n8nApi": {
+          "id": "qd4xz95d6bS3XDr4",
+          "name": "n8n Credential"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "operation": "list",
+        "owner": {
+          "__rl": true,
+          "value": "fabianfrankwerner",
+          "mode": "list",
+          "cachedResultName": "fabianfrankwerner",
+          "cachedResultUrl": "https://github.com/fabianfrankwerner"
+        },
+        "repository": {
+          "__rl": true,
+          "value": "n8n",
+          "mode": "list",
+          "cachedResultName": "n8n",
+          "cachedResultUrl": "https://github.com/fabianfrankwerner/n8n"
+        }
+      },
+      "type": "n8n-nodes-base.github",
+      "typeVersion": 1.1,
+      "position": [
+        224,
+        80
+      ],
+      "id": "66c806dc-6fe6-4950-8ace-5ba8dd76767d",
+      "name": "List files",
+      "webhookId": "05481f35-d079-4a50-b34c-b92e414dea54",
+      "credentials": {
+        "githubApi": {
+          "id": "InkXiVSEqKPunvCy",
+          "name": "GitHub Credential"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const localWorkflows = $('Remove n8n Duplicates').all().map(item => item.json);\nconst githubFiles = $('Remove GitHub Duplicates').all().map(item => item.json);\n\nconst actions = [];\n\nlocalWorkflows.forEach(workflow => {\n  const filename = `${workflow.name}.json`.toLowerCase();\n  const githubFile = githubFiles.find(f => f.name === filename);\n  const fileContent = JSON.stringify(workflow, null, 2);\n\n  if (!githubFile) {\n    actions.push({\n      action: 'create',\n      filename: filename,\n      content: fileContent\n    });\n  } else {\n    actions.push({\n      action: 'update',\n      filename: filename,\n      content: fileContent,\n      sha: githubFile.sha\n    });\n  }\n});\n\ngithubFiles.forEach(file => {\n  const existsLocally = localWorkflows.some(w => `${w.name}.json`.toLowerCase() === file.name);\n  \n  if (!existsLocally) {\n    actions.push({\n      action: 'delete',\n      filename: file.name,\n      sha: file.sha\n    });\n  }\n});\n\nreturn actions.map(action => ({ json: action }));"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1120,
+        80
+      ],
+      "id": "49304c8e-cac1-429c-bd3f-fe3bc919b1ce",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.action }}",
+                    "rightValue": "create",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "16948913-418d-40ad-8d31-95884f7ab0e3"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "8c54d927-a817-4fc9-97b5-eaa85ca97e95",
+                    "leftValue": "={{ $json.action }}",
+                    "rightValue": "update",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "7f69836a-e8be-4cd3-9fa6-73b9c1227112",
+                    "leftValue": "={{ $json.action }}",
+                    "rightValue": "delete",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        1344,
+        64
+      ],
+      "id": "9b6b8a11-5e9e-4109-a25d-843190d7986e",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "owner": {
+          "__rl": true,
+          "value": "fabianfrankwerner",
+          "mode": "list",
+          "cachedResultName": "fabianfrankwerner",
+          "cachedResultUrl": "https://github.com/fabianfrankwerner"
+        },
+        "repository": {
+          "__rl": true,
+          "value": "n8n",
+          "mode": "list",
+          "cachedResultName": "n8n",
+          "cachedResultUrl": "https://github.com/fabianfrankwerner/n8n"
+        },
+        "filePath": "={{ $json.filename }}",
+        "fileContent": "={{ $json.content }}",
+        "commitMessage": "=Created {{ $json.filename }}"
+      },
+      "type": "n8n-nodes-base.github",
+      "typeVersion": 1.1,
+      "position": [
+        1568,
+        -112
+      ],
+      "id": "9cd1ed34-cf5f-4ff3-9f9d-90af82c45ffa",
+      "name": "Create a file",
+      "webhookId": "0ca6317e-ab91-4e18-bf76-57b49b641d7a",
+      "credentials": {
+        "githubApi": {
+          "id": "InkXiVSEqKPunvCy",
+          "name": "GitHub Credential"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "operation": "edit",
+        "owner": {
+          "__rl": true,
+          "value": "fabianfrankwerner",
+          "mode": "list",
+          "cachedResultName": "fabianfrankwerner",
+          "cachedResultUrl": "https://github.com/fabianfrankwerner"
+        },
+        "repository": {
+          "__rl": true,
+          "value": "n8n",
+          "mode": "list",
+          "cachedResultName": "n8n",
+          "cachedResultUrl": "https://github.com/fabianfrankwerner/n8n"
+        },
+        "filePath": "={{ $json.filename }}",
+        "fileContent": "={{ $json.content }}",
+        "commitMessage": "=Updated {{ $json.filename }}"
+      },
+      "type": "n8n-nodes-base.github",
+      "typeVersion": 1.1,
+      "position": [
+        1568,
+        80
+      ],
+      "id": "73a2e9a4-eded-4a16-8886-76ab20d09f67",
+      "name": "Edit a file",
+      "webhookId": "64564249-00df-4e00-a6e9-3377591da6ca",
+      "credentials": {
+        "githubApi": {
+          "id": "InkXiVSEqKPunvCy",
+          "name": "GitHub Credential"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "operation": "delete",
+        "owner": {
+          "__rl": true,
+          "value": "fabianfrankwerner",
+          "mode": "list",
+          "cachedResultName": "fabianfrankwerner",
+          "cachedResultUrl": "https://github.com/fabianfrankwerner"
+        },
+        "repository": {
+          "__rl": true,
+          "value": "n8n",
+          "mode": "list",
+          "cachedResultName": "n8n",
+          "cachedResultUrl": "https://github.com/fabianfrankwerner/n8n"
+        },
+        "filePath": "={{ $json.filename }}",
+        "commitMessage": "=Deleted {{ $json.filename }}"
+      },
+      "type": "n8n-nodes-base.github",
+      "typeVersion": 1.1,
+      "position": [
+        1568,
+        272
+      ],
+      "id": "2741f54e-0f94-4408-bdf4-29e0996be824",
+      "name": "Delete a file",
+      "webhookId": "ed72c22e-52fa-4f07-806f-d19548af5dc5",
+      "credentials": {
+        "githubApi": {
+          "id": "InkXiVSEqKPunvCy",
+          "name": "GitHub Credential"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.removeDuplicates",
+      "typeVersion": 2,
+      "position": [
+        448,
+        80
+      ],
+      "id": "8082dc66-9ca9-4e4b-960a-06852a07c309",
+      "name": "Remove GitHub Duplicates"
+    },
+    {
+      "parameters": {
+        "compare": "selectedFields",
+        "fieldsToCompare": "id",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.removeDuplicates",
+      "typeVersion": 2,
+      "position": [
+        896,
+        80
+      ],
+      "id": "ff5d975b-24fd-43e1-896e-9c5f82a8b5cd",
+      "name": "Remove n8n Duplicates"
+    }
+  ],
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "List files",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many workflows": {
+      "main": [
+        [
+          {
+            "node": "Remove n8n Duplicates",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "List files": {
+      "main": [
+        [
+          {
+            "node": "Remove GitHub Duplicates",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Create a file",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit a file",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Delete a file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Remove GitHub Duplicates": {
+      "main": [
+        [
+          {
+            "node": "Get many workflows",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Remove n8n Duplicates": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrenceRules": []
+    }
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "be57bc5a-a249-4575-addd-2878ebe15627",
+  "activeVersionId": "be57bc5a-a249-4575-addd-2878ebe15627",
+  "triggerCount": 1,
+  "shared": [
+    {
+      "updatedAt": "2026-06-04T00:43:53.771Z",
+      "createdAt": "2026-06-04T00:43:53.771Z",
+      "role": "workflow:owner",
+      "workflowId": "VKFyePTGyoGGp4i5",
+      "projectId": "iQw1PUgSHwcZ7pvN"
+    }
+  ],
+  "activeVersion": {
+    "updatedAt": "2026-06-04T09:13:28.000Z",
+    "createdAt": "2026-06-04T09:13:24.470Z",
+    "versionId": "be57bc5a-a249-4575-addd-2878ebe15627",
+    "workflowId": "VKFyePTGyoGGp4i5",
+    "nodes": [
+      {
+        "parameters": {
+          "rule": {
+            "interval": [
+              {}
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.scheduleTrigger",
+        "typeVersion": 1.3,
+        "position": [
+          0,
+          80
+        ],
+        "id": "72fae9b7-64ad-470e-8cbf-11e742458552",
+        "name": "Schedule Trigger"
+      },
+      {
+        "parameters": {
+          "filters": {},
+          "requestOptions": {}
+        },
+        "type": "n8n-nodes-base.n8n",
+        "typeVersion": 1,
+        "position": [
+          672,
+          80
+        ],
+        "id": "261df6b5-9c6b-43d8-9f84-c1ad92f19a30",
+        "name": "Get many workflows",
+        "credentials": {
+          "n8nApi": {
+            "id": "qd4xz95d6bS3XDr4",
+            "name": "n8n Credential"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "file",
+          "operation": "list",
+          "owner": {
+            "__rl": true,
+            "value": "fabianfrankwerner",
+            "mode": "list",
+            "cachedResultName": "fabianfrankwerner",
+            "cachedResultUrl": "https://github.com/fabianfrankwerner"
+          },
+          "repository": {
+            "__rl": true,
+            "value": "n8n",
+            "mode": "list",
+            "cachedResultName": "n8n",
+            "cachedResultUrl": "https://github.com/fabianfrankwerner/n8n"
+          }
+        },
+        "type": "n8n-nodes-base.github",
+        "typeVersion": 1.1,
+        "position": [
+          224,
+          80
+        ],
+        "id": "66c806dc-6fe6-4950-8ace-5ba8dd76767d",
+        "name": "List files",
+        "webhookId": "05481f35-d079-4a50-b34c-b92e414dea54",
+        "credentials": {
+          "githubApi": {
+            "id": "InkXiVSEqKPunvCy",
+            "name": "GitHub Credential"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "const localWorkflows = $('Remove n8n Duplicates').all().map(item => item.json);\nconst githubFiles = $('Remove GitHub Duplicates').all().map(item => item.json);\n\nconst actions = [];\n\nlocalWorkflows.forEach(workflow => {\n  const filename = `${workflow.name}.json`.toLowerCase();\n  const githubFile = githubFiles.find(f => f.name === filename);\n  const fileContent = JSON.stringify(workflow, null, 2);\n\n  if (!githubFile) {\n    actions.push({\n      action: 'create',\n      filename: filename,\n      content: fileContent\n    });\n  } else {\n    actions.push({\n      action: 'update',\n      filename: filename,\n      content: fileContent,\n      sha: githubFile.sha\n    });\n  }\n});\n\ngithubFiles.forEach(file => {\n  const existsLocally = localWorkflows.some(w => `${w.name}.json`.toLowerCase() === file.name);\n  \n  if (!existsLocally) {\n    actions.push({\n      action: 'delete',\n      filename: file.name,\n      sha: file.sha\n    });\n  }\n});\n\nreturn actions.map(action => ({ json: action }));"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          1120,
+          80
+        ],
+        "id": "49304c8e-cac1-429c-bd3f-fe3bc919b1ce",
+        "name": "Code in JavaScript"
+      },
+      {
+        "parameters": {
+          "rules": {
+            "values": [
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 3
+                  },
+                  "conditions": [
+                    {
+                      "leftValue": "={{ $json.action }}",
+                      "rightValue": "create",
+                      "operator": {
+                        "type": "string",
+                        "operation": "equals"
+                      },
+                      "id": "16948913-418d-40ad-8d31-95884f7ab0e3"
+                    }
+                  ],
+                  "combinator": "and"
+                }
+              },
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 3
+                  },
+                  "conditions": [
+                    {
+                      "id": "8c54d927-a817-4fc9-97b5-eaa85ca97e95",
+                      "leftValue": "={{ $json.action }}",
+                      "rightValue": "update",
+                      "operator": {
+                        "type": "string",
+                        "operation": "equals",
+                        "name": "filter.operator.equals"
+                      }
+                    }
+                  ],
+                  "combinator": "and"
+                }
+              },
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 3
+                  },
+                  "conditions": [
+                    {
+                      "id": "7f69836a-e8be-4cd3-9fa6-73b9c1227112",
+                      "leftValue": "={{ $json.action }}",
+                      "rightValue": "delete",
+                      "operator": {
+                        "type": "string",
+                        "operation": "equals",
+                        "name": "filter.operator.equals"
+                      }
+                    }
+                  ],
+                  "combinator": "and"
+                }
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.switch",
+        "typeVersion": 3.4,
+        "position": [
+          1344,
+          64
+        ],
+        "id": "9b6b8a11-5e9e-4109-a25d-843190d7986e",
+        "name": "Switch"
+      },
+      {
+        "parameters": {
+          "resource": "file",
+          "owner": {
+            "__rl": true,
+            "value": "fabianfrankwerner",
+            "mode": "list",
+            "cachedResultName": "fabianfrankwerner",
+            "cachedResultUrl": "https://github.com/fabianfrankwerner"
+          },
+          "repository": {
+            "__rl": true,
+            "value": "n8n",
+            "mode": "list",
+            "cachedResultName": "n8n",
+            "cachedResultUrl": "https://github.com/fabianfrankwerner/n8n"
+          },
+          "filePath": "={{ $json.filename }}",
+          "fileContent": "={{ $json.content }}",
+          "commitMessage": "=Created {{ $json.filename }}"
+        },
+        "type": "n8n-nodes-base.github",
+        "typeVersion": 1.1,
+        "position": [
+          1568,
+          -112
+        ],
+        "id": "9cd1ed34-cf5f-4ff3-9f9d-90af82c45ffa",
+        "name": "Create a file",
+        "webhookId": "0ca6317e-ab91-4e18-bf76-57b49b641d7a",
+        "credentials": {
+          "githubApi": {
+            "id": "InkXiVSEqKPunvCy",
+            "name": "GitHub Credential"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "file",
+          "operation": "edit",
+          "owner": {
+            "__rl": true,
+            "value": "fabianfrankwerner",
+            "mode": "list",
+            "cachedResultName": "fabianfrankwerner",
+            "cachedResultUrl": "https://github.com/fabianfrankwerner"
+          },
+          "repository": {
+            "__rl": true,
+            "value": "n8n",
+            "mode": "list",
+            "cachedResultName": "n8n",
+            "cachedResultUrl": "https://github.com/fabianfrankwerner/n8n"
+          },
+          "filePath": "={{ $json.filename }}",
+          "fileContent": "={{ $json.content }}",
+          "commitMessage": "=Updated {{ $json.filename }}"
+        },
+        "type": "n8n-nodes-base.github",
+        "typeVersion": 1.1,
+        "position": [
+          1568,
+          80
+        ],
+        "id": "73a2e9a4-eded-4a16-8886-76ab20d09f67",
+        "name": "Edit a file",
+        "webhookId": "64564249-00df-4e00-a6e9-3377591da6ca",
+        "credentials": {
+          "githubApi": {
+            "id": "InkXiVSEqKPunvCy",
+            "name": "GitHub Credential"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "file",
+          "operation": "delete",
+          "owner": {
+            "__rl": true,
+            "value": "fabianfrankwerner",
+            "mode": "list",
+            "cachedResultName": "fabianfrankwerner",
+            "cachedResultUrl": "https://github.com/fabianfrankwerner"
+          },
+          "repository": {
+            "__rl": true,
+            "value": "n8n",
+            "mode": "list",
+            "cachedResultName": "n8n",
+            "cachedResultUrl": "https://github.com/fabianfrankwerner/n8n"
+          },
+          "filePath": "={{ $json.filename }}",
+          "commitMessage": "=Deleted {{ $json.filename }}"
+        },
+        "type": "n8n-nodes-base.github",
+        "typeVersion": 1.1,
+        "position": [
+          1568,
+          272
+        ],
+        "id": "2741f54e-0f94-4408-bdf4-29e0996be824",
+        "name": "Delete a file",
+        "webhookId": "ed72c22e-52fa-4f07-806f-d19548af5dc5",
+        "credentials": {
+          "githubApi": {
+            "id": "InkXiVSEqKPunvCy",
+            "name": "GitHub Credential"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "options": {}
+        },
+        "type": "n8n-nodes-base.removeDuplicates",
+        "typeVersion": 2,
+        "position": [
+          448,
+          80
+        ],
+        "id": "8082dc66-9ca9-4e4b-960a-06852a07c309",
+        "name": "Remove GitHub Duplicates"
+      },
+      {
+        "parameters": {
+          "compare": "selectedFields",
+          "fieldsToCompare": "id",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.removeDuplicates",
+        "typeVersion": 2,
+        "position": [
+          896,
+          80
+        ],
+        "id": "ff5d975b-24fd-43e1-896e-9c5f82a8b5cd",
+        "name": "Remove n8n Duplicates"
+      }
+    ],
+    "connections": {
+      "Schedule Trigger": {
+        "main": [
+          [
+            {
+              "node": "List files",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get many workflows": {
+        "main": [
+          [
+            {
+              "node": "Remove n8n Duplicates",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "List files": {
+        "main": [
+          [
+            {
+              "node": "Remove GitHub Duplicates",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Code in JavaScript": {
+        "main": [
+          [
+            {
+              "node": "Switch",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Switch": {
+        "main": [
+          [
+            {
+              "node": "Create a file",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Edit a file",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Delete a file",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Remove GitHub Duplicates": {
+        "main": [
+          [
+            {
+              "node": "Get many workflows",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Remove n8n Duplicates": {
+        "main": [
+          [
+            {
+              "node": "Code in JavaScript",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "nodeGroups": [],
+    "authors": "Fabian Frank Werner",
+    "name": "Version be57bc5a",
+    "description": "",
+    "autosaved": true
+  },
+  "tags": []
+}
