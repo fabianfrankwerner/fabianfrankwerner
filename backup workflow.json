@@ -433,6 +433,7 @@
   "versionId": "5570c6d9-5a03-4a70-885f-93d9b25ea55e",
   "activeVersionId": "5570c6d9-5a03-4a70-885f-93d9b25ea55e",
   "triggerCount": 1,
+  "tags": [],
   "shared": [
     {
       "updatedAt": "2026-08-09T22:02:01.994Z",
@@ -857,6 +858,5 @@
     "name": "Version 5570c6d9",
     "description": "",
     "autosaved": true
-  },
-  "tags": []
+  }
 }
