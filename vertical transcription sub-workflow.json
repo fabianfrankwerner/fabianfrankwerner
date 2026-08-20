@@ -474,6 +474,7 @@
   "versionId": "32025a3f-870d-4239-a71f-cd1a8d6df331",
   "activeVersionId": "32025a3f-870d-4239-a71f-cd1a8d6df331",
   "triggerCount": 0,
+  "tags": [],
   "shared": [
     {
       "updatedAt": "2026-08-09T22:02:59.065Z",
@@ -948,6 +949,5 @@
     "name": "Version 32025a3f",
     "description": "",
     "autosaved": true
-  },
-  "tags": []
+  }
 }
