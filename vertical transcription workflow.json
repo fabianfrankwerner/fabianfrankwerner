@@ -134,6 +134,7 @@
   "versionId": "313086b1-b0c5-4138-aa30-e1c7a909b689",
   "activeVersionId": "313086b1-b0c5-4138-aa30-e1c7a909b689",
   "triggerCount": 1,
+  "tags": [],
   "shared": [
     {
       "updatedAt": "2026-08-09T22:03:20.413Z",
@@ -270,6 +271,5 @@
     "name": "Version 313086b1",
     "description": "",
     "autosaved": true
-  },
-  "tags": []
+  }
 }
