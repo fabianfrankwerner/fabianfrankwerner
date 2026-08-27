@@ -1,10 +1,13 @@
 {
-  "updatedAt": "2026-08-09T22:13:22.450Z",
-  "createdAt": "2026-08-09T22:02:01.994Z",
   "id": "bqTKEqgJHUkmdzZO",
   "name": "Backup Workflow",
   "active": true,
+  "activeVersionId": "5570c6d9-5a03-4a70-885f-93d9b25ea55e",
+  "createdAt": "2026-08-09T22:02:01.994Z",
+  "updatedAt": "2026-08-09T22:13:22.450Z",
   "isArchived": false,
+  "versionId": "5570c6d9-5a03-4a70-885f-93d9b25ea55e",
+  "triggerCount": 1,
   "nodes": [
     {
       "parameters": {
@@ -410,6 +413,7 @@
       ]
     }
   },
+  "nodeGroups": [],
   "settings": {
     "executionOrder": "v1",
     "binaryMode": "separate",
@@ -425,27 +429,21 @@
       ]
     }
   },
+  "pinData": {},
   "meta": {
     "templateCredsSetupCompleted": true
   },
-  "nodeGroups": [],
-  "pinData": {},
-  "versionId": "5570c6d9-5a03-4a70-885f-93d9b25ea55e",
-  "activeVersionId": "5570c6d9-5a03-4a70-885f-93d9b25ea55e",
-  "triggerCount": 1,
   "tags": [],
   "shared": [
     {
-      "updatedAt": "2026-08-09T22:02:01.994Z",
-      "createdAt": "2026-08-09T22:02:01.994Z",
       "role": "workflow:owner",
       "workflowId": "bqTKEqgJHUkmdzZO",
-      "projectId": "MS2F5rJT2aVXC1kJ"
+      "projectId": "MS2F5rJT2aVXC1kJ",
+      "createdAt": "2026-08-09T22:02:01.994Z",
+      "updatedAt": "2026-08-09T22:02:01.994Z"
     }
   ],
   "activeVersion": {
-    "updatedAt": "2026-08-09T22:16:06.746Z",
-    "createdAt": "2026-08-09T22:13:22.452Z",
     "versionId": "5570c6d9-5a03-4a70-885f-93d9b25ea55e",
     "workflowId": "bqTKEqgJHUkmdzZO",
     "nodes": [
@@ -857,6 +855,8 @@
     "authors": "Fabian Frank Werner",
     "name": "Version 5570c6d9",
     "description": "",
-    "autosaved": true
+    "autosaved": true,
+    "createdAt": "2026-08-09T22:13:22.452Z",
+    "updatedAt": "2026-08-09T22:16:06.746Z"
   }
 }
