@@ -1,10 +1,13 @@
 {
-  "updatedAt": "2026-08-10T07:43:51.932Z",
-  "createdAt": "2026-08-09T22:03:20.413Z",
   "id": "kKFUAxN6fAkpfji6",
   "name": "Vertical Transcription Workflow",
   "active": true,
+  "activeVersionId": "313086b1-b0c5-4138-aa30-e1c7a909b689",
+  "createdAt": "2026-08-09T22:03:20.413Z",
+  "updatedAt": "2026-08-10T07:43:51.932Z",
   "isArchived": false,
+  "versionId": "313086b1-b0c5-4138-aa30-e1c7a909b689",
+  "triggerCount": 1,
   "nodes": [
     {
       "parameters": {
@@ -122,31 +125,26 @@
       ]
     }
   },
+  "nodeGroups": [],
   "settings": {
     "executionOrder": "v1",
     "binaryMode": "separate",
     "availableInMCP": false
   },
   "staticData": null,
-  "meta": null,
-  "nodeGroups": [],
   "pinData": {},
-  "versionId": "313086b1-b0c5-4138-aa30-e1c7a909b689",
-  "activeVersionId": "313086b1-b0c5-4138-aa30-e1c7a909b689",
-  "triggerCount": 1,
+  "meta": null,
   "tags": [],
   "shared": [
     {
-      "updatedAt": "2026-08-09T22:03:20.413Z",
-      "createdAt": "2026-08-09T22:03:20.413Z",
       "role": "workflow:owner",
       "workflowId": "kKFUAxN6fAkpfji6",
-      "projectId": "MS2F5rJT2aVXC1kJ"
+      "projectId": "MS2F5rJT2aVXC1kJ",
+      "createdAt": "2026-08-09T22:03:20.413Z",
+      "updatedAt": "2026-08-09T22:03:20.413Z"
     }
   ],
   "activeVersion": {
-    "updatedAt": "2026-08-10T08:20:13.272Z",
-    "createdAt": "2026-08-10T07:43:30.430Z",
     "versionId": "313086b1-b0c5-4138-aa30-e1c7a909b689",
     "workflowId": "kKFUAxN6fAkpfji6",
     "nodes": [
@@ -270,6 +268,8 @@
     "authors": "Fabian Frank Werner",
     "name": "Version 313086b1",
     "description": "",
-    "autosaved": true
+    "autosaved": true,
+    "createdAt": "2026-08-10T07:43:30.430Z",
+    "updatedAt": "2026-08-10T08:20:13.272Z"
   }
 }
