@@ -1,5 +1,32 @@
+# Python
 .venv/
 __pycache__/
 *.py[cod]
-.DS_Store
+.ipynb_checkpoints/
+.pytest_cache/
+.mypy_cache/
+htmlcov/
+.coverage
+.python-version
+
+# SQLite session/journal files (committed .db datasets stay tracked)
+*.db-journal
+*.db-wal
+*.db-shm
+
+# Environment
 .env
+.env.*
+!.env.example
+.envrc
+
+# Logs
+*.log
+
+# Editors & OS
+.idea/
+.vscode/
+*.swp
+.DS_Store
+Thumbs.db
+Desktop.ini
