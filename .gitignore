@@ -1,9 +1,32 @@
+# Python
 .venv/
 __pycache__/
 *.py[cod]
-.DS_Store
+.ipynb_checkpoints/
+.pytest_cache/
+.mypy_cache/
+htmlcov/
+.coverage
+.python-version
+
+# Go
+*.test
+*.out
+
+# Environment
 .env
 .env.*
 !.env.example
+.envrc
+
+# Logs
+*.log
+npm-debug.log*
+
+# Editors & OS
 .idea/
 .vscode/
+*.swp
+.DS_Store
+Thumbs.db
+Desktop.ini
