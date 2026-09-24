@@ -4,9 +4,9 @@
   "active": false,
   "activeVersionId": null,
   "createdAt": "2026-09-24T13:53:20.883Z",
-  "updatedAt": "2026-09-24T14:21:02.539Z",
+  "updatedAt": "2026-09-24T14:25:27.961Z",
   "isArchived": false,
-  "versionId": "16b70440-ffcd-4c38-b2e6-5b4b022f8db7",
+  "versionId": "49109723-4872-4013-bade-6846490fca4e",
   "triggerCount": 0,
   "nodes": [
     {
@@ -152,7 +152,7 @@
         "nodeCredentialType": "githubApi",
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={\n  \"base_tree\": \"{{ $json.base_tree }}\",\n  \"tree\": {{ JSON.stringify($json.tree) }}\n}",
+        "jsonBody": "={\n  \"tree\": {{ JSON.stringify($json.tree) }}\n}",
         "options": {}
       },
       "type": "n8n-nodes-base.httpRequest",
@@ -183,7 +183,7 @@
             {
               "id": "499ea97c-fa74-4605-9717-b49f0b383f4d",
               "leftValue": "={{ $json.sha }}",
-              "rightValue": "={{ $('Code in JavaScript').first().json.base_tree }}",
+              "rightValue": "={{ $('Get commit').first().json.tree.sha }}",
               "operator": {
                 "type": "string",
                 "operation": "notEquals"
