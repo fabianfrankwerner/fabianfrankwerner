@@ -4,9 +4,9 @@
   "active": false,
   "activeVersionId": null,
   "createdAt": "2026-09-24T13:53:20.883Z",
-  "updatedAt": "2026-09-24T14:25:27.961Z",
+  "updatedAt": "2026-09-24T14:33:58.232Z",
   "isArchived": false,
-  "versionId": "49109723-4872-4013-bade-6846490fca4e",
+  "versionId": "e2160d54-277f-4359-b32e-c20093a27ef4",
   "triggerCount": 0,
   "nodes": [
     {
@@ -221,7 +221,33 @@
         -96
       ],
       "id": "1cc10948-0793-4c1f-9258-e7b37cfb0acf",
-      "name": "Create commit",
+      "name": "Create true commit",
+      "credentials": {
+        "githubApi": {
+          "id": "NMFMlQ5JidmqnaPl",
+          "name": "GitHub"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.github.com/repos/fabianfrankwerner/fabianfrankwerner/git/commits",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "githubApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"message\": \"Backup Workflow\",\n  \"tree\": \"{{ $json.sha }}\",\n  \"parents\": [\"{{ $('Code in JavaScript').first().json.parent_commit_sha }}\"]\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        1792,
+        96
+      ],
+      "id": "36320907-b6f1-46fe-baad-459110f0f174",
+      "name": "Create false commit",
       "credentials": {
         "githubApi": {
           "id": "NMFMlQ5JidmqnaPl",
@@ -247,7 +273,33 @@
         -96
       ],
       "id": "ac61a6f4-f9e0-4e8b-aef0-df2f311f44ab",
-      "name": "Update branch ref",
+      "name": "Update true branch ref",
+      "credentials": {
+        "githubApi": {
+          "id": "NMFMlQ5JidmqnaPl",
+          "name": "GitHub"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "PATCH",
+        "url": "https://api.github.com/repos/fabianfrankwerner/fabianfrankwerner/git/refs/heads/n8n",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "githubApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"sha\": \"{{ $json.sha }}\",\n  \"force\": false\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        2016,
+        96
+      ],
+      "id": "af93b15d-1b6e-497e-b165-1dee5ce985ee",
+      "name": "Update false branch ref",
       "credentials": {
         "githubApi": {
           "id": "NMFMlQ5JidmqnaPl",
@@ -338,18 +390,36 @@
       "main": [
         [
           {
-            "node": "Create commit",
+            "node": "Create true commit",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Create false commit",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Create commit": {
+    "Create true commit": {
       "main": [
         [
           {
-            "node": "Update branch ref",
+            "node": "Update true branch ref",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create false commit": {
+      "main": [
+        [
+          {
+            "node": "Update false branch ref",
             "type": "main",
             "index": 0
           }
