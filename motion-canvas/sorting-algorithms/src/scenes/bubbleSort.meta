@@ -1,0 +1,26 @@
+{
+  "version": 0,
+  "timeEvents": [
+    {
+      "name": "bubble.title",
+      "targetTime": 1.7550000000000003
+    },
+    {
+      "name": "bubble.teach",
+      "targetTime": 1.7550000000000003
+    },
+    {
+      "name": "bubble.speedup",
+      "targetTime": 17.529999999999998
+    },
+    {
+      "name": "bubble.early",
+      "targetTime": 59.594000000000236
+    },
+    {
+      "name": "bubble.wrap",
+      "targetTime": 61.294000000000274
+    }
+  ],
+  "seed": 1362694748
+}

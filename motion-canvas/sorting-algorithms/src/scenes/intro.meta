@@ -1,0 +1,18 @@
+{
+  "version": 0,
+  "timeEvents": [
+    {
+      "name": "intro.title",
+      "targetTime": 0.8
+    },
+    {
+      "name": "intro.rewind",
+      "targetTime": 3.329999999999999
+    },
+    {
+      "name": "intro.out",
+      "targetTime": 31.729999999999922
+    }
+  ],
+  "seed": 1730462921
+}
