@@ -1,6 +1,31 @@
+# Dependencies
 node_modules/
 vendor/bundle/
+.bundle/
+.pnp.*
+
+# Build output
 build/
 dist/
-.DS_Store
+out/
+
+# Environment
 .env
+.env.*
+!.env.example
+.envrc
+
+# Logs
+*.log
+npm-debug.log*
+
+# Ruby
+*.gem
+
+# Editors & OS
+.idea/
+.vscode/
+*.swp
+.DS_Store
+Thumbs.db
+Desktop.ini
