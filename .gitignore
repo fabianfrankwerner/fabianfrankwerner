@@ -1,0 +1,25 @@
+# Environment
+.env
+.env.*
+!.env.example
+.envrc
+
+# Dependencies
+node_modules/
+.pnp.*
+
+# Build output
+dist/
+build/
+out/
+
+# Logs
+*.log
+
+# Editors & OS
+.idea/
+.vscode/
+*.swp
+.DS_Store
+Thumbs.db
+Desktop.ini
