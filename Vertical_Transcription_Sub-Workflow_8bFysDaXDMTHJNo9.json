@@ -4,7 +4,7 @@
   "active": true,
   "activeVersionId": "32025a3f-870d-4239-a71f-cd1a8d6df331",
   "createdAt": "2026-08-09T22:02:59.065Z",
-  "updatedAt": "2026-08-11T12:29:41.474Z",
+  "updatedAt": "2026-09-24T17:31:59.605Z",
   "isArchived": false,
   "versionId": "32025a3f-870d-4239-a71f-cd1a8d6df331",
   "triggerCount": 0,
@@ -467,7 +467,7 @@
   "settings": {
     "executionOrder": "v1",
     "binaryMode": "separate",
-    "availableInMCP": false
+    "availableInMCP": true
   },
   "staticData": null,
   "pinData": {},

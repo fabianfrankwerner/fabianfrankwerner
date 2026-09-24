@@ -4,7 +4,7 @@
   "active": true,
   "activeVersionId": "e2160d54-277f-4359-b32e-c20093a27ef4",
   "createdAt": "2026-09-24T13:53:20.883Z",
-  "updatedAt": "2026-09-24T14:36:19.704Z",
+  "updatedAt": "2026-09-24T17:31:59.605Z",
   "isArchived": false,
   "versionId": "e2160d54-277f-4359-b32e-c20093a27ef4",
   "triggerCount": 1,
@@ -430,7 +430,8 @@
   "nodeGroups": [],
   "settings": {
     "executionOrder": "v1",
-    "binaryMode": "separate"
+    "binaryMode": "separate",
+    "availableInMCP": true
   },
   "staticData": {
     "node:Schedule Trigger": {
