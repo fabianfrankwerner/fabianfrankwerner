@@ -9,7 +9,13 @@ Switch branches to browse each project. History is fully preserved for all of th
 
 | Branch | Project |
 | --- | --- |
-| [`fabianfrankwerner`](https://github.com/fabianfrankwerner/fabianfrankwerner/tree/fabianfrankwerner) | Learning & YouTube projects (CS50, Scrimba, The Odin Project, boot.dev, videos) |
+| [`youtube`](https://github.com/fabianfrankwerner/fabianfrankwerner/tree/youtube) | YouTube videos (539, 566, 567, 577, ... 613, animation, teleprompter) |
+| [`the-odin-project`](https://github.com/fabianfrankwerner/fabianfrankwerner/tree/the-odin-project) | The Odin Project full-stack curriculum |
+| [`scrimba`](https://github.com/fabianfrankwerner/fabianfrankwerner/tree/scrimba) | Scrimba frontend career path |
+| [`cs50`](https://github.com/fabianfrankwerner/fabianfrankwerner/tree/cs50) | CS50x / Harvard problem sets |
+| [`boot.dev`](https://github.com/fabianfrankwerner/fabianfrankwerner/tree/boot.dev) | boot.dev courses (agent, asteroids, bookbot, learn-git, learn-linux) |
+| [`stellar-favicon-exporter`](https://github.com/fabianfrankwerner/fabianfrankwerner/tree/stellar-favicon-exporter) | Stellar favicon exporter |
+| [`experiments`](https://github.com/fabianfrankwerner/fabianfrankwerner/tree/experiments) | Miscellaneous experiments (rust book, memes, frontend-mentor, motion-canvas, chatterbox, ...) |
 | [`simultan`](https://github.com/fabianfrankwerner/fabianfrankwerner/tree/simultan) | [Simultan](https://github.com/fabianfrankwerner/simultan) — open-source content scheduling for busy developers |
 | [`add-to-cart`](https://github.com/fabianfrankwerner/fabianfrankwerner/tree/add-to-cart) | Add-to-cart shopping list app (Firebase) |
 | [`n8n`](https://github.com/fabianfrankwerner/fabianfrankwerner/tree/n8n) | n8n workflow backups (auto-committed by a 24h automation) |
