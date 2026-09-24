@@ -1,0 +1,275 @@
+{
+  "id": "kKFUAxN6fAkpfji6",
+  "name": "Vertical Transcription Workflow",
+  "active": true,
+  "activeVersionId": "313086b1-b0c5-4138-aa30-e1c7a909b689",
+  "createdAt": "2026-08-09T22:03:20.413Z",
+  "updatedAt": "2026-08-10T07:43:51.932Z",
+  "isArchived": false,
+  "versionId": "313086b1-b0c5-4138-aa30-e1c7a909b689",
+  "triggerCount": 1,
+  "nodes": [
+    {
+      "parameters": {
+        "public": true,
+        "authentication": "n8nUserAuth",
+        "initialMessages": "🔗 Paste URL(s)...",
+        "options": {
+          "inputPlaceholder": "🔗 Paste URL(s)...",
+          "subtitle": "",
+          "title": "Chat",
+          "responseMode": "responseNodes"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        0,
+        0
+      ],
+      "id": "66302380-c55c-4273-8e22-55aacf9ff7f3",
+      "name": "When chat message received",
+      "webhookId": "64011e52-b788-438d-b08b-c049fe871502"
+    },
+    {
+      "parameters": {
+        "jsCode": "const rawInput = $input.first().json.chatInput;\nconst urlRegex = /(https?:\\/\\/[^\\s]+)/g;\nconst matches = rawInput.match(urlRegex);\n\nif (!matches || matches.length === 0) {\n    throw new Error(\"No valid URLs detected.\");\n}\n\nconst supportedPlatforms = ['instagram', 'tiktok', 'youtube'];\nconst results = [];\n\nfor (let rawUrl of matches) {\n    let cleanUrl = rawUrl.replace(/[^a-zA-Z0-9]+$/, '');\n  \n    try {\n        const urlObj = new URL(cleanUrl);\n        urlObj.search = \"\";\n        cleanUrl = urlObj.toString();\n    } catch (e) {\n        cleanUrl = cleanUrl.split('?')[0];\n    }\n    \n    if (cleanUrl.endsWith('/')) {\n        cleanUrl = cleanUrl.slice(0, -1);\n    }\n\n    const isSupported = supportedPlatforms.some(platform => cleanUrl.toLowerCase().includes(platform));\n    if (isSupported) {\n        results.push({ json: { url: cleanUrl } });\n    }\n}\n\nif (results.length === 0) {\n    throw new Error(\"No supported platform URLs detected.\");\n}\n\nreturn results;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        224,
+        0
+      ],
+      "id": "56c5ecbe-cbe2-4c74-a7f4-1e85113d8efc",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "message": "🔄",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chat",
+      "typeVersion": 1.3,
+      "position": [
+        640,
+        0
+      ],
+      "id": "134c49c8-4ab5-4c9a-bdf4-a04293a5ebba",
+      "name": "Chat",
+      "webhookId": "f66e4a81-f427-4bfa-a8a2-51d0544b4f3d"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "8bFysDaXDMTHJNo9",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/8bFysDaXDMTHJNo9",
+          "cachedResultName": "Vertical Transcription Sub-Workflow"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {
+          "waitForSubWorkflow": false
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.3,
+      "position": [
+        432,
+        0
+      ],
+      "id": "318f0743-c1c2-4069-b7aa-8fffd5a8a894",
+      "name": "Call 'Vertical Transcription Sub-Workflow'"
+    }
+  ],
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Call 'Vertical Transcription Sub-Workflow'",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call 'Vertical Transcription Sub-Workflow'": {
+      "main": [
+        [
+          {
+            "node": "Chat",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "nodeGroups": [],
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "staticData": null,
+  "pinData": {},
+  "meta": null,
+  "tags": [],
+  "shared": [
+    {
+      "role": "workflow:owner",
+      "workflowId": "kKFUAxN6fAkpfji6",
+      "projectId": "MS2F5rJT2aVXC1kJ",
+      "createdAt": "2026-08-09T22:03:20.413Z",
+      "updatedAt": "2026-08-09T22:03:20.413Z"
+    }
+  ],
+  "activeVersion": {
+    "versionId": "313086b1-b0c5-4138-aa30-e1c7a909b689",
+    "workflowId": "kKFUAxN6fAkpfji6",
+    "nodes": [
+      {
+        "parameters": {
+          "public": true,
+          "authentication": "n8nUserAuth",
+          "initialMessages": "🔗 Paste URL(s)...",
+          "options": {
+            "inputPlaceholder": "🔗 Paste URL(s)...",
+            "subtitle": "",
+            "title": "Chat",
+            "responseMode": "responseNodes"
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+        "typeVersion": 1.4,
+        "position": [
+          0,
+          0
+        ],
+        "id": "66302380-c55c-4273-8e22-55aacf9ff7f3",
+        "name": "When chat message received",
+        "webhookId": "64011e52-b788-438d-b08b-c049fe871502"
+      },
+      {
+        "parameters": {
+          "jsCode": "const rawInput = $input.first().json.chatInput;\nconst urlRegex = /(https?:\\/\\/[^\\s]+)/g;\nconst matches = rawInput.match(urlRegex);\n\nif (!matches || matches.length === 0) {\n    throw new Error(\"No valid URLs detected.\");\n}\n\nconst supportedPlatforms = ['instagram', 'tiktok', 'youtube'];\nconst results = [];\n\nfor (let rawUrl of matches) {\n    let cleanUrl = rawUrl.replace(/[^a-zA-Z0-9]+$/, '');\n  \n    try {\n        const urlObj = new URL(cleanUrl);\n        urlObj.search = \"\";\n        cleanUrl = urlObj.toString();\n    } catch (e) {\n        cleanUrl = cleanUrl.split('?')[0];\n    }\n    \n    if (cleanUrl.endsWith('/')) {\n        cleanUrl = cleanUrl.slice(0, -1);\n    }\n\n    const isSupported = supportedPlatforms.some(platform => cleanUrl.toLowerCase().includes(platform));\n    if (isSupported) {\n        results.push({ json: { url: cleanUrl } });\n    }\n}\n\nif (results.length === 0) {\n    throw new Error(\"No supported platform URLs detected.\");\n}\n\nreturn results;"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          224,
+          0
+        ],
+        "id": "56c5ecbe-cbe2-4c74-a7f4-1e85113d8efc",
+        "name": "Code in JavaScript"
+      },
+      {
+        "parameters": {
+          "message": "🔄",
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.chat",
+        "typeVersion": 1.3,
+        "position": [
+          640,
+          0
+        ],
+        "id": "134c49c8-4ab5-4c9a-bdf4-a04293a5ebba",
+        "name": "Chat",
+        "webhookId": "f66e4a81-f427-4bfa-a8a2-51d0544b4f3d"
+      },
+      {
+        "parameters": {
+          "workflowId": {
+            "__rl": true,
+            "value": "8bFysDaXDMTHJNo9",
+            "mode": "list",
+            "cachedResultUrl": "/workflow/8bFysDaXDMTHJNo9",
+            "cachedResultName": "Vertical Transcription Sub-Workflow"
+          },
+          "workflowInputs": {
+            "mappingMode": "defineBelow",
+            "value": {},
+            "matchingColumns": [],
+            "schema": [],
+            "attemptToConvertTypes": false,
+            "convertFieldsToString": true
+          },
+          "options": {
+            "waitForSubWorkflow": false
+          }
+        },
+        "type": "n8n-nodes-base.executeWorkflow",
+        "typeVersion": 1.3,
+        "position": [
+          432,
+          0
+        ],
+        "id": "318f0743-c1c2-4069-b7aa-8fffd5a8a894",
+        "name": "Call 'Vertical Transcription Sub-Workflow'"
+      }
+    ],
+    "connections": {
+      "When chat message received": {
+        "main": [
+          [
+            {
+              "node": "Code in JavaScript",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Code in JavaScript": {
+        "main": [
+          [
+            {
+              "node": "Call 'Vertical Transcription Sub-Workflow'",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Call 'Vertical Transcription Sub-Workflow'": {
+        "main": [
+          [
+            {
+              "node": "Chat",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "nodeGroups": [],
+    "authors": "Fabian Frank Werner",
+    "name": "Version 313086b1",
+    "description": "",
+    "autosaved": true,
+    "createdAt": "2026-08-10T07:43:30.430Z",
+    "updatedAt": "2026-08-10T08:20:13.272Z"
+  }
+}
