@@ -1,1 +1,0 @@
-/Users/fabianfrankwerner/Documents/GitHub/fabianfrankwerner/learning/other/the-rust-programming-language/projects/hello_cargo/target/debug/hello_cargo: /Users/fabianfrankwerner/Documents/GitHub/fabianfrankwerner/learning/other/the-rust-programming-language/projects/hello_cargo/src/main.rs

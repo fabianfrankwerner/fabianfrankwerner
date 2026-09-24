@@ -2,24 +2,20 @@
 
 I make [YouTube](https://youtube.com/@fabianfrankwerner) videos and write a [Newsletter](https://fabianfrankwerner.com/newsletter)!
 
-## Projects
+## This repo is a collection
 
-This repository contains my coding projects from various learning platforms:
+Every project lives on its **own branch** — the default branch is only this README.
+Switch branches to browse each project. History is fully preserved for all of them.
 
-### CS50
+| Branch | Project |
+| --- | --- |
+| [`fabianfrankwerner`](https://github.com/fabianfrankwerner/fabianfrankwerner/tree/fabianfrankwerner) | Learning & YouTube projects (CS50, Scrimba, The Odin Project, boot.dev, videos) |
+| [`simultan`](https://github.com/fabianfrankwerner/fabianfrankwerner/tree/simultan) | [Simultan](https://github.com/fabianfrankwerner/simultan) — open-source content scheduling for busy developers |
+| [`add-to-cart`](https://github.com/fabianfrankwerner/fabianfrankwerner/tree/add-to-cart) | Add-to-cart shopping list app (Firebase) |
+| [`n8n`](https://github.com/fabianfrankwerner/fabianfrankwerner/tree/n8n) | n8n workflow backups (auto-committed by a 24h automation) |
 
-- **Problem Sets**: Python, SQL, and R programming challenges
-- **Final Projects**: Web applications and data analysis projects
+### Why branches?
 
-### Scrimba
-
-- **Frontend Development**: React, JavaScript, CSS animations
-- **Interactive Components**: Calculators, games, and web applications
-
-### The Odin Project
-
-- **Full-Stack Development**: Node.js, Express, Prisma
-- **JavaScript Algorithms**: Data structures and algorithms
-- **Web Applications**: Authentication, APIs, and user interfaces
-
-Check out the individual project folders for detailed implementations and code examples.
+Keeping one branch per project (named after the project) makes it obvious which
+branch homes which project, and lets automated jobs (like the n8n backup) commit
+without touching anything else. See you on a branch!

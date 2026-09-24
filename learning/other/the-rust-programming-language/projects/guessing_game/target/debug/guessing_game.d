@@ -1,1 +1,0 @@
-/Users/fabianfrankwerner/Documents/GitHub/fabianfrankwerner/learning/other/the-rust-programming-language/projects/guessing_game/target/debug/guessing_game: /Users/fabianfrankwerner/Documents/GitHub/fabianfrankwerner/learning/other/the-rust-programming-language/projects/guessing_game/src/main.rs

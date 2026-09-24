@@ -1,7 +1,0 @@
-{
-  "extends": "@canvas-commons/2d/tsconfig.project.json",
-  "include": ["src"],
-  "compilerOptions": {
-    "skipLibCheck": true
-  }
-}
