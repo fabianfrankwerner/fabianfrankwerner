@@ -1,5 +1,32 @@
+# Dependencies
 node_modules/
+.pnp.*
+
+# Build output
 dist/
+build/
 out/
-.DS_Store
+
+# Environment
 .env
+.env.*
+!.env.example
+.envrc
+
+# Logs
+*.log
+npm-debug.log*
+
+# JS/TS caches
+.cache/
+.parcel-cache/
+coverage/
+*.tsbuildinfo
+
+# Editors & OS
+.idea/
+.vscode/
+*.swp
+.DS_Store
+Thumbs.db
+Desktop.ini
