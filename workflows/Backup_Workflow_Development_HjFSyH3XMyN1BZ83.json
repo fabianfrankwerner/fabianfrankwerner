@@ -1,0 +1,110 @@
+{
+  "id": "HjFSyH3XMyN1BZ83",
+  "name": "Backup Workflow [Development]",
+  "active": false,
+  "activeVersionId": null,
+  "createdAt": "2026-09-24T13:53:20.883Z",
+  "updatedAt": "2026-09-24T13:57:00.594Z",
+  "isArchived": false,
+  "versionId": "ec44e20d-5afd-4b3c-8155-0c7a4bc3dee6",
+  "triggerCount": 0,
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {}
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        0,
+        0
+      ],
+      "id": "b4f0feca-557e-4a98-bea4-b68e3cb74bcf",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "filters": {},
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-base.n8n",
+      "typeVersion": 1,
+      "position": [
+        224,
+        0
+      ],
+      "id": "7dec0049-7874-4f35-a2c9-8b7f8fd95bcd",
+      "name": "Get many workflows",
+      "credentials": {
+        "n8nApi": {
+          "id": "tZL5iDPCjpDPsN7i",
+          "name": "n8n"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "compare": "selectedFields",
+        "fieldsToCompare": "id",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.removeDuplicates",
+      "typeVersion": 2,
+      "position": [
+        448,
+        0
+      ],
+      "id": "215aba23-efa7-4a4a-8a50-29f2b694712a",
+      "name": "Remove Duplicates"
+    }
+  ],
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get many workflows",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many workflows": {
+      "main": [
+        [
+          {
+            "node": "Remove Duplicates",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "nodeGroups": [],
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "staticData": null,
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "tags": [],
+  "shared": [
+    {
+      "role": "workflow:owner",
+      "workflowId": "HjFSyH3XMyN1BZ83",
+      "projectId": "MS2F5rJT2aVXC1kJ",
+      "createdAt": "2026-09-24T13:53:20.883Z",
+      "updatedAt": "2026-09-24T13:53:20.883Z"
+    }
+  ],
+  "activeVersion": null
+}
