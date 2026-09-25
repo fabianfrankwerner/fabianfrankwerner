@@ -1,10 +1,10 @@
 {
   "id": "HjFSyH3XMyN1BZ83",
-  "name": "Backup Workflow",
+  "name": "[Legacy] Backup Workflow",
   "active": true,
   "activeVersionId": "e2160d54-277f-4359-b32e-c20093a27ef4",
   "createdAt": "2026-09-24T13:53:20.883Z",
-  "updatedAt": "2026-09-25T10:01:26.252Z",
+  "updatedAt": "2026-09-25T10:08:27.694Z",
   "isArchived": false,
   "versionId": "115ad9e0-0ea8-4604-ba25-ef457a882fea",
   "triggerCount": 1,

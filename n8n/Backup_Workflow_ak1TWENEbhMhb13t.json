@@ -1,0 +1,982 @@
+{
+  "id": "ak1TWENEbhMhb13t",
+  "name": "Backup Workflow",
+  "active": true,
+  "activeVersionId": "b0fe67f1-f699-4ffb-a73d-6f8e334177d7",
+  "createdAt": "2026-09-25T10:09:07.791Z",
+  "updatedAt": "2026-09-25T10:11:42.546Z",
+  "isArchived": false,
+  "versionId": "b0fe67f1-f699-4ffb-a73d-6f8e334177d7",
+  "triggerCount": 1,
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {}
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        0,
+        0
+      ],
+      "id": "9e4ffd9a-e2d0-4c21-92d0-4b0b3c4186fd",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "filters": {},
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-base.n8n",
+      "typeVersion": 1,
+      "position": [
+        224,
+        0
+      ],
+      "id": "88466a99-ac6f-40e6-a5c5-71ad86dd15ec",
+      "name": "Get many workflows",
+      "credentials": {
+        "n8nApi": {
+          "id": "tZL5iDPCjpDPsN7i",
+          "name": "n8n"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "compare": "selectedFields",
+        "fieldsToCompare": "id",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.removeDuplicates",
+      "typeVersion": 2,
+      "position": [
+        448,
+        0
+      ],
+      "id": "1d226da4-7583-41be-b39d-9549e3fc180d",
+      "name": "Remove Duplicates"
+    },
+    {
+      "parameters": {
+        "jsCode": "const workflows = $('Remove Duplicates').all();\n\nconst commitData = $('Get commit').first().json;\nconst baseCommitSha = commitData.sha;\nconst baseTreeSha = commitData.tree.sha;\n\nconst existingGitTree = $('Get tree').first().json.tree || [];\n\nconst activePaths = new Set();\n\nconst tree = workflows.map((item) => {\n  const wf = item.json;\n  const safeName = (wf.name || 'Untitled_Workflow')\n    .replace(/[^a-zA-Z0-9_\\-\\s]/g, '')\n    .trim()\n    .replace(/\\s+/g, '_');\n\n  const filePath = `n8n/${safeName}_${wf.id}.json`;\n  activePaths.add(filePath);\n\n  return {\n    path: filePath,\n    mode: '100644',\n    type: 'blob',\n    content: JSON.stringify(wf, null, 2),\n  };\n});\n\nfor (const item of existingGitTree) {\n  if (item.path.startsWith('n8n/') && item.type === 'blob' && !activePaths.has(item.path)) {\n    tree.push({\n      path: item.path,\n      mode: '100644',\n      type: 'blob',\n      sha: null,\n    });\n  }\n}\n\nreturn [{\n  json: {\n    base_tree: baseTreeSha,\n    parent_commit_sha: baseCommitSha,\n    tree: tree,\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1344,
+        0
+      ],
+      "id": "36bc83a1-7df3-46e1-873a-402e2be07a93",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "url": "=https://api.github.com/repos/fabianfrankwerner/fabianfrankwerner/git/commits/{{ $json.object.sha }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "githubApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/vnd.github+json"
+            },
+            {
+              "name": "X-GitHub-Api-Version",
+              "value": "2022-11-28"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        896,
+        0
+      ],
+      "id": "7368777b-4ed5-4426-a83d-d61bf729d3f6",
+      "name": "Get commit",
+      "credentials": {
+        "githubApi": {
+          "id": "NMFMlQ5JidmqnaPl",
+          "name": "GitHub"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://api.github.com/repos/fabianfrankwerner/fabianfrankwerner/git/ref/heads/main",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "githubApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/vnd.github+json"
+            },
+            {
+              "name": "X-GitHub-Api-Version",
+              "value": "2022-11-28"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        672,
+        0
+      ],
+      "id": "9478aa04-9b8a-46d9-be7a-2d6a50b25b16",
+      "name": "Get branch ref",
+      "credentials": {
+        "githubApi": {
+          "id": "NMFMlQ5JidmqnaPl",
+          "name": "GitHub"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.github.com/repos/fabianfrankwerner/fabianfrankwerner/git/trees",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "githubApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"base_tree\": \"{{ $('Code in JavaScript').first().json.base_tree }}\",\n  \"tree\": {{ JSON.stringify($json.tree) }}\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        1568,
+        0
+      ],
+      "id": "ceda3a66-3f57-4871-8278-6928b6eb206e",
+      "name": "Create tree",
+      "credentials": {
+        "githubApi": {
+          "id": "NMFMlQ5JidmqnaPl",
+          "name": "GitHub"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "499ea97c-fa74-4605-9717-b49f0b383f4d",
+              "leftValue": "={{ $json.sha }}",
+              "rightValue": "={{ $('Get commit').first().json.tree.sha }}",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1792,
+        0
+      ],
+      "id": "4f90d953-50a9-481c-bf5f-eab693cc8c02",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.github.com/repos/fabianfrankwerner/fabianfrankwerner/git/commits",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "githubApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"message\": \"Backup Workflow {{ $now.toFormat('yyyy-MM-dd HH:mm:ss') }}\",\n  \"tree\": \"{{ $json.sha }}\",\n  \"parents\": [\"{{ $('Code in JavaScript').first().json.parent_commit_sha }}\"]\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        2016,
+        -96
+      ],
+      "id": "d415e609-4e97-45da-9bf8-4230398935be",
+      "name": "Create true commit",
+      "credentials": {
+        "githubApi": {
+          "id": "NMFMlQ5JidmqnaPl",
+          "name": "GitHub"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.github.com/repos/fabianfrankwerner/fabianfrankwerner/git/commits",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "githubApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"message\": \"Backup Workflow\",\n  \"tree\": \"{{ $json.sha }}\",\n  \"parents\": [\"{{ $('Code in JavaScript').first().json.parent_commit_sha }}\"]\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        2016,
+        96
+      ],
+      "id": "4800c9d4-f270-414f-a6e8-139c26eb7f8d",
+      "name": "Create false commit",
+      "credentials": {
+        "githubApi": {
+          "id": "NMFMlQ5JidmqnaPl",
+          "name": "GitHub"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "PATCH",
+        "url": "https://api.github.com/repos/fabianfrankwerner/fabianfrankwerner/git/refs/heads/main",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "githubApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"sha\": \"{{ $json.sha }}\",\n  \"force\": false\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        2240,
+        -96
+      ],
+      "id": "b6d718ae-a938-417b-a29c-0c8958617ea7",
+      "name": "Update true branch ref",
+      "credentials": {
+        "githubApi": {
+          "id": "NMFMlQ5JidmqnaPl",
+          "name": "GitHub"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "PATCH",
+        "url": "https://api.github.com/repos/fabianfrankwerner/fabianfrankwerner/git/refs/heads/main",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "githubApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"sha\": \"{{ $json.sha }}\",\n  \"force\": false\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        2240,
+        96
+      ],
+      "id": "c66b458e-0991-48da-b85a-1f8863546a08",
+      "name": "Update false branch ref",
+      "credentials": {
+        "githubApi": {
+          "id": "NMFMlQ5JidmqnaPl",
+          "name": "GitHub"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "=https://api.github.com/repos/fabianfrankwerner/fabianfrankwerner/git/trees/{{ $json.tree.sha }}?recursive=1",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "githubApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/vnd.github+json"
+            },
+            {
+              "name": "X-GitHub-Api-Version",
+              "value": "2022-11-28"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        1120,
+        0
+      ],
+      "id": "6b306db9-56d1-4dee-abc1-d7123d50ccd6",
+      "name": "Get tree",
+      "credentials": {
+        "githubApi": {
+          "id": "NMFMlQ5JidmqnaPl",
+          "name": "GitHub"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get many workflows",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many workflows": {
+      "main": [
+        [
+          {
+            "node": "Remove Duplicates",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Remove Duplicates": {
+      "main": [
+        [
+          {
+            "node": "Get branch ref",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get commit": {
+      "main": [
+        [
+          {
+            "node": "Get tree",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get branch ref": {
+      "main": [
+        [
+          {
+            "node": "Get commit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Create tree",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create tree": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Create true commit",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Create false commit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create true commit": {
+      "main": [
+        [
+          {
+            "node": "Update true branch ref",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create false commit": {
+      "main": [
+        [
+          {
+            "node": "Update false branch ref",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get tree": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "nodeGroups": [],
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": true
+  },
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrenceRules": [
+        null
+      ],
+      "recurrenceRuleSignatures": [
+        null
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "tags": [],
+  "shared": [
+    {
+      "role": "workflow:owner",
+      "workflowId": "ak1TWENEbhMhb13t",
+      "projectId": "MS2F5rJT2aVXC1kJ",
+      "createdAt": "2026-09-25T10:09:07.791Z",
+      "updatedAt": "2026-09-25T10:09:07.791Z"
+    }
+  ],
+  "activeVersion": {
+    "versionId": "b0fe67f1-f699-4ffb-a73d-6f8e334177d7",
+    "workflowId": "ak1TWENEbhMhb13t",
+    "nodes": [
+      {
+        "parameters": {
+          "rule": {
+            "interval": [
+              {}
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.scheduleTrigger",
+        "typeVersion": 1.4,
+        "position": [
+          0,
+          0
+        ],
+        "id": "9e4ffd9a-e2d0-4c21-92d0-4b0b3c4186fd",
+        "name": "Schedule Trigger"
+      },
+      {
+        "parameters": {
+          "filters": {},
+          "requestOptions": {}
+        },
+        "type": "n8n-nodes-base.n8n",
+        "typeVersion": 1,
+        "position": [
+          224,
+          0
+        ],
+        "id": "88466a99-ac6f-40e6-a5c5-71ad86dd15ec",
+        "name": "Get many workflows",
+        "credentials": {
+          "n8nApi": {
+            "id": "tZL5iDPCjpDPsN7i",
+            "name": "n8n"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "compare": "selectedFields",
+          "fieldsToCompare": "id",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.removeDuplicates",
+        "typeVersion": 2,
+        "position": [
+          448,
+          0
+        ],
+        "id": "1d226da4-7583-41be-b39d-9549e3fc180d",
+        "name": "Remove Duplicates"
+      },
+      {
+        "parameters": {
+          "jsCode": "const workflows = $('Remove Duplicates').all();\n\nconst commitData = $('Get commit').first().json;\nconst baseCommitSha = commitData.sha;\nconst baseTreeSha = commitData.tree.sha;\n\nconst existingGitTree = $('Get tree').first().json.tree || [];\n\nconst activePaths = new Set();\n\nconst tree = workflows.map((item) => {\n  const wf = item.json;\n  const safeName = (wf.name || 'Untitled_Workflow')\n    .replace(/[^a-zA-Z0-9_\\-\\s]/g, '')\n    .trim()\n    .replace(/\\s+/g, '_');\n\n  const filePath = `n8n/${safeName}_${wf.id}.json`;\n  activePaths.add(filePath);\n\n  return {\n    path: filePath,\n    mode: '100644',\n    type: 'blob',\n    content: JSON.stringify(wf, null, 2),\n  };\n});\n\nfor (const item of existingGitTree) {\n  if (item.path.startsWith('n8n/') && item.type === 'blob' && !activePaths.has(item.path)) {\n    tree.push({\n      path: item.path,\n      mode: '100644',\n      type: 'blob',\n      sha: null,\n    });\n  }\n}\n\nreturn [{\n  json: {\n    base_tree: baseTreeSha,\n    parent_commit_sha: baseCommitSha,\n    tree: tree,\n  }\n}];"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          1344,
+          0
+        ],
+        "id": "36bc83a1-7df3-46e1-873a-402e2be07a93",
+        "name": "Code in JavaScript"
+      },
+      {
+        "parameters": {
+          "url": "=https://api.github.com/repos/fabianfrankwerner/fabianfrankwerner/git/commits/{{ $json.object.sha }}",
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "githubApi",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Accept",
+                "value": "application/vnd.github+json"
+              },
+              {
+                "name": "X-GitHub-Api-Version",
+                "value": "2022-11-28"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.5,
+        "position": [
+          896,
+          0
+        ],
+        "id": "7368777b-4ed5-4426-a83d-d61bf729d3f6",
+        "name": "Get commit",
+        "credentials": {
+          "githubApi": {
+            "id": "NMFMlQ5JidmqnaPl",
+            "name": "GitHub"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "url": "https://api.github.com/repos/fabianfrankwerner/fabianfrankwerner/git/ref/heads/main",
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "githubApi",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Accept",
+                "value": "application/vnd.github+json"
+              },
+              {
+                "name": "X-GitHub-Api-Version",
+                "value": "2022-11-28"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.5,
+        "position": [
+          672,
+          0
+        ],
+        "id": "9478aa04-9b8a-46d9-be7a-2d6a50b25b16",
+        "name": "Get branch ref",
+        "credentials": {
+          "githubApi": {
+            "id": "NMFMlQ5JidmqnaPl",
+            "name": "GitHub"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://api.github.com/repos/fabianfrankwerner/fabianfrankwerner/git/trees",
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "githubApi",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\n  \"base_tree\": \"{{ $('Code in JavaScript').first().json.base_tree }}\",\n  \"tree\": {{ JSON.stringify($json.tree) }}\n}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.5,
+        "position": [
+          1568,
+          0
+        ],
+        "id": "ceda3a66-3f57-4871-8278-6928b6eb206e",
+        "name": "Create tree",
+        "credentials": {
+          "githubApi": {
+            "id": "NMFMlQ5JidmqnaPl",
+            "name": "GitHub"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 3
+            },
+            "conditions": [
+              {
+                "id": "499ea97c-fa74-4605-9717-b49f0b383f4d",
+                "leftValue": "={{ $json.sha }}",
+                "rightValue": "={{ $('Get commit').first().json.tree.sha }}",
+                "operator": {
+                  "type": "string",
+                  "operation": "notEquals"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.3,
+        "position": [
+          1792,
+          0
+        ],
+        "id": "4f90d953-50a9-481c-bf5f-eab693cc8c02",
+        "name": "If"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://api.github.com/repos/fabianfrankwerner/fabianfrankwerner/git/commits",
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "githubApi",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\n  \"message\": \"Backup Workflow {{ $now.toFormat('yyyy-MM-dd HH:mm:ss') }}\",\n  \"tree\": \"{{ $json.sha }}\",\n  \"parents\": [\"{{ $('Code in JavaScript').first().json.parent_commit_sha }}\"]\n}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.5,
+        "position": [
+          2016,
+          -96
+        ],
+        "id": "d415e609-4e97-45da-9bf8-4230398935be",
+        "name": "Create true commit",
+        "credentials": {
+          "githubApi": {
+            "id": "NMFMlQ5JidmqnaPl",
+            "name": "GitHub"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://api.github.com/repos/fabianfrankwerner/fabianfrankwerner/git/commits",
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "githubApi",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\n  \"message\": \"Backup Workflow\",\n  \"tree\": \"{{ $json.sha }}\",\n  \"parents\": [\"{{ $('Code in JavaScript').first().json.parent_commit_sha }}\"]\n}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.5,
+        "position": [
+          2016,
+          96
+        ],
+        "id": "4800c9d4-f270-414f-a6e8-139c26eb7f8d",
+        "name": "Create false commit",
+        "credentials": {
+          "githubApi": {
+            "id": "NMFMlQ5JidmqnaPl",
+            "name": "GitHub"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "method": "PATCH",
+          "url": "https://api.github.com/repos/fabianfrankwerner/fabianfrankwerner/git/refs/heads/main",
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "githubApi",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\n  \"sha\": \"{{ $json.sha }}\",\n  \"force\": false\n}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.5,
+        "position": [
+          2240,
+          -96
+        ],
+        "id": "b6d718ae-a938-417b-a29c-0c8958617ea7",
+        "name": "Update true branch ref",
+        "credentials": {
+          "githubApi": {
+            "id": "NMFMlQ5JidmqnaPl",
+            "name": "GitHub"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "method": "PATCH",
+          "url": "https://api.github.com/repos/fabianfrankwerner/fabianfrankwerner/git/refs/heads/main",
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "githubApi",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\n  \"sha\": \"{{ $json.sha }}\",\n  \"force\": false\n}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.5,
+        "position": [
+          2240,
+          96
+        ],
+        "id": "c66b458e-0991-48da-b85a-1f8863546a08",
+        "name": "Update false branch ref",
+        "credentials": {
+          "githubApi": {
+            "id": "NMFMlQ5JidmqnaPl",
+            "name": "GitHub"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "url": "=https://api.github.com/repos/fabianfrankwerner/fabianfrankwerner/git/trees/{{ $json.tree.sha }}?recursive=1",
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "githubApi",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Accept",
+                "value": "application/vnd.github+json"
+              },
+              {
+                "name": "X-GitHub-Api-Version",
+                "value": "2022-11-28"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.5,
+        "position": [
+          1120,
+          0
+        ],
+        "id": "6b306db9-56d1-4dee-abc1-d7123d50ccd6",
+        "name": "Get tree",
+        "credentials": {
+          "githubApi": {
+            "id": "NMFMlQ5JidmqnaPl",
+            "name": "GitHub"
+          }
+        }
+      }
+    ],
+    "connections": {
+      "Schedule Trigger": {
+        "main": [
+          [
+            {
+              "node": "Get many workflows",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get many workflows": {
+        "main": [
+          [
+            {
+              "node": "Remove Duplicates",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Remove Duplicates": {
+        "main": [
+          [
+            {
+              "node": "Get branch ref",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get commit": {
+        "main": [
+          [
+            {
+              "node": "Get tree",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get branch ref": {
+        "main": [
+          [
+            {
+              "node": "Get commit",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Code in JavaScript": {
+        "main": [
+          [
+            {
+              "node": "Create tree",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create tree": {
+        "main": [
+          [
+            {
+              "node": "If",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If": {
+        "main": [
+          [
+            {
+              "node": "Create true commit",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Create false commit",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create true commit": {
+        "main": [
+          [
+            {
+              "node": "Update true branch ref",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create false commit": {
+        "main": [
+          [
+            {
+              "node": "Update false branch ref",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get tree": {
+        "main": [
+          [
+            {
+              "node": "Code in JavaScript",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "nodeGroups": [],
+    "authors": "Fabian Frank Werner",
+    "name": "Version b0fe67f1",
+    "description": "",
+    "autosaved": true,
+    "createdAt": "2026-09-25T10:11:27.866Z",
+    "updatedAt": "2026-09-25T10:11:51.468Z"
+  }
+}
