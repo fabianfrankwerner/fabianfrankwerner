@@ -4,7 +4,7 @@ I make [YouTube](https://youtube.com/@fabianfrankwerner) videos and write a [New
 
 ## This repo is a collection
 
-This repository collects many of my projects. Each project lives on its **own branch** — the default branch is only this README. Switch branches to browse each project. History is fully preserved for every project.
+This repository collects many of my projects. Most projects live on their **own branch**, while the default branch contains this README and selected shared assets, including the [n8n workflow exports](n8n/). Switch branches to browse project-specific work. History is fully preserved for every project.
 
 ### Why branches?
 
