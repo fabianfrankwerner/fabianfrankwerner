@@ -4,7 +4,7 @@
   "active": true,
   "activeVersionId": "b0fe67f1-f699-4ffb-a73d-6f8e334177d7",
   "createdAt": "2026-09-25T10:09:07.791Z",
-  "updatedAt": "2026-09-25T10:11:42.546Z",
+  "updatedAt": "2026-09-25T10:19:08.594Z",
   "isArchived": false,
   "versionId": "b0fe67f1-f699-4ffb-a73d-6f8e334177d7",
   "triggerCount": 1,
@@ -477,7 +477,11 @@
   "settings": {
     "executionOrder": "v1",
     "binaryMode": "separate",
-    "availableInMCP": true
+    "availableInMCP": true,
+    "timeSavedMode": "fixed",
+    "callerPolicy": "workflowsFromSameOwner",
+    "timeSavedPerExecution": 5,
+    "errorWorkflow": "iz4yfTsSAx8ZogHk"
   },
   "staticData": {
     "node:Schedule Trigger": {

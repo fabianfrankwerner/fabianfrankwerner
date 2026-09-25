@@ -1,0 +1,132 @@
+{
+  "id": "iz4yfTsSAx8ZogHk",
+  "name": "Error Workflow",
+  "active": true,
+  "activeVersionId": "461ef931-8763-4ce4-8e29-103dcd608f3c",
+  "createdAt": "2026-09-25T10:17:53.751Z",
+  "updatedAt": "2026-09-25T11:18:23.914Z",
+  "isArchived": false,
+  "versionId": "461ef931-8763-4ce4-8e29-103dcd608f3c",
+  "triggerCount": 0,
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [
+        -80,
+        -64
+      ],
+      "id": "0c390e20-0aed-479a-b61f-abaeff5cff12",
+      "name": "Error Trigger"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.ERROR_WORKFLOW_DISCORD_WEBHOOK_URL }}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"embeds\": [\n    {\n      \"title\": \"{{ $json.workflow.name }}: `{{ $json.workflow.id }}`\",\n      \"color\": 16711680,\n      \"fields\": [\n        {\n          \"name\": \"Error Message\",\n          \"value\": \"```\\n{{ ((s) => s.length > 1000 ? s.slice(0, 1000) + '...' : s)(($json.execution.error.message).toString()) }}\\n```\"\n        },\n        {\n          \"name\": \"Error Stack\",\n          \"value\": \"```\\n{{ ((s) => s.length > 1000 ? s.slice(0, 1000) + '...' : s)(($json.execution.error.stack).toString()) }}\\n```\"\n        },\n        {\n          \"name\": \"Execution\",\n          \"value\": \"ID: `{{ $json.execution.id }}`\\nURL: `{{ $json.execution.url }}`\\nRetry Of: `{{ $json.execution.retryOf }}`\\nLast Node Executed: `{{ $json.execution.lastNodeExecuted }}`\\nMode: `{{ $json.execution.mode }}`\"\n        }\n      ]\n    }\n  ]\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        144,
+        -64
+      ],
+      "id": "7f347f2f-cfd3-46dd-89bc-b156fd2e768a",
+      "name": "HTTP Request"
+    }
+  ],
+  "connections": {
+    "Error Trigger": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "nodeGroups": [],
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": true,
+    "timeSavedMode": "fixed",
+    "callerPolicy": "workflowsFromSameOwner",
+    "timeSavedPerExecution": 15
+  },
+  "staticData": null,
+  "pinData": {},
+  "meta": null,
+  "tags": [],
+  "shared": [
+    {
+      "role": "workflow:owner",
+      "workflowId": "iz4yfTsSAx8ZogHk",
+      "projectId": "MS2F5rJT2aVXC1kJ",
+      "createdAt": "2026-09-25T10:17:53.751Z",
+      "updatedAt": "2026-09-25T10:17:53.751Z"
+    }
+  ],
+  "activeVersion": {
+    "versionId": "461ef931-8763-4ce4-8e29-103dcd608f3c",
+    "workflowId": "iz4yfTsSAx8ZogHk",
+    "nodes": [
+      {
+        "parameters": {},
+        "type": "n8n-nodes-base.errorTrigger",
+        "typeVersion": 1,
+        "position": [
+          -80,
+          -64
+        ],
+        "id": "0c390e20-0aed-479a-b61f-abaeff5cff12",
+        "name": "Error Trigger"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "={{ $env.ERROR_WORKFLOW_DISCORD_WEBHOOK_URL }}",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\n  \"embeds\": [\n    {\n      \"title\": \"{{ $json.workflow.name }}: `{{ $json.workflow.id }}`\",\n      \"color\": 16711680,\n      \"fields\": [\n        {\n          \"name\": \"Error Message\",\n          \"value\": \"```\\n{{ ((s) => s.length > 1000 ? s.slice(0, 1000) + '...' : s)(($json.execution.error.message).toString()) }}\\n```\"\n        },\n        {\n          \"name\": \"Error Stack\",\n          \"value\": \"```\\n{{ ((s) => s.length > 1000 ? s.slice(0, 1000) + '...' : s)(($json.execution.error.stack).toString()) }}\\n```\"\n        },\n        {\n          \"name\": \"Execution\",\n          \"value\": \"ID: `{{ $json.execution.id }}`\\nURL: `{{ $json.execution.url }}`\\nRetry Of: `{{ $json.execution.retryOf }}`\\nLast Node Executed: `{{ $json.execution.lastNodeExecuted }}`\\nMode: `{{ $json.execution.mode }}`\"\n        }\n      ]\n    }\n  ]\n}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.5,
+        "position": [
+          144,
+          -64
+        ],
+        "id": "7f347f2f-cfd3-46dd-89bc-b156fd2e768a",
+        "name": "HTTP Request"
+      }
+    ],
+    "connections": {
+      "Error Trigger": {
+        "main": [
+          [
+            {
+              "node": "HTTP Request",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "nodeGroups": [],
+    "authors": "Fabian Frank Werner",
+    "name": "Version 461ef931",
+    "description": "",
+    "autosaved": true,
+    "createdAt": "2026-09-25T11:18:23.916Z",
+    "updatedAt": "2026-09-25T11:19:10.333Z"
+  }
+}

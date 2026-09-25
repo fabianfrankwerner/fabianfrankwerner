@@ -4,7 +4,7 @@
   "active": true,
   "activeVersionId": "313086b1-b0c5-4138-aa30-e1c7a909b689",
   "createdAt": "2026-08-09T22:03:20.413Z",
-  "updatedAt": "2026-09-24T17:31:59.605Z",
+  "updatedAt": "2026-09-25T11:22:41.171Z",
   "isArchived": false,
   "versionId": "313086b1-b0c5-4138-aa30-e1c7a909b689",
   "triggerCount": 1,
@@ -129,7 +129,11 @@
   "settings": {
     "executionOrder": "v1",
     "binaryMode": "separate",
-    "availableInMCP": true
+    "availableInMCP": true,
+    "timeSavedMode": "fixed",
+    "errorWorkflow": "iz4yfTsSAx8ZogHk",
+    "callerPolicy": "workflowsFromSameOwner",
+    "timeSavedPerExecution": 1
   },
   "staticData": null,
   "pinData": {},
