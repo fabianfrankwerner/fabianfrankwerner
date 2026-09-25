@@ -4,9 +4,9 @@
   "active": true,
   "activeVersionId": "e2160d54-277f-4359-b32e-c20093a27ef4",
   "createdAt": "2026-09-24T13:53:20.883Z",
-  "updatedAt": "2026-09-24T17:31:59.605Z",
+  "updatedAt": "2026-09-25T10:01:26.252Z",
   "isArchived": false,
-  "versionId": "e2160d54-277f-4359-b32e-c20093a27ef4",
+  "versionId": "115ad9e0-0ea8-4604-ba25-ef457a882fea",
   "triggerCount": 1,
   "nodes": [
     {
@@ -63,7 +63,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const workflows = $('Remove Duplicates').all();\n\nconst commitData = $('Get commit').first().json;\nconst baseCommitSha = commitData.sha;\nconst baseTreeSha = commitData.tree.sha;\n\nconst tree = workflows.map((item) => {\n  const wf = item.json;\n  const safeName = (wf.name || 'untitled')\n    .replace(/[^a-zA-Z0-9_\\-\\s]/g, '')\n    .trim()\n    .replace(/\\s+/g, '_');\n\n  return {\n    path: `${safeName}_${wf.id}.json`,\n    mode: '100644',\n    type: 'blob',\n    content: JSON.stringify(wf, null, 2),\n  };\n});\n\nreturn [{\n  json: {\n    base_tree: baseTreeSha,\n    parent_commit_sha: baseCommitSha,\n    tree: tree,\n  }\n}];"
+        "jsCode": "const workflows = $('Remove Duplicates').all();\n\nconst commitData = $('Get commit').first().json;\nconst baseCommitSha = commitData.sha;\nconst baseTreeSha = commitData.tree.sha;\n\nconst tree = workflows.map((item) => {\n  const wf = item.json;\n  const safeName = (wf.name || 'Untitled_Workflow')\n    .replace(/[^a-zA-Z0-9_\\-\\s]/g, '')\n    .trim()\n    .replace(/\\s+/g, '_');\n\n  return {\n    path: `n8n/${safeName}_${wf.id}.json`,\n    mode: '100644',\n    type: 'blob',\n    content: JSON.stringify(wf, null, 2),\n  };\n});\n\nreturn [{\n  json: {\n    base_tree: baseTreeSha,\n    parent_commit_sha: baseCommitSha,\n    tree: tree,\n  }\n}];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -111,7 +111,7 @@
     },
     {
       "parameters": {
-        "url": "https://api.github.com/repos/fabianfrankwerner/fabianfrankwerner/git/ref/heads/n8n",
+        "url": "https://api.github.com/repos/fabianfrankwerner/fabianfrankwerner/git/ref/heads/main",
         "authentication": "predefinedCredentialType",
         "nodeCredentialType": "githubApi",
         "sendHeaders": true,
@@ -152,7 +152,7 @@
         "nodeCredentialType": "githubApi",
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={\n  \"tree\": {{ JSON.stringify($json.tree) }}\n}",
+        "jsonBody": "={\n  \"base_tree\": \"{{ $('Code in JavaScript').first().json.base_tree }}\",\n  \"tree\": {{ JSON.stringify($json.tree) }}\n}",
         "options": {}
       },
       "type": "n8n-nodes-base.httpRequest",
@@ -258,7 +258,7 @@
     {
       "parameters": {
         "method": "PATCH",
-        "url": "https://api.github.com/repos/fabianfrankwerner/fabianfrankwerner/git/refs/heads/n8n",
+        "url": "https://api.github.com/repos/fabianfrankwerner/fabianfrankwerner/git/refs/heads/main",
         "authentication": "predefinedCredentialType",
         "nodeCredentialType": "githubApi",
         "sendBody": true,
@@ -284,7 +284,7 @@
     {
       "parameters": {
         "method": "PATCH",
-        "url": "https://api.github.com/repos/fabianfrankwerner/fabianfrankwerner/git/refs/heads/n8n",
+        "url": "https://api.github.com/repos/fabianfrankwerner/fabianfrankwerner/git/refs/heads/main",
         "authentication": "predefinedCredentialType",
         "nodeCredentialType": "githubApi",
         "sendBody": true,
