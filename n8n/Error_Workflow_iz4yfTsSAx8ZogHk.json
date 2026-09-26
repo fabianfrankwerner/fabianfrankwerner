@@ -4,7 +4,7 @@
   "active": true,
   "activeVersionId": "461ef931-8763-4ce4-8e29-103dcd608f3c",
   "createdAt": "2026-09-25T10:17:53.751Z",
-  "updatedAt": "2026-09-25T11:18:23.914Z",
+  "updatedAt": "2026-09-25T14:22:33.869Z",
   "isArchived": false,
   "versionId": "461ef931-8763-4ce4-8e29-103dcd608f3c",
   "triggerCount": 0,
@@ -59,7 +59,7 @@
     "availableInMCP": true,
     "timeSavedMode": "fixed",
     "callerPolicy": "workflowsFromSameOwner",
-    "timeSavedPerExecution": 15
+    "timeSavedPerExecution": 10
   },
   "staticData": null,
   "pinData": {},
