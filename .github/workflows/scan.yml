@@ -1,0 +1,48 @@
+name: Scanning
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+  workflow_dispatch:
+  schedule:
+    # Midnight UTC full-history audit. gitleaks-action only omits --log-opts for
+    # schedule/workflow_dispatch, so this is the trigger that scans every commit
+    # rather than just the ones in a push or PR range.
+    - cron: '0 0 * * *'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+# Least privilege. checkout needs contents:read; the action needs
+# pull-requests:write to post inline review comments on findings. Nothing else
+# is granted. Fork PRs get a read-only token automatically, so they cannot
+# comment - the action handles that failure without failing the job.
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  scanning:
+    # This exact name is what branch protection requires as a status check.
+    name: Scanning
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+        with:
+          # Required. gitleaks-action scans the range
+          # <first pushed commit>^..<last pushed commit>, so the parent of the
+          # first commit must exist locally. fetch-depth 0 guarantees that.
+          fetch-depth: 0
+          # Nothing in this job pushes, and gitleaks only reads the local
+          # history. Do not leave the token in .git/config.
+          persist-credentials: false
+
+      - name: Run Gitleaks
+        uses: gitleaks/gitleaks-action@e0c47f4f8be36e29cdc102c57e68cb5cbf0e8d1e # v3.0.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITLEAKS_VERSION: latest
