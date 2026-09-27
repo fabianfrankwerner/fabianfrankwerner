@@ -17,7 +17,7 @@ Enforcement was verified end-to-end with a real leaked token, not just assumed.
 | Branch protection on `main` | none | requires `Gitleaks Scan` |
 | Force pushes to `main` | allowed | **blocked** |
 | Branch deletion | allowed | **blocked** |
-| Admin bypass of protection | allowed | **blocked** (`enforce_admins`) |
+| Admin bypass of protection | allowed | allowed — **required**, see 4.1 |
 | GitHub native secret scanning | enabled | unchanged |
 | GitHub native push protection | enabled | unchanged |
 | Dependabot security updates | disabled | **enabled** |
@@ -119,7 +119,7 @@ Applied via GitHub REST API.
 ```json
 {
   "required_status_checks": { "strict": false, "contexts": ["Gitleaks Scan"] },
-  "enforce_admins": true,
+  "enforce_admins": false,
   "allow_force_pushes": false,
   "allow_deletions": false,
   "required_pull_request_reviews": null,
@@ -133,9 +133,34 @@ Notes:
 - `required_pull_request_reviews` is deliberately `null`. Adding review requirements
   was not requested, and this repo is a personal single-maintainer project where
   mandatory review would block all merging.
-- `enforce_admins: true` closes the obvious bypass, since the owner is also the admin.
 - Force-push and deletion blocking were added because they are the standard way to
   erase a commit after it leaked.
+
+**`enforce_admins` is `false` deliberately, and this was corrected during setup.**
+
+It was initially set to `true`, which broke the repository's n8n backup automation.
+That automation pushes directly to `main` (six consecutive `Backup Workflow` commits
+in the recent log), and with `enforce_admins: true` the owner's own pushes were
+rejected:
+
+```
+! [remote rejected]  main -> main (protected branch hook declined)
+```
+
+Since the owner is also the admin, enforcing on admins removes the only bypass the
+automation has. The setting was reverted to `false` and the push succeeded, with
+`Gitleaks Scan` enforcement confirmed intact afterward.
+
+**The real trade-off:** with `enforce_admins: false`, secret detection is still fully
+enforced on every PR merge — that path cannot be bypassed. But a *direct push* to
+`main` by the owner is not gated by the status check, because GitHub does not run
+status checks on direct pushes at all. For that path, protection relies on GitHub
+native **push protection** (enabled, section 4.2), which blocks the push over the
+wire before the commit is stored.
+
+If direct-push coverage is wanted for the owner too, the n8n automation must be
+changed to open PRs instead of pushing to `main`; `enforce_admins` can then be
+re-enabled. That is an automation change, out of scope here.
 
 ### 4.2 Security features
 
@@ -182,6 +207,12 @@ mergeStateStatus: BLOCKED
 
 **Cleanup.** PR #6 closed, remote branch deleted, local branch deleted, verified
 absent. The token was randomly generated and never valid.
+
+**Post-fix re-verification.** After `enforce_admins` was reverted to `false`
+(section 4.1), branch protection was re-read to confirm the required check survived:
+`required_status_checks.contexts` = `["Gitleaks Scan"]`, with force-push and deletion
+blocking both still `false` (i.e. blocked). The check itself is unaffected by the
+admin-bypass setting, since PR merges are gated either way.
 
 **Note:** two `Gitleaks Scan` checks appear per PR because both `push` and
 `pull_request` fire. The concurrency groups differ (`refs/heads/…` vs
@@ -243,9 +274,13 @@ and is a decision about which findings to suppress, not a mechanical step.
    may add a rule that fails the build with no commit from you. Remediation:
    add the reported fingerprint to `.gitleaksignore`, or pin to a fixed version.
    Currently resolves to 8.30.1, which is clean.
-4. **Direct pushes to `main` still bypass status checks** — inherent to how GitHub
-   works. Only PR merges are gated. Push protection is the pre-receive control here,
-   and it is enabled.
+4. **Direct pushes to `main` bypass the status check.** Inherent to GitHub: status
+   checks run on PRs, never on direct pushes. This is why `enforce_admins` is
+   `false` (section 4.1) — enforcing it would break the n8n backup automation. For
+   direct pushes, the control is GitHub native **push protection**, which is enabled
+   and rejects known token formats before the commit is stored. It matches by
+   provider pattern, so it is a narrower net than gitleaks: an unrecognized
+   high-entropy string pushed straight to `main` would not be caught by CI.
 5. **`ubuntu-latest` migrates to Ubuntu 26 on 2026-10-19.** Flagged by the runner
    itself; no action needed, but worth a glance if the job breaks in October.
 6. **No local pre-commit hook**, by choice — CI plus push protection cover the goal.
