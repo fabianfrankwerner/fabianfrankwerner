@@ -5,7 +5,7 @@
       "source": "n8n-io/skills",
       "sourceType": "github",
       "skillPath": "skills/n8n-agents-official/SKILL.md",
-      "computedHash": "686d04073c00d32aa6049412449cab96b20306059b5f62f802655466a6e88b13"
+      "computedHash": "2b1351133222152827dae6cd827ad4286e8f055fa6294b4dd2e9453317db2bb9"
     },
     "n8n-code-nodes-official": {
       "source": "n8n-io/skills",
@@ -47,19 +47,19 @@
       "source": "n8n-io/skills",
       "sourceType": "github",
       "skillPath": "skills/n8n-node-configuration-official/SKILL.md",
-      "computedHash": "772a4e21015c3edbd71df233485c8d4b02c7082c555657e8ebc062113bbd204a"
+      "computedHash": "e3d57ef33e7b767854150fa7ab6970f64b9a84194cb4b5327d2cccb64ca84122"
     },
     "n8n-subworkflows-official": {
       "source": "n8n-io/skills",
       "sourceType": "github",
       "skillPath": "skills/n8n-subworkflows-official/SKILL.md",
-      "computedHash": "b7e76b3d120dfac9a8e941743f6fcce2a16932bb9c8d1c1b09b52b145dc6a771"
+      "computedHash": "9a360ea7fa24d8dbd7d14bb944b8db4dce1f9b33c1eb0cc4f2482493cc5d50e9"
     },
     "n8n-workflow-lifecycle-official": {
       "source": "n8n-io/skills",
       "sourceType": "github",
       "skillPath": "skills/n8n-workflow-lifecycle-official/SKILL.md",
-      "computedHash": "e9a6ae482f70bbac81e6583afaec51c3250f93dce78b4d2605a55dff2917c1b2"
+      "computedHash": "c70dceb57227955aa5eb189900f4e3327ad5c4036ee6580645ed4abe04de8e82"
     }
   }
 }
